@@ -3,13 +3,21 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import Vuex from 'vuex'
+import store from './vuex/'
+import './config/rem'
+import fastclick from 'fastclick'
 
+Vue.use(Vuex)
+Vue.use(MintUI)
+import MintUI from 'mint-ui'
 Vue.config.productionTip = false
+fastclick.attach(document.body)
+
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
   router,
-  template: '<App/>',
-  components: { App }
-})
+  store,
+  // render: h => h(App)
+}).$mount('#app')
