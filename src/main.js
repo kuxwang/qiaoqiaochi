@@ -7,10 +7,12 @@ import Vuex from 'vuex'
 import store from './vuex/'
 import './config/rem'
 import fastclick from 'fastclick'
+import 'vue2-animate/dist/vue2-animate.css'
+import 'mint-ui/lib/style.css'
+import MintUI from 'mint-ui'
 
 Vue.use(Vuex)
 Vue.use(MintUI)
-import MintUI from 'mint-ui'
 Vue.config.productionTip = false
 fastclick.attach(document.body)
 
