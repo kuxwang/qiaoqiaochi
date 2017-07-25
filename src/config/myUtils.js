@@ -25,19 +25,3 @@ export const removeStore = name => {
   window.localStorage.removeItem(name)
 }
 
-/**
- *  获取自身位置
- */
-//获取本地地址
-// export const myposition = () => {
-//   let geolocation = new qq.map.Geolocation('OAABZ-D6BH6-PMJST-M5MET-56X4E-T3BY5', 'myapp')
-//   let options = {timeout: 1000}
-//   let positionNum = 0
-//   let position = []
-//   geolocation.getLocation((res) => {
-//     position = res
-//   }, () => {
-//     console.log('定位失败')
-//   }, options)
-//   return position
-// }

@@ -7,7 +7,7 @@
 </template>
 <script>
   export default {
-    name:'app',
+    name: 'app',
   }
 </script>
 
@@ -27,22 +27,12 @@
     outline: medium;
   }
 
-  button {
-    /*outline: none;*/
+  .ocolor {
+    background-color: #F5751D !important;
   }
 
-  * {
-    margin: 0;
-    padding: 0;
-    font-size: .28rem
-    /*font-family: PingFangSC-Regular, sans-serif;*/
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  li {
-    list-style-type: none
+  .clear:after {
+    content:'';
+    clear: both;
   }
 </style>
