@@ -34,7 +34,7 @@
   * {
     margin: 0;
     padding: 0;
-    font-size: .28rem
+    /*font-size: .28rem*/
     /*font-family: PingFangSC-Regular, sans-serif;*/
   }
 

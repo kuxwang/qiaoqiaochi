@@ -14,7 +14,7 @@ import MintUI from 'mint-ui'
 Vue.use(Vuex)
 Vue.use(MintUI)
 Vue.config.productionTip = false
-fastclick.attach(document.body)
+// fastclick.attach(document.body)
 
 
 /* eslint-disable no-new */
