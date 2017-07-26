@@ -32,7 +32,7 @@
         </div>
       </router-link>
     </mt-tabbar>
-  </div>
+    </div>
 </template>
 <script>
   import { Tabbar ,TabItem } from 'mint-ui';

@@ -31,18 +31,7 @@
     /*outline: none;*/
   }
 
-  * {
-    margin: 0;
-    padding: 0;
-    font-size: .28rem
-    /*font-family: PingFangSC-Regular, sans-serif;*/
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  li {
-    list-style-type: none
+  .ocolor{
+    background:#F5751D !important
   }
 </style>

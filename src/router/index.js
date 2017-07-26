@@ -13,8 +13,15 @@ const app = r => require.ensure([], () => r(require('../App.vue')), 'app')
 import Home from '../view/Home.vue'
 const Order = r => require.ensure([], () => r(require('../view/Order.vue')), 'Order')
 const ShoppingCart = r => require.ensure([], () => r(require('../view/ShoppingCart.vue')), 'ShoppingCart')
-const VipCenter = r => require.ensure([], () => r(require('../view/VipCenter.vue')), 'VipCenter')
+const VipCenter = r => require.ensure([], () => r(require('../view/Home.vue')), 'VipCenter')
 const QrCode = r => require.ensure([], () => r(require('../view/QrCode.vue')), 'QrCode')
+
+/**
+ * 商品详情模块
+ */
+const goodsDetails = r => require.ensure([], () => r(require('../components/Home/productDetail.vue')), 'goodsDetails')
+
+
 
 export default new Router({
   // mode: 'history',
@@ -26,8 +33,15 @@ export default new Router({
       children: [
         {
           path: '',
-          name:'home',
-          component: Home
+          name: 'home',
+          component: Home,
+          children: [
+            {
+              path: '/details',
+              name: 'details',
+              component: goodsDetails,
+            }
+          ]
         },
         {
           path: '/order',
@@ -49,11 +63,10 @@ export default new Router({
           name: 'qrCode',
           component: QrCode
         },
-        // {
-        //   path: '/login_success',
-        //   name: 'login_success',
-        //   component: login_success
-        // }
+        {
+          path: '/detail',
+          name: 'detail'
+        }
       ]
     },
   ]

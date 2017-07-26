@@ -16,3 +16,12 @@ let axios_instance = axios.create({
 })
 // 附近车辆
 // export const vehicleNum = params => { return axios_instance.post(`${base}?i=1&c=entry&do=homenologin&m=zhui_calltaxi`, params).then(res => res.data) }
+
+//import {vehicleNum}  from
+//let params={
+//  tel:''
+//}
+//
+//vehicleNum(params).then((res)=>{
+//  cons
+//})
