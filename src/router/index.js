@@ -9,19 +9,22 @@ Vue.use(Router)
 const app = r => require.ensure([], () => r(require('../App.vue')), 'app')
 // const  = r => require.ensure([], () => r(require('../components/index/alertLogin.vue')), 'alertLogin')
 //Home
-// const Home = r => require.ensure([], () => r(require('../view/Home.vue')), 'kk')
 import Home from '../view/Home.vue'
 const Order = r => require.ensure([], () => r(require('../view/Order.vue')), 'Order')
 const ShoppingCart = r => require.ensure([], () => r(require('../view/ShoppingCart.vue')), 'ShoppingCart')
-const VipCenter = r => require.ensure([], () => r(require('../view/Home.vue')), 'VipCenter')
+const VipCenter = r => require.ensure([], () => r(require('../view/distributionCenter.vue')), 'VipCenter')
 const QrCode = r => require.ensure([], () => r(require('../view/QrCode.vue')), 'QrCode')
+
+/**
+ * 分销模块
+ * @param r
+ */
+const extension = r => require.ensure([], () => r(require('../components/distribution/extension.vue')), 'vipCenter')
 
 /**
  * 商品详情模块
  */
 const goodsDetails = r => require.ensure([], () => r(require('../components/Home/productDetail.vue')), 'goodsDetails')
-
-
 
 export default new Router({
   // mode: 'history',
@@ -56,7 +59,14 @@ export default new Router({
         {
           path: '/vipCenter',
           name: 'vipCenter',
-          component: VipCenter
+          component: VipCenter,
+          children:[
+            {
+              path: '/extension',
+              name: 'extension',
+              component: extension,
+            }
+          ]
         },
         {
           path: '/qrCode',

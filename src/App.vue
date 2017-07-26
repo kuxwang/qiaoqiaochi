@@ -7,7 +7,7 @@
 </template>
 <script>
   export default {
-    name:'app',
+    name: 'app',
   }
 </script>
 
@@ -27,11 +27,27 @@
     outline: medium;
   }
 
-  button {
-    /*outline: none;*/
+  .ocolor {
+    background-color: #F5751D !important;
   }
 
-  .ocolor{
-    background:#F5751D !important
+  .clear:after {
+    content:'';
+    clear: both;
+  }
+  a {
+    text-decoration: none;
+  }
+
+  li {
+    list-style-type: none
+  }
+
+  .slide-enter-active, .slide-leave-active {
+    transition: all 0.3s
+  }
+
+  .slide-enter, .slide-leave-to {
+    transform: translate3d(100%, 0, 0)
   }
 </style>

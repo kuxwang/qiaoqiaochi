@@ -35,11 +35,11 @@
     </div>
 </template>
 <script>
-  import { Tabbar ,TabItem } from 'mint-ui';
+//  import { Tabbar ,TabItem } from 'mint-ui';
   export default{
     components:{
-      Tabbar,
-      TabItem
+//      Tabbar,
+//      TabItem
     }
   }
 </script>
