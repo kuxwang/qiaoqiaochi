@@ -39,15 +39,27 @@
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
         <!--<mt-cell v-for="n in 5" :title="'内容 ' + n" />-->
-        <mt-cell v-for="n in 5">
-         <div class="logo">
-           <img src="../../assets/images/shoppingCart-01.jpg"/>
-         </div>
-          <div class="info">
-            <h5>名字</h5>
-            <span>123112</span>
-          </div>
-        </mt-cell>
+        <ul class="p-list" v-for="n in 5">
+          <li class="p-cell">
+            <div class="up">
+              <span>订单编号</span>
+              <span class="time">2017-7-23 32：23：23</span>
+            </div>
+           <div class="down">
+             <div class="logo">
+               <img src="../../assets/images/shoppingCart-01.jpg"/>
+             </div>
+             <div class="info">
+               <h5>名字</h5>
+               <span>123112</span>
+             </div>
+             <div class="ordertype">
+                <span>已发货</span>
+                <span>￥0.36</span>
+             </div>
+           </div>
+          </li>
+        </ul>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
         <mt-cell v-for="n in 4" :title="'测试 ' + n" />
@@ -280,26 +292,50 @@
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
   }
-  .mint-cell-title {
-    display: none;
-    -webkit-box-flex:0;
-    flex: 0
+  .p-list {
+    display: block;
+    background-color: #fff;
+  }
+  .p-cell {
+    display: flex;
+    flex-direction: column;
+    ;
+    padding: 0.1rem 0.2rem;
+  }
+  .up {
+    flex: 1;
+    text-align: left;
   }
 
- /* .mint-cell-value {
-    !*display: flex;*!
+.up .time {
+  float: right;
+}
 
+  .down {
+    flex: 3.5;
+    height: 0.78rem;
+    display: flex;
   }
-  .mint-cell-value .logo {
+  .logo {
     flex: 1;
   }
-  .mint-cell-value .info {
+  .info {
     flex: 4;
+    text-align: left;
+    margin-left: 0.1rem;
+  }
+  .info h5 {
+    margin: 0.1rem 0;
   }
   .logo img {
     width: 100%;
+    border-radius: 50%;
   }
-  .mint-cell-wrapper.mint-cell-title {
-    width: 0;
-  }*/
+  .ordertype {
+    flex: 3;
+  }
+  .ordertype span {
+    display: block;
+    text-align: right;
+  }
 </style>

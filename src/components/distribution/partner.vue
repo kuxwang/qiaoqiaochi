@@ -43,7 +43,27 @@
 
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <mt-cell v-for="n in 5" :title="'内容 ' + n" />
+        <!--<mt-cell v-for="n in 5" :title="'内容 ' + n" />-->
+        <!--<mt-cell v-for="n in 5">-->
+          <!--<div class="logo">-->
+            <!--<img src="../../assets/images/shoppingCart-01.jpg"/>-->
+          <!--</div>-->
+          <!--<div class="info">-->
+            <!--<h5>名字</h5>-->
+            <!--<span>123112</span>-->
+          <!--</div>-->
+        <!--</mt-cell>-->
+        <ul class="p-list" v-for="n in 5">
+          <li class="p-cell">
+            <div class="logo">
+              <img src="../../assets/images/shoppingCart-01.jpg"/>
+            </div>
+            <div class="info">
+              <h5>名字</h5>
+              <span>123112</span>
+            </div>
+          </li>
+        </ul>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
         <mt-cell v-for="n in 4" :title="'测试 ' + n" />
@@ -275,5 +295,34 @@
   }
   .list-type {
     height: 0.25rem;
+    border-bottom: 1px solid #fff;
+
+  }
+  .p-list {
+    display: block;
+    background-color: #fff;
+  }
+  .p-cell {
+    display: flex;
+    height: 0.78rem;
+    padding: 0.1rem 0.2rem;
+  }
+  .logo {
+    flex: 1;
+  }
+  .info {
+    flex: 4;
+    text-align: left;
+    margin-left: 0.1rem;
+  }
+  .info h5 {
+    margin: 0.1rem 0;
+  }
+  .logo img {
+    width: 100%;
+    border-radius: 50%;
+  }
+  .mint-navbar .mint-tab-item.is-selected {
+    color: red;
   }
 </style>

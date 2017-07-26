@@ -21,6 +21,7 @@ const QrCode = r => require.ensure([], () => r(require('../view/QrCode.vue')), '
  */
 const extension = r => require.ensure([], () => r(require('../components/distribution/extension.vue')), 'vipCvnenter')
 const partner = r => require.ensure([], () => r(require('../components/distribution/partner.vue')), 'vipCvnenter')
+const partnerlist = r => require.ensure([], () => r(require('../components/distribution/partnerlist.vue')), 'vipCvnenter')
 
 /**
  * 商品详情模块
@@ -68,7 +69,14 @@ export default new Router({
             {
               path:'/partner',
               name:'partner',
-              component:partner
+              component:partner,
+              children: [
+                {
+                  path: '/partnerlist',
+                  name: 'partnerlist',
+                  component: partnerlist
+                }
+              ]
             }
           ]
         },
