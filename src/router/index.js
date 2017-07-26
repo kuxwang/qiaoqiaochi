@@ -19,7 +19,7 @@ const QrCode = r => require.ensure([], () => r(require('../view/QrCode.vue')), '
  * 分销模块
  * @param r
  */
-const distribution = r => require.ensure([], () => r(require('../view/distributionCenter.vue')), 'distribution')
+const extension = r => require.ensure([], () => r(require('../components/distribution/extension.vue')), 'vipCenter')
 
 /**
  * 测试模块
@@ -28,8 +28,6 @@ const distribution = r => require.ensure([], () => r(require('../view/distributi
 const test = r => require.ensure([], () => r(require('../test/test.vue')), 'test')
 
 export default new Router({
-  // mode: 'history',
-  // base: '/zhczwx/',
   routes: [
     {
       path: '/',
@@ -53,7 +51,14 @@ export default new Router({
         {
           path: '/vipCenter',
           name: 'vipCenter',
-          component: VipCenter
+          component: VipCenter,
+          children:[
+            {
+              path: '/extension',
+              name: 'extension',
+              component: extension,
+            }
+          ]
         },
         {
           path: '/qrCode',
@@ -62,17 +67,17 @@ export default new Router({
         },
       ]
     },
-    {
-      path: '/test',
-      name: 'test',
-      component: test,
-      children: [
-        {
-          path: '/distribution',
-          name: 'distribution',
-          component: distribution
-        }
-      ]
-    },
+    // {
+    //   path: '/test',
+    //   name: 'test',
+    //   component: test,
+    //   children: [
+    //     {
+    //       path: '/distribution',
+    //       name: 'distribution',
+    //       component: distribution
+    //     }
+    //   ]
+    // },
   ]
 })
