@@ -41,27 +41,33 @@
         <span class="mint-cell-text">我的伙伴</span>
       </div>
       <ul>
-        <li class="li1">
+        <router-link to="/partner" tag="li">
+        <!--<li class="li1">-->
           <div class="title">所有伙伴</div>
           <div class="iconfont listicon">&#xe646;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 人</span>
           </div>
-        </li>
-        <li class="li2">
+        <!--</li>-->
+        </router-link>
+        <router-link to="/partner" tag="li">
+        <!--<li class="li2">-->
           <div class="title">已购买伙伴</div>
           <div class="iconfont listicon">&#xe600;</div>
           <div>
             <span class="num">10</span><span class="yuan"> 人</span>
           </div>
-        </li>
-        <li class="li3">
+        <!--</li>-->
+        </router-link>
+        <router-link to="/partner" tag="li">
+        <!--<li class="li3">-->
           <div class="title">未购买伙伴</div>
           <div class="iconfont listicon">&#xe60d;</div>
           <div>
             <span class="num">100</span><span class="yuan"> 人</span>
           </div>
-        </li>
+        <!--</li>-->
+        </router-link>
       </ul>
 
       <div class="mfriend">
@@ -77,20 +83,24 @@
             </div>
           </router-link>
         <!--</li>-->
-        <li class="li2">
+        <router-link to="/extension" tag="li">
+        <!--<li class="li2">-->
           <div class="title">下单已发货</div>
           <div class="iconfont listicon">&#xe8b5;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 单</span>
           </div>
-        </li>
-        <li class="li3">
+        <!--</li>-->
+        </router-link>
+        <router-link to="/extension" tag="li">
+        <!--<li class="li3">-->
           <div class="title">订单已完成</div>
           <div class="iconfont listicon">&#xe619;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 单</span>
           </div>
-        </li>
+        <!--</li>-->
+        </router-link>
       </ul>
 
       <div class="mfriend">

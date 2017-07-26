@@ -19,7 +19,8 @@ const QrCode = r => require.ensure([], () => r(require('../view/QrCode.vue')), '
  * 分销模块
  * @param r
  */
-const extension = r => require.ensure([], () => r(require('../components/distribution/extension.vue')), 'vipCenter')
+const extension = r => require.ensure([], () => r(require('../components/distribution/extension.vue')), 'vipCvnenter')
+const partner = r => require.ensure([], () => r(require('../components/distribution/partner.vue')), 'vipCvnenter')
 
 /**
  * 商品详情模块
@@ -27,8 +28,6 @@ const extension = r => require.ensure([], () => r(require('../components/distrib
 const goodsDetails = r => require.ensure([], () => r(require('../components/Home/productDetail.vue')), 'goodsDetails')
 
 export default new Router({
-  // mode: 'history',
-  // base: '/zhczwx/',
   routes: [
     {
       path: '/',
@@ -65,6 +64,11 @@ export default new Router({
               path: '/extension',
               name: 'extension',
               component: extension,
+            },
+            {
+              path:'/partner',
+              name:'partner',
+              component:partner
             }
           ]
         },
@@ -79,5 +83,17 @@ export default new Router({
         }
       ]
     },
+    // {
+    //   path: '/test',
+    //   name: 'test',
+    //   component: test,
+    //   children: [
+    //     {
+    //       path: '/distribution',
+    //       name: 'distribution',
+    //       component: distribution
+    //     }
+    //   ]
+    // },
   ]
 })

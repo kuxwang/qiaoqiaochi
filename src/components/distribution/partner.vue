@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <section>
-      <mt-header fixed title="推广订单" class="ocolor">
+      <mt-header fixed title="我的伙伴" class="ocolor">
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back">返回</mt-button>
         </router-link>
@@ -9,45 +9,41 @@
       </mt-header>
     </section>
     <section class="top">
-      <div class="top_1">
+      <!--<div class="top_1">
         <span class="title">累计奖励(元)</span>
         <span class="num">58229.63</span><span class="yuan"> 元</span>
       </div>
       <div>
         <span class="title">推广销售(元)</span>
         <span class="num">130834.09</span><span class="yuan"> 元</span>
-      </div>
+      </div>-->
+
     </section>
+    <ul>
+      <li class="list-type" v-for="item in cell">
+        {{item}}
+      </li>
+    </ul>
     <!--<mt-tab-container v-model="active">-->
-      <!--<mt-tab-container-item id="tab-container1">-->
-        <!--<mt-cell v-for="n in 10" title="tab-container 1"></mt-cell>-->
-      <!--</mt-tab-container-item>-->
-      <!--<mt-tab-container-item id="tab-container2">-->
-        <!--<mt-cell v-for="n in 5" title="tab-container 2"></mt-cell>-->
-      <!--</mt-tab-container-item>-->
-      <!--<mt-tab-container-item id="tab-container3">-->
-        <!--<mt-cell v-for="n in 7" title="tab-container 3"></mt-cell>-->
-      <!--</mt-tab-container-item>-->
+    <!--<mt-tab-container-item id="tab-container1">-->
+    <!--<mt-cell v-for="n in 10" title="tab-container 1"></mt-cell>-->
+    <!--</mt-tab-container-item>-->
+    <!--<mt-tab-container-item id="tab-container2">-->
+    <!--<mt-cell v-for="n in 5" title="tab-container 2"></mt-cell>-->
+    <!--</mt-tab-container-item>-->
+    <!--<mt-tab-container-item id="tab-container3">-->
+    <!--<mt-cell v-for="n in 7" title="tab-container 3"></mt-cell>-->
+    <!--</mt-tab-container-item>-->
     <!--</mt-tab-container>-->
     <mt-navbar class="page-part" v-model="selected">
-      <mt-tab-item id="1">全部</mt-tab-item>
-      <mt-tab-item id="2">未结算</mt-tab-item>
-      <mt-tab-item id="3">已退款</mt-tab-item>
-      <mt-tab-item id="4">已结算</mt-tab-item>
+      <mt-tab-item id="1">所有伙伴</mt-tab-item>
+      <mt-tab-item id="2">已购买伙伴</mt-tab-item>
+      <mt-tab-item id="3">未购买伙伴</mt-tab-item>
     </mt-navbar>
 
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <!--<mt-cell v-for="n in 5" :title="'内容 ' + n" />-->
-        <mt-cell v-for="n in 5">
-         <div class="logo">
-           <img src="../../assets/images/shoppingCart-01.jpg"/>
-         </div>
-          <div class="info">
-            <h5>名字</h5>
-            <span>123112</span>
-          </div>
-        </mt-cell>
+        <mt-cell v-for="n in 5" :title="'内容 ' + n" />
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
         <mt-cell v-for="n in 4" :title="'测试 ' + n" />
@@ -55,24 +51,21 @@
       <mt-tab-container-item id="3">
         <mt-cell v-for="n in 6" :title="'选项 ' + n" />
       </mt-tab-container-item>
-      <mt-tab-container-item id="4">
-        <mt-cell v-for="n in 6" :title="'选项 ' + n" />
-      </mt-tab-container-item>
     </mt-tab-container>
   </div>
+
 </template>
 <script>
-  import MtCell from "../../../node_modules/mint-ui/packages/cell/src/cell";
-//  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
+  //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
   export default{
     data () {
       return {
         active:'tab-container1',
-        selected:1
+        selected:1,
+        cell: [1,2,3,4,5,6,7]
       }
     },
     components: {
-      MtCell
 //      'mt-cell': Cell,
 //      'mt-tab-container': TabContainer,
 //      'mt-tab-container-item': TabContainerItem,
@@ -153,7 +146,7 @@
   }
 
   .top {
-    height: .64rem;
+    height: 0rem;
     /*background: #fff;*/
     margin-top:.4rem;
     background: rgb(244, 127, 47);
@@ -280,26 +273,7 @@
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
   }
-  .mint-cell-title {
-    display: none;
-    -webkit-box-flex:0;
-    flex: 0
+  .list-type {
+    height: 0.25rem;
   }
-
- /* .mint-cell-value {
-    !*display: flex;*!
-
-  }
-  .mint-cell-value .logo {
-    flex: 1;
-  }
-  .mint-cell-value .info {
-    flex: 4;
-  }
-  .logo img {
-    width: 100%;
-  }
-  .mint-cell-wrapper.mint-cell-title {
-    width: 0;
-  }*/
 </style>
