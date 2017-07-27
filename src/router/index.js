@@ -31,6 +31,13 @@ const UserInfo= r => require.ensure([], () => r(require('../components/VipCenter
 const goodsDetails = r => require.ensure([], () => r(require('../components/Home/productDetail.vue')), 'goodsDetails')
 const payselect = r => require.ensure([], () => r(require('../components/common/payselect.vue')), 'goodsDetails')
 
+/**
+ * 确认订单页面
+*/
+const ConfirmOrder = r => require.ensure([], () => r(require('../components/common/ConfirmOrder.vue')), 'common')
+const DeliveryAddress= r => require.ensure([], () => r(require('../components/common/DeliveryAddress.vue')), 'common')
+const AddAddress= r => require.ensure([], () => r(require('../components/common/AddAddress.vue')), 'common')
+
 export default new Router({
   routes: [
     {
@@ -92,9 +99,7 @@ export default new Router({
                   component: partnerlist
                 }
               ]
-            }
-
-
+            },
           ]
         },
         {
@@ -103,8 +108,24 @@ export default new Router({
           component: QrCode
         },
         {
-          path: '/detail',
-          name: 'detail'
+          path:'/confirmorder',
+          name:'confirmorder',
+          component:ConfirmOrder,
+          children:[
+            {
+              path:'/deliveryaddress',
+              name:'deliveryaddress',
+              component:DeliveryAddress,
+              children:[
+                {
+                  path:'/addaddress',
+                  name:'addaddress',
+                  component:AddAddress
+                }
+              ]
+            }
+          ]
+
         },
         {
           path:'/payselect',
