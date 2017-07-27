@@ -30,7 +30,7 @@
 	      <div class="userpopup">
 	        <div class="userpopup-tp clearfix">
 	          <span class="fl userpopup-lf" @click="cityCancel">取消</span>
-	          选择所在城市
+	          选择地址
 	          <span class="fr userpopup-lr" @click="cityConfirm">确定</span>
 	        </div>
 	       <mt-picker :slots="slots" value-key="aname" @change="cityValuesChange" class="myCityPopup"></mt-picker>
