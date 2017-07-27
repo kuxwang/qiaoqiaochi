@@ -24,7 +24,8 @@
           <span>塑料</span>
         </div>
       </div>
-      <i class="iconfont right">&#xe649;</i>
+      <!-- <i class="iconfont right" @click="goUserInfo">&#xe649;</i> -->
+      <router-link class="iconfont right" :to="{name:'userinfo'}" tag="i">&#xe649;</router-link>
     </section>
     <section class="top">
       <div class="top_1">
@@ -140,6 +141,9 @@
       </ul>
     </section>
     <v-tabbar></v-tabbar>
+    <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 <script>

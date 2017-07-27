@@ -53,6 +53,7 @@
     background: #fff;
     border-top: 1px solid #E7E7E7;
     position: fixed;
+    z-index: 20
   }
   .mint-tab-item{
     color:#525252;

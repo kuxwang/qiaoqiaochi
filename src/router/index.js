@@ -20,12 +20,13 @@ const QrCode = r => require.ensure([], () => r(require('../view/QrCode.vue')), '
  * @param r
  */
 const distribution = r => require.ensure([], () => r(require('../view/distributionCenter.vue')), 'distribution')
+const UserInfo= r => require.ensure([], () => r(require('../components/VipCenter/UserInfo.vue')), 'distribution')
 
 /**
  * 测试模块
  * @constructor
  */
-const test = r => require.ensure([], () => r(require('../test/test.vue')), 'test')
+// const test = r => require.ensure([], () => r(require('../test/test.vue')), 'test')
 
 export default new Router({
   // mode: 'history',
@@ -53,7 +54,14 @@ export default new Router({
         {
           path: '/vipCenter',
           name: 'vipCenter',
-          component: VipCenter
+          component: VipCenter,
+          children:[
+            {
+              path:'/vipCenter/userinfo',
+              name:'userinfo',
+              component:UserInfo
+            }
+          ]
         },
         {
           path: '/qrCode',
@@ -62,17 +70,17 @@ export default new Router({
         },
       ]
     },
-    {
-      path: '/test',
-      name: 'test',
-      component: test,
-      children: [
-        {
-          path: '/distribution',
-          name: 'distribution',
-          component: distribution
-        }
-      ]
-    },
+    // {
+    //   path: '/test',
+    //   name: 'test',
+    //   component: test,
+    //   children: [
+    //     {
+    //       path: '/distribution',
+    //       name: 'distribution',
+    //       component: distribution
+    //     }
+    //   ]
+    // },
   ]
 })

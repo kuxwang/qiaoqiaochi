@@ -13,7 +13,7 @@
 
 <style>
   #app {
-    /*width: 3.75rem;*/
+    width: 3.75rem;
     height: 100%;
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -41,5 +41,11 @@
 
   li {
     list-style-type: none
+  }
+  .mint-msgbox-confirm{
+    color:#F5751D !important;
+  }
+  .mint-msgbox-message{
+    font-size: 0.15rem;
   }
 </style>
