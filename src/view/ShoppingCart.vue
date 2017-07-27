@@ -43,7 +43,7 @@
 		<div class="total_area clearfix" v-show="isShow">
 			<label class="mint-checklist-label fl">
 				<span class="mint-checkbox fl">
-					<input type="checkbox" class="mint-checkbox-input" value="当前值" :checked="isTrue" @click="allCheckBox"> 
+					<input type="checkbox" class="mint-checkbox-input" value="当前值" :checked="isTrue" @click="allCheckBox">
 					<span class="mint-checkbox-core"></span>
 				</span>
 				<span class="mint-checkbox-label">全选</span>
@@ -432,7 +432,7 @@
 	.goods-price{
 		color:#F5751D;
 	}
-	
+
 	.mint-msgbox-confirm{
 		color:#F5751D !important;
 	}

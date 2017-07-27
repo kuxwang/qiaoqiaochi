@@ -74,10 +74,17 @@
       <div class="mfriend">
         <span class="mint-cell-text">推广订单</span>
       </div>
-      <ul>
+      <ul class="order-list">
         <!--<li class="li1">-->
+        <router-link to="/extension" tag="li">
+          <div class="title">全部</div>
+          <div class="iconfont listicon">&#xe624;</div>
+          <div>
+            <span class="num">1</span><span class="yuan"> 单</span>
+          </div>
+        </router-link>
           <router-link to="/extension" tag="li">
-            <div class="title">下单已付款</div>
+            <div class="title">未结算</div>
             <div class="iconfont listicon">&#xe624;</div>
             <div>
               <span class="num">1</span><span class="yuan"> 单</span>
@@ -86,7 +93,7 @@
         <!--</li>-->
         <router-link to="/extension" tag="li">
         <!--<li class="li2">-->
-          <div class="title">下单已发货</div>
+          <div class="title">已退款</div>
           <div class="iconfont listicon">&#xe8b5;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 单</span>
@@ -95,7 +102,7 @@
         </router-link>
         <router-link to="/extension" tag="li">
         <!--<li class="li3">-->
-          <div class="title">订单已完成</div>
+          <div class="title">已结算</div>
           <div class="iconfont listicon">&#xe619;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 单</span>
@@ -371,5 +378,11 @@
     margin-top: .04rem;
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
+  }
+  .order-list {
+    display: flex;
+  }
+  .order-list li {
+    flex: 1;
   }
 </style>

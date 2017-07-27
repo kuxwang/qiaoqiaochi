@@ -1,20 +1,246 @@
 <template>
 
-    <div class="main">
+    <div class="main order-header">
       <mt-header title="我的订单" fixed>
-        <router-link to="/" slot="left">
+        <router-link to="/" slot="left" >
           <mt-button icon="back"></mt-button>
         </router-link>
       </mt-header>
+      <div class="page-navbar">
+        <mt-navbar class="page-part" v-model="selected">
+          <mt-tab-item id="1">全部</mt-tab-item>
+          <mt-tab-item id="2">待付款</mt-tab-item>
+          <mt-tab-item id="3">待发货</mt-tab-item>
+          <mt-tab-item id="4">待收货</mt-tab-item>
+          <mt-tab-item id="5">已完成</mt-tab-item>
+        </mt-navbar>
+
+        <!--<div>-->
+          <!--<mt-cell class="page-part" title="当前选中">{{ selected }}</mt-cell>-->
+        <!--</div>-->
+
+        <mt-tab-container v-model="selected" class="orderList">
+          <mt-tab-container-item id="1">
+            <ul class="order-list">
+              <li>
+                <div>订单号：xyyzeeeeeeeeeeee</div>
+                <router-link class="good-info" to="/orderd" tag="div">
+                  <img src="../assets/images/xiaotu.jpg" alt="" class="order-small">
+                  <p>竹享</p>
+                  <div class="good-price">
+                    <p>￥99.00</p>
+                    <p>×1</p>
+                  </div>
+                </router-link>
+                <div class="good-pay">
+                  <span>共1件商品 实付：</span> ￥99.00
+                </div>
+                <div class="good-btn">
+                  <button class="cancel-order">
+                    取消订单
+                  </button>
+                  <router-link class="charge-order ocolor" to="" tag="button">
+                    付款
+                  </router-link>
+                </div>
+              </li>
+              <li>
+                <div>订单号：xyyzeeeeeeeeeeee</div>
+                <div class="good-info">
+                  <img src="../assets/images/xiaotu.jpg" alt="" class="order-small">
+                  <p>竹享</p>
+                  <div class="good-price">
+                    <p>￥99.00</p>
+                    <p>×1</p>
+                  </div>
+                </div>
+                <div class="good-pay">
+                  <span>共1件商品 实付：</span> ￥99.00
+                </div>
+                <div class="good-btn">
+                  <button class="cancel-order">
+                    取消订单
+                  </button>
+                  <router-link class="charge-order ocolor" to="" tag="button">
+                    付款
+                  </router-link>
+                </div>
+              </li>
+            </ul>
+          </mt-tab-container-item>
+          <mt-tab-container-item id="2">
+            <ul class="order-list">
+              <li>
+                <div>订单号：xyyzeeeeeeeeeeee</div>
+                <router-link class="good-info" to="/orderd" tag="div">
+                  <img src="../assets/images/xiaotu.jpg" alt="" class="order-small">
+                  <p>竹享</p>
+                  <div class="good-price">
+                    <p>￥99.00</p>
+                    <p>×1</p>
+                  </div>
+                </router-link>
+                <div class="good-pay">
+                  <span>共1件商品 实付：</span> ￥99.00
+                </div>
+                <div class="good-btn">
+                  <button class="cancel-order">
+                    取消订单
+                  </button>
+                  <router-link class="look-logi ocolor" to="/logistics" tag="button">
+                    查看物流
+                  </router-link>
+                  <router-link class="charge-order ocolor" to="" tag="button">
+                    付款
+                  </router-link>
+                </div>
+              </li>
+              <li>
+                <div>订单号：xyyzeeeeeeeeeeee</div>
+                <div class="good-info">
+                  <img src="../assets/images/xiaotu.jpg" alt="" class="order-small">
+                  <p>竹享</p>
+                  <div class="good-price">
+                    <p>￥99.00</p>
+                    <p>×1</p>
+                  </div>
+                </div>
+                <div class="good-pay">
+                  <span>共1件商品 实付：</span> ￥99.00
+                </div>
+                <div class="good-btn">
+                  <button class="cancel-order">
+                    取消订单
+                  </button>
+                  <router-link class="charge-order ocolor" to="" tag="button">
+                    付款
+                  </router-link>
+                </div>
+              </li>
+            </ul>
+          </mt-tab-container-item>
+          <mt-tab-container-item id="3">
+            <ul class="order-list">
+              <li>
+                <div>订单号：xyyzeeeeeeeeeeee</div>
+                <router-link class="good-info" to="/orderd" tag="div">
+                  <img src="../assets/images/xiaotu.jpg" alt="" class="order-small">
+                  <p>竹享</p>
+                  <div class="good-price">
+                    <p>￥99.00</p>
+                    <p>×1</p>
+                  </div>
+                </router-link>
+                <div class="good-pay">
+                  <span>共1件商品 实付：</span> ￥99.00
+                </div>
+                <div class="good-btn">
+                  <button class="cancel-order">
+                    取消订单
+                  </button>
+                  <router-link class="back-money ocolor" to="/drawback" tag="button">
+                    申请退款
+                  </router-link>
+                </div>
+              </li>
+              <li>
+                <div>订单号：xyyzeeeeeeeeeeee</div>
+                <div class="good-info">
+                  <img src="../assets/images/xiaotu.jpg" alt="" class="order-small">
+                  <p>竹享</p>
+                  <div class="good-price">
+                    <p>￥99.00</p>
+                    <p>×1</p>
+                  </div>
+                </div>
+                <div class="good-pay">
+                  <span>共1件商品 实付：</span> ￥99.00
+                </div>
+                <div class="good-btn">
+                  <button class="cancel-order">
+                    取消订单
+                  </button>
+                  <router-link class="charge-order ocolor" to="" tag="button">
+                    付款
+                  </router-link>
+                </div>
+              </li>
+            </ul>
+          </mt-tab-container-item>
+          <mt-tab-container-item id="4">
+            <div class="share-page">
+              <div class="iconfont">
+                &#xe60f;
+              </div>
+              <p>您还没有相关订单</p>
+              <sapn></sapn>
+            </div>
+          </mt-tab-container-item>
+          <mt-tab-container-item id="5">
+            <ul class="order-list">
+              <li>
+                <div>订单号：xyyzeeeeeeeeeeee</div>
+                <router-link class="good-info" to="/orderd" tag="div">
+                  <img src="../assets/images/xiaotu.jpg" alt="" class="order-small">
+                  <p>竹享</p>
+                  <div class="good-price">
+                    <p>￥99.00</p>
+                    <p>×1</p>
+                  </div>
+                </router-link>
+                <div class="good-pay">
+                  <span>共1件商品 实付：</span> ￥99.00
+                </div>
+                <div class="good-btn">
+                  <button class="cancel-order">
+                    取消订单
+                  </button>
+                  <router-link class="look-logi ocolor" to="/logistics" tag="button">
+                    查看物流
+                  </router-link>
+                  <router-link class="charge-order ocolor" to="" tag="button">
+                    付款
+                  </router-link>
+                </div>
+              </li>
+              <li>
+                <div>订单号：xyyzeeeeeeeeeeee</div>
+                <div class="good-info">
+                  <img src="../assets/images/xiaotu.jpg" alt="" class="order-small">
+                  <p>竹享</p>
+                  <div class="good-price">
+                    <p>￥99.00</p>
+                    <p>×1</p>
+                  </div>
+                </div>
+                <div class="good-pay">
+                  <span>共1件商品 实付：</span> ￥99.00
+                </div>
+                <div class="good-btn">
+                  <button class="delete-order">
+                    删除订单
+                  </button>
+                  <router-link class="charge-order ocolor" to="" tag="button">
+                    付款
+                  </router-link>
+                </div>
+              </li>
+            </ul>
+          </mt-tab-container-item>
+        </mt-tab-container>
+      </div>
       <v-tabbar></v-tabbar>
+      <router-view></router-view>
     </div>
 </template>
 <script>
+  import { Navbar,MessageBox } from 'mint-ui';
  	import vTabbar from '../components/common/Tabbar';
 	export default{
+    name: 'page-navbar',
 		data(){
 			return{
-
+        selected: '1'
 			}
 		},
 		components:{
@@ -30,15 +256,109 @@
   .slide-enter-active, .slide-leave-active {
     transition: all 0.3s
   }
-
   .slide-enter, .slide-leave-to {
     transform: translate3d(100%, 0, 0)
   }
+  .main {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /*background: rgba(243,195,151,0.7);*/
+    background:#ececec;
+    font-size:.15rem;
+    overflow:auto
+  }
   .mint-header {
-    background: #fff;
+    background: #f5741c;
     color: #252525;
     border-bottom: 1px solid #e3e3e3;
-    font-size: 0.16rem;
-    height:46px;
+    height:.45rem;
+  }
+  .order-header .mintui-back:before{
+    color:#fff;
+  }
+
+  div.page-navbar{
+    margin-top:.45rem;
+  }
+  .order-list{
+    background: #efefef;
+    padding-top:.01rem
+  }
+  .order-list>li{
+    margin-top:.09rem;
+    background: #fff;
+    text-align: left;
+    padding:0 .12rem;
+  }
+  .order-small{
+    width:.5rem;
+    height:.5rem;
+    border:1px solid #ddd;
+  }
+  .order-list>li>div{
+    padding:.12rem 0;
+    border-bottom:1px solid #ddd;
+  }
+  .good-info{
+    height:.75rem;
+  }
+  .good-info>img{
+    float:left;
+  }
+  .good-info>p{
+    float:left;
+    margin-left:.08rem;
+  }
+  .good-price{
+    float:right
+  }
+  .good-price>p{
+    text-align: right;
+    margin-bottom:.02rem;
+  }
+  .good-pay{
+    text-align: right;
+    color:#666;
+  }
+  .good-pay>span{
+    color:#999;
+  }
+  div.good-btn{
+    text-align: right;
+    padding:.08rem 0 !important;
+    border-bottom:none !important;
+  }
+  .good-btn>button{
+    width:.6rem;
+    height:.3rem;
+    border:none;
+    outline: none;
+    color:#fff;
+    border-radius:.03rem;
+  }
+  .orderList{
+    margin-bottom:.8rem;
+  }
+  .look-logi{
+    width:.9rem !important;
+    margin-right:.05rem;
+  }
+  .delete-order{
+    background:#ddd;
+    color:#777 !important;
+    width:.9rem !important;
+    margin-right:.05rem;
+  }
+  .cancel-order{
+    background:#ddd;
+    color:#777 !important;
+    width:.9rem !important;
+    margin-right:.05rem;
+  }
+  .back-money{
+    width:.9rem !important;
   }
 </style>

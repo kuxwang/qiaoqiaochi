@@ -10,7 +10,7 @@
     </section>
     <section class="top">
     </section>
-    <ul>
+    <ul class="partner-type">
       <router-link to="/partnerlist" tag="li" class="list-type">
         <span class="iconfont">&#xe632;</span>新的粉丝
         <span class="num-right">人</span>
@@ -36,8 +36,7 @@
 
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <ul class="p-list" v-for="n in 5">
-          <li class="p-cell">
+        <router-link to="/partnerlist" tag="div" class="p-cell">
             <div class="logo">
               <img src="../../assets/images/shoppingCart-01.jpg"/>
             </div>
@@ -45,34 +44,30 @@
               <h5>名字</h5>
               <span>123112</span>
             </div>
-          </li>
-        </ul>
+        </router-link>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <ul class="p-list" v-for="n in 13">
-          <li class="p-cell">
-            <div class="logo">
-              <img src="../../assets/images/shoppingCart-01.jpg"/>
-            </div>
-            <div class="info">
-              <h5>名字</h5>
-              <span>123112</span>
-            </div>
-          </li>
-        </ul>
+        <router-link to="/partnerlist" tag="div" class="p-cell">
+          <div class="logo">
+            <img src="../../assets/images/shoppingCart-01.jpg"/>
+          </div>
+          <div class="info">
+            <h5>名字</h5>
+            <span>123112</span>
+          </div>
+        </router-link>
       </mt-tab-container-item>
       <mt-tab-container-item id="3">
-        <ul class="p-list" v-for="n in 7">
-          <li class="p-cell">
-            <div class="logo">
-              <img src="../../assets/images/shoppingCart-01.jpg"/>
-            </div>
-            <div class="info">
-              <h5>名字</h5>
-              <span>123112</span>
-            </div>
-          </li>
-        </ul>
+        <router-link to="/partnerlist" tag="div" class="p-cell">
+          <div class="logo">
+            <img src="../../assets/images/shoppingCart-01.jpg"/>
+          </div>
+          <div class="info">
+            <h5>名字</h5>
+            <span class="userid">123112</span>
+            <span class="usertime">关注</span>
+          </div>
+        </router-link>
       </mt-tab-container-item>
     </mt-tab-container>
     <mt-popup
@@ -364,6 +359,8 @@
     display: flex;
     height: 0.78rem;
     padding: 0.1rem 0.2rem;
+    background-color: #fff;
+    border-top:1px solid #eee;
   }
   .logo {
     flex: 1;
@@ -372,6 +369,7 @@
     flex: 4;
     text-align: left;
     margin-left: 0.1rem;
+    position: relative;
   }
   .info h5 {
     margin: 0.1rem 0;
@@ -392,5 +390,15 @@
     display: inline-block;
     margin-right: 0.05rem;
     font-size: 0.2rem;
+  }
+  .usertime {
+    position: absolute;
+    right: 0;
+    bottom:0.05rem;
+    font-size: 0.12rem;
+  }
+  .partner-type {
+    background: #fff;
+    color: #666;
   }
 </style>

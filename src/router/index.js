@@ -23,12 +23,13 @@ const extension = r => require.ensure([], () => r(require('../components/distrib
 const partner = r => require.ensure([], () => r(require('../components/distribution/partner.vue')), 'vipCvnenter')
 const partnerlist = r => require.ensure([], () => r(require('../components/distribution/partnerlist.vue')), 'vipCvnenter')
 const orderinfo = r => require.ensure([], () => r(require('../components/distribution/orderinfo.vue')), 'vipCvnenter')
-const UserInfo= r => require.ensure([], () => r(require('../components/VipCenter/UserInfo.vue')), 'vipCvnenter')
+const UserInfo= r => require.ensure([], () => r(require('../components/VipCenter/UserInfo.vue')), 'distribution')
 
 /**
  * 商品详情模块
  */
 const goodsDetails = r => require.ensure([], () => r(require('../components/Home/productDetail.vue')), 'goodsDetails')
+const payselect = r => require.ensure([], () => r(require('../components/common/payselect.vue')), 'goodsDetails')
 
 /**
  * 确认订单页面
@@ -79,6 +80,13 @@ export default new Router({
               path: '/extension',
               name: 'extension',
               component: extension,
+              children: [
+                {
+                  path: '/orderinfo',
+                  name: 'orderinfo',
+                  component: orderinfo
+                }
+              ]
             },
             {
               path:'/partner',
@@ -92,11 +100,6 @@ export default new Router({
                 }
               ]
             },
-            {
-              path: '/orderinfo',
-              name: 'orderinfo',
-              component: orderinfo
-            }
           ]
         },
         {
@@ -122,6 +125,12 @@ export default new Router({
               ]
             }
           ]
+
+        },
+        {
+          path:'/payselect',
+          name:'payselect',
+          component:payselect
         }
       ]
     },

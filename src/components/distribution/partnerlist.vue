@@ -34,6 +34,7 @@
     display: flex;
     height: 0.78rem;
     padding: 0.1rem 0.2rem;
+    border-top:1px solid #eee;
   }
   .logo {
     flex: 1;
