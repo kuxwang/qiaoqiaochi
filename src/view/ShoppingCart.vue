@@ -1,15 +1,15 @@
 <template>
 	<div class="content">
-		<mt-header title="购物车">
+		<mt-header title="购物车" class="ocolor header is-fixed">
 		  <router-link to="/" slot="left">
 		    <mt-button icon="back"></mt-button>
 		  </router-link>
 		</mt-header>
-		<ul class="goods-list">
+		<ul class="goods-list" v-show="isShow">
 			<li class="clearfix" v-for="(v,i) in getShCartData">
 				<label class="mint-checklist-label fl">
 					<div class="mint-checkbox">
-						<input type="checkbox" class="mint-checkbox-input" v-model="checkItem" >
+						<input type="checkbox" class="mint-checkbox-input" :checked="v.isChecked" @click="nowChecked($event,v,i)">
 						<span class="mint-checkbox-core"></span>
 					</div>
 				</label>
@@ -29,21 +29,21 @@
 					<div class="goods-num">X<i>{{v.total}}</i></div>
 				</div>
 				<div class="goods-total fr">
-					 <div class="goods-del">
+					 <div class="goods-del" @click="delGoods(v,i)">
                     	<i class="iconfont">&#xe6db;</i>
                     </div>
 					<div class="dt_sku_numm_m clearfix">
-						<span class="dt_subt fl"  @click="reduceTotal(v)">-</span>
+						<span class="dt_subt fl"  @click="reduceTotal(v,i)">-</span>
 						<span class="dt_num fl">{{v.total}}</span>
 						<span class="dt_add" @click="addTotal(v,i)">+</span>
                     </div>
 				</div>
 			</li>
 		</ul>
-		<div class="total_area clearfix">
+		<div class="total_area clearfix" v-show="isShow">
 			<label class="mint-checklist-label fl">
 				<span class="mint-checkbox fl">
-					<input type="checkbox" class="mint-checkbox-input" value="全选" :checked="isTrue" @click="allCheckBox">
+					<input type="checkbox" class="mint-checkbox-input" value="当前值" :checked="isTrue" @click="allCheckBox">
 					<span class="mint-checkbox-core"></span>
 				</span>
 				<span class="mint-checkbox-label">全选</span>
@@ -62,60 +62,156 @@
 						不含运费
 					</h4>
 				</div>
-				<div class="payment-lr fl lr1">
+				<div class="payment-lr fl lr1" @click="goConfirmorder">
 					结算({{defTotal}})
 				</div>
+			</div>
+		</div>
+		<div class="nogoods" v-show="!isShow">
+			<div class="nogoods-tp">
+				<img src="../assets/images/shoppingCart-02.png">
+			</div>
+			<p class="nogoods-mid">
+				没有添加商品 <br>
+				购物车都饿扁了，快去喂它吧!
+			</p>
+			<div class="nogoods-bt">
+				去购物
 			</div>
 		</div>
 	</div>
 </template>
 <script>
-	import { Header,Checklist } from 'mint-ui';
+	import { Header,Checklist,MessageBox } from 'mint-ui';
 	import {setStore, getStore} from '../config/myUtils';
 	export default{
 		data(){
 			return {
 				value1: [],
 				getShCartData:[
-					{goodsid:"4",id:"1111",marketprice:"99.00",maxbuy:"0",optionid:"0",optionstock:"null",optiontitle:"null",productprice:"120.20",specs:"null",stock:"96198",thumb:"http://duoyunjiav2.wshoto.com/attachment/images/2/2017/07/LwQEua5Wt2KBKOalLBou5eaXxauvOo.jpg",title:"植护竹浆本色抽纸10包装",total:"2"
+					{goodsid:"4",id:"1111",marketprice:"10",maxbuy:"0",optionid:"0",optionstock:"null",optiontitle:"null",productprice:"120.20",specs:"null",stock:"96198",thumb:"http://duoyunjiav2.wshoto.com/attachment/images/2/2017/07/LwQEua5Wt2KBKOalLBou5eaXxauvOo.jpg",title:"植护竹浆本色抽纸10包装",total:"1",isChecked:false
 					},
-					{goodsid:"4",id:"2222",marketprice:"88.89",maxbuy:"0",optionid:"0",optionstock:"null",optiontitle:"null",productprice:"150.00",specs:"null",stock:"96198",thumb:"http://duoyunjiav2.wshoto.com/attachment/images/2/2017/07/LwQEua5Wt2KBKOalLBou5eaXxauvOo.jpg",title:"植护竹浆本色抽纸10包装",total:"3"
+					{goodsid:"4",id:"2222",marketprice:"20",maxbuy:"0",optionid:"0",optionstock:"null",optiontitle:"null",productprice:"150.00",specs:"null",stock:"96198",thumb:"http://duoyunjiav2.wshoto.com/attachment/images/2/2017/07/LwQEua5Wt2KBKOalLBou5eaXxauvOo.jpg",title:"植护竹浆本色抽纸10包装",total:"2",isChecked:false
 					},
-					{goodsid:"4",id:"3333",marketprice:"88.00",maxbuy:"0",optionid:"0",optionstock:"null",optiontitle:"null",productprice:"100.00",specs:"null",stock:"96198",thumb:"http://duoyunjiav2.wshoto.com/attachment/images/2/2017/07/LwQEua5Wt2KBKOalLBou5eaXxauvOo.jpg",title:"植护竹浆本色抽纸10包装",total:"4"
+					{goodsid:"4",id:"3333",marketprice:"30",maxbuy:"0",optionid:"0",optionstock:"null",optiontitle:"null",productprice:"100.00",specs:"null",stock:"96198",thumb:"http://duoyunjiav2.wshoto.com/attachment/images/2/2017/07/LwQEua5Wt2KBKOalLBou5eaXxauvOo.jpg",title:"植护竹浆本色抽纸10包装",total:"3",isChecked:false
 					},
-					{goodsid:"4",id:"4444",marketprice:"125.25",maxbuy:"0",optionid:"0",optionstock:"null",optiontitle:"null",productprice:"210.50",specs:"null",stock:"96198",thumb:"http://duoyunjiav2.wshoto.com/attachment/images/2/2017/07/LwQEua5Wt2KBKOalLBou5eaXxauvOo.jpg",title:"植护竹浆本色抽纸10包装",total:"5"
-					}
+					{goodsid:"4",id:"4444",marketprice:"40",maxbuy:"0",optionid:"0",optionstock:"null",optiontitle:"null",productprice:"210.50",specs:"null",stock:"96198",thumb:"http://duoyunjiav2.wshoto.com/attachment/images/2/2017/07/LwQEua5Wt2KBKOalLBou5eaXxauvOo.jpg",title:"植护竹浆本色抽纸10包装",total:"4",isChecked:false
+					},
 				],
-				defPrice:'1442.82',
-				defTotal:'14',
+				defPrice:'0',
+				defTotal:'0',
 				isTrue:false,
-				checkItem:false
+				checkItem:false,
+				isShow:true
 			}
 		},
 		methods:{
-			addTotal(val,i){
-				val.total++;
-				Number(this.defTotal++);
-			},
-			reduceTotal(val){
-				var total=val.total;
-				if(total>1){
-					val.total--;
-					Number(this.defTotal--)
+			addTotal(v,i){//加
+				v.total++;
+				var myTotal=Number(v.total);
+				var myPrice=Number(v.marketprice);
+				var myDefPrice=Number(this.defPrice);
+				if(this.getShCartData[i].isChecked==true){
+					this.defPrice=myDefPrice+myPrice;
+					this.defTotal++
 				}
 			},
-			// selectInp(v,i){
-			// 	console.log(i)
-			// },
-			allCheckBox(){
-				if(this.isTrue==false){
-					this.checkItem=true;
-					this.isTrue=true;
+			reduceTotal(v,i){//减
+				var total=v.total;
+				if(total>1){
+					v.total--;
+					var myTotal=Number(v.total);
+					var myPrice=Number(v.marketprice);
+					var myDefPrice=Number(this.defPrice);
+					if(this.getShCartData[i].isChecked==true){
+						this.defPrice=myDefPrice-myPrice;
+						this.defTotal--
+					}
+				}
+			},
+			allCheckBox(){//全选
+				this.isTrue=!this.isTrue;
+				if(this.isTrue==true){
+					var allPrice=0;
+					var allTotal=0;
+					for(var i=0;i<this.getShCartData.length;i++){
+						this.getShCartData[i].isChecked=true;
+						console.log(this.getShCartData[i])
+						var myTotal=Number(this.getShCartData[i].total);
+						var myPrice=Number(this.getShCartData[i].marketprice);
+						allPrice+=myPrice*myTotal;
+						allTotal+=myTotal
+					}
+					this.defPrice=allPrice;
+					this.defTotal=allTotal;
 				}else{
-					this.checkItem=false;
-					this.isTrue=false;
+					for(var i=0;i<this.getShCartData.length;i++){
+						this.getShCartData[i].isChecked=false;
+					}
+					this.defPrice=0;
+					this.defTotal=0;
+				}
+			},
+			nowChecked(e,v,i){//单选
+				this.getShCartData[i].isChecked=!this.getShCartData[i].isChecked;
+				var myTotal=Number(v.total);
+				var myPrice=Number(v.marketprice);
+				var myDefPrice=Number(this.defPrice);
+				var myDefTotal=Number(this.defTotal);
+				if(this.getShCartData[i].isChecked==true){
+					this.defPrice=myDefPrice+(myTotal*myPrice);
+					this.defTotal=myDefTotal+myTotal;
+				}else{
+					if(myDefPrice-myTotal*myPrice>=0){
+						this.defPrice=myDefPrice-(myTotal*myPrice);
+						this.defTotal=myDefTotal-myTotal;
+					}else{
+						this.defPrice=0;
+					}
 				}
 
+				var arr=[];
+				for(var i=0;i<this.getShCartData.length;i++){
+					if(this.getShCartData[i].isChecked==true){
+						arr.push(this.getShCartData[i].isChecked);
+						if(arr.length==this.getShCartData.length){
+							this.isTrue=true
+						}else{
+							this.isTrue=false
+						}
+					}
+				}
+			},
+			delGoods(v,i){//删除
+				MessageBox({title: '确认要删除此商品吗?',message: '点击确认删除',showCancelButton: true}).then(action => {
+                    if(action=='confirm'){//表示点击了确定
+                    	if(this.getShCartData[i].isChecked==true){
+                    		var myTotal=Number(v.total);
+							var myPrice=Number(v.marketprice);
+							var myDefPrice=Number(this.defPrice);
+							var myDefTotal=Number(this.defTotal);
+                    		if(myDefPrice-myTotal*myPrice>=0){
+								this.defPrice=myDefPrice-(myTotal*myPrice);
+								this.defTotal=myDefTotal-myTotal;
+							}else{
+								this.defPrice=0;
+							}
+                    	}
+                    	console.log(this.getShCartData.length)
+                    	if(this.getShCartData.length==1){
+                    		this.isTrue=false;
+                    		this.isShow=false;
+                    	}
+                    	this.getShCartData.splice(i,1);
+                    }else if(action=='cancel'){//表示点击了取消
+                      // console.log('点击了取消')
+                    }
+                })
+			},
+			goConfirmorder(){//去确认订单
+				if(this.defPrice>0){
+					this.$router.push({name:'confirmorder'})
+				}
 			}
 		},
 		filters:{
@@ -144,11 +240,20 @@
 	@import '../assets/css/fonts/iconfont.css';
   	@import '../assets/css/reset/reset.css';
   	.content{
-  		height: 100%;
+  		position: fixed;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    background: #ececec;
+	    overflow: auto;
+  	}
+  	.header{
+  		color: #fff;
   	}
 	.mint-header{
-		background: #fff;
-		color:#252525;
+		/*background: #fff;*/
+		color:#fff;
 		border-bottom: 1px solid #e3e3e3;
 		font-size:0.16rem;
 	}
@@ -163,12 +268,14 @@
 	    padding: 0rem;
 	}
 	.goods-list{
-		padding-bottom: 0.65rem;
+		padding:0.40rem 0rem 0.65rem 0rem;
 	}
 	.goods-list li{
 		height: 1rem;
 	    padding: 0.1rem;
 	    border-bottom: 0.01rem solid #e3e3e3;
+	    background:#FCFCFC;
+	    margin-top: 0.05rem;
 	}
 	.goods-img{
 		width: 0.8rem;
@@ -222,6 +329,7 @@
 	.mint-checkbox-core{
 		width:0.2rem;
 		height: 0.2rem;
+		background: #FCFCFC;
 	}
 	.mint-checkbox-core::after{
 		border: 0.02rem solid transparent;
@@ -277,39 +385,41 @@
 	    left: 0;
 	    right: 0;
 	    bottom: 0;
-	    height: 0.54rem;
+	    height: 0.50rem;
 	    padding: 0rem 0rem 0rem 0.1rem;
 	    border-top: 1px solid #e7e7e7;
-	    background: #fff;
+	    background: #FCFCFC;
 	}
 	.total_area .mint-checklist-label{
 		padding: 0rem;
 		display: block;
 		width:1rem;
-		height: 0.54rem;
-		line-height:0.54rem;
+		height: 0.50rem;
+		line-height:0.50rem;
 		text-align: left;
 		font-size: 0.28rem
+	}
+	.router-link-active{
+		color:#fff;
 	}
 	.mint-checkbox-label{
 		font-size: 0.14rem;
 		color:#051b28;
 	}
 	.payment-lf{
-		height: 0.54rem;
+		height: 0.50rem;
 	}
 	.payment-lf h3{
 		font-size: 0.14rem;
 		margin-right: 0.1rem;
-		margin-top: 0.05rem;
 	}
 	.payment-lf h4{
 		font-size: 0.14rem;
 	}
 	.payment-lr{
 		width: 1.10rem;
-		height: 0.54rem;
-		line-height: 0.54rem;
+		height: 0.50rem;
+		line-height: 0.50rem;
 		font-size: 0.16rem;
 		background: #F5751D;
 		color:#fff;
@@ -321,6 +431,41 @@
 	}
 	.goods-price{
 		color:#F5751D;
+	}
+
+	.mint-msgbox-confirm{
+		color:#F5751D !important;
+	}
+	.nogoods{
+		margin-top: 1.5rem;
+
+	}
+	.nogoods-tp{
+		width:0.55rem;
+		height: 0.47rem;
+		margin: 0 auto;
+	}
+	.nogoods-tp img{
+		display: block;
+		width: 100%;
+	}
+	.nogoods-mid{
+		margin-top: 0.2rem;
+		font-size: 0.14em;
+    	color: #666;
+	}
+	.nogoods-bt{
+		width: 1.6rem;
+		height: 0.4rem;
+		line-height: 0.4rem;
+		text-align: center;
+		color:#fff;
+		background: #F5751D;
+		margin: 0 auto;
+		margin-top: 0.2rem;
+		font-size: 0.14rem;
+		box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);
+		border-radius: 0.04rem;
 	}
 </style>
 

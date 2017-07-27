@@ -19,7 +19,11 @@ const QrCode = r => require.ensure([], () => r(require('../view/QrCode.vue')), '
  * 分销模块
  * @param r
  */
-const extension = r => require.ensure([], () => r(require('../components/distribution/extension.vue')), 'vipCenter')
+const extension = r => require.ensure([], () => r(require('../components/distribution/extension.vue')), 'vipCvnenter')
+const partner = r => require.ensure([], () => r(require('../components/distribution/partner.vue')), 'vipCvnenter')
+const partnerlist = r => require.ensure([], () => r(require('../components/distribution/partnerlist.vue')), 'vipCvnenter')
+const orderinfo = r => require.ensure([], () => r(require('../components/distribution/orderinfo.vue')), 'vipCvnenter')
+const UserInfo= r => require.ensure([], () => r(require('../components/VipCenter/UserInfo.vue')), 'vipCvnenter')
 
 /**
  * 商品详情模块
@@ -43,9 +47,14 @@ const Drawback = r => require.ensure([], () => r(require('../components/order/dr
 const DrawbackInfo = r => require.ensure([], () => r(require('../components/order/drawbackInfo.vue')), 'DrawbackInfo')
 
 
+/**
+ * 确认订单页面
+*/
+const ConfirmOrder = r => require.ensure([], () => r(require('../components/common/ConfirmOrder.vue')), 'common')
+const DeliveryAddress= r => require.ensure([], () => r(require('../components/common/DeliveryAddress.vue')), 'common')
+const AddAddress= r => require.ensure([], () => r(require('../components/common/AddAddress.vue')), 'common')
+
 export default new Router({
-  // mode: 'history',
-  // base: '/zhczwx/',
   routes: [
     {
       path: '/',
@@ -98,9 +107,31 @@ export default new Router({
           component: VipCenter,
           children:[
             {
+              path:'/vipCenter/userinfo',
+              name:'userinfo',
+              component:UserInfo
+            },
+            {
               path: '/extension',
               name: 'extension',
               component: extension,
+            },
+            {
+              path:'/partner',
+              name:'partner',
+              component:partner,
+              children: [
+                {
+                  path: '/partnerlist',
+                  name: 'partnerlist',
+                  component: partnerlist
+                }
+              ]
+            },
+            {
+              path: '/orderinfo',
+              name: 'orderinfo',
+              component: orderinfo
             }
           ]
         },
@@ -110,8 +141,23 @@ export default new Router({
           component: QrCode
         },
         {
-          path: '/detail',
-          name: 'detail'
+          path:'/confirmorder',
+          name:'confirmorder',
+          component:ConfirmOrder,
+          children:[
+            {
+              path:'/deliveryaddress',
+              name:'deliveryaddress',
+              component:DeliveryAddress,
+              children:[
+                {
+                  path:'/addaddress',
+                  name:'addaddress',
+                  component:AddAddress
+                }
+              ]
+            }
+          ]
         }
       ]
     },
