@@ -148,6 +148,9 @@
 //      'mt-cell': Cell,
 //      'mt-tab-container': TabContainer,
 //      'mt-tab-container-item': TabContainerItem,
+    },
+    methods: {
+
     }
   }
 </script>
@@ -369,6 +372,7 @@
 
 .up .time {
   float: right;
+  font-size: 0.12rem;
 }
 
   .down {
@@ -378,11 +382,13 @@
   }
   .logo {
     flex: 1;
+    padding: 0.1rem 0;
   }
   .info {
     flex: 4;
     text-align: left;
     margin-left: 0.1rem;
+    padding: 0.05rem 0;
   }
   .info h5 {
     margin: 0.05rem 0;
@@ -399,6 +405,7 @@
   }
   .ordertype {
     flex: 3;
+    padding: 0.05rem 0;
   }
   .ordertype span {
     display: block;
@@ -408,6 +415,9 @@
     overflow: hidden;
     overflow-y: scroll;
     height: 4.8rem;
+  }
+  .mint-navbar .mint-tab-item.is-selected {
+    color: #F5751D;
   }
 
 </style>

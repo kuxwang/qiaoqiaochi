@@ -9,7 +9,8 @@ import actions from './actions'
 import getters from './getters'
 Vue.use(Vuex)
 const state = {
-  latitude: '', // 当前位置纬度
+  mobile: '', //手机号
+  orderNumber: '',//当前订单号
 }
 
 export default new Vuex.Store({

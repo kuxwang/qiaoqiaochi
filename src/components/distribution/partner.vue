@@ -11,26 +11,23 @@
     <section class="top">
     </section>
     <ul>
-      <!--<li class="list-type" v-for="item in cell">
-        <span class="iconfont">&#xe612;</span>新的粉丝
-        <span class="num-right">62人</span>
-      </li>-->
-      <router-link to="/partnerlist" tag="li" class="list-type" v-for="item in cell">
-        <span class="iconfont">&#xe612;</span>新的粉丝
-        <span class="num-right">62人</span>
+      <router-link to="/partnerlist" tag="li" class="list-type">
+        <span class="iconfont">&#xe632;</span>新的粉丝
+        <span class="num-right">人</span>
+      </router-link>
+      <router-link to="/partnerlist" tag="li" class="list-type">
+        <span class="iconfont">&#xe628; </span>新成交粉丝
+        <span class="num-right">人</span>
+      </router-link>
+      <router-link to="/partnerlist" tag="li" class="list-type">
+        <span class="iconfont"> &#xe65a;</span>高价值粉丝
+        <span class="num-right">人</span>
+      </router-link>
+      <router-link to="/partnerlist" tag="li" class="list-type">
+        <span class="iconfont">&#xe68e; </span>分享达人
+        <span class="num-right">人</span>
       </router-link>
     </ul>
-    <!--<mt-tab-container v-model="active">-->
-    <!--<mt-tab-container-item id="tab-container1">-->
-    <!--<mt-cell v-for="n in 10" title="tab-container 1"></mt-cell>-->
-    <!--</mt-tab-container-item>-->
-    <!--<mt-tab-container-item id="tab-container2">-->
-    <!--<mt-cell v-for="n in 5" title="tab-container 2"></mt-cell>-->
-    <!--</mt-tab-container-item>-->
-    <!--<mt-tab-container-item id="tab-container3">-->
-    <!--<mt-cell v-for="n in 7" title="tab-container 3"></mt-cell>-->
-    <!--</mt-tab-container-item>-->
-    <!--</mt-tab-container>-->
     <mt-navbar class="page-part" v-model="selected">
       <mt-tab-item id="1">所有伙伴</mt-tab-item>
       <mt-tab-item id="2">已购买伙伴</mt-tab-item>
@@ -39,16 +36,6 @@
 
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <!--<mt-cell v-for="n in 5" :title="'内容 ' + n" />-->
-        <!--<mt-cell v-for="n in 5">-->
-          <!--<div class="logo">-->
-            <!--<img src="../../assets/images/shoppingCart-01.jpg"/>-->
-          <!--</div>-->
-          <!--<div class="info">-->
-            <!--<h5>名字</h5>-->
-            <!--<span>123112</span>-->
-          <!--</div>-->
-        <!--</mt-cell>-->
         <ul class="p-list" v-for="n in 5">
           <li class="p-cell">
             <div class="logo">
@@ -106,7 +93,9 @@
         </ul>
       </div>
     </mt-popup>
-    <router-view></router-view>
+    <transition name="slide">
+      <router-view></router-view>
+    </transition>
   </div>
 
 </template>
@@ -118,7 +107,28 @@
       return {
         active:'tab-container1',
         selected:1,
-        cell: [1,2,3,4],
+        cell: [
+          {
+              icon:'&#xe612',
+              type: '新的粉丝',
+              num:'1'
+          },
+          {
+            icon:'&#xe612',
+            type: '新的粉丝',
+            num:'1'
+          },
+          {
+            icon:'&#xe610;',
+            type: '高价值粉丝',
+            num:'1'
+          },{
+            icon:'&#xe612',
+            type: '分享达人',
+            num:'1'
+          },
+
+        ],
         popupVisible:false
       }
     },
@@ -126,6 +136,11 @@
 //      'mt-cell': Cell,
 //      'mt-tab-container': TabContainer,
 //      'mt-tab-container-item': TabContainerItem,
+    },
+    methods: {
+        open(){
+            this.popupVisible=true
+        }
     }
   }
 </script>
@@ -137,7 +152,7 @@
     font-size: .16rem;
   }
 
-  .main {
+  .main,.main1 {
     position: fixed;
     top: 0;
     left: 0;
@@ -334,7 +349,9 @@
     height: 0.4rem;
     border-bottom: 1px solid #fff;
     text-align: left;
-    padding: 0.1rem 0.2rem;
+    padding: 0.05rem 0.2rem;
+    line-height: 0.3rem;
+
   }
   .list-type .num-right {
     float: right;
@@ -364,11 +381,16 @@
     border-radius: 50%;
   }
   .mint-navbar .mint-tab-item.is-selected {
-    color: red;
+    color: #F5751D;
   }
   .mint-tab-container-item {
     overflow: hidden;
     overflow-y: scroll;
     height: 4.2rem;
+  }
+  .iconfont {
+    display: inline-block;
+    margin-right: 0.05rem;
+    font-size: 0.2rem;
   }
 </style>

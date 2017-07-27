@@ -1,6 +1,16 @@
 <template>
-  <div>
-    <ul class="p-list" v-for="n in 5">
+  <div class="mian1">
+    <section>
+      <mt-header fixed title="列表" class="ocolor">
+        <router-link to="/partner" slot="left">
+          <mt-button icon="back">返回</mt-button>
+        </router-link>
+        <!--<mt-button icon="more" slot="right"></mt-button>-->
+      </mt-header>
+    </section>
+    <section class="top">
+    </section>
+    <ul class="p-list" v-for="n in 1">
       <li class="p-cell">
         <div class="logo">
           <img src="../../assets/images/shoppingCart-01.jpg"/>
@@ -18,6 +28,7 @@
   .p-list {
     display: block;
     background-color: #fff;
+    margin-top: 0.5rem;
   }
   .p-cell {
     display: flex;
@@ -38,5 +49,13 @@
   .logo img {
     width: 100%;
     border-radius: 50%;
+  }
+  .mian1 {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #eee;
+    z-index: 10;
   }
 </style>

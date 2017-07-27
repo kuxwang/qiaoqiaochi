@@ -180,8 +180,8 @@
     font-size: .16rem;
   }
 
-  .main {
-    /*position: fixed;*/
+  .main,.main1 {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
