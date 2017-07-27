@@ -2,7 +2,7 @@
   <div class="main">
     <section>
       <mt-header fixed title="推广订单" class="ocolor">
-        <router-link to="/vipCenter" slot="left">
+        <router-link to="/test" slot="left">
           <mt-button icon="back">返回</mt-button>
         </router-link>
         <!--<mt-button icon="more" slot="right"></mt-button>-->
@@ -18,139 +18,31 @@
         <span class="num">130834.09</span><span class="yuan"> 元</span>
       </div>
     </section>
-    <!--<mt-tab-container v-model="active">-->
-      <!--<mt-tab-container-item id="tab-container1">-->
-        <!--<mt-cell v-for="n in 10" title="tab-container 1"></mt-cell>-->
-      <!--</mt-tab-container-item>-->
-      <!--<mt-tab-container-item id="tab-container2">-->
-        <!--<mt-cell v-for="n in 5" title="tab-container 2"></mt-cell>-->
-      <!--</mt-tab-container-item>-->
-      <!--<mt-tab-container-item id="tab-container3">-->
-        <!--<mt-cell v-for="n in 7" title="tab-container 3"></mt-cell>-->
-      <!--</mt-tab-container-item>-->
-    <!--</mt-tab-container>-->
-    <mt-navbar class="page-part" v-model="selected">
-      <mt-tab-item id="1">全部</mt-tab-item>
-      <mt-tab-item id="2">未结算</mt-tab-item>
-      <mt-tab-item id="3">已退款</mt-tab-item>
-      <mt-tab-item id="4">已结算</mt-tab-item>
-    </mt-navbar>
-
-    <mt-tab-container v-model="selected">
-      <mt-tab-container-item id="1">
-        <!--<mt-cell v-for="n in 5" :title="'内容 ' + n" />-->
-        <ul class="p-list" v-for="n in 5">
-          <li class="p-cell">
-            <div class="up">
-              <span>订单编号</span>
-              <span class="time">2017-7-23 32：23：23</span>
-            </div>
-           <div class="down">
-             <div class="logo">
-               <img src="../../assets/images/shoppingCart-01.jpg"/>
-             </div>
-             <div class="info">
-               <h5>名字</h5>
-               <span>123112</span>
-             </div>
-             <div class="ordertype">
-                <span>已发货</span>
-                <span>￥0.36</span>
-             </div>
-           </div>
-          </li>
-        </ul>
+    <mt-tab-container v-model="active">
+      <mt-tab-container-item id="tab-container1">
+        <mt-cell v-for="n in 10" title="tab-container 1"></mt-cell>
       </mt-tab-container-item>
-      <mt-tab-container-item id="2">
-        <ul class="p-list" v-for="n in 5">
-          <li class="p-cell">
-            <div class="up">
-              <span>订单编号</span>
-              <span class="time">2017-7-23 32：23：23</span>
-            </div>
-            <div class="down">
-              <div class="logo">
-                <img src="../../assets/images/shoppingCart-01.jpg"/>
-              </div>
-              <div class="info">
-                <h5>名字</h5>
-                <span>123112</span>
-              </div>
-              <div class="ordertype">
-                <span>已发货</span>
-                <span>￥0.36</span>
-              </div>
-            </div>
-          </li>
-        </ul>
+      <mt-tab-container-item id="tab-container2">
+        <mt-cell v-for="n in 5" title="tab-container 2"></mt-cell>
       </mt-tab-container-item>
-      <mt-tab-container-item id="3">
-        <ul class="p-list" v-for="n in 5">
-          <li class="p-cell">
-            <div class="up">
-              <span>订单编号</span>
-              <span class="time">2017-7-23 32：23：23</span>
-            </div>
-            <div class="down">
-              <div class="logo">
-                <img src="../../assets/images/shoppingCart-01.jpg"/>
-              </div>
-              <div class="info">
-                <h5>名字</h5>
-                <span>123112</span>
-              </div>
-              <div class="ordertype">
-                <span>已发货</span>
-                <span>￥0.36</span>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </mt-tab-container-item>
-      <mt-tab-container-item id="4">
-        <ul class="p-list" v-for="n in 5">
-          <li class="p-cell">
-            <div class="up">
-              <span>订单编号</span>
-              <span class="time">2017-7-23 32：23：23</span>
-            </div>
-            <div class="down">
-              <div class="logo">
-                <img src="../../assets/images/shoppingCart-01.jpg"/>
-              </div>
-              <div class="info">
-                <h5>名字</h5>
-                <span>123112</span>
-              </div>
-              <div class="ordertype">
-                <span>已发货</span>
-                <span>￥0.36</span>
-              </div>
-            </div>
-          </li>
-        </ul>
+      <mt-tab-container-item id="tab-container3">
+        <mt-cell v-for="n in 7" title="tab-container 3"></mt-cell>
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
 </template>
 <script>
-  import MtCell from "../../../node_modules/mint-ui/packages/cell/src/cell";
 //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
   export default{
     data () {
       return {
-        active:'tab-container1',
-        selected:1
+        active:'tab-container1'
       }
     },
     components: {
-      MtCell
 //      'mt-cell': Cell,
 //      'mt-tab-container': TabContainer,
 //      'mt-tab-container-item': TabContainerItem,
-    },
-    methods: {
-
     }
   }
 </script>
@@ -355,69 +247,4 @@
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
   }
-  .p-list {
-    display: block;
-    background-color: #fff;
-  }
-  .p-cell {
-    display: flex;
-    flex-direction: column;
-    ;
-    padding: 0.1rem 0.2rem;
-  }
-  .up {
-    flex: 1;
-    text-align: left;
-  }
-
-.up .time {
-  float: right;
-  font-size: 0.12rem;
-}
-
-  .down {
-    flex: 3.5;
-    height: 0.68rem;
-    display: flex;
-  }
-  .logo {
-    flex: 1;
-    padding: 0.1rem 0;
-  }
-  .info {
-    flex: 4;
-    text-align: left;
-    margin-left: 0.1rem;
-    padding: 0.05rem 0;
-  }
-  .info h5 {
-    margin: 0.05rem 0;
-  }
-  .info span {
-    color: #000;
-    font-size: 0.14rem;
-  }
-  .logo img {
-    width: 100%;
-    border-radius: 50%;
-    vertical-align: middle;
-    display: block;
-  }
-  .ordertype {
-    flex: 3;
-    padding: 0.05rem 0;
-  }
-  .ordertype span {
-    display: block;
-    text-align: right;
-  }
-  .mint-tab-container-item {
-    overflow: hidden;
-    overflow-y: scroll;
-    height: 4.8rem;
-  }
-  .mint-navbar .mint-tab-item.is-selected {
-    color: #F5751D;
-  }
-
 </style>

@@ -13,7 +13,7 @@
 
 <style>
   #app {
-    width: 3.75rem;
+    /*width: 3.75rem;*/
     height: 100%;
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -43,13 +43,6 @@
     list-style-type: none
   }
 
-  /*yellowStar*/
-  .mint-msgbox-confirm{
-    color:#F5751D !important;
-  }
-  .mint-msgbox-message{
-    font-size: 0.15rem;
-  }
   .slide-enter-active, .slide-leave-active {
     transition: all 0.3s
   }
@@ -57,16 +50,21 @@
   .slide-enter, .slide-leave-to {
     transform: translate3d(100%, 0, 0)
   }
-  .myCityPopup .picker-item{
-    font-size: 0.16rem;
+  /*我的订单navbar字体设置*/
+  .page-navbar .mint-tab-item-label{
+    font-size: .15rem;
+    line-height: .06rem;
   }
-  /*.cityPopup{
-    height: 2.90rem;
-  }*/
-  .myBirthPicker .picker-item{
-     font-size: 0.16rem;
+  .mint-navbar .mint-tab-item.is-selected{
+    border-bottom: 2px solid #F5751D;
+    color: #F5751D;
+    font-size:.15rem;
   }
-  .mint-datetime-action{
-    color:#F5751D;
+  .order-header .mintui-back:before{
+    color:#fff;
   }
+  .order-header .mint-header-title{
+    color:#fff;
+  }
+  /*订单详情页*/
 </style>

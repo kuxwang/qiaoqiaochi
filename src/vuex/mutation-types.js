@@ -1,4 +1,2 @@
 // export const RECORD_ADDRESS = 'RECORD_ADDRESS'
 
-export const MOBILE = 'MOBILE'
-export const ORDERNUM = 'ORDERNUM'

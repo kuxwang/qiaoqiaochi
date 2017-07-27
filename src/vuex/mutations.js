@@ -1,6 +1,5 @@
 import {
-  MOBILE,
-  ORDERNUM
+  RECORD_ADDRESS,
 }
   from
     './mutation-types.js'
@@ -13,11 +12,4 @@ export default {
   //   state.position = position
   //   setStore('position', state.position)
   // },
-  [MOBILE] (state, mobile) {
-    state.mobile = mobile
-    setStore('mobile', mobile.mobile)
-  },
-  [ORDERNUM] (state, data) {
-    state.orderNum = data
-  }
 }
