@@ -24,7 +24,8 @@
           <span>塑料</span>
         </div>
       </div>
-      <i class="iconfont right">&#xe649;</i>
+      <!-- <i class="iconfont right" @click="goUserInfo">&#xe649;</i> -->
+      <router-link class="iconfont right" :to="{name:'userinfo'}" tag="i">&#xe649;</router-link>
     </section>
     <section class="top">
       <div class="top_1">
@@ -41,56 +42,73 @@
         <span class="mint-cell-text">我的伙伴</span>
       </div>
       <ul>
-        <li class="li1">
+        <router-link to="/partner" tag="li">
+        <!--<li class="li1">-->
           <div class="title">所有伙伴</div>
           <div class="iconfont listicon">&#xe646;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 人</span>
           </div>
-        </li>
-        <li class="li2">
+        <!--</li>-->
+        </router-link>
+        <router-link to="/partner" tag="li">
+        <!--<li class="li2">-->
           <div class="title">已购买伙伴</div>
           <div class="iconfont listicon">&#xe600;</div>
           <div>
             <span class="num">10</span><span class="yuan"> 人</span>
           </div>
-        </li>
-        <li class="li3">
+        <!--</li>-->
+        </router-link>
+        <router-link to="/partner" tag="li">
+        <!--<li class="li3">-->
           <div class="title">未购买伙伴</div>
           <div class="iconfont listicon">&#xe60d;</div>
           <div>
             <span class="num">100</span><span class="yuan"> 人</span>
           </div>
-        </li>
+        <!--</li>-->
+        </router-link>
       </ul>
 
       <div class="mfriend">
         <span class="mint-cell-text">推广订单</span>
       </div>
-      <ul>
+      <ul class="order-list">
         <!--<li class="li1">-->
+        <router-link to="/extension" tag="li">
+          <div class="title">全部</div>
+          <div class="iconfont listicon">&#xe624;</div>
+          <div>
+            <span class="num">1</span><span class="yuan"> 单</span>
+          </div>
+        </router-link>
           <router-link to="/extension" tag="li">
-            <div class="title">下单已付款</div>
+            <div class="title">未结算</div>
             <div class="iconfont listicon">&#xe624;</div>
             <div>
               <span class="num">1</span><span class="yuan"> 单</span>
             </div>
           </router-link>
         <!--</li>-->
-        <li class="li2">
-          <div class="title">下单已发货</div>
+        <router-link to="/extension" tag="li">
+        <!--<li class="li2">-->
+          <div class="title">已退款</div>
           <div class="iconfont listicon">&#xe8b5;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 单</span>
           </div>
-        </li>
-        <li class="li3">
-          <div class="title">订单已完成</div>
+        <!--</li>-->
+        </router-link>
+        <router-link to="/extension" tag="li">
+        <!--<li class="li3">-->
+          <div class="title">已结算</div>
           <div class="iconfont listicon">&#xe619;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 单</span>
           </div>
-        </li>
+        <!--</li>-->
+        </router-link>
       </ul>
 
       <div class="mfriend">
@@ -141,10 +159,13 @@
         </li>
       </ul>
     </section>
-    <transition name="slide">
+   <!--  <transition name="slide">
+      <router-view></router-view>
+    </transition> -->
+    <v-tabbar></v-tabbar>
+    <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight" >
       <router-view></router-view>
     </transition>
-    <v-tabbar></v-tabbar>
   </div>
 </template>
 <script>
@@ -166,8 +187,8 @@
     font-size: .16rem;
   }
 
-  .main {
-    /*position: fixed;*/
+  .main,.main1 {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -357,5 +378,11 @@
     margin-top: .04rem;
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
+  }
+  .order-list {
+    display: flex;
+  }
+  .order-list li {
+    flex: 1;
   }
 </style>

@@ -1,63 +1,42 @@
 <template>
   <div class="main">
     <section>
-      <mt-header fixed title="推广订单" class="ocolor">
+      <mt-header fixed title="我的伙伴" class="ocolor">
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back">返回</mt-button>
         </router-link>
         <!--<mt-button icon="more" slot="right"></mt-button>-->
       </mt-header>
     </section>
-    <transition name="slide">
-      <router-view></router-view>
-    </transition>
     <section class="top">
-      <div class="top_1" >
-        <span class="title">累计奖励{{selected}}(元)</span>
-        <span class="num">58229.63</span><span class="yuan"> 元</span>
-      </div>
-      <div>
-        <span class="title">推广销售(元)</span>
-        <span class="num">130834.09</span><span class="yuan"> </span>
-      </div>
     </section>
-
+    <ul>
+      <router-link to="/partnerlist" tag="li" class="list-type">
+        <span class="iconfont">&#xe632;</span>新的粉丝
+        <span class="num-right">人</span>
+      </router-link>
+      <router-link to="/partnerlist" tag="li" class="list-type">
+        <span class="iconfont">&#xe628; </span>新成交粉丝
+        <span class="num-right">人</span>
+      </router-link>
+      <router-link to="/partnerlist" tag="li" class="list-type">
+        <span class="iconfont"> &#xe65a;</span>高价值粉丝
+        <span class="num-right">人</span>
+      </router-link>
+      <router-link to="/partnerlist" tag="li" class="list-type">
+        <span class="iconfont">&#xe68e; </span>分享达人
+        <span class="num-right">人</span>
+      </router-link>
+    </ul>
     <mt-navbar class="page-part" v-model="selected">
-      <mt-tab-item id="1">全部</mt-tab-item>
-      <mt-tab-item id="2">未结算</mt-tab-item>
-      <mt-tab-item id="3">已退款</mt-tab-item>
-      <mt-tab-item id="4">已结算</mt-tab-item>
+      <mt-tab-item id="1">所有伙伴</mt-tab-item>
+      <mt-tab-item id="2">已购买伙伴</mt-tab-item>
+      <mt-tab-item id="3">未购买伙伴</mt-tab-item>
     </mt-navbar>
 
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-          <router-link to="/orderinfo" tag="div" class="p-cell" v-for="n in 5">
-            <div class="up">
-              <span>订单编号</span>
-              <span class="time">2017-7-23 32：23：23</span>
-            </div>
-            <div class="down">
-              <div class="logo">
-                <img src="../../assets/images/shoppingCart-01.jpg"/>
-              </div>
-              <div class="info">
-                <h5>名字</h5>
-                <span>123112</span>
-              </div>
-              <div class="ordertype">
-                <span>已发货</span>
-                <span>￥0.36</span>
-              </div>
-            </div>
-          </router-link>
-      </mt-tab-container-item>
-      <mt-tab-container-item id="2">
-        <router-link to="/orderinfo" tag="div" class="p-cell"  v-for="n in 10">
-          <div class="up">
-            <span>订单编号</span>
-            <span class="time">2017-7-23 32：23：23</span>
-          </div>
-          <div class="down">
+        <router-link to="/partnerlist" tag="div" class="p-cell">
             <div class="logo">
               <img src="../../assets/images/shoppingCart-01.jpg"/>
             </div>
@@ -65,79 +44,98 @@
               <h5>名字</h5>
               <span>123112</span>
             </div>
-            <div class="ordertype">
-              <span>已发货</span>
-              <span>￥0.36</span>
-            </div>
+        </router-link>
+      </mt-tab-container-item>
+      <mt-tab-container-item id="2">
+        <router-link to="/partnerlist" tag="div" class="p-cell">
+          <div class="logo">
+            <img src="../../assets/images/shoppingCart-01.jpg"/>
+          </div>
+          <div class="info">
+            <h5>名字</h5>
+            <span>123112</span>
           </div>
         </router-link>
       </mt-tab-container-item>
       <mt-tab-container-item id="3">
-        <router-link to="/orderinfo" tag="div" class="p-cell"  v-for="n in 3">
-          <div class="up">
-            <span>订单编号</span>
-            <span class="time">2017-7-23 32：23：23</span>
+        <router-link to="/partnerlist" tag="div" class="p-cell">
+          <div class="logo">
+            <img src="../../assets/images/shoppingCart-01.jpg"/>
           </div>
-          <div class="down">
-            <div class="logo">
-              <img src="../../assets/images/shoppingCart-01.jpg"/>
-            </div>
-            <div class="info">
-              <h5>名字</h5>
-              <span>123112</span>
-            </div>
-            <div class="ordertype">
-              <span>已发货</span>
-              <span>￥0.36</span>
-            </div>
-          </div>
-        </router-link>
-      </mt-tab-container-item>
-      <mt-tab-container-item id="4">
-        <router-link to="/orderinfo" tag="div" class="p-cell"  v-for="n in 6">
-          <div class="up">
-            <span>订单编号</span>
-            <span class="time">2017-7-23 32：23：23</span>
-          </div>
-          <div class="down">
-            <div class="logo">
-              <img src="../../assets/images/shoppingCart-01.jpg"/>
-            </div>
-            <div class="info">
-              <h5>名字</h5>
-              <span>123112</span>
-            </div>
-            <div class="ordertype">
-              <span>已发货</span>
-              <span>￥0.36</span>
-            </div>
+          <div class="info">
+            <h5>名字</h5>
+            <span class="userid">123112</span>
+            <span class="usertime">关注</span>
           </div>
         </router-link>
       </mt-tab-container-item>
     </mt-tab-container>
-
+    <mt-popup
+      v-model="popupVisible"
+      popup-transition="popup-fade">
+      <div>
+        <div class="pop-logo">
+          <img src="../../assets/images/shoppingCart-01.jpg"/>
+          <span>名字</span>
+          <span>ID</span>
+        </div>
+        <ul class="pop-info">
+          <li>粉丝：</li>
+          <li>关注方式</li>
+          <li>消费金额</li>
+          <li>微信号</li>
+          <li></li>
+        </ul>
+      </div>
+    </mt-popup>
+    <transition name="slide">
+      <router-view></router-view>
+    </transition>
   </div>
 
 </template>
 <script>
-  import MtCell from "../../../node_modules/mint-ui/packages/cell/src/cell";
-//  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
+  import {Popup, Picker} from 'mint-ui';
+  //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
   export default{
     data () {
       return {
         active:'tab-container1',
-        selected:1
+        selected:1,
+        cell: [
+          {
+              icon:'&#xe612',
+              type: '新的粉丝',
+              num:'1'
+          },
+          {
+            icon:'&#xe612',
+            type: '新的粉丝',
+            num:'1'
+          },
+          {
+            icon:'&#xe610;',
+            type: '高价值粉丝',
+            num:'1'
+          },{
+            icon:'&#xe612',
+            type: '分享达人',
+            num:'1'
+          },
+
+        ],
+        popupVisible:false
       }
     },
     components: {
-
-
+//      'mt-cell': Cell,
+//      'mt-tab-container': TabContainer,
+//      'mt-tab-container-item': TabContainerItem,
     },
     methods: {
-
-    },
-    credted(){
-      this.selected=2
+        open(){
+            this.popupVisible=true
+        }
     }
   }
 </script>
@@ -149,7 +147,7 @@
     font-size: .16rem;
   }
 
-  .main {
+  .main,.main1 {
     position: fixed;
     top: 0;
     left: 0;
@@ -215,7 +213,7 @@
   }
 
   .top {
-    height: .64rem;
+    height: 0rem;
     /*background: #fff;*/
     margin-top:.4rem;
     background: rgb(244, 127, 47);
@@ -342,78 +340,61 @@
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
   }
+  .list-type {
+    height: 0.4rem;
+    border-bottom: 1px solid #fff;
+    text-align: left;
+    padding: 0.05rem 0.2rem;
+    line-height: 0.3rem;
+
+  }
+  .list-type .num-right {
+    float: right;
+  }
   .p-list {
     display: block;
     background-color: #fff;
-
   }
   .p-cell {
     display: flex;
-    flex-direction: column;
-    ;
-    padding:  0;
-    margin-top: 0.05rem;
+    height: 0.78rem;
+    padding: 0.1rem 0.2rem;
     background-color: #fff;
     border-top:1px solid #eee;
   }
-  .up {
-    flex: 1;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-    padding: 0 0.1rem;
-  }
-
-.up .time {
-  float: right;
-  font-size: 0.12rem;
-
-}
-
-  .down {
-    flex: 3;
-    height: 0.68rem;
-    display: flex;
-    padding: 0 0.1rem;
-  }
   .logo {
     flex: 1;
-    padding: 0.1rem 0;
   }
   .info {
     flex: 4;
     text-align: left;
     margin-left: 0.1rem;
-    padding: 0.05rem 0;
+    position: relative;
   }
   .info h5 {
-    margin: 0.05rem 0;
-  }
-  .info span {
-    color: #000;
-    font-size: 0.14rem;
+    margin: 0.1rem 0;
   }
   .logo img {
     width: 100%;
     border-radius: 50%;
-    vertical-align: middle;
-    display: block;
   }
-  .ordertype {
-    flex: 3;
-    padding: 0.05rem 0;
-  }
-  .ordertype span {
-    display: block;
-    text-align: right;
+  .mint-navbar .mint-tab-item.is-selected {
+    color: #F5751D;
   }
   .mint-tab-container-item {
     overflow: hidden;
     overflow-y: scroll;
-    height: 4.8rem;
+    height: 4.2rem;
   }
-  .mint-navbar .mint-tab-item.is-selected {
-    color: #F5751D;
-    font-weight: 00;
+  .iconfont {
+    display: inline-block;
+    margin-right: 0.05rem;
+    font-size: 0.2rem;
   }
-
+  .usertime {
+    position: absolute;
+    right: 0;
+    bottom:0.05rem;
+    font-size: 0.12rem;
+  }
 </style>
