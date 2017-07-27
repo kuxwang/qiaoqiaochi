@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+// const  = r => require.ensure([], () => r(require('../components/index/alertLogin.vue')), 'alertLogin')
+//Home
+import Home from '../view/Home.vue'
 // import App from '../App'
 Vue.use(Router)
 
@@ -7,9 +10,7 @@ Vue.use(Router)
  * index模块
  */
 const app = r => require.ensure([], () => r(require('../App.vue')), 'app')
-// const  = r => require.ensure([], () => r(require('../components/index/alertLogin.vue')), 'alertLogin')
-//Home
-import Home from '../view/Home.vue'
+
 const Order = r => require.ensure([], () => r(require('../view/Order.vue')), 'Order')
 const ShoppingCart = r => require.ensure([], () => r(require('../view/ShoppingCart.vue')), 'ShoppingCart')
 const VipCenter = r => require.ensure([], () => r(require('../view/distributionCenter.vue')), 'VipCenter')
