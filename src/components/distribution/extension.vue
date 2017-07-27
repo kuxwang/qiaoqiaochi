@@ -96,7 +96,7 @@
                 <img src="../../assets/images/shoppingCart-01.jpg"/>
               </div>
               <div class="info">
-                <h5>名字</h5>
+                <h5>名字11</h5>
                 <span>123112</span>
               </div>
               <div class="ordertype">
