@@ -69,16 +69,163 @@
             </ul>
           </mt-tab-container-item>
           <mt-tab-container-item id="2">
-            <!--<mt-cell v-for="n in 4" :title="'测试 ' + n" />-->
+            <ul class="order-list">
+              <li>
+                <div>订单号：xyyzeeeeeeeeeeee</div>
+                <router-link class="good-info" to="/orderd" tag="div">
+                  <img src="../assets/images/xiaotu.jpg" alt="" class="order-small">
+                  <p>竹享</p>
+                  <div class="good-price">
+                    <p>￥99.00</p>
+                    <p>×1</p>
+                  </div>
+                </router-link>
+                <div class="good-pay">
+                  <span>共1件商品 实付：</span> ￥99.00
+                </div>
+                <div class="good-btn">
+                  <button class="cancel-order">
+                    取消订单
+                  </button>
+                  <router-link class="look-logi ocolor" to="/logistics" tag="button">
+                    查看物流
+                  </router-link>
+                  <router-link class="charge-order ocolor" to="" tag="button">
+                    付款
+                  </router-link>
+                </div>
+              </li>
+              <li>
+                <div>订单号：xyyzeeeeeeeeeeee</div>
+                <div class="good-info">
+                  <img src="../assets/images/xiaotu.jpg" alt="" class="order-small">
+                  <p>竹享</p>
+                  <div class="good-price">
+                    <p>￥99.00</p>
+                    <p>×1</p>
+                  </div>
+                </div>
+                <div class="good-pay">
+                  <span>共1件商品 实付：</span> ￥99.00
+                </div>
+                <div class="good-btn">
+                  <button class="cancel-order">
+                    取消订单
+                  </button>
+                  <router-link class="charge-order ocolor" to="" tag="button">
+                    付款
+                  </router-link>
+                </div>
+              </li>
+            </ul>
           </mt-tab-container-item>
           <mt-tab-container-item id="3">
-            <!--<mt-cell v-for="n in 6" :title="'选项 ' + n" />-->
+            <ul class="order-list">
+              <li>
+                <div>订单号：xyyzeeeeeeeeeeee</div>
+                <router-link class="good-info" to="/orderd" tag="div">
+                  <img src="../assets/images/xiaotu.jpg" alt="" class="order-small">
+                  <p>竹享</p>
+                  <div class="good-price">
+                    <p>￥99.00</p>
+                    <p>×1</p>
+                  </div>
+                </router-link>
+                <div class="good-pay">
+                  <span>共1件商品 实付：</span> ￥99.00
+                </div>
+                <div class="good-btn">
+                  <button class="cancel-order">
+                    取消订单
+                  </button>
+                  <router-link class="back-money ocolor" to="/drawback" tag="button">
+                    申请退款
+                  </router-link>
+                </div>
+              </li>
+              <li>
+                <div>订单号：xyyzeeeeeeeeeeee</div>
+                <div class="good-info">
+                  <img src="../assets/images/xiaotu.jpg" alt="" class="order-small">
+                  <p>竹享</p>
+                  <div class="good-price">
+                    <p>￥99.00</p>
+                    <p>×1</p>
+                  </div>
+                </div>
+                <div class="good-pay">
+                  <span>共1件商品 实付：</span> ￥99.00
+                </div>
+                <div class="good-btn">
+                  <button class="cancel-order">
+                    取消订单
+                  </button>
+                  <router-link class="charge-order ocolor" to="" tag="button">
+                    付款
+                  </router-link>
+                </div>
+              </li>
+            </ul>
           </mt-tab-container-item>
           <mt-tab-container-item id="4">
-            <!--<mt-cell v-for="n in 6" :title="'选项 ' + n" />-->
+            <div class="share-page">
+              <div class="iconfont">
+                &#xe60f;
+              </div>
+              <p>您还没有相关订单</p>
+              <sapn></sapn>
+            </div>
           </mt-tab-container-item>
           <mt-tab-container-item id="5">
-            <!--<mt-cell v-for="n in 6" :title="'选项 ' + n" />-->
+            <ul class="order-list">
+              <li>
+                <div>订单号：xyyzeeeeeeeeeeee</div>
+                <router-link class="good-info" to="/orderd" tag="div">
+                  <img src="../assets/images/xiaotu.jpg" alt="" class="order-small">
+                  <p>竹享</p>
+                  <div class="good-price">
+                    <p>￥99.00</p>
+                    <p>×1</p>
+                  </div>
+                </router-link>
+                <div class="good-pay">
+                  <span>共1件商品 实付：</span> ￥99.00
+                </div>
+                <div class="good-btn">
+                  <button class="cancel-order">
+                    取消订单
+                  </button>
+                  <router-link class="look-logi ocolor" to="/logistics" tag="button">
+                    查看物流
+                  </router-link>
+                  <router-link class="charge-order ocolor" to="" tag="button">
+                    付款
+                  </router-link>
+                </div>
+              </li>
+              <li>
+                <div>订单号：xyyzeeeeeeeeeeee</div>
+                <div class="good-info">
+                  <img src="../assets/images/xiaotu.jpg" alt="" class="order-small">
+                  <p>竹享</p>
+                  <div class="good-price">
+                    <p>￥99.00</p>
+                    <p>×1</p>
+                  </div>
+                </div>
+                <div class="good-pay">
+                  <span>共1件商品 实付：</span> ￥99.00
+                </div>
+                <div class="good-btn">
+                  <button class="delete-order">
+                    删除订单
+                  </button>
+                  <router-link class="charge-order ocolor" to="" tag="button">
+                    付款
+                  </router-link>
+                </div>
+              </li>
+            </ul>
           </mt-tab-container-item>
         </mt-tab-container>
       </div>
@@ -195,10 +342,23 @@
   .orderList{
     margin-bottom:.8rem;
   }
+  .look-logi{
+    width:.9rem !important;
+    margin-right:.05rem;
+  }
+  .delete-order{
+    background:#ddd;
+    color:#777 !important;
+    width:.9rem !important;
+    margin-right:.05rem;
+  }
   .cancel-order{
     background:#ddd;
     color:#777 !important;
     width:.9rem !important;
     margin-right:.05rem;
+  }
+  .back-money{
+    width:.9rem !important;
   }
 </style>
