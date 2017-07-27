@@ -62,7 +62,7 @@
 						不含运费
 					</h4>
 				</div>
-				<div class="payment-lr fl lr1">
+				<div class="payment-lr fl lr1" @click="goConfirmorder">
 					结算({{defTotal}})
 				</div>
 			</div>
@@ -207,6 +207,11 @@
                       // console.log('点击了取消')
                     }
                 })
+			},
+			goConfirmorder(){//去确认订单
+				if(this.defPrice>0){
+					this.$router.push({name:'confirmorder'})
+				}
 			}
 		},
 		filters:{

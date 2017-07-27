@@ -57,4 +57,6 @@ a {
   -ms-text-overflow: ellipsis;
   white-space: nowrap;
 }
+.lr2{overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;}
+.lr3{overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;}
 input[disabled]{background: #fcfcfc}

@@ -23,12 +23,19 @@ const extension = r => require.ensure([], () => r(require('../components/distrib
 const partner = r => require.ensure([], () => r(require('../components/distribution/partner.vue')), 'vipCvnenter')
 const partnerlist = r => require.ensure([], () => r(require('../components/distribution/partnerlist.vue')), 'vipCvnenter')
 const orderinfo = r => require.ensure([], () => r(require('../components/distribution/orderinfo.vue')), 'vipCvnenter')
-const UserInfo= r => require.ensure([], () => r(require('../components/VipCenter/UserInfo.vue')), 'distribution')
+const UserInfo= r => require.ensure([], () => r(require('../components/VipCenter/UserInfo.vue')), 'vipCvnenter')
 
 /**
  * 商品详情模块
  */
 const goodsDetails = r => require.ensure([], () => r(require('../components/Home/productDetail.vue')), 'goodsDetails')
+
+/**
+ * 确认订单页面
+*/
+const ConfirmOrder = r => require.ensure([], () => r(require('../components/common/ConfirmOrder.vue')), 'common')
+const DeliveryAddress= r => require.ensure([], () => r(require('../components/common/DeliveryAddress.vue')), 'common')
+const AddAddress= r => require.ensure([], () => r(require('../components/common/AddAddress.vue')), 'common')
 
 export default new Router({
   routes: [
@@ -85,7 +92,6 @@ export default new Router({
                 }
               ]
             },
-
             {
               path: '/orderinfo',
               name: 'orderinfo',
@@ -99,8 +105,23 @@ export default new Router({
           component: QrCode
         },
         {
-          path: '/detail',
-          name: 'detail'
+          path:'/confirmorder',
+          name:'confirmorder',
+          component:ConfirmOrder,
+          children:[
+            {
+              path:'/deliveryaddress',
+              name:'deliveryaddress',
+              component:DeliveryAddress,
+              children:[
+                {
+                  path:'/addaddress',
+                  name:'addaddress',
+                  component:AddAddress
+                }
+              ]
+            }
+          ]
         }
       ]
     },

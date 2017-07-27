@@ -77,16 +77,6 @@
 	      </div>
 	    </mt-popup>
 	     <!-- 出生日期 -->
-	    <!-- <mt-popup v-model="mypopup2" position="bottom">
-	      <div class="userpopup">
-	        <div class="userpopup-tp clearfix">
-	          <span class="fl userpopup-lf" @click="birthCancel">取消</span>
-	          选择出生日期
-	          <span class="fr userpopup-lr" @click="birthConfirm">确定</span>
-	        </div>
-	       <mt-picker :slots="slots2"  @change="birthValuesChange" class="myBirthPopup"></mt-picker>
-	      </div>
-	    </mt-popup> -->
 	     <mt-datetime-picker
 	      ref="picker1"
 	      type="date"
@@ -117,12 +107,12 @@
 				mypopup1:false,
 				mypopup2:false,
 				slots: slots,
-        visibleItemCount:5,
-    		address: '',
-    		temp_addr:'',
-    		value1:null,
-        startDate: new Date('1960'),
-        endDate: new Date()
+		        visibleItemCount:5,
+		    	address: '',
+		    	temp_addr:'',
+		    	value1:null,
+		        startDate: new Date('1960'),
+		        endDate: new Date()
 			}
 		},
 		methods:{
@@ -154,42 +144,43 @@
 		          }
 		        });
 		    },
-	    cityValuesChange(picker, values) {
-	        // 防止没有省份时报错
-	        if (values[0]) {
-	          this.slots[1].values = address.filter((item, index) => {
-	            if (item.apid === values[0].aid) {
-	              return item;
-	            }
-	          });
-	        }
-	        // 防止没有市时报错
-	        if (values[1]) {
-	          this.slots[2].values = address.filter((item, index) => {
-	            if (item.apid === values[1].aid) {
-	              return item;
-	            }
-	          });
-	        }
-	        // 防止没有区时报错
-	        if (values[2]) {
-	          // 这里可以指定地址符，此处以空格进行连接
-	          this.temp_addr = values[0].aname + ' ' + values[1].aname + ' ' + values[2].aname;
-	        }
-	    },
-	    setbirth(){//出生日期显示
-	    	this.mypopup2=true;
-	    },
-	    open(picker) {
-	        this.$refs[picker].open();
-	    },
-	    handleChange(value) {
-	    	console.log(value)
-	    }
+	    	cityValuesChange(picker, values) {
+		        // 防止没有省份时报错
+		        if (values[0]) {
+		          this.slots[1].values = address.filter((item, index) => {
+		            if (item.apid === values[0].aid) {
+		              return item;
+		            }
+		          });
+		        }
+		        // 防止没有市时报错
+		        if (values[1]) {
+		          this.slots[2].values = address.filter((item, index) => {
+		            if (item.apid === values[1].aid) {
+		              return item;
+		            }
+		          });
+		        }
+		        // 防止没有区时报错
+		        if (values[2]) {
+		          // 这里可以指定地址符，此处以空格进行连接
+		          this.temp_addr = values[0].aname + ' ' + values[1].aname + ' ' + values[2].aname;
+		        }
+		    },
+		    setbirth(){//出生日期显示
+		    	this.mypopup2=true;
+		    },
+		    open(picker) {
+		        this.$refs[picker].open();
+		    },
+		    handleChange(value) {
+		    	console.log(value)
+		    }
 		},
 		mounted() {
 	      this.initAddress()
 	    }
+
 	}
 </script>
 <style scoped>
