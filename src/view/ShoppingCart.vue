@@ -181,7 +181,6 @@
 						}
 					}
 				}
-				
 			},
 			delGoods(v,i){//删除
 				MessageBox({title: '确认要删除此商品吗?',message: '点击确认删除',showCancelButton: true}).then(action => {
@@ -210,7 +209,7 @@
                 })
 			}
 		},
-		filters:{  
+		filters:{
 			getIntNmb:function(val){
 				val=Number(val).toFixed(2);
 				var numIndex=val.indexOf('.');

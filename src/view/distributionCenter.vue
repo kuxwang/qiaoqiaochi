@@ -1,13 +1,13 @@
 <template>
   <div class="main">
-    <section>
-      <mt-header fixed title="会员中心" class="ocolor">
-        <router-link to="/test" slot="left">
-          <mt-button icon="back">返回</mt-button>
-        </router-link>
-        <mt-button icon="more" slot="right"></mt-button>
-      </mt-header>
-    </section>
+    <!--<section>-->
+      <!--<mt-header fixed title="会员中心" class="ocolor">-->
+        <!--<router-link to="/test" slot="left">-->
+          <!--<mt-button icon="back">返回</mt-button>-->
+        <!--</router-link>-->
+        <!--<mt-button icon="more" slot="right"></mt-button>-->
+      <!--</mt-header>-->
+    <!--</section>-->
     <section class="avatar">
       <div class="icon"></div>
       <div class="message">
@@ -42,54 +42,66 @@
         <span class="mint-cell-text">我的伙伴</span>
       </div>
       <ul>
-        <li class="li1">
+        <router-link to="/partner" tag="li">
+        <!--<li class="li1">-->
           <div class="title">所有伙伴</div>
           <div class="iconfont listicon">&#xe646;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 人</span>
           </div>
-        </li>
-        <li class="li2">
+        <!--</li>-->
+        </router-link>
+        <router-link to="/partner" tag="li">
+        <!--<li class="li2">-->
           <div class="title">已购买伙伴</div>
           <div class="iconfont listicon">&#xe600;</div>
           <div>
             <span class="num">10</span><span class="yuan"> 人</span>
           </div>
-        </li>
-        <li class="li3">
+        <!--</li>-->
+        </router-link>
+        <router-link to="/partner" tag="li">
+        <!--<li class="li3">-->
           <div class="title">未购买伙伴</div>
           <div class="iconfont listicon">&#xe60d;</div>
           <div>
             <span class="num">100</span><span class="yuan"> 人</span>
           </div>
-        </li>
+        <!--</li>-->
+        </router-link>
       </ul>
 
       <div class="mfriend">
         <span class="mint-cell-text">推广订单</span>
       </div>
       <ul>
-        <li class="li1">
-          <div class="title">下单已付款</div>
-          <div class="iconfont listicon">&#xe624;</div>
-          <div>
-            <span class="num">1</span><span class="yuan"> 单</span>
-          </div>
-        </li>
-        <li class="li2">
+        <!--<li class="li1">-->
+          <router-link to="/extension" tag="li">
+            <div class="title">下单已付款</div>
+            <div class="iconfont listicon">&#xe624;</div>
+            <div>
+              <span class="num">1</span><span class="yuan"> 单</span>
+            </div>
+          </router-link>
+        <!--</li>-->
+        <router-link to="/extension" tag="li">
+        <!--<li class="li2">-->
           <div class="title">下单已发货</div>
           <div class="iconfont listicon">&#xe8b5;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 单</span>
           </div>
-        </li>
-        <li class="li3">
+        <!--</li>-->
+        </router-link>
+        <router-link to="/extension" tag="li">
+        <!--<li class="li3">-->
           <div class="title">订单已完成</div>
           <div class="iconfont listicon">&#xe619;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 单</span>
           </div>
-        </li>
+        <!--</li>-->
+        </router-link>
       </ul>
 
       <div class="mfriend">
@@ -140,8 +152,11 @@
         </li>
       </ul>
     </section>
+   <!--  <transition name="slide">
+      <router-view></router-view>
+    </transition> -->
     <v-tabbar></v-tabbar>
-    <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight" mode="out-in">
+    <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight" >
       <router-view></router-view>
     </transition>
   </div>
@@ -166,7 +181,7 @@
   }
 
   .main {
-    position: fixed;
+    /*position: fixed;*/
     top: 0;
     left: 0;
     width: 100%;
@@ -179,7 +194,7 @@
     position: relative;
     top: 0;
     left: 0;
-    margin-top: .4rem;
+    /*margin-top: .4rem;*/
     height: 1rem;
     padding: .15rem;
     color: #fff;
@@ -286,7 +301,7 @@
   }
 
   .content .mfriend {
-    margin-top: .1rem;
+    margin-top: .05rem;
     text-align: left;
     color: rgba(0, 0, 0, .7);
     background-color: #fff;
@@ -297,9 +312,9 @@
   .content ul {
     /*margin-top: .1rem;*/
     height: .90rem;
-    -webkit-box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
-    -moz-box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
-    box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
+    -webkit-box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
+    -moz-box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
+    box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
   }
 
   .content .tuiguang {

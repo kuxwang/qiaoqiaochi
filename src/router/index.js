@@ -19,18 +19,17 @@ const QrCode = r => require.ensure([], () => r(require('../view/QrCode.vue')), '
  * 分销模块
  * @param r
  */
-const distribution = r => require.ensure([], () => r(require('../view/distributionCenter.vue')), 'distribution')
+const extension = r => require.ensure([], () => r(require('../components/distribution/extension.vue')), 'vipCvnenter')
+const partner = r => require.ensure([], () => r(require('../components/distribution/partner.vue')), 'vipCvnenter')
+const partnerlist = r => require.ensure([], () => r(require('../components/distribution/partnerlist.vue')), 'vipCvnenter')
 const UserInfo= r => require.ensure([], () => r(require('../components/VipCenter/UserInfo.vue')), 'distribution')
 
 /**
- * 测试模块
- * @constructor
+ * 商品详情模块
  */
-// const test = r => require.ensure([], () => r(require('../test/test.vue')), 'test')
+const goodsDetails = r => require.ensure([], () => r(require('../components/Home/productDetail.vue')), 'goodsDetails')
 
 export default new Router({
-  // mode: 'history',
-  // base: '/zhczwx/',
   routes: [
     {
       path: '/',
@@ -39,7 +38,14 @@ export default new Router({
         {
           path: '',
           name: 'home',
-          component: Home
+          component: Home,
+          children: [
+            {
+              path: '/details',
+              name: 'details',
+              component: goodsDetails,
+            }
+          ]
         },
         {
           path: '/order',
@@ -60,6 +66,23 @@ export default new Router({
               path:'/vipCenter/userinfo',
               name:'userinfo',
               component:UserInfo
+            },
+            {
+              path: '/extension',
+              name: 'extension',
+              component: extension,
+            },
+            {
+              path:'/partner',
+              name:'partner',
+              component:partner,
+              children: [
+                {
+                  path: '/partnerlist',
+                  name: 'partnerlist',
+                  component: partnerlist
+                }
+              ]
             }
           ]
         },
@@ -68,6 +91,10 @@ export default new Router({
           name: 'qrCode',
           component: QrCode
         },
+        {
+          path: '/detail',
+          name: 'detail'
+        }
       ]
     },
     // {
