@@ -42,6 +42,8 @@
   li {
     list-style-type: none
   }
+
+  /*yellowStar*/
   .mint-msgbox-confirm{
     color:#F5751D !important;
   }
@@ -54,5 +56,17 @@
 
   .slide-enter, .slide-leave-to {
     transform: translate3d(100%, 0, 0)
+  }
+  .myCityPopup .picker-item{
+    font-size: 0.16rem;
+  }
+  /*.cityPopup{
+    height: 2.90rem;
+  }*/
+  .myBirthPicker .picker-item{
+     font-size: 0.16rem;
+  }
+  .mint-datetime-action{
+    color:#F5751D;
   }
 </style>

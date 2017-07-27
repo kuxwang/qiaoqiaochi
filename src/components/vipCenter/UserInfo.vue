@@ -1,303 +1,195 @@
 <template>
  	<div class="main">
  		<section>
-	      <mt-header fixed title="我的资料" class="ocolor">
+	      <mt-header fixed title="我的资料" class="ocolor header">
 	        <router-link to="/vipCenter" slot="left">
 	          <mt-button icon="back" >返回</mt-button>
 	        </router-link>
 	      </mt-header>
 	    </section>
 	    <ul class="userinfo-list">
-	    	 <li class="userinfo-header" style="position: relative">
+	    	 <li class="userinfo-header">
 	          <span class="fl">
 	            头像
 	          </span>
-	          <span class="fr" style="display: block">
+	          <span class="fr">
 	            <img id="img_upload" :src="imgurl"/>
 	          </span>
 	          <input id="file_head" type="file" @change="getMyImg($event)"/>
 	        </li>
-	        <li @click="getMyName">
-	          <span class="fl">
-	            姓名
+	         <li>
+	          <span class="userinfo-list-lf fl">
+	            昵称
 	          </span>
-	          <span class="fr">
-	            请填写
-	          </span>
+	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请输入昵称" v-model="myNc" @blur="testNc(myNc)">
 	        </li>
-	        <li @click="getMyWx">
-	          <span class="fl">
+	        <li>
+	          <span class="userinfo-list-lf fl">
+	            手机号码
+	          </span>
+	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请输入手机号码" v-model="myPhone" disabled>
+	        </li>
+	        <li>
+	          <span class="userinfo-list-lf fl">
 	            微信号
 	          </span>
-	          <span class="fr">
-	            请填写
-	          </span>
+	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请输入微信号" v-model="myWx" @blur="testWx(myWx)">
 	        </li>
-	        <li @click="getMyZfb">
-	          <span class="fl">
-	            支付宝账号
+	        <li>
+	          <span class="userinfo-list-lf fl">
+	            支付宝-账
 	          </span>
-	          <span class="fr">
-	            请填写
-	          </span>
+	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请输入支付宝账号" v-model="myZfb" @blur="testZfb(myZfb)">
 	        </li>
-	        <li @click="getMyRelName">
-	          <span class="fl">
-	            真实姓名
+	        <li>
+	          <span class="userinfo-list-lf fl">
+	            支付宝-名
 	          </span>
-	          <span class="fr">
-	            请填写
-	          </span>
+	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请输入支付宝真实姓名" v-model="myZfbName" @blur="testZfbName(myZfbName)" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')">
 	        </li>
-	        <li @click="getCity">
-	          <span class="fl">
+	        <li @click="setCity">
+	          <span class="userinfo-list-lf fl">
 	            所在城市
 	          </span>
-	          <span class="fr">
-	            请填写
-	          </span>
+	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择所在城市" v-model="myCity" disabled>
 	        </li>
-	        <li @click="getMyAge">
-	          <span class="fl">
-	            年龄
+	        <li @click="open('picker1')">
+	          <span class="userinfo-list-lf fl">
+	            出生日期
 	          </span>
-	          <span class="fr">
-	            请填写
-	          </span>
+	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择出生日期" v-model="myDate" disabled>
 	        </li>
 	    </ul>
-	    <!-- 姓名弹窗 -->
-	    <div class="mark" @click="hideNameMrak" v-show="!mypopup1">
-	    	<div class="msgbox" @click.stop="">
-		        <div class="msgbox-header">
-		          <div class="msgbox-title">
-		            姓名
-		          </div>
-		        </div>
-		        <div class="msgbox-input">
-		          <input placeholder="" type="text" v-model="userName" autofocus="autofocus" placeholder="请输入您的姓名"
-		                 onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')">
-		        </div>
-		        <div class="msgbox-btns">
-		          <button class="msgbox-btn msgbox-cancel " @click="msgboxNameCancel">取消</button>
-		          <button class="msgbox-btn msgbox-confirm " @click="msgboxNameConfirm">确定</button>
-		        </div>
-	    	</div>
-    	</div>
-    	<!-- 微信弹窗 -->
-	    <div class="mark" @click="hideWxMrak" v-show="!mypopup2">
-	    	<div class="msgbox" @click.stop="">
-		        <div class="msgbox-header">
-		          <div class="msgbox-title">
-		            微信号
-		          </div>
-		        </div>
-		        <div class="msgbox-input">
-		          <input placeholder="" type="text" v-model="userWx" autofocus="autofocus" placeholder="请输入您的微信号"
-		                 onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')">
-		        </div>
-		        <div class="msgbox-btns">
-		          <button class="msgbox-btn msgbox-cancel " @click="msgboxWxCancel">取消</button>
-		          <button class="msgbox-btn msgbox-confirm " @click="msgboxWxConfirm">确定</button>
-		        </div>
-	    	</div>
-    	</div>
-    	<!-- 支付宝账号弹窗 -->
-	    <div class="mark" @click="hideZfbMrak" v-show="!mypopup3">
-	    	<div class="msgbox" @click.stop="">
-		        <div class="msgbox-header">
-		          <div class="msgbox-title">
-		            支付宝账号
-		          </div>
-		        </div>
-		        <div class="msgbox-input">
-		          <input placeholder="" type="text" v-model="userZfb" autofocus="autofocus" placeholder="请输入您的支付宝账号"
-		                 onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')">
-		        </div>
-		        <div class="msgbox-btns">
-		          <button class="msgbox-btn msgbox-cancel " @click="msgboxZfbCancel">取消</button>
-		          <button class="msgbox-btn msgbox-confirm " @click="msgboxZfbConfirm">确定</button>
-		        </div>
-	    	</div>
-    	</div>
-    	<!-- 真实姓名弹窗 -->
-	    <div class="mark" @click="hideRelMrak" v-show="!mypopup4">
-	    	<div class="msgbox" @click.stop="">
-		        <div class="msgbox-header">
-		          <div class="msgbox-title">
-		            真实姓名
-		          </div>
-		        </div>
-		        <div class="msgbox-input">
-		          <input placeholder="" type="text" v-model="userRelName" autofocus="autofocus" placeholder="请输入您的真实姓名"
-		                 onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')">
-		        </div>
-		        <div class="msgbox-btns">
-		          <button class="msgbox-btn msgbox-cancel " @click="msgboxRelCancel">取消</button>
-		          <button class="msgbox-btn msgbox-confirm " @click="msgboxRelConfirm">确定</button>
-		        </div>
-	    	</div>
-    	</div>
-    	<!-- 年龄 -->
-	    <mt-popup v-model="mypopup5" position="bottom">
-	      <div class="usersex">
-	        <div class="usersex-tp clearfix">
-	          <span class="fl usersex-lf" @click="ageCancel">取消</span>
-	          选择出生年份
-	          <span class="fr usersex-lr" @click="ageConfirm">确定</span>
-	        </div>
-	        <!-- <mt-picker :slots="ageSlots" @change="ageValuesChange"></mt-picker> -->
-	      </div>
-	    </mt-popup>
+	    <div class="postUserInfo">
+	    	 <button class="postUserInfo-item">
+	    		提交
+	    	</button>
+	    </div>
 	    <!-- 所在城市 -->
-	    <mt-popup v-model="mypopup6" position="bottom">
-	      <div class="usersex">
-	        <div class="usersex-tp clearfix">
-	          <span class="fl usersex-lf" @click="cityCancel">取消</span>
+	    <mt-popup v-model="mypopup1" position="bottom" class="cityPopup">
+	      <div class="userpopup">
+	        <div class="userpopup-tp clearfix">
+	          <span class="fl userpopup-lf" @click="cityCancel">取消</span>
 	          选择所在城市
-	          <span class="fr usersex-lr" @click="cityConfirm">确定</span>
+	          <span class="fr userpopup-lr" @click="cityConfirm">确定</span>
 	        </div>
-	        <mt-picker :slots="citySlots" @change="cityValuesChange"></mt-picker>
+	       <mt-picker :slots="slots" value-key="aname" @change="cityValuesChange" class="myCityPopup"></mt-picker>
 	      </div>
 	    </mt-popup>
+	     <!-- 出生日期 -->
+	    <!-- <mt-popup v-model="mypopup2" position="bottom">
+	      <div class="userpopup">
+	        <div class="userpopup-tp clearfix">
+	          <span class="fl userpopup-lf" @click="birthCancel">取消</span>
+	          选择出生日期
+	          <span class="fr userpopup-lr" @click="birthConfirm">确定</span>
+	        </div>
+	       <mt-picker :slots="slots2"  @change="birthValuesChange" class="myBirthPopup"></mt-picker>
+	      </div>
+	    </mt-popup> -->
+	     <mt-datetime-picker
+	      ref="picker1"
+	      type="date"
+	      v-model="value1"
+	      year-format="{value} 年"
+	      month-format="{value} 月"
+	      date-format="{value} 日"
+        :startDate="startDate"
+        :endDate="endDate"
+	      @confirm="handleChange" class="myBirthPicker">
+	    </mt-datetime-picker>
  	</div>
 </template>
 <script>
-	import {Toast, Picker, Popup} from 'mint-ui';
+	import {Toast, Picker, Popup, DatetimePicker} from 'mint-ui';
+	import {address, slots} from '../../assets/js/address';
 	export default{
 		data(){
 			return{
-				getUserData:[],
-				imgurl: '',
-				mypopup1: true,
-				mypopup2: true,
-				mypopup3: true,
-				mypopup4: true,
-				mypopup5: false,
-				mypopup6: false,
-				userName:'',
-				userWx:'',
-				userZfb:'',
-				userRelName:'',
-				myAge: '',
+				myNc:'',
+				myPhone:'18395319906',
+				myWx:'',
+				myZfb:'',
+				myZfbName:'',
 				myCity:'',
-				ageSlots: [
-		          {
-		            flex: 1,
-		            values: []
-		          }
-		        ],
-		        citySlots: [
-		          {
-		            flex: 1,
-		            values: []
-		          }
-		        ],
+				myDate:'',
+				imgurl:'',
+				mypopup1:false,
+				mypopup2:false,
+				slots: slots,
+        visibleItemCount:5,
+    		address: '',
+    		temp_addr:'',
+    		value1:null,
+        startDate: new Date('1960'),
+        endDate: new Date()
 			}
 		},
 		methods:{
-			getMyImg(){
+			testNc(val){//昵称
 
 			},
-			getMyName(){//姓名弹窗显示
-		        this.mypopup1 = false;
-		        this.userName = '';
-		    },
-			hideNameMrak(){//姓名弹窗消失
-		        this.mypopup1 = true;
-		    },
-		    msgboxNameConfirm(){//姓名确认按钮
-		        this.mypopup1 = true;
-		        // var reg = /^[\u4E00-\u9FA5]+$/;
-		        // if (reg.test(this.myName)) {
-		        // } else {
-		        //   Toast({
-		        //     message: '姓名不能为空',
-		        //     position: 'middle',
-		        //     duration: 2000
-		        //   });
-		        // }
-		    },
-		    msgboxNameCancel(){//姓名取消按钮
-		    	this.mypopup1 = true;
-		    },
-			getMyWx(){//微信弹窗显示
-				this.mypopup2 = false;
-		        this.userWx = '';
+			testWx(val){//微信号
+				
 			},
-			hideWxMrak(){//微信弹窗消失
-		        this.mypopup2 = true;
-		    },
-		    msgboxWxConfirm(){//微信确认按钮
-		    	this.mypopup2 = true;
-		    },
-		    msgboxWxCancel(){//微信取消按钮
-		    	this.mypopup2 = true;
-		    },
-		    getMyZfb(){//支付宝弹窗显示
-				this.mypopup3 = false;
-		        this.userZfb = '';
+			testZfb(val){//支付宝账号
+				
 			},
-			hideZfbMrak(){//微信弹窗消失
-		        this.mypopup3 = true;
+			testZfbName(val){//支支付宝真实姓名
+			},
+			setCity(){//所在城市显示
+				this.mypopup1=true;
+			},
+			cityConfirm(){//城市确认
+				this.mypopup1=false;
+				console.log(this.temp_addr)
+			},
+			cityCancel(){//城市取消
+				this.mypopup1=false;
+			},
+			initAddress() {//城市初始化
+		        this.slots[0].values = address.filter((item, index) => {
+		          if (item.apid === 0) {
+		            return item;
+		          }
+		        });
 		    },
-		    msgboxZfbConfirm(){//微信确认按钮
-		    	this.mypopup3 = true;
-		    },
-		    msgboxZfbCancel(){//微信取消按钮
-		    	this.mypopup3 = true;
-		    },
-		    getMyRelName(){//真实姓名弹窗显示
-		    	this.mypopup4 = false;
-		        this.userRelName = '';
-		    },
-		    hideRelMrak(){//微信弹窗消失
-		        this.mypopup4 = true;
-		    },
-		    msgboxRelConfirm(){//微信确认按钮
-		    	this.mypopup4 = true;
-		    },
-		    msgboxRelCancel(){//微信取消按钮
-		    	this.mypopup4 = true;
-		    },
-		    getMyAge(){//年龄弹窗显示
-		    	this.mypopup5=true;
-		    },
-		    ageConfirm(){//年龄确认按钮
-		    	this.mypopup5=false;
-		    },
-		    ageCancel(){//年龄取消按钮
-		    	this.mypopup5=false;
-		    },
-		    ageYears(){
-		        // var nowYear = new Date().getFullYear();
-		        // var yearsArr =[];
-		        // for (let i = 1940; i <= nowYear; i++) {
-		        //   yearsArr.push(i)
-		        // }
-		        // yearsArr.sort(function(a,b){return b-a});
-		        // this.ageSlots[0].values = yearsArr;
-		   	},
-		   	ageValuesChange(){//获取当前年龄
-		        // this.myAge = new Date().getFullYear() - Number(values.join(''));
-		        // console.log(myAge)
-		    },
-		    getCity(){//城市弹窗显示
-		    	this.mypopup6=true;
-		    },
-		    cityConfirm(){//城市确认按钮
-		    	this.mypopup6=false;
-		    },
-		    cityCancel(){//城市取消按钮
-		    	this.mypopup6=false;
-		    },
-		    cityValuesChange(){
-
-		    }
+	    cityValuesChange(picker, values) {
+	        // 防止没有省份时报错
+	        if (values[0]) {
+	          this.slots[1].values = address.filter((item, index) => {
+	            if (item.apid === values[0].aid) {
+	              return item;
+	            }
+	          });
+	        }
+	        // 防止没有市时报错
+	        if (values[1]) {
+	          this.slots[2].values = address.filter((item, index) => {
+	            if (item.apid === values[1].aid) {
+	              return item;
+	            }
+	          });
+	        }
+	        // 防止没有区时报错
+	        if (values[2]) {
+	          // 这里可以指定地址符，此处以空格进行连接
+	          this.temp_addr = values[0].aname + ' ' + values[1].aname + ' ' + values[2].aname;
+	        }
+	    },
+	    setbirth(){//出生日期显示
+	    	this.mypopup2=true;
+	    },
+	    open(picker) {
+	        this.$refs[picker].open();
+	    },
+	    handleChange(value) {
+	    	console.log(value)
+	    }
 		},
-		mounted(){
-			// this.ageYears();
-		}
+		mounted() {
+	      this.initAddress()
+	    }
 	}
 </script>
 <style scoped>
@@ -310,40 +202,34 @@
 	    width: 100%;
 	    height: 100%;
 	    background: #ececec;
-	    /*overflow: auto;*/
+	    /*overflow: hidden;*/
 	    z-index: 30
   	}
+  	.header{
+  		font-size: 0.16rem;
+  		height: 0.44rem;
+  	}
   	.userinfo-list{
-  		margin-top: 0.60rem;
+  		margin-top: 0.54rem;
   		overflow: hidden;
   	}
 	.userinfo-list li {
-		padding: 0rem 0.18rem;
+		padding: 0rem 0.10rem;
 	    height: 0.5rem;
 	    line-height: 0.5rem;
-	    background: #fff;
+	    background: #fcfcfc;
 	    border-bottom: 0.01rem solid #F3F4F5;
 	    position: relative;
 	}
-	.userinfo-list li:after {
-	   	content: '';
-	    position: absolute;
-	    width: 0.05rem;
-	    height: 0.09rem;
-	    top: 0.20rem;
-	    right: 0.175rem;
-	    background: url('../../assets/images/userinfo-01.png') no-repeat center center;
-	    background-size: cover;
-	    z-index: 999
+	.userinfo-list li input{
+		background: #fcfcfc;
 	}
 	.userinfo-list li span:nth-child(1) {
-	    font-size: 0.13rem;
-	    color: #666;
+	    font-size: 0.14rem;
+	    color: #333;
 	}
-	.userinfo-list li span:nth-child(2) {
-	    font-size: 0.12rem;
-	    color: #969696;
-	    margin-right: 0.2rem;
+	.userinfo-header{
+		margin-bottom: 0.1rem
 	}
 	.userinfo-header span:nth-child(2) {
 	    width: 0.25rem;
@@ -351,6 +237,8 @@
 	     background: url('../../assets/images/userinfo-02.png') no-repeat center center;
 	    background-size: cover;
 	    margin-top: 0.13rem;
+	    font-size: 0.12rem;
+	    color: #969696;
 	}
 	#file_head {
 	    display: block;
@@ -366,113 +254,56 @@
 	    visibility: hidden;
 	    border-radius: 50%;
   	}
-  	.mark {
-	    position: fixed;
-	    left: 0;
-	    top: 0;
-	    width: 100%;
-	    height: 100%;
-	    background: rgba(0, 0, 0, .5);
-	    z-index: 50;
+  	.userinfo-list-lf{
+  		/*width: 20%;*/
+  		text-align: left;
   	}
-	.msgbox {
-	    width: 3rem;
-	    position: fixed;
-	    top: 50%;
-	    background: #fff;
-	    left: 50%;
-	    margin-left: -1.5rem;
-	    margin-top: -1.27rem;
-	    border-radius: 1.5px;
-	    /*font-size: 16px;*/
-	    -webkit-user-select: none;
-	    overflow: hidden;
-	    -webkit-backface-visibility: hidden;
-	    backface-visibility: hidden;
-	    /*-webkit-animation: fadeIn 1s .2s ease both;*/
-	    /*-moz-animation: bounceIn 1s .2s ease both;*/
+  	.userinfo-list-lr{
+  		height: 100%;
+  		line-height: 100%;
+  		width: 80%;
+  		padding-left:0.1rem;
+  		color:#727272;
+  	}
+  	.postUserInfo{
+  		width:100%;
+  		padding: 0rem 0.1rem;
+  		margin-top: 0.2rem;
+  	}
+  	.postUserInfo-item{
+  		width:100%;
+  		height: 0.45rem;
+  		box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);
+  		background: #F5751D;
+  		color:#fff;
+  		font-size: 0.16rem;
+  		border-radius: 0.04rem;
+  	}
+  	.picker-toolbar .mint-datetime-action {
+   		color: #979696 !important;
+  	}
+  	.mint-popup.mint-popup-bottom {
+    	width: 100%;
+    	background: #fff;
+  	}
+  	.userpopup-tp {
+	    padding: 0.12rem 0.33rem;
+	    font-size: 0.165rem;
+	    color: #2C2C2C;
+	    border-bottom: 0.01rem solid #ddd;
 	}
 
-  .msgbox-header {
-    padding: 0.25rem 0 0;
-    margin-bottom: 0.32rem;
-  }
+	.userpopup-lf {
+	    font-size: 0.135rem;
+	    color: #979696;
+	}
 
-  .msgbox-input {
-    display: block;
-    width: 2rem;
-    margin: 0 auto;
-    margin-bottom: 0.38rem;
-  }
-
-  .msgbox-input input {
-    border-bottom: 1px solid #666;
-    padding: 0.08rem 0rem;
-    width: 100%;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    outline: none;
-    text-align: center;
-    font-size: 0.14rem
-  }
-
-  .msgbox-btns {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    height: 0.5rem;
-    line-height: 0.5rem;
-    border-top: 0.01rem solid #eee;
-  }
-
-  .msgbox-btn {
-    display: block;
-    background-color: #fff;
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    margin: 0;
-    border: 0;
-    font-size: 0.15rem;
-  }
-  .msgbox-cancel {
-    width: 50%;
-    border-right: 1px solid #eee;
-    color: #969696;
-  }
-
-  .msgbox-confirm {
-    color: #FFCB05;
-    width: 50%;
-  }
-
-  .msgbox-title {
-    font-size: 0.165rem;
-    color: #2C2C2C;
-  }
-  .picker-toolbar .mint-datetime-action {
-    color: #979696 !important;
-  }
-
-  .mint-popup.mint-popup-bottom {
-    width: 100%;
-    background: #fff;
-  }
-
-  .usersex-tp {
-    padding: 0.19rem 0.33rem;
-    font-size: 0.165rem;
-    color: #2C2C2C;
-    border-bottom: 0.01rem solid #ddd;
-  }
-
-  .usersex-lf {
-    font-size: 0.135rem;
-    color: #979696;
-  }
-  .usersex-lr{
-  	font-size: 0.135rem;
-    color: #FFCB05;
-  }
+	.userpopup-lr {
+	    font-size: 0.135rem;
+	    color: #F5751D ;
+	}
+	.picker-item{
+		font-size: 0.16rem;
+	}
 </style>
+
