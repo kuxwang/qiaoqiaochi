@@ -10,7 +10,7 @@
     </section>
     <section class="top">
     </section>
-    <ul>
+    <ul class="partner-type">
       <router-link to="/partnerlist" tag="li" class="list-type">
         <span class="iconfont">&#xe632;</span>新的粉丝
         <span class="num-right">人</span>
@@ -396,5 +396,9 @@
     right: 0;
     bottom:0.05rem;
     font-size: 0.12rem;
+  }
+  .partner-type {
+    background: #fff;
+    color: #666;
   }
 </style>

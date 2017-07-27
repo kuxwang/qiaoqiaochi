@@ -157,6 +157,7 @@
     height: 100%;
     background: #ececec;
     overflow: auto;
+
   }
 
   .avatar {
@@ -384,13 +385,16 @@
     text-align: left;
     margin-left: 0.1rem;
     padding: 0.05rem 0;
+    color: #666;
   }
   .info h5 {
     margin: 0.05rem 0;
+    color: #666;
   }
   .info span {
     color: #000;
     font-size: 0.14rem;
+    color: #666;
   }
   .logo img {
     width: 100%;
@@ -401,10 +405,16 @@
   .ordertype {
     flex: 3;
     padding: 0.05rem 0;
+    color: #666;
   }
   .ordertype span {
     display: block;
     text-align: right;
+    font-size: 0.14rem;
+    margin-top: 0.05rem;
+  }
+  .ordertype span:last-child {
+    margin-top: 0.1rem;
   }
   .mint-tab-container-item {
     overflow: hidden;
@@ -413,7 +423,10 @@
   }
   .mint-navbar .mint-tab-item.is-selected {
     color: #F5751D;
-    font-weight: 00;
+
+  }
+  .mint-navbar .mint-tab-item.is-selected {
+    border-bottom:2px solid #F5751D;
   }
 
 </style>

@@ -63,12 +63,12 @@
     z-index: 200;
   }
   .title {
-    height: 0.68rem;
+    height: 0.48rem;
     border-bottom: 1px solid #eee;
     padding: 0.1rem;
     margin-top: 0.5rem;
     text-align: left;
-    line-height: 0.48rem;
+    line-height: 0.28rem;
   }
   .title span {
     float: right;
@@ -77,6 +77,7 @@
   .order-info {
     width: 100%;
     padding: 0 0.1rem;
+    color: #666;
   }
   .order-cell {
     display: flex;
