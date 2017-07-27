@@ -9,20 +9,16 @@
       </mt-header>
     </section>
     <section class="top">
-      <!--<div class="top_1">
-        <span class="title">累计奖励(元)</span>
-        <span class="num">58229.63</span><span class="yuan"> 元</span>
-      </div>
-      <div>
-        <span class="title">推广销售(元)</span>
-        <span class="num">130834.09</span><span class="yuan"> 元</span>
-      </div>-->
-
     </section>
     <ul>
-      <li class="list-type" v-for="item in cell">
-        {{item}}
-      </li>
+      <!--<li class="list-type" v-for="item in cell">
+        <span class="iconfont">&#xe612;</span>新的粉丝
+        <span class="num-right">62人</span>
+      </li>-->
+      <router-link to="/partnerlist" tag="li" class="list-type" v-for="item in cell">
+        <span class="iconfont">&#xe612;</span>新的粉丝
+        <span class="num-right">62人</span>
+      </router-link>
     </ul>
     <!--<mt-tab-container v-model="active">-->
     <!--<mt-tab-container-item id="tab-container1">-->
@@ -66,23 +62,64 @@
         </ul>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <mt-cell v-for="n in 4" :title="'测试 ' + n" />
+        <ul class="p-list" v-for="n in 13">
+          <li class="p-cell">
+            <div class="logo">
+              <img src="../../assets/images/shoppingCart-01.jpg"/>
+            </div>
+            <div class="info">
+              <h5>名字</h5>
+              <span>123112</span>
+            </div>
+          </li>
+        </ul>
       </mt-tab-container-item>
       <mt-tab-container-item id="3">
-        <mt-cell v-for="n in 6" :title="'选项 ' + n" />
+        <ul class="p-list" v-for="n in 7">
+          <li class="p-cell">
+            <div class="logo">
+              <img src="../../assets/images/shoppingCart-01.jpg"/>
+            </div>
+            <div class="info">
+              <h5>名字</h5>
+              <span>123112</span>
+            </div>
+          </li>
+        </ul>
       </mt-tab-container-item>
     </mt-tab-container>
+    <mt-popup
+      v-model="popupVisible"
+      popup-transition="popup-fade">
+      <div>
+        <div class="pop-logo">
+          <img src="../../assets/images/shoppingCart-01.jpg"/>
+          <span>名字</span>
+          <span>ID</span>
+        </div>
+        <ul class="pop-info">
+          <li>粉丝：</li>
+          <li>关注方式</li>
+          <li>消费金额</li>
+          <li>微信号</li>
+          <li></li>
+        </ul>
+      </div>
+    </mt-popup>
+    <router-view></router-view>
   </div>
 
 </template>
 <script>
+  import {Popup, Picker} from 'mint-ui';
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
   export default{
     data () {
       return {
         active:'tab-container1',
         selected:1,
-        cell: [1,2,3,4,5,6,7]
+        cell: [1,2,3,4],
+        popupVisible:false
       }
     },
     components: {
@@ -294,9 +331,13 @@
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
   }
   .list-type {
-    height: 0.25rem;
+    height: 0.4rem;
     border-bottom: 1px solid #fff;
-
+    text-align: left;
+    padding: 0.1rem 0.2rem;
+  }
+  .list-type .num-right {
+    float: right;
   }
   .p-list {
     display: block;
@@ -324,5 +365,10 @@
   }
   .mint-navbar .mint-tab-item.is-selected {
     color: red;
+  }
+  .mint-tab-container-item {
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 4.2rem;
   }
 </style>

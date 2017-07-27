@@ -62,13 +62,73 @@
         </ul>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <mt-cell v-for="n in 4" :title="'测试 ' + n" />
+        <ul class="p-list" v-for="n in 5">
+          <li class="p-cell">
+            <div class="up">
+              <span>订单编号</span>
+              <span class="time">2017-7-23 32：23：23</span>
+            </div>
+            <div class="down">
+              <div class="logo">
+                <img src="../../assets/images/shoppingCart-01.jpg"/>
+              </div>
+              <div class="info">
+                <h5>名字</h5>
+                <span>123112</span>
+              </div>
+              <div class="ordertype">
+                <span>已发货</span>
+                <span>￥0.36</span>
+              </div>
+            </div>
+          </li>
+        </ul>
       </mt-tab-container-item>
       <mt-tab-container-item id="3">
-        <mt-cell v-for="n in 6" :title="'选项 ' + n" />
+        <ul class="p-list" v-for="n in 5">
+          <li class="p-cell">
+            <div class="up">
+              <span>订单编号</span>
+              <span class="time">2017-7-23 32：23：23</span>
+            </div>
+            <div class="down">
+              <div class="logo">
+                <img src="../../assets/images/shoppingCart-01.jpg"/>
+              </div>
+              <div class="info">
+                <h5>名字</h5>
+                <span>123112</span>
+              </div>
+              <div class="ordertype">
+                <span>已发货</span>
+                <span>￥0.36</span>
+              </div>
+            </div>
+          </li>
+        </ul>
       </mt-tab-container-item>
       <mt-tab-container-item id="4">
-        <mt-cell v-for="n in 6" :title="'选项 ' + n" />
+        <ul class="p-list" v-for="n in 5">
+          <li class="p-cell">
+            <div class="up">
+              <span>订单编号</span>
+              <span class="time">2017-7-23 32：23：23</span>
+            </div>
+            <div class="down">
+              <div class="logo">
+                <img src="../../assets/images/shoppingCart-01.jpg"/>
+              </div>
+              <div class="info">
+                <h5>名字</h5>
+                <span>123112</span>
+              </div>
+              <div class="ordertype">
+                <span>已发货</span>
+                <span>￥0.36</span>
+              </div>
+            </div>
+          </li>
+        </ul>
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
@@ -313,7 +373,7 @@
 
   .down {
     flex: 3.5;
-    height: 0.78rem;
+    height: 0.68rem;
     display: flex;
   }
   .logo {
@@ -325,11 +385,17 @@
     margin-left: 0.1rem;
   }
   .info h5 {
-    margin: 0.1rem 0;
+    margin: 0.05rem 0;
+  }
+  .info span {
+    color: #000;
+    font-size: 0.14rem;
   }
   .logo img {
     width: 100%;
     border-radius: 50%;
+    vertical-align: middle;
+    display: block;
   }
   .ordertype {
     flex: 3;
@@ -338,4 +404,10 @@
     display: block;
     text-align: right;
   }
+  .mint-tab-container-item {
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 4.8rem;
+  }
+
 </style>

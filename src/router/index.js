@@ -22,6 +22,7 @@ const QrCode = r => require.ensure([], () => r(require('../view/QrCode.vue')), '
 const extension = r => require.ensure([], () => r(require('../components/distribution/extension.vue')), 'vipCvnenter')
 const partner = r => require.ensure([], () => r(require('../components/distribution/partner.vue')), 'vipCvnenter')
 const partnerlist = r => require.ensure([], () => r(require('../components/distribution/partnerlist.vue')), 'vipCvnenter')
+const orderinfo = r => require.ensure([], () => r(require('../components/distribution/orderinfo.vue')), 'vipCvnenter')
 const UserInfo= r => require.ensure([], () => r(require('../components/VipCenter/UserInfo.vue')), 'distribution')
 
 /**
@@ -83,6 +84,12 @@ export default new Router({
                   component: partnerlist
                 }
               ]
+            },
+
+            {
+              path: '/orderinfo',
+              name: 'orderinfo',
+              component: orderinfo
             }
           ]
         },
