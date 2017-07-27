@@ -1,13 +1,14 @@
 <template>
   <div class="main order-detail-header">
     <mt-header title="订单详情" class="ocolor">
-      <router-link to="/order" slot="left">
+      <a @click="goBack" slot="left">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </a>
     </mt-header>
     <div class="buyer-info ocolor">
       <div class="buyer-info-box">
         <div class="iconfont" >
+          &#xe66f;
         </div>
         <ul class="order-state">
           <li>交易完成</li>
@@ -17,6 +18,9 @@
       </div>
     </div>
     <div class="buyer-address">
+      <div class="iconfont" >
+        &#xe621;
+      </div>
       <div class="buyer-address-detail">
         <p>收件人：XXXXX</p>
         江苏省无锡市滨湖区山水科教园
@@ -24,6 +28,7 @@
     </div>
     <div class="product-info-box">
       <div class="pib-header">
+        <span class="iconfont">&#xe6ce;</span>
         朵云家
       </div>
       <router-link class="good-info" to="/details" tag="div">
@@ -41,13 +46,32 @@
         <li>实付费(含运费)：<p>￥99.00</p></li>
       </ul>
     </div>
+    <ul class="trace-info">
+      <li>订单号：<p>WDSFDFGEDEDEDEDE</p></li>
+      <li>交易完成时间：<p>2017-07-27 22:00:00</p></li>
+    </ul>
+    <div class="bottom-box">
+      <router-link to="/drawbackInfo" class="back-money-ing" tag="button">
+        退款申请中
+      </router-link>
+      <button class="delete-order">删除订单</button>
+      <router-link to="/logistics" tag="button" class="ocolor">
+        查看物流
+      </router-link>
+    </div>
+    <router-view></router-view>
   </div>
 </template>
 <script>
   import { Header} from 'mint-ui'
   import PageNavbar from "../../view/Order.vue";
   export default {
-    components: {PageNavbar}
+    components: {PageNavbar},
+    methods:{
+      goBack:function () {
+        this.$router.go(-1)
+      }
+    }
   }
 </script>
 <style scoped>
@@ -75,9 +99,16 @@
     background: rgba(0,0,0,.25);
     position:relative;
   }
+  .buyer-info-box>div.iconfont{
+    position:absolute;
+    left:.05rem;
+    top:.28rem;
+    color:#fff;
+    font-size:.35rem;
+  }
   .order-state{
     position:absolute;
-    left:.7rem;
+    left:.48rem;
     top:.2rem;
   }
   .order-state li{
@@ -93,11 +124,17 @@
     height:.75rem;
     margin-bottom:.15rem;
   }
+  .buyer-address>div.iconfont{
+    position:absolute;
+    font-size:.18rem;
+    left:.12rem;
+    top:.27rem;
+  }
   .buyer-address-detail{
     text-align: left;
     font-size: .14rem;
     position:absolute;
-    left:.4rem;
+    left:.47rem;
   }
   .buyer-address-detail>p{
     margin-bottom:.04rem;
@@ -105,12 +142,16 @@
   .product-info-box{
     background: #fff;
     padding:0 .1rem;
-    height:3rem;
+    height:2.35rem;
+    margin-bottom:.15rem;
   }
   .pib-header{
     text-align: left;
-    padding:.08rem 0;
+    padding:.08rem .05rem;
     border-bottom:1px solid #ddd;
+  }
+  .pib-header>span{
+    margin-right:.05rem;
   }
   .good-info{
     height:.7rem;
@@ -131,7 +172,8 @@
     font-size:.13rem;
   }
   .good-price{
-    float:right
+    float:right;
+    font-size:.13rem;
   }
   .good-price>p{
     text-align: right;
@@ -140,12 +182,57 @@
 .pib-list{
   padding:.2rem 0;
 }
-  .pib-list>li{
-    text-align: left;
-    font-size:.13rem;
-    margin-bottom:.06rem;
+.pib-list>li{
+  text-align: left;
+  font-size:.13rem;
+  margin-bottom:.06rem;
+}
+.pib-list>li>p{
+  float:right;
+}
+.trace-info{
+  background: #fff;
+  padding:.08rem .1rem;
+  padding-bottom:.06rem;
+  font-size: .13rem;
+}
+.trace-info li{
+  text-align: left;
+  margin-bottom:.08rem;
+}
+.trace-info li p{
+  float:right;
+}
+  .bottom-box{
+    height:.6rem;
+    background: #fff;
+    border-top:1px solid #ddd;
+    position:absolute;
+    width:100%;
+    left:0;
+    bottom:0;
   }
-  .pib-list>li>p{
-    float:right;
+  .bottom-box{
+    text-align:right;
+    padding-right:.15rem;
+    padding-top:.1rem;
+  }
+  .bottom-box>button{
+    width:.9rem;
+    height:.4rem;
+    border:none;
+    outline: none;
+    color:#fff;
+    border-radius:.03rem;
+  }
+  .delete-order{
+    background:#ddd;
+    color:#666 !important;
+    width:.9rem !important;
+    margin-right:.05rem;
+  }
+  .back-money-ing{
+    background:#ff771b;
+    margin-right:.05rem;
   }
 </style>

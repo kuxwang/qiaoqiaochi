@@ -1,4 +1,3 @@
-
 <template>
   <transition name="slide">
     <div class="main">

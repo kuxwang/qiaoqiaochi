@@ -29,6 +29,20 @@ const goodsDetails = r => require.ensure([], () => r(require('../components/Home
  * 订单详情
  */
 const orderDetail = r => require.ensure([], () => r(require('../components/order/orderDetail.vue')), 'orderDetail')
+/**
+ * 查看物流
+ */
+const Logistics = r => require.ensure([], () => r(require('../components/order/logistics.vue')), 'Logistics')
+/**
+ * 申请退款
+ */
+const Drawback = r => require.ensure([], () => r(require('../components/order/drawback.vue')), 'Drawback')
+/**
+ * 查看申请退款详情
+ */
+const DrawbackInfo = r => require.ensure([], () => r(require('../components/order/drawbackInfo.vue')), 'DrawbackInfo')
+
+
 export default new Router({
   // mode: 'history',
   // base: '/zhczwx/',
@@ -58,6 +72,18 @@ export default new Router({
               path:'/orderd',
               name:'orderd',
               component:orderDetail
+            },{
+              path:'/logistics',
+              name:'logistics',
+              component:Logistics
+            },{
+              path:'/drawback',
+              name:'drawback',
+              component:Drawback
+            },{
+              path:'/drawbackInfo',
+              name:'drawbackInfo',
+              component:DrawbackInfo
             }
           ]
         },

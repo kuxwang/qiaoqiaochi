@@ -66,5 +66,4 @@
   .order-header .mint-header-title{
     color:#fff;
   }
-  /*订单详情页*/
 </style>
