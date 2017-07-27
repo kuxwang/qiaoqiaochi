@@ -57,3 +57,4 @@ a {
   -ms-text-overflow: ellipsis;
   white-space: nowrap;
 }
+input[disabled]{background: #fcfcfc}
