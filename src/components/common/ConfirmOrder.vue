@@ -25,21 +25,39 @@
       				<i class="iconfont">&#xe6a8;</i>
       				onet凡兔旗舰店
       			</div>
-      			<div class="goodsList-mid clearfix">
-      				<div class="goods-img fl">
-      					<img src="../../assets/images/confirmorder-01.jpg">
-      				</div>
-      				<div class="goods-introduce fl">
-      					韩版男装牛仔外套男修身男士秋季夹克学生外衣大码牛仔衣潮褂上衣
-      				</div>
-      				<div class="goods-unitPrice fr">
-      					<div class="goods-price">
-							¥
-							<span class="goods-intPrice">10</span>
-							<span class="goods-folatPrice">.00</span>
-						</div>
-						<div class="goods-num">X<i>11</i></div>
-      				</div>
+      			<div class="goodsList-mids">
+      				<div class="goodsList-mid clearfix">
+	      				<div class="goods-img fl">
+	      					<img src="../../assets/images/confirmorder-01.jpg">
+	      				</div>
+	      				<div class="goods-introduce fl">
+	      					韩版男装牛仔外套男修身男士秋季夹克学生外衣大码牛仔衣潮褂上衣
+	      				</div>
+	      				<div class="goods-unitPrice fr">
+	      					<div class="goods-price">
+								¥
+								<span class="goods-intPrice">10</span>
+								<span class="goods-folatPrice">.00</span>
+							</div>
+							<div class="goods-num">X<i>11</i></div>
+	      				</div>
+	      			</div>
+	      			<div class="goodsList-mid clearfix">
+	      				<div class="goods-img fl">
+	      					<img src="../../assets/images/confirmorder-01.jpg">
+	      				</div>
+	      				<div class="goods-introduce fl">
+	      					韩版男装牛仔外套男修身男士秋季夹克学生外衣大码牛仔衣潮褂上衣
+	      				</div>
+	      				<div class="goods-unitPrice fr">
+	      					<div class="goods-price">
+								¥
+								<span class="goods-intPrice">10</span>
+								<span class="goods-folatPrice">.00</span>
+							</div>
+							<div class="goods-num">X<i>11</i></div>
+	      				</div>
+	      			</div>
       			</div>
       			<router-link class="deliveryMode deflist" tag="div" :to="{name:'deliverymode'}">
   					<div class="deliveryMode-lf fl">
@@ -54,7 +72,7 @@
   						给卖家留言:
       				</div>
       				<div class="deliveryMode-lr fl">
-      					<input type="text" name="" placeholder="选填:对本次交易的说明(建议填写已和卖家协商一致的内容)">
+      					<input type="text" name="" placeholder="选填:对本次交易的说明)">
       				</div>
       			</div>
       			<div class="goods-total clearfix">
@@ -231,13 +249,12 @@
 		font-size: 0.18rem;
 	}
 	.goodsList-mid{
-		height: 1.1rem;
+		height:0.8rem;
 		padding:0.1rem;
-		background: #F5F5F5;
 	}
 	.goods-img{
-		width:0.92rem;
-		height:0.92rem;
+		width:0.60rem;
+		height:0.60rem;
 	}
 	.goods-img img{
 		display: block;
