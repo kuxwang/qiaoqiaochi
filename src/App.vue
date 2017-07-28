@@ -8,7 +8,6 @@
 <script>
   export default {
     name: 'app',
-
   }
 </script>
 
@@ -27,21 +26,19 @@
 
   /*公共头部*/
   .mint-header {
-    background: #fff;
-    color: #252525;
+    background: #fff !important;
+    color: #252525 !important;
     border-bottom: 1px solid #e3e3e3;
-    font-size: 0.16rem;
-    height:46px;
+    font-size: 0.16rem !important;
+    height:45px !important;
   }
+
   .ocolor {
     background-color: #F5751D !important;
   }
   input {
     outline: medium;
   }
-
-
-
   .clear:after {
     content:'';
     clear: both;
@@ -53,9 +50,7 @@
     /*box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);*/
   }
   li {
-    list-style-type: none;
-
-
+    list-style-type: none
   }
 
   .slide-enter-active, .slide-leave-active {
@@ -75,10 +70,18 @@
     color: #F5751D;
     font-size:.15rem;
   }
-/*  .order-header .mintui-back:before{
+  .order-header .mintui-back:before{
     color:#fff;
   }
   .order-header .mint-header-title{
     color:#fff;
-  }*/
+  }
+
+  /*yellowStar*/
+  .mint-msgbox-confirm{
+    color:#F5751D;
+  }
+  ::-webkit-scrollbar{
+    display:none;
+  }
 </style>

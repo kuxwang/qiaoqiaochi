@@ -1,8 +1,8 @@
 <template>
 	<div class="main">
-      <mt-header fixed title="管理收货地址" class="ocolor header">
+      <mt-header fixed title="管理收货地址">
         <a slot="left" @click="goBack">
-          <mt-button icon="back" >返回</mt-button>
+          <mt-button icon="back" ></mt-button>
         </a>
       </mt-header>
       <ul class="deliveryAddress">
@@ -150,7 +150,7 @@
 	    left: 0;
 	    width: 100%;
 	    height: 100%;
-	    background: #ececec;
+	    background: #efeff4;
 	    overflow: auto;
 	    z-index: 50
   	}
@@ -159,7 +159,7 @@
   		height: 0.44rem;
   	}
   	.deliveryAddress{
-  		margin-top: 0.54rem;
+  		margin-top: 0.55rem;
   		margin-bottom: 0.58rem;
   	}
   	.deliveryAddress li{

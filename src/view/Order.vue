@@ -8,11 +8,11 @@
       </mt-header>
       <div class="page-navbar">
         <mt-navbar class="page-part" v-model="selected">
-          <mt-tab-item id="1">全部</mt-tab-item>
-          <mt-tab-item id="2">待付款</mt-tab-item>
-          <mt-tab-item id="3">待发货</mt-tab-item>
-          <mt-tab-item id="4">待收货</mt-tab-item>
-          <mt-tab-item id="5">已完成</mt-tab-item>
+          <mt-tab-item id="all">全部</mt-tab-item>
+          <mt-tab-item id="will-pay">待付款</mt-tab-item>
+          <mt-tab-item id="will-send">待发货</mt-tab-item>
+          <mt-tab-item id="will-reserve">待收货</mt-tab-item>
+          <mt-tab-item id="done">已完成</mt-tab-item>
         </mt-navbar>
 
         <!--<div>-->
@@ -20,7 +20,7 @@
         <!--</div>-->
 
         <mt-tab-container v-model="selected" class="orderList">
-          <mt-tab-container-item id="1">
+          <mt-tab-container-item id="all">
             <ul class="order-list">
               <li>
                 <div>订单号：xyyzeeeeeeeeeeee</div>
@@ -68,7 +68,7 @@
               </li>
             </ul>
           </mt-tab-container-item>
-          <mt-tab-container-item id="2">
+          <mt-tab-container-item id="will-pay">
             <ul class="order-list">
               <li>
                 <div>订单号：xyyzeeeeeeeeeeee</div>
@@ -119,7 +119,7 @@
               </li>
             </ul>
           </mt-tab-container-item>
-          <mt-tab-container-item id="3">
+          <mt-tab-container-item id="will-send">
             <ul class="order-list">
               <li>
                 <div>订单号：xyyzeeeeeeeeeeee</div>
@@ -135,7 +135,7 @@
                   <span>共1件商品 实付：</span> ￥99.00
                 </div>
                 <div class="good-btn">
-                  <button class="cancel-order">
+                  <button class="cancel-order" @click="fn1">
                     取消订单
                   </button>
                   <router-link class="back-money ocolor" to="/drawback" tag="button">
@@ -167,16 +167,17 @@
               </li>
             </ul>
           </mt-tab-container-item>
-          <mt-tab-container-item id="4">
+          <mt-tab-container-item id="will-reserve">
             <div class="share-page">
               <div class="iconfont">
                 &#xe60f;
               </div>
               <p>您还没有相关订单</p>
-              <sapn></sapn>
+              <p>赶快去购物吧</p>
+              <router-link tag="button" to="/details">再逛逛</router-link>
             </div>
           </mt-tab-container-item>
-          <mt-tab-container-item id="5">
+          <mt-tab-container-item id="done">
             <ul class="order-list">
               <li>
                 <div>订单号：xyyzeeeeeeeeeeee</div>
@@ -240,12 +241,27 @@
     name: 'page-navbar',
 		data(){
 			return{
-        selected: '1'
+        selected: 'all'
 			}
 		},
+    methods:{
+		  fn1:function () {
+        MessageBox({
+          title: '提示',
+          message: '确定执行此操作?',
+          showCancelButton: true
+        }).then(action=>{
+          if(action=='confirm'){
+
+          }else if(action=='cancel'){
+
+          }
+        });
+      }
+    },
 		components:{
 			vTabbar
-		}
+		},
 	}
 </script>
 <style scoped>
@@ -269,6 +285,25 @@
     background:#ececec;
     font-size:.15rem;
     overflow:auto
+  }
+  .share-page{
+    padding:.5rem 1rem;
+    color:#999;
+  }
+  .share-page>div.iconfont{
+    font-size:.7rem;
+  }
+  .share-page>p{
+    font-size:.14rem;
+  }
+  .share-page>button{
+    width:.7rem;
+    height:.35rem;
+    border-radius:.03rem;
+    margin-top:.15rem;
+    background:#ff4f4f;
+    outline:none;
+    color:#ddd;
   }
   .mint-header {
     background: #f5741c;

@@ -1,8 +1,8 @@
 <template>
 	<div class="main">
-      <mt-header fixed title="新增收货地址" class="ocolor header">
+      <mt-header fixed title="新增收货地址">
         <a slot="left" @click="goBack">
-          <mt-button icon="back" >返回</mt-button>
+          <mt-button icon="back" ></mt-button>
         </a>
       </mt-header>
       <ul class="addAddress-list">
@@ -30,7 +30,7 @@
 	      <div class="userpopup">
 	        <div class="userpopup-tp clearfix">
 	          <span class="fl userpopup-lf" @click="cityCancel">取消</span>
-	          选择所在城市
+	          选择地址
 	          <span class="fr userpopup-lr" @click="cityConfirm">确定</span>
 	        </div>
 	       <mt-picker :slots="slots" value-key="aname" @change="cityValuesChange" class="myCityPopup"></mt-picker>
@@ -110,7 +110,7 @@
 	    left: 0;
 	    width: 100%;
 	    height: 100%;
-	    background: #ececec;
+	    background: #efeff4;
 	    overflow: auto;
 	    z-index: 50
   	}

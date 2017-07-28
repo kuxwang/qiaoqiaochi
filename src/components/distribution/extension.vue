@@ -431,7 +431,7 @@
 
   }
   .mint-navbar .mint-tab-item.is-selected {
-    border-bottom:none;
+    border-bottom:2px solid #F5751D;
   }
 
 </style>

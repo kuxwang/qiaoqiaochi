@@ -31,10 +31,19 @@
   }
 </script>
 <style scoped>
-  .goodsList {
-
+  .content{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #efeff4;
+    overflow: auto;
+    z-index: 50
   }
-
+  .goodsList{
+    padding-bottom:0.5rem;
+  }
   .goodsList-itme1 {
     width: 3.75rem;
     height: 2.64rem;
