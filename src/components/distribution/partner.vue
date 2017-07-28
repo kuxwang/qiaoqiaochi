@@ -17,7 +17,7 @@
         <span class="num-right">人</span>
       </router-link>
       <router-link to="/partnerlist" tag="li" class="list-type">
-        <span class="iconfont">&#xe628; </span>新成交粉丝
+        <span class="iconfont">&#xe628; </span>成交粉丝
         <span class="num-right">人</span>
       </router-link>
       <router-link to="/partnerlist" tag="li" class="list-type">
