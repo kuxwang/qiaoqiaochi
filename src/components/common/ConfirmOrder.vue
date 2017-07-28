@@ -30,7 +30,9 @@
 	      				<div class="goods-img fl">
 	      					<img src="../../assets/images/confirmorder-01.jpg">
 	      				</div>
-	      				<div class="goods-introduce fl">
+	      				<div class="goods-introduce fl lr3">
+	      					韩版男装牛仔外套男修身男士秋季夹克学生外衣大码牛仔衣潮褂上衣
+	      					韩版男装牛仔外套男修身男士秋季夹克学生外衣大码牛仔衣潮褂上衣
 	      					韩版男装牛仔外套男修身男士秋季夹克学生外衣大码牛仔衣潮褂上衣
 	      				</div>
 	      				<div class="goods-unitPrice fr">
@@ -46,7 +48,9 @@
 	      				<div class="goods-img fl">
 	      					<img src="../../assets/images/confirmorder-01.jpg">
 	      				</div>
-	      				<div class="goods-introduce fl">
+	      				<div class="goods-introduce fl lr3">
+	      					韩版男装牛仔外套男修身男士秋季夹克学生外衣大码牛仔衣潮褂上衣
+	      					韩版男装牛仔外套男修身男士秋季夹克学生外衣大码牛仔衣潮褂上衣
 	      					韩版男装牛仔外套男修身男士秋季夹克学生外衣大码牛仔衣潮褂上衣
 	      				</div>
 	      				<div class="goods-unitPrice fr">
@@ -77,7 +81,7 @@
       			</div>
       			<div class="goods-total clearfix">
       				<span class="goods-total-lf">
-      					共 11 件, 合计:
+      					共 11 件, 合计：
       				</span>
       				<span class="mygoods-price">
 						¥
@@ -249,20 +253,23 @@
 		font-size: 0.18rem;
 	}
 	.goodsList-mid{
-		height:0.8rem;
+		height:0.7rem;
 		padding:0.1rem;
 	}
 	.goods-img{
-		width:0.60rem;
-		height:0.60rem;
+		width:0.50rem;
+		height:0.50rem;
 	}
 	.goods-img img{
 		display: block;
 		width:100%;
 	}
+	.goods-unitPrice{
+
+	}
 	.goods-introduce{
 		width: 1.90rem;
-		font-size: 0.14rem;
+		font-size: 0.12rem;
 		color:#666;
 		text-align: left;
 		margin-left: 0.1rem;
@@ -373,5 +380,21 @@
 	}
 	.exhibition .mygoods-price{
 		margin-top: 0.1rem;	
+	}
+	.goodsList-mids .goods-price{
+		font-size: 0.12rem;
+		color:#666;
+	}
+	.goodsList-mids .goods-intPrice{
+		font-size: 0.16rem;
+	}
+	.goodsList-mids .goods-num i{
+		font-size: 0.12rem;
+	}
+	.exhibition .mygoods-price{
+		color:#666;
+	}
+	.exhibition .goods-intPrice{
+		font-size: 0.16rem
 	}
 </style>
