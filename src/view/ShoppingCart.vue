@@ -190,7 +190,7 @@
 							var myPrice=Number(v.marketprice);
 							var myDefPrice=Number(this.defPrice);
 							var myDefTotal=Number(this.defTotal);
-                    		if(myDefPrice-myTotal*myPrice>=0){
+                    		if(myDefPrice-(myTotal*myPrice)>=0){
 								this.defPrice=myDefPrice-(myTotal*myPrice);
 								this.defTotal=myDefTotal-myTotal;
 							}else{

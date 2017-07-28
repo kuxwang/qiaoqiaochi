@@ -37,7 +37,7 @@ const payselect = r => require.ensure([], () => r(require('../components/common/
 const ConfirmOrder = r => require.ensure([], () => r(require('../components/common/ConfirmOrder.vue')), 'common')
 const DeliveryAddress= r => require.ensure([], () => r(require('../components/common/DeliveryAddress.vue')), 'common')
 const AddAddress= r => require.ensure([], () => r(require('../components/common/AddAddress.vue')), 'common')
-
+const DeliveryMode=r => require.ensure([], () => r(require('../components/common/DeliveryMode.vue')), 'common')
 export default new Router({
   routes: [
     {
@@ -123,6 +123,11 @@ export default new Router({
                   component:AddAddress
                 }
               ]
+            },
+            {
+              path:'/deliverymode',
+              name:'deliverymode',
+              component:DeliveryMode
             }
           ]
 

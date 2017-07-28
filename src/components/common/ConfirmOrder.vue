@@ -6,9 +6,9 @@
         </a>
       </mt-header>
       <router-link class="deliveryAddress" tag="div" :to="{name:'deliveryaddress'}">
-	      	<div class="fl deliveryAddress-lf iconfont">
+	      <!-- 	<div class="fl deliveryAddress-lf iconfont">
 	      		&#xe636;
-	      	</div>
+	      	</div> -->
 	      	<ul class="fl deliveryAddress-lr">
 	      		<li class="delivery-people clearfix">
 	      			<span class="fl">收货人：孙秀明</span>
@@ -41,62 +41,14 @@
 						<div class="goods-num">X<i>11</i></div>
       				</div>
       			</div>
-      			<div class="deliveryMode deflist">
+      			<router-link class="deliveryMode deflist" tag="div" :to="{name:'deliverymode'}">
   					<div class="deliveryMode-lf fl">
   						配送方式
       				</div>
       				<div class="deliveryMode-lr fr">
       					快递免邮
       				</div>
-      			</div>
-      			<div class="deliveryMode deflist clearfix">
-  					<div class="deliveryMode-lf fl">
-  						给卖家留言:
-      				</div>
-      				<div class="deliveryMode-lr fl">
-      					<input type="text" name="" placeholder="选填:对本次交易的说明(建议填写已和卖家协商一致的内容)">
-      				</div>
-      			</div>
-      			<div class="goods-total clearfix">
-      				<span class="goods-total-lf">
-      					共 11 件, 合计:
-      				</span>
-      				<span class="mygoods-price">
-						¥
-						<span class="goods-intPrice">10</span>
-						<span class="goods-folatPrice">.00</span>
-					</span>
-      			</div>
-      		</li>
-      		<li>
-      			<div class="goodsList-tp">
-      				<i class="iconfont">&#xe6a8;</i>
-      				onet凡兔旗舰店
-      			</div>
-      			<div class="goodsList-mid clearfix">
-      				<div class="goods-img fl">
-      					<img src="../../assets/images/confirmorder-01.jpg">
-      				</div>
-      				<div class="goods-introduce fl">
-      					韩版男装牛仔外套男修身男士秋季夹克学生外衣大码牛仔衣潮褂上衣
-      				</div>
-      				<div class="goods-unitPrice fr">
-      					<div class="goods-price">
-							¥
-							<span class="goods-intPrice">10</span>
-							<span class="goods-folatPrice">.00</span>
-						</div>
-						<div class="goods-num">X<i>11</i></div>
-      				</div>
-      			</div>
-      			<div class="deliveryMode deflist">
-  					<div class="deliveryMode-lf fl">
-  						配送方式
-      				</div>
-      				<div class="deliveryMode-lr fr">
-      					快递免邮
-      				</div>
-      			</div>
+      			</router-link>
       			<div class="deliveryMode deflist clearfix">
   					<div class="deliveryMode-lf fl">
   						给卖家留言:
@@ -210,7 +162,6 @@
   		margin-top:0.54rem;
   		background: #fff;
   		position: relative;
-  		box-shadow: 0 1px 0 0 rgba(0,0,0,.2), 0 0.5px 0 0 rgba(0,0,0,.3);
   	}
   	.delivery-people{
   		overflow: hidden
@@ -237,9 +188,7 @@
   		width: 90%;
   		font-size: 0.14rem;
   		text-align: left;
-  		padding-left: 10%;
   		color:#666;
-  		/*clear:both;*/
   	}
   	.deliveryAddress-lr-addr{
   		line-height: 0.22rem;
@@ -268,7 +217,6 @@
 	.goodsList li{
 		background: #fff;
 		margin-bottom: 0.1rem;
-		box-shadow: 0 1px 0 0 rgba(0,0,0,.2), 0 0.5px 0 0 rgba(0,0,0,.3);
 	}
 	.goodsList-tp{
 		padding:0.15rem 0.1rem;

@@ -7,6 +7,7 @@
 import axios from 'axios'
 import qs from 'qs'
 // let base = 'http://www.i-carparking.com/zhczwx/info.php'
+let base ='https://api.duoyunjiav2.wshoto.com';
 let axios_instance = axios.create({
   transformRequest: [function (data) {
     data = qs.stringify(data)
@@ -17,11 +18,10 @@ let axios_instance = axios.create({
 // 附近车辆
 // export const vehicleNum = params => { return axios_instance.post(`${base}?i=1&c=entry&do=homenologin&m=zhui_calltaxi`, params).then(res => res.data) }
 
-//import {vehicleNum}  from
-//let params={
-//  tel:''
-//}
+
 //
-//vehicleNum(params).then((res)=>{
-//  cons
-//})
+
+
+
+
+
