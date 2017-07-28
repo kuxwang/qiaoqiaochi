@@ -148,6 +148,10 @@
   * {
     font-size: .16rem;
   }
+  .mint-header {
+    border-bottom: 0;
+    color: #fff;
+  }
 
   .main {
     position: fixed;
@@ -354,13 +358,14 @@
     padding:  0;
     margin-top: 0.05rem;
     background-color: #fff;
-    border-top:1px solid #eee;
+    border-top:1px solid #e2e2e2;
   }
   .up {
     flex: 1;
     text-align: left;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #e2e2e2;
     padding: 0 0.1rem;
+    line-height: 0.32rem;
 
   }
 
@@ -426,7 +431,7 @@
 
   }
   .mint-navbar .mint-tab-item.is-selected {
-    border-bottom:2px solid #F5751D;
+    border-bottom:none;
   }
 
 </style>

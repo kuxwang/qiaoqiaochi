@@ -172,6 +172,10 @@
     background: #ececec;
     overflow: auto;
   }
+  .mint-header {
+    border-bottom: 0;
+    color: #fff;
+  }
 
   .avatar {
     position: relative;
@@ -358,7 +362,7 @@
   }
   .list-type {
     height: 0.4rem;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #e2e2e2;
     text-align: left;
     padding: 0.05rem 0.2rem;
     line-height: 0.3rem;
@@ -376,8 +380,8 @@
     height: 0.78rem;
     padding: 0.1rem 0.2rem;
     background-color: #fff;
-    border-top:1px solid #eee;
-    border-bottom:1px solid #eee;
+    border-top:1px solid #e2e2e2;
+    border-bottom:1px solid #e2e2e2;
   }
   .logo {
 
@@ -387,12 +391,13 @@
   .info {
     flex: 1;
     text-align: left;
-    margin-left: 0.1rem;
+    margin-left: 0.2rem;
     position: relative;
   }
   .info h5 {
     margin-top: 0.1rem;
-    color: #333;
+    color: #27272f;
+    font-size: 0.14rem;
 
   }
   .info span {
@@ -405,6 +410,7 @@
   }
   .mint-navbar .mint-tab-item.is-selected {
     color: #F5751D;
+    border-bottom: none;
   }
   .mint-tab-container-item {
     overflow: hidden;
@@ -425,11 +431,12 @@
   .partner-type {
     background: #fff;
     color: #666;
+    margin-top: 0.5rem;
   }
   .mint-navbar .mint-tab-item {
     padding: 0.1rem 0;
     font-size: 0.2rem;
-    border-right: 1px solid red;
+    border-right: 1px solid #e2e2e2;
   }
   .mint-navbar {
     margin: 0.05rem 0;
