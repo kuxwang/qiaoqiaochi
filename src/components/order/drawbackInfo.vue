@@ -1,6 +1,6 @@
 <template>
   <div class="main drawback-info-header">
-    <mt-header title="查看退款申请" class="ocolor">
+    <mt-header title="查看退款申请">
       <router-link to="/order" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
@@ -54,7 +54,7 @@
   div.infomation{
     text-align: left;
     background: #fff;
-    margin:.15rem 0;
+    margin:.1rem 0;
     padding:.16rem .12rem 0;
     font-size:.13rem;
   }
@@ -77,10 +77,11 @@
     background:#ff4f4f;
     border-radius:.03rem;
     outline: none;
-    margin-bottom:.15rem;
+    margin-top:.1rem;
   }
   .main>button.cancel-btn{
     background:#ddd;
     color:#666;
+    margin-top:.15rem;
   }
 </style>

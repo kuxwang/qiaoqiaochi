@@ -39,6 +39,9 @@
   input {
     outline: medium;
   }
+
+
+
   .clear:after {
     content:'';
     clear: both;
@@ -84,4 +87,10 @@
   ::-webkit-scrollbar{
     display:none;
   }
+  /*.order-header .mintui-back:before{*/
+    /*color:#fff;*/
+  /*}*/
+  /*.order-header .mint-header-title{*/
+    /*color:#fff;*/
+  /*}*/
 </style>
