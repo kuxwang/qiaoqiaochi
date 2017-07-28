@@ -3,7 +3,7 @@
     <section>
       <mt-header fixed title="推广订单" class="ocolor">
         <router-link to="/vipCenter" slot="left">
-          <mt-button icon="back">返回</mt-button>
+          <mt-button icon="back"></mt-button>
         </router-link>
         <!--<mt-button icon="more" slot="right"></mt-button>-->
       </mt-header>
@@ -13,7 +13,7 @@
     </transition>
     <section class="top">
       <div class="top_1" >
-        <span class="title">累计奖励{{selected}}(元)</span>
+        <span class="title">累计奖励(元)</span>
         <span class="num">58229.63</span><span class="yuan"> 元</span>
       </div>
       <div>
@@ -23,7 +23,7 @@
     </section>
 
     <mt-navbar class="page-part" v-model="selected">
-      <mt-tab-item id="1">全部</mt-tab-item>
+      <mt-tab-item id="1" :class="">全部</mt-tab-item>
       <mt-tab-item id="2">未结算</mt-tab-item>
       <mt-tab-item id="3">已退款</mt-tab-item>
       <mt-tab-item id="4">已结算</mt-tab-item>
@@ -126,7 +126,7 @@
     data () {
       return {
         active:'tab-container1',
-        selected:1
+        selected:'1'
       }
     },
     components: {
@@ -136,8 +136,8 @@
     methods: {
 
     },
-    credted(){
-      this.selected=2
+    created(){
+
     }
   }
 </script>
@@ -147,6 +147,10 @@
 
   * {
     font-size: .16rem;
+  }
+  .mint-header {
+    border-bottom: 0;
+    color: #fff;
   }
 
   .main {
@@ -351,17 +355,18 @@
   .p-cell {
     display: flex;
     flex-direction: column;
-    ;
     padding:  0;
     margin-top: 0.05rem;
     background-color: #fff;
-    border-top:1px solid #eee;
+    border-top:1px solid #e2e2e2;
   }
   .up {
     flex: 1;
     text-align: left;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #e2e2e2;
     padding: 0 0.1rem;
+    line-height: 0.32rem;
+
   }
 
 .up .time {
@@ -371,7 +376,7 @@
 }
 
   .down {
-    flex: 3;
+    flex: 2.5;
     height: 0.68rem;
     display: flex;
     padding: 0 0.1rem;

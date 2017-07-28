@@ -50,7 +50,6 @@
 
 </template>
 
-
 <style scoped>
   .main2 {
     position: fixed;
@@ -61,6 +60,10 @@
     background: #fff;
     overflow: auto;
     z-index: 200;
+  }
+  .mint-header {
+    border-bottom: 0;
+    color: #fff;
   }
   .title {
     height: 0.48rem;
@@ -73,11 +76,16 @@
   .title span {
     float: right;
     font-size: 0.24rem;
+    display: block;
+    margin-right: 0.05rem;
   }
   .order-info {
-    width: 100%;
-    padding: 0 0.1rem;
+    width: auto;
+    padding: 0.1rem;
     color: #666;
+    margin: 0.05rem;
+    border: 1px solid #e2e2e2;
+    box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);
   }
   .order-cell {
     display: flex;
