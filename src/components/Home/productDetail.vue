@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="main">
-      <mt-header title="商品详情" fixed class="ocolor header">
+      <mt-header title="商品详情" fixed class="header">
         <router-link to="/" slot="left" class="pro-white">
           <mt-button icon="back"></mt-button>
         </router-link>
@@ -173,7 +173,6 @@
   }
   .bottom-nav{
     padding:.1rem 0;
-    border-top:.02rem solid #696d6f;
   }
   .img-p{
     width:100%;
