@@ -13,7 +13,7 @@
     </transition>
     <section class="top">
       <div class="top_1" >
-        <span class="title">累计奖励{{selected}}(元)</span>
+        <span class="title">累计奖励(元)</span>
         <span class="num">58229.63</span><span class="yuan"> 元</span>
       </div>
       <div>
