@@ -2,7 +2,7 @@
   <div class="main2">
     <mt-header fixed title="订单详情" class="ocolor">
       <router-link to="/extension" slot="left">
-        <mt-button icon="back">返回</mt-button>
+        <mt-button icon="back"></mt-button>
       </router-link>
       <!--<mt-button icon="more" slot="right"></mt-button>-->
     </mt-header>
