@@ -99,7 +99,7 @@
   import {Popup, Picker} from 'mint-ui';
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
   import {Carts,Goods,ApiLogin} from '../../api/api.js'
-
+  import { MD5 } from 'js-md5'
   export default{
     data () {
       return {
@@ -141,18 +141,20 @@
         }
     },
     created(){
-        let params={
+//        console.log(MD5('TIMESTAMP=1500922207&KEY=MJJB614J'))
+      console.log('11')
+        /*let params={
           params: {
             timestamp:1500922207,
-            sign:'TIMESTAMP=1500922207&key=MJJB614J',
-            access_token:"78dddb9fe91d6ac654af8c4abd9fb036",
+//            sign:'TIMESTAMP=1500922207&KEY=MJJB614J',
+            sign:MD5('TIMESTAMP=1500922207&KEY=MJJB614J')
+
           }
         }
       Goods(params).then((res)=>{
         console.log(res)
-      })
+      })*/
         }
-
 
 
     }
