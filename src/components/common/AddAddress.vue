@@ -147,6 +147,7 @@
   		padding-right: 0.20rem;
   		font-size: 0.14rem;
   		color:#727272;
+  		background: #fff;
   	}
   	.newlyAdded{
   		position: fixed;

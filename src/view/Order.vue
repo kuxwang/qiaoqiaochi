@@ -306,7 +306,6 @@
     color:#ddd;
   }
   .mint-header {
-    background: #f5741c;
     color: #252525;
     border-bottom: 1px solid #e3e3e3;
     height:.45rem;
@@ -373,6 +372,7 @@
     outline: none;
     color:#fff;
     border-radius:.03rem;
+    font-size:.14rem;
   }
   .orderList{
     margin-bottom:.8rem;

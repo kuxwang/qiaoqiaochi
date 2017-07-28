@@ -1,6 +1,6 @@
 <template>
   <div class="main order-detail-header">
-    <mt-header title="订单详情" class="ocolor">
+    <mt-header title="订单详情" class="ocolor myOrderDetail">
       <a @click="goBack" slot="left">
         <mt-button icon="back"></mt-button>
       </a>
@@ -85,6 +85,16 @@
     overflow:auto;
     z-index:20;
   }
+  .mint-header{
+    border-bottom:none;
+    color:#fff;
+  }
+  .mint-header a{
+    color:#fff;
+  }
+  .mint-header-title{
+    color:#fff;
+  }
   .order-detail-header .mint-header {
     height:.45rem;
   }
@@ -122,7 +132,7 @@
     padding:.16rem .1rem;
     position:relative;
     height:.75rem;
-    margin-bottom:.15rem;
+    margin-bottom:.1rem;
   }
   .buyer-address>div.iconfont{
     position:absolute;
@@ -143,7 +153,7 @@
     background: #fff;
     padding:0 .1rem;
     height:2.35rem;
-    margin-bottom:.15rem;
+    margin-bottom:.1rem;
   }
   .pib-header{
     text-align: left;

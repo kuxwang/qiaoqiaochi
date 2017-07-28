@@ -70,11 +70,14 @@
     color: #F5751D;
     font-size:.15rem;
   }
-  .order-header .mintui-back:before{
+  .myOrderDetail .mint-header-title{
     color:#fff;
   }
-  .order-header .mint-header-title{
+  .order-detail-header .mint-header-title{
     color:#fff;
+  }
+ .order-detail-header .mint-header-button a{
+     color:#fff;
   }
 
   /*yellowStar*/
