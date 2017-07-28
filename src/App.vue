@@ -21,15 +21,26 @@
     text-align: center;
     color: #2c3e50;
     position: relative;
+    background-color: #efeff4 !important;
   }
 
-  input {
-    outline: medium;
+  /*公共头部*/
+  .mint-header {
+    background: #fff;
+    color: #252525;
+    border-bottom: 1px solid #e3e3e3;
+    font-size: 0.16rem;
+    height:46px;
   }
 
   .ocolor {
     background-color: #F5751D !important;
   }
+  input {
+    outline: medium;
+  }
+
+
 
   .clear:after {
     content:'';
@@ -38,7 +49,9 @@
   a {
     text-decoration: none;
   }
-
+  ul {
+    /*box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);*/
+  }
   li {
     list-style-type: none
   }
@@ -64,9 +77,6 @@
     color:#fff;
   }
   .order-header .mint-header-title{
-    color:#fff;
-  }
-  .pro-white {
     color:#fff;
   }
 </style>
