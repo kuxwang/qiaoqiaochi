@@ -43,7 +43,7 @@
         <button class="icon-btn icon-btn-car ocolor" @click="handleClick">
           加入购物车
         </button>
-        <router-link class="icon-btn icon-btn-con" :to="{name:''}"  tag="button">
+        <router-link class="icon-btn icon-btn-con" to="/payselect"  tag="button">
           立即购买
         </router-link>
       </div>
@@ -63,7 +63,7 @@
             </div>
             <p>购买数量</p>
           </div>
-          <button class="confirm ocolor">确认</button>
+          <router-link class="confirm ocolor" to="shoppingCart" tag="button">确认</router-link>
         </div>
       </mt-popup>
     </div>
@@ -113,9 +113,6 @@
     border-bottom: 1px solid #e3e3e3;
     font-size: 0.16rem;
     height:46px;
-  }
-  .header a{
-    color:#fff;
   }
   .router-link-active {
     color: #666;

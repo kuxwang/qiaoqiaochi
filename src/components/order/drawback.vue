@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="main drawback-header">
-      <mt-header title="申请退款" class="ocolor">
+      <mt-header title="申请退款">
         <a @click="goBack" slot="left" >
           <mt-button icon="back"></mt-button>
         </a>

@@ -85,6 +85,13 @@
     overflow:auto;
     z-index:20;
   }
+  .mint-header{
+    border-bottom:none;
+    color:#fff;
+  }
+  .mint-header a{
+    color:#fff;
+  }
   .order-detail-header .mint-header {
     height:.45rem;
   }
@@ -122,7 +129,7 @@
     padding:.16rem .1rem;
     position:relative;
     height:.75rem;
-    margin-bottom:.15rem;
+    margin-bottom:.1rem;
   }
   .buyer-address>div.iconfont{
     position:absolute;
@@ -143,7 +150,7 @@
     background: #fff;
     padding:0 .1rem;
     height:2.35rem;
-    margin-bottom:.15rem;
+    margin-bottom:.1rem;
   }
   .pib-header{
     text-align: left;

@@ -73,10 +73,10 @@
     color: #F5751D;
     font-size:.15rem;
   }
-  .order-header .mintui-back:before{
-    color:#fff;
-  }
-  .order-header .mint-header-title{
-    color:#fff;
-  }
+  /*.order-header .mintui-back:before{*/
+    /*color:#fff;*/
+  /*}*/
+  /*.order-header .mint-header-title{*/
+    /*color:#fff;*/
+  /*}*/
 </style>

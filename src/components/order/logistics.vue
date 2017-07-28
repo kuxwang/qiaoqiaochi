@@ -88,6 +88,10 @@
     z-index:20;
     color:#666;
   }
+  .mint-header{
+    border-bottom:none;
+    color:#fff;
+  }
   .order-detail-header .mint-header {
     height:.45rem;
   }
@@ -95,7 +99,7 @@
     height:.8rem;
     width:100%;
     background: rgba(245,117,29,.2);
-    margin-bottom:.15rem;
+    margin-bottom:.1rem;
   }
   .buyer-info-box{
     height:.8rem;
@@ -125,7 +129,7 @@
     background: #fff;
     padding:0 .1rem;
     height:1.2rem;
-    margin-bottom:.15rem;
+    margin-bottom:.1rem;
   }
   .pib-header{
     text-align: left;
