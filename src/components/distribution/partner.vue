@@ -99,6 +99,7 @@
   import {Popup, Picker} from 'mint-ui';
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
   import {Carts,Goods,ApiLogin} from '../../api/api.js'
+
   export default{
     data () {
       return {
@@ -141,9 +142,11 @@
     },
     created(){
         let params={
-          timestamp:1500922207,
-          sign:'TIMESTAMP=1500922207&key=MJJB614J',
-          access_token:"78dddb9fe91d6ac654af8c4abd9fb036",
+          params: {
+            timestamp:1500922207,
+            sign:'TIMESTAMP=1500922207&key=MJJB614J',
+            access_token:"78dddb9fe91d6ac654af8c4abd9fb036",
+          }
         }
       Goods(params).then((res)=>{
         console.log(res)
