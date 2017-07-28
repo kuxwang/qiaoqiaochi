@@ -1,9 +1,9 @@
 <template>
   <div class="mian1">
     <section>
-      <mt-header fixed title="列表" class="ocolor">
+      <mt-header fixed title="列表">
         <router-link to="/partner" slot="left">
-          <mt-button icon="back">返回</mt-button>
+          <mt-button icon="back"></mt-button>
         </router-link>
         <!--<mt-button icon="more" slot="right"></mt-button>-->
       </mt-header>

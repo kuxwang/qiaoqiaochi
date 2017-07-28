@@ -6,22 +6,20 @@
  */
 import axios from 'axios'
 import qs from 'qs'
-// let base = 'http://www.i-carparking.com/zhczwx/info.php'
+let base = 'https://api.duoyunjiav2.wshoto.com'
 let axios_instance = axios.create({
   transformRequest: [function (data) {
     data = qs.stringify(data)
     return data
   }],
-  headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'addons':'ewei_shop',
+  }
 })
-// 附近车辆
-// export const vehicleNum = params => { return axios_instance.post(`${base}?i=1&c=entry&do=homenologin&m=zhui_calltaxi`, params).then(res => res.data) }
 
-//import {vehicleNum}  from
-//let params={
-//  tel:''
-//}
-//
-//vehicleNum(params).then((res)=>{
-//  cons
-//})
+
+export const ApiLogin = params => { return axios_instance.get(`${base}/ApiLogin`, params).then(res => res.data) }
+export const Goods = params => { return axios_instance.get(`${base}/goods?access_token=78dddb9fe91d6ac654af8c4abd9fb036`).then(res => res.data) }
+//购物车
+export const Carts = params => { return axios_instance.post(`${base}/carts`, params).then(res => res.data) }
