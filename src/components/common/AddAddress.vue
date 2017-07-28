@@ -1,8 +1,8 @@
 <template>
 	<div class="main">
-      <mt-header fixed title="新增收货地址" class="ocolor header">
+      <mt-header fixed title="新增收货地址">
         <a slot="left" @click="goBack">
-          <mt-button icon="back" >返回</mt-button>
+          <mt-button icon="back" ></mt-button>
         </a>
       </mt-header>
       <ul class="addAddress-list">
@@ -110,7 +110,7 @@
 	    left: 0;
 	    width: 100%;
 	    height: 100%;
-	    background: #ececec;
+	    background: #efeff4;
 	    overflow: auto;
 	    z-index: 50
   	}

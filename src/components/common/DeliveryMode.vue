@@ -1,6 +1,6 @@
 <template>
 	<div class="main">
-      <mt-header fixed title="配送方式" class="ocolor header">
+      <mt-header fixed title="配送方式">
         <a slot="left" @click="goBack">
           <mt-button icon="back" >返回</mt-button>
         </a>
@@ -42,7 +42,7 @@
 	    left: 0;
 	    width: 100%;
 	    height: 100%;
-	    background: #ececec;
+	    background: #efeff4;
 	    overflow: auto;
 	    z-index: 50
   	}

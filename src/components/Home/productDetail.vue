@@ -1,8 +1,8 @@
 <template>
   <transition name="slide">
     <div class="main">
-      <mt-header title="商品详情" fixed>
-        <router-link to="/" slot="left">
+      <mt-header title="商品详情" fixed class="header">
+        <router-link to="/" slot="left" class="pro-white">
           <mt-button icon="back"></mt-button>
         </router-link>
       </mt-header>
@@ -104,17 +104,18 @@
     top: 0;
     width: 100%;
     height: 100%;
-    /*background: rgba(243,195,151,0.7);*/
-    background:#f3f3f3;
+    background:#ececec;
     font-size:.15rem;
-    overflow:auto
+    overflow:auto;
+    z-index:20;
   }
   .mint-header {
-    background: #fff;
-    color: #252525;
     border-bottom: 1px solid #e3e3e3;
     font-size: 0.16rem;
     height:46px;
+  }
+  .header a{
+    color:#fff;
   }
   .router-link-active {
     color: #666;
@@ -172,7 +173,6 @@
   }
   .bottom-nav{
     padding:.1rem 0;
-    border-top:.02rem solid #696d6f;
   }
   .img-p{
     width:100%;

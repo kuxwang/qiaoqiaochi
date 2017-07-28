@@ -3,10 +3,11 @@
     <section>
       <mt-header fixed title="我的伙伴" class="ocolor">
         <router-link to="/vipCenter" slot="left">
-          <mt-button icon="back">返回</mt-button>
+          <mt-button icon="back"></mt-button>
         </router-link>
         <!--<mt-button icon="more" slot="right"></mt-button>-->
       </mt-header>
+
     </section>
     <section class="top">
     </section>
@@ -97,11 +98,12 @@
 <script>
   import {Popup, Picker} from 'mint-ui';
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
+  import {Carts,Goods,ApiLogin} from '../../api/api.js'
   export default{
     data () {
       return {
         active:'tab-container1',
-        selected:1,
+        selected:'1',
         cell: [
           {
               icon:'&#xe612',
@@ -136,8 +138,22 @@
         open(){
             this.popupVisible=true
         }
+    },
+    created(){
+        let params={
+          timestamp:1500922207,
+          sign:'TIMESTAMP=1500922207&key=MJJB614J',
+          access_token:"78dddb9fe91d6ac654af8c4abd9fb036",
+        }
+      Goods(params).then((res)=>{
+        console.log(res)
+      })
+        }
+
+
+
     }
-  }
+
 </script>
 <style scoped>
   @import '../../assets/css/fonts/iconfont.css';
@@ -361,18 +377,27 @@
     padding: 0.1rem 0.2rem;
     background-color: #fff;
     border-top:1px solid #eee;
+    border-bottom:1px solid #eee;
   }
   .logo {
-    flex: 1;
+
+    width: 0.58rem;
+    height: 0.58rem;
   }
   .info {
-    flex: 4;
+    flex: 1;
     text-align: left;
     margin-left: 0.1rem;
     position: relative;
   }
   .info h5 {
-    margin: 0.1rem 0;
+    margin-top: 0.1rem;
+    color: #333;
+
+  }
+  .info span {
+    font-size: 0.14rem;
+    color: #666;
   }
   .logo img {
     width: 100%;
@@ -400,5 +425,13 @@
   .partner-type {
     background: #fff;
     color: #666;
+  }
+  .mint-navbar .mint-tab-item {
+    padding: 0.1rem 0;
+    font-size: 0.2rem;
+    border-right: 1px solid red;
+  }
+  .mint-navbar {
+    margin: 0.05rem 0;
   }
 </style>

@@ -21,16 +21,24 @@
     text-align: center;
     color: #2c3e50;
     position: relative;
+    background-color: #efeff4 !important;
   }
 
-  input {
-    outline: medium;
+  /*公共头部*/
+  .mint-header {
+    background: #fff !important;
+    color: #252525 !important;
+    border-bottom: 1px solid #e3e3e3;
+    font-size: 0.16rem !important;
+    height:45px !important;
   }
 
   .ocolor {
     background-color: #F5751D !important;
   }
-
+  input {
+    outline: medium;
+  }
   .clear:after {
     content:'';
     clear: both;
@@ -38,7 +46,9 @@
   a {
     text-decoration: none;
   }
-
+  ul {
+    /*box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);*/
+  }
   li {
     list-style-type: none
   }
@@ -65,5 +75,13 @@
   }
   .order-header .mint-header-title{
     color:#fff;
+  }
+
+  /*yellowStar*/
+  .mint-msgbox-confirm{
+    color:#F5751D;
+  }
+  ::-webkit-scrollbar{
+    display:none;
   }
 </style>

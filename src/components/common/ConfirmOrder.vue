@@ -1,8 +1,8 @@
 <template>
 	<div class="main">
-      <mt-header fixed title="确认订单" class="ocolor header">
+      <mt-header fixed title="确认订单">
         <a slot="left" @click="goBack">
-          <mt-button icon="back" >返回</mt-button>
+          <mt-button icon="back" ></mt-button>
         </a>
       </mt-header>
       <router-link class="deliveryAddress" tag="div" :to="{name:'deliveryaddress'}">
@@ -116,7 +116,7 @@
 					<span class="goods-folatPrice">.00</span>
 				</span> 
       		</div>
-      		<div class="settlement-lr fr">
+      		<div class="settlement-lr fr" @click="goPay">
       			提交订单
       		</div>
       	</div>
@@ -135,6 +135,9 @@
 		methods:{
 			goBack(){
 				this.$router.go(-1);
+			},
+			goPay(){
+				this.$router.push({name:'payselect'})
 			}
 		}
 	}
@@ -148,7 +151,7 @@
 	    left: 0;
 	    width: 100%;
 	    height: 100%;
-	    background: #ececec;
+	    background:#efeff4 ;
 	    overflow: auto;
 	    z-index: 30
   	}
@@ -314,7 +317,7 @@
 	    height: 0.50rem;
 	    padding: 0rem 0rem 0rem 0.1rem;
 	    border-top: 1px solid #e7e7e7;
-	    background: #FCFCFC;
+	    background: #fff;
 	    z-index: 50
 	}
 	.settlement-lf{

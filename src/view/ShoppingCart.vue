@@ -1,6 +1,6 @@
 <template>
 	<div class="content">
-		<mt-header title="购物车" class="ocolor header is-fixed">
+		<mt-header title="购物车" class="is-fixed">
 		  <router-link to="/" slot="left">
 		    <mt-button icon="back"></mt-button>
 		  </router-link>
@@ -245,7 +245,7 @@
 	    left: 0;
 	    width: 100%;
 	    height: 100%;
-	    background: #ececec;
+	    background: #efeff4;
 	    overflow: auto;
   	}
   	.header{
@@ -268,13 +268,12 @@
 	    padding: 0rem;
 	}
 	.goods-list{
-		padding:0.40rem 0rem 0.65rem 0rem;
+		padding-top: 0.45rem;
 	}
 	.goods-list li{
 		height: 1rem;
 	    padding: 0.1rem;
-	    border-bottom: 0.01rem solid #e3e3e3;
-	    background:#FCFCFC;
+	    background:#fff;
 	    margin-top: 0.05rem;
 	}
 	.goods-img{
@@ -388,7 +387,7 @@
 	    height: 0.50rem;
 	    padding: 0rem 0rem 0rem 0.1rem;
 	    border-top: 1px solid #e7e7e7;
-	    background: #FCFCFC;
+	    background: #fff;
 	}
 	.total_area .mint-checklist-label{
 		padding: 0rem;
@@ -398,9 +397,6 @@
 		line-height:0.50rem;
 		text-align: left;
 		font-size: 0.28rem
-	}
-	.router-link-active{
-		color:#fff;
 	}
 	.mint-checkbox-label{
 		font-size: 0.14rem;
