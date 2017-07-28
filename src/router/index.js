@@ -37,6 +37,13 @@ const payselect = r => require.ensure([], () => r(require('../components/common/
 const ConfirmOrder = r => require.ensure([], () => r(require('../components/common/ConfirmOrder.vue')), 'common')
 const DeliveryAddress= r => require.ensure([], () => r(require('../components/common/DeliveryAddress.vue')), 'common')
 const AddAddress= r => require.ensure([], () => r(require('../components/common/AddAddress.vue')), 'common')
+/**
+ * 訂單詳情
+ */
+const Orderd= r => require.ensure([], () => r(require('../components/order/orderDetail.vue')), 'Orderd')
+const Logistics= r => require.ensure([], () => r(require('../components/order/logistics.vue')), 'Logistics')
+const Drawback= r => require.ensure([], () => r(require('../components/order/drawback.vue')), 'Drawback')
+const DrawbackInfo= r => require.ensure([], () => r(require('../components/order/drawbackInfo.vue')), 'DrawbackInfo')
 
 export default new Router({
   routes: [
@@ -59,7 +66,31 @@ export default new Router({
         {
           path: '/order',
           name: 'order',
-          component: Order
+          component: Order,
+          children:[
+            {
+              path: '/orderd',
+              name: 'orderd',
+              component: Orderd,
+            },
+            {
+              path: '/logistics',
+              name: 'logistics',
+              component: Logistics,
+            },
+            {
+              path: '/drawback',
+              name: 'drawback',
+              component: Drawback,
+            },
+            {
+              path: '/drawbackInfo',
+              name: 'drawbackInfo',
+              component: DrawbackInfo,
+            }
+          ]
+
+
         },
         {
           path: '/shoppingCart',

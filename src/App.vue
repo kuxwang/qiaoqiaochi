@@ -66,4 +66,7 @@
   .order-header .mint-header-title{
     color:#fff;
   }
+  .pro-white {
+    color:#fff;
+  }
 </style>
