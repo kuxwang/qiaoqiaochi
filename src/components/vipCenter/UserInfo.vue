@@ -1,9 +1,9 @@
 <template>
  	<div class="main">
  		<section>
-	      <mt-header fixed title="我的资料" class="ocolor header">
+	      <mt-header fixed title="我的资料">
 	        <router-link to="/vipCenter" slot="left">
-	          <mt-button icon="back" >返回</mt-button>
+	          <mt-button icon="back" ></mt-button>
 	        </router-link>
 	      </mt-header>
 	    </section>
@@ -208,12 +208,12 @@
 		padding: 0rem 0.10rem;
 	    height: 0.5rem;
 	    line-height: 0.5rem;
-	    background: #fcfcfc;
+	    background: #fff;
 	    border-bottom: 0.01rem solid #F3F4F5;
 	    position: relative;
 	}
 	.userinfo-list li input{
-		background: #fcfcfc;
+		background: #fff;
 	}
 	.userinfo-list li span:nth-child(1) {
 	    font-size: 0.14rem;
