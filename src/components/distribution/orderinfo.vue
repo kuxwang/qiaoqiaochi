@@ -1,6 +1,6 @@
 <template>
   <div class="main2">
-    <mt-header fixed title="订单详情" class="ocolor">
+    <mt-header fixed title="订单详情" >
       <router-link to="/extension" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
@@ -50,6 +50,44 @@
 
 </template>
 
+<script>
+  import {mapMutations, mapGetters} from 'vuex';
+  import {orders} from '../../api/api';
+  export default{
+    data () {
+      return {
+        orderinfo:{}
+      }
+    },
+    components: {
+
+    },
+    methods: {
+
+    },
+    created(){
+
+    },
+    mounted(){
+
+      let params={
+          ordersn:this.ordersn
+      }
+      orders(params,(res)=>{
+        this.ordernum=res.data
+        console.log(res)
+        console.log(this.ordernum)
+      })
+    },
+    computed:{
+      ...mapGetters([
+        'ordersn',
+      ]),
+    }
+  }
+</script>
+
+
 <style scoped>
   .main2 {
     position: fixed;
@@ -63,7 +101,8 @@
   }
   .mint-header {
     border-bottom: 0;
-    color: #fff;
+    color: #272727;
+    border-bottom: 1px solid #eee;
   }
   .title {
     height: 0.48rem;
