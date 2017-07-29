@@ -59,13 +59,15 @@
     },
     mounted(){
       let params={
-        type:'lock',
-        page:1,
-        psize:10
+        data: {
+          type:'lock',
+          page:1,
+          psize:10
+        }
       }
       orderLists(params,(res)=>{
           if(res.statusCode==1){
-            this.orderlist=res.data.lock;
+            this.orderlist=res.data;
             console.log(this.orderlist)
           }else {
               console.log('请求失败')

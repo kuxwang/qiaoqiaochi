@@ -48,7 +48,7 @@
         <div class="title">已结算</div>
         <div class="iconfont listicon">&#xe619;</div>
         <div>
-          <span class="num">{{ordernum.ok.order_count}}</span><span class="yuan"> 单</span>
+          <span class="num">{{ordernum.lock.order_count}}</span><span class="yuan"> 单</span>
         </div>
         </li>
       <!--</router-link>-->
