@@ -71,7 +71,9 @@
     mounted(){
 
       let params={
-          ordersn:this.ordersn
+          data:{
+            ordersn:this.ordersn
+          }
       }
       orders(params,(res)=>{
         this.ordernum=res.data

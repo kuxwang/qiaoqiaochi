@@ -18,6 +18,7 @@ export const commissions = {
   recordStatistics_post: {url: `${base}/commissions/recordStatistics`, method: 'POST', header, dataType},
   /**
    * 订单统计
+   * 订单列表
    */
   orderStatistics: {url: `${base}/commissions/orderStatistics`, method: 'GET', header, dataType},
   /**
@@ -65,7 +66,7 @@ export const teamsStatistics = function (params, callback) {
     callback(res)
   })
 };
-
+export const teamsLists = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.teamsLists), function (res) {callback(res)})};
 /**
  * 订单统计
  * @param params

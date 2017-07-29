@@ -34,7 +34,7 @@
     data(){
       return {
         thumb:require('../../assets/images/userinfo-02.png'),
-        orderlist:{}
+        orderlist:[]
       }
     },
     components: {
@@ -61,14 +61,17 @@
     },
     mounted(){
       let params={
-        type:'total',
-        page:1,
-        psize:10
+        data: {
+          type:'total',
+          page:1,
+          psize:10
+        }
       }
       orderLists(params,(res)=>{
         if(res.statusCode==1){
-          this.orderlist=res.data.total;
+          this.orderlist=res.data;
           console.log(this.orderlist)
+          console.log(res)
         }else {
           console.log('请求失败')
         }

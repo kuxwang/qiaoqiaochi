@@ -2,14 +2,14 @@
   <div class="mian1">
     <!--<mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">-->
     <ul class="p-list" >
-      <li class="p-cell" v-for="n in 10">
+      <li class="p-cell" v-for="i in personlist.lists">
         <div class="logo">
-          <img :src="thumb"/>
+          <img :src="i.avatar"/>
         </div>
         <div class="info">
-          <h5>名字</h5>
-          <span>123112</span>
-          <span class="usertime">关注</span>
+          <h5>{{i.nickname}}</h5>
+          <span>{{i.id}}</span>
+          <span class="usertime">{{i.createtime}}关注</span>
         </div>
       </li>
     </ul>
@@ -18,15 +18,18 @@
 </template>
 
 <script>
-  import { Loadmore } from  'mint-ui'
+  import { Loadmore } from  'mint-ui';
+  import { teamsLists } from '../../api/api.js'
+  import {mapMutations, mapGetters} from 'vuex';
   export default{
     data(){
       return {
-        thumb:require('../../assets/images/userinfo-02.png')
+        thumb:require('../../assets/images/userinfo-02.png'),
+        personlist:{}
       }
     },
     components: {
-      Loadmore
+
     },
     methods: {
       loadTop(){
@@ -38,7 +41,28 @@
       allLoaded(){
 
       }
-    }
+    },
+    mounted(){
+      let params={
+        data: {
+          type:'agent',
+          page:1,
+          psize:10
+        }
+      }
+      teamsLists(params,(res)=>{
+        if(res.statusCode==1){
+          this.personlist=res.data;
+          console.log(res)
+          console.log(this.personlist)
+        }else {
+          console.log('请求失败')
+        }
+
+
+      })
+    },
+
   }
 </script>
 
@@ -64,7 +88,7 @@
     flex: 1;
   }
   .info {
-    flex: 4;
+    flex: 5;
     text-align: left;
     margin-left: 0.1rem;
     position: relative;
@@ -79,10 +103,10 @@
     color: #666;
   }
   .logo img {
-    width: 70%;
+    width: 80%;
     border-radius: 50%;
     display: block;
-    margin: 15% auto;
+    margin: 10% auto;
   }
   .mian1 {
     position: fixed;
