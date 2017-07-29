@@ -1,5 +1,5 @@
 //判断浏览器
-var _env = (function () {
+export var _env = (function () {
     var f = navigator.userAgent,
         b = null,
         c = function (h, i) {
@@ -72,7 +72,7 @@ var _env = (function () {
     return d
 }());
 
-var _webapp = {
+export var _webapp = {
 
     init: false,
 
@@ -84,16 +84,16 @@ var _webapp = {
         }
     },
 
-    request : function(params, callback){
-        var handler = 'request';
+    requestx: function (params, callback) {
+        var handler = 'requestx';
 
         if (_env.ios) {
             _webapp.setupWebViewJavascriptBridge(function (bridge) {
-                bridge.callHandler(handler, function (response) {
+                bridge.callHandler(handler, {params: params}, function (response) {
                     //return _webapp.callback(response, callback);
                 });
 
-                bridge.registerHandler(handler, {'params' : params}, function (data) {
+                bridge.registerHandler(handler, function (data) {
                     return _webapp.callback(data, callback);
                 });
             });
@@ -112,18 +112,18 @@ var _webapp = {
                     });
                 }
 
-                bridge.callHandler(handler, {'params' : params}, function (response) {
-                    //response = eval('(' + response + ')');
+                bridge.callHandler(handler, {params: params}, function (response) {
                     //return _webapp.callback(response, callback);
                 });
 
-                bridge.registerHandler(handler, function (response) {
+                bridge.registerHandler(handler, function (response, responseCallback) {
+                    responseCallback('get requestx callback');
                     response = eval('(' + response + ')');
                     return _webapp.callback(response, callback);
                 });
+
             });
         }
-
     },
 
     locationCity: function () {

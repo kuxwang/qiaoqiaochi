@@ -1,30 +1,63 @@
 /**
  * Created by Crete on 17/7/24.
  */
+// import {_webapp} from '../config/webapp.js'
+import {_webapp} from '../config/_webapp.js'
+const base = 'https://api.duoyunjiav2.wshoto.com';
+const header = 'application/json';
+const dataType = 'json';
+const Promise = require("bluebird");
 /**
- * Created by Crete on 17/6/24.
+ * 分销
  */
-/*
-import axios from 'axios'
-import qs from 'qs'
-let base = 'https://api.duoyunjiav2.wshoto.com'
-let axios_instance = axios.create({
-  transformRequest: [function (data) {
-    data = qs.stringify(data)
-    return data
-  }],
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'addons':'ewei_shop'
+export const commissions = {
+  /**
+   * 佣金统计
+   */
+  recordStatistics: {
+    url: `${base}/commissions/recordStatistics`,
+    method: 'GET',
+    header,
+    dataType
+  },
+
+  /**
+   * 推广订单
+   */
+  orderStatistics: {
+    url: `${base}/commissions/orderStatistics`,
+    method: 'GET',
+    header,
+    dataType
   }
-})
+}
 
 
+/**
+ * 参数合并
+ */
+// export const mergeParams = (baseParams, addParams) => {
+//   return baseParams.push(addParams)
+// }
 
-export const ApiLogin = params => { return axios_instance.get(`${base}/ApiLogin`, params).then(res => res.data) }
-export const Goods = params => { return axios.get(`${base}/goods?access_token=78dddb9fe91d6ac654af8c4abd9fb036`,params).then(res => res.data) }
-//购物车
-export const Carts = params => { return axios_instance.post(`${base}/carts`, params).then(res => res.data) }
-*/
+// console.log(_webapp)
+// console.log(Promise())
+// export const recordStatistics = params => {return _webapp.requestx(Object.assign(params,commissions.recordStatistics))};
 
 
+/**
+ * 佣金统计
+ * @param params
+ * @param callback
+ */
+function requestweb(params, callback){
+  _webapp.requestx(Object.assign(params, commissions.recordStatistics), res => {
+    callback(res)
+  })
+}
+export const recordStatistics = function(params, callback) {
+  console.log(params);
+  _webapp.requestx(Object.assign(params, commissions.recordStatistics), function(res) {
+    callback(res)
+  })
+};
