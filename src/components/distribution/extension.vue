@@ -1,60 +1,57 @@
 <template>
   <div class="main">
     <section>
-      <mt-header fixed title="推广订单" class="ocolor">
+      <mt-header fixed title="推广订单" >
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
-        <!--<mt-button icon="more" slot="right"></mt-button>-->
+
       </mt-header>
     </section>
     <transition name="slide">
       <router-view></router-view>
     </transition>
-   <!-- <section class="top content">
-     &lt;!&ndash; <div class="top_1" >
-        <span class="title">累计奖励(元)</span>
-        <span class="num">58229.63</span><span class="yuan"> 元</span>
-      </div>
-      <div>
-        <span class="title">推广销售(元)</span>
-        <span class="num">130834.09</span><span class="yuan"> </span>
-      </div>&ndash;&gt;
-    </section>-->
     <ul class="nav-tab">
-      <router-link to="/extension1" tag="li">
-        <div class="title">全部</div>
+      <li :class="{tabActive: selected==1 }" @click="selecttab(1)">
+      <!--<router-link @click="selecttab(1)" to="/extension1" tag="li" :class="{tabActive: selected==1 }"  >-->
+        <div class="title">全部{{selected}}</div>
         <div class="iconfont listicon">&#xe624;</div>
         <div>
           <span class="num">1</span><span class="yuan"> 单</span>
         </div>
-      </router-link>
-      <router-link to="/extension2" tag="li">
+      <!--</router-link>-->
+      </li>
+      <li :class="{tabActive: selected==2 }" @click="selecttab(2)">
+      <!--<router-link @click="selecttab(2)" to="/extension2" tag="li" :class="{tabActive: selected==2 }" >-->
         <div class="title">未结算</div>
         <div class="iconfont listicon">&#xe624;</div>
         <div>
           <span class="num">1</span><span class="yuan"> 单</span>
         </div>
-      </router-link>
+      <!--</router-link>-->
       <!--</li>-->
-      <router-link to="/extension3" tag="li">
+      <!--<router-link  @click="selecttab(3)" to="/extension3" tag="li" :class="{tabActive: selected==3 }">-->
+      </li>
+      <li :class="{tabActive: selected==3 }" @click="selecttab(3)">
         <!--<li class="li2">-->
         <div class="title">已退款</div>
         <div class="iconfont listicon">&#xe8b5;</div>
         <div>
           <span class="num">1</span><span class="yuan"> 单</span>
         </div>
-        <!--</li>-->
-      </router-link>
-      <router-link to="/extension4" tag="li">
+        </li>
+      <!--</router-link>-->
+
+      <li :class="{tabActive: selected==4 }" @click="selecttab(4)">
+      <!--<router-link to="/extension4" tag="li" :class="{tabActive: selected==4 }" @click="selecttab(4)">-->
         <!--<li class="li3">-->
         <div class="title">已结算</div>
         <div class="iconfont listicon">&#xe619;</div>
         <div>
           <span class="num">1</span><span class="yuan"> 单</span>
         </div>
-        <!--</li>-->
-      </router-link>
+        </li>
+      <!--</router-link>-->
     </ul>
 
 
@@ -72,12 +69,13 @@
 <script>
   import MtCell from "../../../node_modules/mint-ui/packages/cell/src/cell";
 //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
-  import { Search } from 'mint-ui'
+  import { Search } from 'mint-ui';
+  import {mapMutations, mapGetters} from 'vuex';
   export default{
     data () {
       return {
         active:'tab-container1',
-        selected:'1',
+        selected: 1,
         find:''
       }
     },
@@ -86,10 +84,20 @@
 
     },
     methods: {
+      selecttab(idx){
+        this.selected = idx;
+        this.$router.push({name: `extension${idx}`})
+      },
+
 
     },
     created(){
-
+      this.selected=this.tabselect
+    },
+    computed:{
+    ...mapGetters([
+        'tabselect',
+      ]),
     }
   }
 </script>
@@ -383,14 +391,26 @@
     display: block;
     height: 100%;
     flex: 1;
+    padding: 0 0.2rem;
   }
   .search button {
     background-color: #F5751D;
     display: block;
     height: 100%;
-    flex: .2;
+    flex: .3;
+    color: #fff;
   }
   .mint-header {
-    color: #fff !important;
+    color: #252522 !important;
+  }
+  .nav-tab .tabActive{
+    background-color: #f5751d;
+    color: #fff;
+  }
+  .nav-tab .tabActive .title {
+    color: #fff;
+  }
+  .tabActive .num,.tabActive .yuan {
+    color: #fff;
   }
 </style>

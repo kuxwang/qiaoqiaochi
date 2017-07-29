@@ -9,7 +9,7 @@ import actions from './actions'
 import getters from './getters'
 Vue.use(Vuex)
 const state = {
-  latitude: '', // 当前位置纬度
+  tabselect: ''
 }
 
 export default new Vuex.Store({
