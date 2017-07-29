@@ -45,7 +45,11 @@
       <button>搜索</button>
     </div>
 
-    <router-view></router-view>
+    <!--<transition name="slide">-->
+      <router-view></router-view>
+    <!--</transition>-->
+
+
 
   </div>
 

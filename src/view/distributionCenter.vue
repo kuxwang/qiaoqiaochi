@@ -74,15 +74,15 @@
           <div>
             <span class="num">1</span><span class="yuan"> 单</span>
           </div>
-          <!--</router-link>-->
+        <!--</router-link>-->
         </li>
-        <!--<router-link to="/extension2" tag="li">-->
+          <!--<router-link to="/extension2" tag="li">-->
         <li @click="ordertab(2)">
-          <div class="title">未结算</div>
-          <div class="iconfont listicon">&#xe624;</div>
-          <div>
-            <span class="num">1</span><span class="yuan"> 单</span>
-          </div>
+            <div class="title">未结算</div>
+            <div class="iconfont listicon">&#xe624;</div>
+            <div>
+              <span class="num">1</span><span class="yuan"> 单</span>
+            </div>
           <!--</router-link>-->
         </li>
         <!--<router-link to="/extension3" tag="li">-->
@@ -153,52 +153,28 @@
         </li>
       </ul>
     </section>
-    <!--  <transition name="slide">
-       <router-view></router-view>
-     </transition> -->
+   <!--  <transition name="slide">
+      <router-view></router-view>
+    </transition> -->
     <v-tabbar></v-tabbar>
-    <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight">
+    <transition name="slide">
       <router-view></router-view>
     </transition>
   </div>
 </template>
 <script>
   import vTabbar from '../components/common/Tabbar.vue'
-  import {recordStatistics_get} from '../api/api'
+  import {recordStatistics} from '../api/api'
   import {_webapp} from '../config/webapp'
-  import {mapMutations, mapGetters} from 'vuex'
+  import {mapMutations,mapGetters} from 'vuex'
   export default{
     data () {
-      return {
-        cg_money_sum: '',//销售总额
-        c_money_sum: '', //佣金总额
-
-
-      }
+      return {}
     },
     components: {
       vTabbar
     },
     methods: {
-      init () {
-        let _this = this;
-        let params = {};
-        //佣金统计
-        recordStatistics_get(params, function (res) {
-          if (res.statusCode == 1) {
-            console.log(res)
-            let data = res.data
-            _this.cg_money_sum = res.data.total.cg_money_sum
-            _this.c_money_sum = res.data.total.c_money_sum
-          } else {
-
-          }
-        })
-        //团队列表
-        
-
-
-      },
       partnertab(idx){
         this.tabselect(idx)
         this.$router.push({name: `partnerlist${idx}`})
@@ -210,8 +186,8 @@
 
       },
       ...mapMutations({
-        tabselect: 'TABSELECT',
-      }),
+        tabselect:'TABSELECT',
+      })
     },
     created(){
       this.init()
