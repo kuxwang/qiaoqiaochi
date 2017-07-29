@@ -1,97 +1,52 @@
 <template>
   <div class="main">
     <section>
-      <mt-header fixed title="我的伙伴" class="ocolor">
+      <mt-header fixed title="我的伙伴">
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
-        <!--<mt-button icon="more" slot="right"></mt-button>-->
       </mt-header>
 
     </section>
     <section class="top">
     </section>
-    <ul class="partner-type">
-      <router-link to="/partnerlist" tag="li" class="list-type">
-        <span class="iconfont">&#xe632;</span>新的粉丝
-        <span class="num-right">人</span>
-      </router-link>
-      <router-link to="/partnerlist" tag="li" class="list-type">
-        <span class="iconfont">&#xe628; </span>成交粉丝
-        <span class="num-right">人</span>
-      </router-link>
-      <router-link to="/partnerlist" tag="li" class="list-type">
-        <span class="iconfont"> &#xe65a;</span>高价值粉丝
-        <span class="num-right">人</span>
-      </router-link>
-      <router-link to="/partnerlist" tag="li" class="list-type">
-        <span class="iconfont">&#xe68e; </span>分享达人
-        <span class="num-right">人</span>
-      </router-link>
-    </ul>
-    <mt-navbar class="page-part" v-model="selected">
-      <mt-tab-item id="1">所有伙伴</mt-tab-item>
-      <mt-tab-item id="2">已购买伙伴</mt-tab-item>
-      <mt-tab-item id="3">未购买伙伴</mt-tab-item>
-    </mt-navbar>
 
-    <mt-tab-container v-model="selected">
-      <mt-tab-container-item id="1">
-        <router-link to="/partnerlist" tag="div" class="p-cell">
-            <div class="logo">
-              <img src="../../assets/images/shoppingCart-01.jpg"/>
-            </div>
-            <div class="info">
-              <h5>名字</h5>
-              <span>123112</span>
-            </div>
-        </router-link>
-      </mt-tab-container-item>
-      <mt-tab-container-item id="2">
-        <router-link to="/partnerlist" tag="div" class="p-cell">
-          <div class="logo">
-            <img src="../../assets/images/shoppingCart-01.jpg"/>
-          </div>
-          <div class="info">
-            <h5>名字</h5>
-            <span>123112</span>
-          </div>
-        </router-link>
-      </mt-tab-container-item>
-      <mt-tab-container-item id="3">
-        <router-link to="/partnerlist" tag="div" class="p-cell">
-          <div class="logo">
-            <img src="../../assets/images/shoppingCart-01.jpg"/>
-          </div>
-          <div class="info">
-            <h5>名字</h5>
-            <span class="userid">123112</span>
-            <span class="usertime">关注</span>
-          </div>
-        </router-link>
-      </mt-tab-container-item>
-    </mt-tab-container>
-    <mt-popup
-      v-model="popupVisible"
-      popup-transition="popup-fade">
-      <div>
-        <div class="pop-logo">
-          <img src="../../assets/images/shoppingCart-01.jpg"/>
-          <span>名字</span>
-          <span>ID</span>
+    <ul class="nav-tab">
+      <!--<router-link to="/partner1" tag="li">-->
+        <li :class="{tabActive: selected==1 }" @click="selecttab(1)">
+        <div class="title">所有伙伴</div>
+        <div class="iconfont listicon">&#xe646;</div>
+        <div>
+          <span class="num">1</span><span class="yuan"> 人</span>
         </div>
-        <ul class="pop-info">
-          <li>粉丝：</li>
-          <li>关注方式</li>
-          <li>消费金额</li>
-          <li>微信号</li>
-          <li></li>
-        </ul>
-      </div>
-    </mt-popup>
-    <transition name="slide">
-      <router-view></router-view>
-    </transition>
+      <!--</router-link>-->
+      <!--<router-link to="/partner2" tag="li">-->
+        </li>
+        <li :class="{tabActive: selected==2 }" @click="selecttab(2)">
+        <div class="title">已购买伙伴</div>
+        <div class="iconfont listicon">&#xe600;</div>
+        <div>
+          <span class="num">10</span><span class="yuan"> 人</span>
+        </div>
+      <!--</router-link>
+      <router-link to="/partner3" tag="li">-->
+        </li>
+      <li :class="{tabActive: selected==3 }" @click="selecttab(3)">
+        <div class="title">未购买伙伴</div>
+        <div class="iconfont listicon">&#xe60d;</div>
+        <div>
+          <span class="num">100</span><span class="yuan"> 人</span>
+        </div>
+      <!--</router-link>-->
+      </li>
+    </ul>
+    <div class="search">
+      <input type="search" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
+      <button>搜索</button>
+    </div>
+
+    <router-view></router-view>
+
   </div>
 
 </template>
@@ -99,12 +54,13 @@
   import {Popup, Picker} from 'mint-ui';
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
   import {Carts,Goods,ApiLogin} from '../../api/api.js'
-
+  import {mapMutations, mapGetters} from 'vuex';
   export default{
     data () {
       return {
         active:'tab-container1',
-        selected:'1',
+        selected: 1,
+        find:'',
         cell: [
           {
               icon:'&#xe612',
@@ -138,24 +94,32 @@
     methods: {
         open(){
             this.popupVisible=true
-        }
+        },
+      selecttab(idx){
+        this.selected = idx;
+        this.$router.push({name: `partnerlist${idx}`})
+      },
+    },
+    computed:{
+    ...mapGetters([
+        'tabselect',
+      ])
     },
     created(){
-        let params={
-          params: {
-            timestamp:1500922207,
-            sign:'TIMESTAMP=1500922207&key=MJJB614J',
-            access_token:"78dddb9fe91d6ac654af8c4abd9fb036",
-          }
-        }
-      Goods(params).then((res)=>{
-        console.log(res)
-      })
-        }
-
+      this.selected = this.tabselect;
+      console.log(this.selected)
+    },
+    mounted() {
+      this.selected = this.tabselect;
+      console.log(this.selected)
 
 
     }
+
+
+
+
+  }
 
 </script>
 <style scoped>
@@ -443,5 +407,92 @@
   }
   .mint-navbar {
     margin: 0.05rem 0;
+  }
+
+  .nav-tab {
+    margin-top: .5rem;
+    height: .90rem;
+    -webkit-box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
+    -moz-box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
+    box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
+    display: flex;
+  }
+
+
+  .nav-tab li {
+    position: relative;
+    display: block;
+    /*width: 33.3%;*/
+    height: .90rem;
+    /*float: left*/
+    background-color: #fff;
+    padding: .1rem .2rem;
+    flex: 1;
+  }
+
+  .nav-tab .li1:after, .nav-tab .li2:after,.nav-tab .li4:after, .nav-tab .li5:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: .14rem;
+    width: 1px;
+    height: 70%;
+    background-color: rgba(0, 0, 0, .1);
+  }
+
+  .nav-tab .li4, .content .li5, .content .li6 {
+    border-top: 1px solid rgba(0, 0, 0, .2)
+  }
+
+  .nav-tab .title {
+    color: rgba(0, 0, 0, .5);
+    font-size: .14rem;
+    line-height: .2rem;
+  }
+
+  .nav-tab .iconfont {
+    width: .28rem;
+    height: .30rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: .20rem;
+    /*border: 1px solid #F5751D;*/
+    line-height: .3rem;
+    /*color: #F5751D;*/
+    border-radius: 50%;
+  }
+
+  .search {
+    height: .3rem;
+    display: flex;
+    margin: .2rem 2% ;
+    width: 96%;
+  }
+  .search input {
+    border: none;
+    display: block;
+    height: 100%;
+    flex: 1;
+    padding: 0 0.2rem;
+  }
+  .search button {
+    background-color: #F5751D;
+    display: block;
+    height: 100%;
+    flex: .3;
+    color: #fff;
+  }
+  .mint-header {
+    color: #252525 !important;
+  }
+  .nav-tab .tabActive{
+    background-color: #f5751d;
+    color: #fff;
+  }
+  .nav-tab .tabActive .title {
+    color: #fff;
+  }
+  .tabActive .num,.tabActive .yuan {
+    color: #fff;
   }
 </style>

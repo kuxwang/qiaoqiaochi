@@ -6,7 +6,7 @@
         </a>
       </mt-header>
       <ul class="deliveryAddress">
-      	<li :class="{on:onActive==i}" @click="getMyAddress(v,i)" v-for="(v,i) in addressLists">
+      	<li :class="{on:onActives==i}" @click="getMyAddress(v,i)" v-for="(v,i) in addressLists">
       		<div class="clearfix deliveryAddress-tp">
       			<div class="fl">
 	      			收货人：{{v.realname}}
@@ -29,11 +29,11 @@
     </div>
 </template>
 <script>
-  import {mapActions,mapMutations} from 'vuex';
+  import {mapGetters ,mapMutations} from 'vuex';
 	export default{
     data(){
       return{
-        onActive:'',
+        onActives:'',
         addressLists:[
           {
               "id":"111",
@@ -85,16 +85,23 @@
 				this.$router.go(-1);
 			},
       getMyAddress(v,i){
-        this.onActive=i;
+        this.onActives=i;
+        this.$router.go(-1);
         this.getUserAddress(v);
-        // this.$router.push({name:'confirmorder'});
+        this.getOnActive(i);
       },
       ...mapMutations({
-        'getUserAddress':'GET_USERADDRESS'
+        'getUserAddress':'GET_USERADDRESS',
+        'getOnActive':'GET_ONACTIVE'
       })
 		},
+    computed:{
+      ...mapGetters([
+        "onActive"
+      ])
+    },
     mounted(){
-      this.onActive='2'
+      this.onActives=this.onActive
     }
 	}
 </script>

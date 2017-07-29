@@ -95,6 +95,7 @@
   }
   .left {
     flex: 1;
+
   }
   .right {
     flex: 3.5;

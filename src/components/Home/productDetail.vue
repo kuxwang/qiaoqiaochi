@@ -68,7 +68,6 @@
       </mt-popup>
     </div>
   </transition>
-
 </template>
 <script>
   import { Header,Popup} from 'mint-ui'

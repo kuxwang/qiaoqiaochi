@@ -22,8 +22,15 @@ const QrCode = r => require.ensure([], () => r(require('../view/QrCode.vue')), '
 const extension = r => require.ensure([], () => r(require('../components/distribution/extension.vue')), 'vipCvnenter')
 const partner = r => require.ensure([], () => r(require('../components/distribution/partner.vue')), 'vipCvnenter')
 const partnerlist = r => require.ensure([], () => r(require('../components/distribution/partnerlist.vue')), 'vipCvnenter')
+const partnerlist1 = r => require.ensure([], () => r(require('../components/distribution/partnerlist1.vue')), 'vipCvnenter')
+const partnerlist2 = r => require.ensure([], () => r(require('../components/distribution/partnerlist2.vue')), 'vipCvnenter')
+const partnerlist3 = r => require.ensure([], () => r(require('../components/distribution/partnerlist3.vue')), 'vipCvnenter')
 const orderinfo = r => require.ensure([], () => r(require('../components/distribution/orderinfo.vue')), 'vipCvnenter')
 const UserInfo= r => require.ensure([], () => r(require('../components/VipCenter/UserInfo.vue')), 'distribution')
+const extension1 = r => require.ensure([], () => r(require('../components/distribution/extension1.vue')), 'vipCvnenter')
+const extension2 = r => require.ensure([], () => r(require('../components/distribution/extension2.vue')), 'vipCvnenter')
+const extension3 = r => require.ensure([], () => r(require('../components/distribution/extension3.vue')), 'vipCvnenter')
+const extension4 = r => require.ensure([], () => r(require('../components/distribution/extension4.vue')), 'vipCvnenter')
 
 /**
  * 商品详情模块
@@ -115,7 +122,28 @@ export default new Router({
                   path: '/orderinfo',
                   name: 'orderinfo',
                   component: orderinfo
+                },
+                {
+                  path: '/extension1',
+                  name: 'extension1',
+                  component: extension1
+                },
+                {
+                  path: '/extension2',
+                  name: 'extension2',
+                  component: extension2
+                },
+                {
+                  path: '/extension3',
+                  name: 'extension3',
+                  component: extension3
+                },
+                {
+                  path: '/extension4',
+                  name: 'extension4',
+                  component: extension4
                 }
+
               ]
             },
             {
@@ -127,6 +155,21 @@ export default new Router({
                   path: '/partnerlist',
                   name: 'partnerlist',
                   component: partnerlist
+                },
+                {
+                  path: '/partner1',
+                  name: 'partnerlist1',
+                  component: partnerlist1
+                },
+                {
+                  path: '/partner2',
+                  name: 'partnerlist2',
+                  component: partnerlist2
+                },
+                {
+                  path: '/partner3',
+                  name: 'partnerlist3',
+                  component: partnerlist3
                 }
               ]
             },

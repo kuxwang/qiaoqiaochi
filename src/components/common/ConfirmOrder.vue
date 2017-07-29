@@ -145,7 +145,6 @@
       	<transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight" >
 	    	<router-view></router-view>
 	    </transition>
-
 	</div>
 </template>
 <script>

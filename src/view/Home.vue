@@ -13,7 +13,6 @@
     </ul>
     <v-tabbar></v-tabbar>
     <router-view></router-view>
-
   </div>
 </template>
 <script>
