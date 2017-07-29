@@ -2,8 +2,10 @@ import {
   GET_USERADDRESS,
   TABSELECT,
   GET_ONACTIVE,
-  GET_BUSACTIVE
-}from
+  GET_BUSACTIVE,
+  ORDERSN
+}
+  from
     './mutation-types.js'
 
 import { setStore, getStore } from '../config/myUtils'
@@ -23,6 +25,8 @@ export default {
   },
   [GET_BUSACTIVE](state,data){
   	state.busActive=data;
-  	console.log(data)
+  },
+  [ORDERSN] (state, data) {
+    state.ordersn = data
   }
 }

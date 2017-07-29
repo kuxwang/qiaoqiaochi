@@ -14,6 +14,7 @@
 <<<<<<< HEAD
 =======
 <style>
+  @import './assets/css/fonts/iconfont.css';
   #app {
     /*width: 3.75rem;*/
     height: 100%;

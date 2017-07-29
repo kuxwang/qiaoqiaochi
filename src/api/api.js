@@ -6,9 +6,9 @@ import {_webapp} from '../config/_webapp.js'
 const base = 'https://api.duoyunjiav2.wshoto.com';
 const header = 'application/json';
 const dataType = 'json';
-// const Promise = require("bluebird");
+
 /**
- * 分销
+ * 分销中心
  */
 export const commissions = {
   /**
@@ -19,17 +19,104 @@ export const commissions = {
     header,
     dataType
   },
-
+  recordStatistics_get: {url: `${base}/commissions/recordStatistics`, method: 'GET', header, dataType},
+  recordStatistics_post: {url: `${base}/commissions/recordStatistics`, method: 'POST', header, dataType},
   /**
    * 订单统计
+   * 订单列表
    */
-  orderStatistics: {
-    url: `${base}/carts`,
-    method: 'GET',
-    header,
-    dataType
-  }
+
+  orderStatistics: {url: `${base}/commissions/orderStatistics`, method:'GET', header, dataType},
+  /**
+   * 订单列表
+   */
+  orderLists: {url: `${base}/commissions/orderLists`, method: 'GET', header, dataType},
+  /**
+   * 订单详情
+   */
+  orders: {url: `${base}/commissions/orders`, method: 'GET', header, dataType},
+  /**
+   * 获取团队列表
+   */
+  teamsLists: {url: `${base}/commissions/teamsLists`, method: 'GET', header, dataType},
+  /**
+   * 获取团队指定用户
+   */
+  teams: {url: `${base}/commissions/teams`, method: 'GET', header, dataType},
+  /**
+   * 获取团队数量统计
+   */
+  teamsStatistics: {url: `${base}/commissions/teamsStatistics`, method: 'GET', header, dataType},
+};
+
+export const members = {
+  memberInfo: {url: `${base}/members/memberInfo`, method: 'GET', header, dataType}
 }
+/**
+ * 佣金统计
+ * @param params
+ * @param callback
+ */
+export const recordStatistics_get = function (params, callback) {
+  _webapp.requestx(Object.assign(params, commissions.recordStatistics_get), function (res) {
+    callback(res)
+  })
+};
+/**
+ * 获取团队数量统计
+ * @param params
+ * @param callback
+ */
+export const teamsStatistics = function (params, callback) {
+  _webapp.requestx(Object.assign(params, commissions.teamsStatistics), function (res) {
+    callback(res)
+  })
+};
+export const teamsLists = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.teamsLists), function (res) {callback(res)})};
+/**
+ * 订单统计
+ * @param params
+ * @param callback
+ */
+export const orderStatistics = function (params, callback) {
+  _webapp.requestx(Object.assign(params, commissions.orderStatistics), function (res) {
+    callback(res)
+  })
+};
+/**
+ * 订单列表
+ * @param params
+ * @param callback
+ */
+export const orderLists = function (params, callback) {
+  _webapp.requestx(Object.assign(params, commissions.orderLists), function (res) {
+    callback(res)
+  })
+};
+/**
+ * 订单详情
+ * @param params
+ * @param callback
+ */
+export const orders = function (params, callback) {
+  _webapp.requestx(Object.assign(params, commissions.orders), function (res) {
+    callback(res)
+  })
+};
+
+/**
+ * 用户信息获取
+ * @param params
+ * @param callback
+ */
+export const memberInfo = function (params, callback) {
+  _webapp.requestx(Object.assign(params, members.memberInfo), function (res) {
+    callback(res)
+  })
+};
+
+
+
 
 /**
  * 首页商品展示 yellowStar
@@ -99,58 +186,6 @@ const MYADDRESS1={
 }
 export const GET_MYADDRESS1 = function(params, callback) {
   _webapp.requestx(Object.assign(params,MYADDRESS1), function(res) {
-    callback(res)
-  })
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * 参数合并
- */
-// export const mergeParams = (baseParams, addParams) => {
-//   return baseParams.push(addParams)
-// }
-
-// console.log(_webapp)
-// console.log(Promise())
-// export const recordStatistics = params => {return _webapp.requestx(Object.assign(params,commissions.recordStatistics))};
-
-
-/**
- * 佣金统计
- * @param params
- * @param callback
- */
-// function requestweb(params, callback){
-//   _webapp.requestx(Object.assign(params, commissions.recordStatistics), res => {
-//     callback(res)
-//   })
-// }
-
-/**
- * 佣金统计
- * @param params
- * @param callback
- */
-export const recordStatistics = function(params, callback) {
-  _webapp.requestx(Object.assign(params, commissions.recordStatistics), function(res) {
-    callback(res)
-  })
-};
-export const orderStatistics = function(params, callback) {
-  _webapp.requestx(Object.assign(params, commissions.orderStatistics), function(res) {
     callback(res)
   })
 };
