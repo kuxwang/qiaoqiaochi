@@ -19,10 +19,12 @@
 
 <script>
   import { Loadmore } from  'mint-ui'
+  import {orderLists} from  '../../api/api.js'
   export default{
     data(){
       return {
-        thumb:require('../../assets/images/userinfo-02.png')
+        thumb:require('../../assets/images/userinfo-02.png'),
+        orderList: []
       }
     },
     components: {
@@ -38,6 +40,20 @@
       allLoaded(){
 
       }
+    },
+    created(){
+
+    },
+    mounted() {
+      let params= {
+        type:'total'
+
+      }
+      orderLists(params,(res)=> {
+        this.orderList=res;
+        console.log(this.orderList)
+        console.log(4344)
+      })
     }
   }
 </script>

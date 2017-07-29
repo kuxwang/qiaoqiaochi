@@ -14,10 +14,10 @@
     <ul class="nav-tab">
       <li :class="{tabActive: selected==1 }" @click="selecttab(1)">
       <!--<router-link @click="selecttab(1)" to="/extension1" tag="li" :class="{tabActive: selected==1 }"  >-->
-        <div class="title">全部{{selected}}</div>
+        <div class="title">全部</div>
         <div class="iconfont listicon">&#xe624;</div>
         <div>
-          <span class="num">1</span><span class="yuan"> 单</span>
+          <span class="num">{{ordernum.total.order_count}}</span><span class="yuan"> 单</span>
         </div>
       <!--</router-link>-->
       </li>
@@ -26,7 +26,7 @@
         <div class="title">未结算</div>
         <div class="iconfont listicon">&#xe624;</div>
         <div>
-          <span class="num">1</span><span class="yuan"> 单</span>
+          <span class="num">{{ordernum.lock.order_count}}</span><span class="yuan"> 单</span>
         </div>
       <!--</router-link>-->
       <!--</li>-->
@@ -37,7 +37,7 @@
         <div class="title">已退款</div>
         <div class="iconfont listicon">&#xe8b5;</div>
         <div>
-          <span class="num">1</span><span class="yuan"> 单</span>
+          <span class="num">{{ordernum.refund.order_count}}</span><span class="yuan"> 单</span>
         </div>
         </li>
       <!--</router-link>-->
@@ -48,37 +48,35 @@
         <div class="title">已结算</div>
         <div class="iconfont listicon">&#xe619;</div>
         <div>
-          <span class="num">1</span><span class="yuan"> 单</span>
+          <span class="num">{{ordernum.ok.order_count}}</span><span class="yuan"> 单</span>
         </div>
         </li>
       <!--</router-link>-->
     </ul>
 
-
     <div class="search">
       <input type="search" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
       <button>搜索</button>
     </div>
-
-
       <router-view></router-view>
 
-
-
   </div>
-
 </template>
 <script>
   import MtCell from "../../../node_modules/mint-ui/packages/cell/src/cell";
 //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
   import { Search } from 'mint-ui';
   import {mapMutations, mapGetters} from 'vuex';
+  import {orderLists,orderStatistics} from  '../../api/api.js'
+
   export default{
     data () {
       return {
         active:'tab-container1',
         selected: 1,
-        find:''
+        find:'',
+        orderList: '',
+        ordernum:{}
       }
     },
     components: {
@@ -92,9 +90,26 @@
       },
 
 
+
     },
     created(){
-      this.selected=this.tabselect
+      this.selected=this.tabselect;
+
+    },
+    mounted(){
+      let params= {
+        /*type: 'total',
+        page: 1,
+        psize: 10*/
+
+      }
+      orderStatistics(params, (res)=> {
+       /* this.ordernum=res;
+        console.log(this.ordernum)*/
+        console.log(res);
+        this.ordernum=res.data;
+        console.log(this.ordernum)
+      })
     },
     computed:{
     ...mapGetters([
