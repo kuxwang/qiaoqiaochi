@@ -32,6 +32,9 @@ export const commissions = {
    * 获取团队数量统计
    */
   teamsStatistics: {url: `${base}/commissions/teamsStatistics`, method: 'GET', header, dataType},
+  /**
+   *
+   */
 };
 
 /**
@@ -41,8 +44,15 @@ export const commissions = {
  */
 export const recordStatistics_get = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.recordStatistics_get), function (res) {callback(res)})};
 /**
- * 订单操作
+ * 获取团队数量统计
  * @param params
  * @param callback
  */
 export const teamsStatistics = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.teamsStatistics), function (res) {callback(res)})};
+
+/**
+ * 订单统计
+ * @param params
+ * @param callback
+ */
+export const orderStatistics = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.orderStatistics), function (res) {callback(res)})};
