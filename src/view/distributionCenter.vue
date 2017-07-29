@@ -1,13 +1,5 @@
 <template>
   <div class="main">
-    <!--<section>-->
-    <!--<mt-header fixed title="会员中心" class="ocolor">-->
-    <!--<router-link to="/test" slot="left">-->
-    <!--<mt-button icon="back">返回</mt-button>-->
-    <!--</router-link>-->
-    <!--<mt-button icon="more" slot="right"></mt-button>-->
-    <!--</mt-header>-->
-    <!--</section>-->
     <section class="avatar">
       <div class="icon"></div>
       <div class="message">
@@ -30,11 +22,11 @@
     <section class="top">
       <div class="top_1">
         <span class="title">营业额</span>
-        <span class="num">703205</span><span class="yuan"> 元</span>
+        <span class="num">{{cg_money_sum}}</span><span class="yuan"> 元</span>
       </div>
       <div>
         <span class="title">佣金</span>
-        <span class="num">1308.34</span><span class="yuan"> 元</span>
+        <span class="num">{{c_money_sum}}</span><span class="yuan"> 元</span>
       </div>
     </section>
     <section class="content">
@@ -76,7 +68,7 @@
       </div>
       <ul class="order-list">
         <li class="li1" @click="ordertab(1)">
-        <!--<router-link to="/extension1" tag="li">-->
+          <!--<router-link to="/extension1" tag="li">-->
           <div class="title">全部</div>
           <div class="iconfont listicon">&#xe624;</div>
           <div>
@@ -197,12 +189,16 @@
         tabselect:'TABSELECT',
       })
     },
-    mounted(){
-      let params = []
-      recordStatistics(params, function (res) {
-        console.log(res)
-      })
+    created(){
+      this.init()
+
+    },
+    mounted()
+    {
+
     }
+    ,
+
   }
 </script>
 <style scoped>
