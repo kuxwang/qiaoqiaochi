@@ -6,121 +6,17 @@
         </a>
       </mt-header>
       <ul class="deliveryAddress">
-      	<li class="on">
+      	<li :class="{on:onActives==i}" @click="getMyAddress(v,i)" v-for="(v,i) in addressLists">
       		<div class="clearfix deliveryAddress-tp">
       			<div class="fl">
-	      			收货人：孙秀明
+	      			收货人：{{v.realname}}
 	      		</div>
 	      		<div class="fr">
-	      			18395319906
+	      			{{v.mobile}}
 	      		</div>
       		</div>
       		<p class="deliveryAddress-mid lr2">
-      			江苏省无锡市滨湖区雪浪街道 科教创业园3号楼10F 江苏微盛网络科技有限公司 1005室
-      		</p>
-      	</li>
-      	<li>
-      		<div class="clearfix deliveryAddress-tp">
-      			<div class="fl">
-	      			收货人：孙秀明
-	      		</div>
-	      		<div class="fr">
-	      			18395319906
-	      		</div>
-      		</div>
-      		<p class="deliveryAddress-mid lr2">
-      			江苏省无锡市滨湖区雪浪街道 科教创业园3号楼10F 江苏微盛网络科技有限公司 1005室
-      		</p>
-      	</li>
-      	<li>
-      		<div class="clearfix deliveryAddress-tp">
-      			<div class="fl">
-	      			收货人：孙秀明
-	      		</div>
-	      		<div class="fr">
-	      			18395319906
-	      		</div>
-      		</div>
-      		<p class="deliveryAddress-mid lr2">
-      			江苏省无锡市滨湖区雪浪街道 科教创业园3号楼10F 江苏微盛网络科技有限公司 1005室
-      		</p>
-      	</li>
-      		<li>
-      		<div class="clearfix deliveryAddress-tp">
-      			<div class="fl">
-	      			收货人：孙秀明
-	      		</div>
-	      		<div class="fr">
-	      			18395319906
-	      		</div>
-      		</div>
-      		<p class="deliveryAddress-mid lr2">
-      			江苏省无锡市滨湖区雪浪街道 科教创业园3号楼10F 江苏微盛网络科技有限公司 1005室
-      		</p>
-      	</li>
-      	<li>
-      		<div class="clearfix deliveryAddress-tp">
-      			<div class="fl">
-	      			收货人：孙秀明
-	      		</div>
-	      		<div class="fr">
-	      			18395319906
-	      		</div>
-      		</div>
-      		<p class="deliveryAddress-mid lr2">
-      			江苏省无锡市滨湖区雪浪街道 科教创业园3号楼10F 江苏微盛网络科技有限公司 1005室
-      		</p>
-      	</li>
-      		<li>
-      		<div class="clearfix deliveryAddress-tp">
-      			<div class="fl">
-	      			收货人：孙秀明
-	      		</div>
-	      		<div class="fr">
-	      			18395319906
-	      		</div>
-      		</div>
-      		<p class="deliveryAddress-mid lr2">
-      			江苏省无锡市滨湖区雪浪街道 科教创业园3号楼10F 江苏微盛网络科技有限公司 1005室
-      		</p>
-      	</li>
-      	<li>
-      		<div class="clearfix deliveryAddress-tp">
-      			<div class="fl">
-	      			收货人：孙秀明
-	      		</div>
-	      		<div class="fr">
-	      			18395319906
-	      		</div>
-      		</div>
-      		<p class="deliveryAddress-mid lr2">
-      			江苏省无锡市滨湖区雪浪街道 科教创业园3号楼10F 江苏微盛网络科技有限公司 1005室
-      		</p>
-      	</li>
-      		<li>
-      		<div class="clearfix deliveryAddress-tp">
-      			<div class="fl">
-	      			收货人：孙秀明
-	      		</div>
-	      		<div class="fr">
-	      			18395319906
-	      		</div>
-      		</div>
-      		<p class="deliveryAddress-mid lr2">
-      			江苏省无锡市滨湖区雪浪街道 科教创业园3号楼10F 江苏微盛网络科技有限公司 1005室
-      		</p>
-      	</li>
-      	<li>
-      		<div class="clearfix deliveryAddress-tp">
-      			<div class="fl">
-	      			收货人：孙秀明
-	      		</div>
-	      		<div class="fr">
-	      			18395319906
-	      		</div>
-      		</div>
-      		<p class="deliveryAddress-mid lr2">
-      			江苏省无锡市滨湖区雪浪街道 科教创业园3号楼10F 江苏微盛网络科技有限公司 1005室
+            {{v.province}}{{v.city}}{{v.area}}{{v.address}}
       		</p>
       	</li>
       </ul>
@@ -133,12 +29,80 @@
     </div>
 </template>
 <script>
+  import {mapGetters ,mapMutations} from 'vuex';
 	export default{
+    data(){
+      return{
+        onActives:'',
+        addressLists:[
+          {
+              "id":"111",
+              "uniacid":"2",
+              "openid":"ombk8wiE8F5XPNFtBEga5s2voS_E",
+              "realname":"2号",
+              "mobile":"18912393729",
+              "province":"西藏区",
+              "city":"拉萨市",
+              "area":"城关区",
+              "address":"巴尔库路天海大酒店(测试)",
+              "isdefault":"1",
+              "zipcode":"",
+              "deleted":"0"
+          },
+          {
+              "id":"222",
+              "uniacid":"2",
+              "openid":"ombk8wiE8F5XPNFtBEga5s2voS_E",
+              "realname":"2号",
+              "mobile":"18912393729",
+              "province":"西藏区",
+              "city":"拉萨市",
+              "area":"城关区",
+              "address":"巴尔库路天海大酒店(测试)",
+              "isdefault":"1",
+              "zipcode":"",
+              "deleted":"0"
+          },
+          {
+              "id":"333",
+              "uniacid":"2",
+              "openid":"ombk8wiE8F5XPNFtBEga5s2voS_E",
+              "realname":"2号",
+              "mobile":"18912393729",
+              "province":"西藏区",
+              "city":"拉萨市",
+              "area":"城关区",
+              "address":"巴尔库路天海大酒店(测试)",
+              "isdefault":"1",
+              "zipcode":"",
+              "deleted":"0"
+          }
+        ]
+      }
+    },
 		methods:{
 			goBack(){
 				this.$router.go(-1);
-			}
-		}
+			},
+      getMyAddress(v,i){
+        this.onActives=i;
+        this.$router.go(-1);
+        this.getUserAddress(v);
+        this.getOnActive(i);
+      },
+      ...mapMutations({
+        'getUserAddress':'GET_USERADDRESS',
+        'getOnActive':'GET_ONACTIVE'
+      })
+		},
+    computed:{
+      ...mapGetters([
+        "onActive"
+      ])
+    },
+    mounted(){
+      this.onActives=this.onActive
+    }
 	}
 </script>
 <style scoped>

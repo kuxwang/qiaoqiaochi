@@ -6,9 +6,6 @@
         </a>
       </mt-header>
       <router-link class="deliveryAddress" tag="div" :to="{name:'deliveryaddress'}">
-	      <!-- 	<div class="fl deliveryAddress-lf iconfont">
-	      		&#xe636;
-	      	</div> -->
 	      	<ul class="fl deliveryAddress-lr">
 	      		<li class="delivery-people clearfix">
 	      			<span class="fl">收货人：孙秀明</span>
@@ -19,6 +16,9 @@
 	      		</li>
 	      	</ul>
       	</router-link>
+      <!-- 	<router-link class="noDeliveryAddress" tag="div" :to="{name:'deliveryaddress'}">
+	      	设置收货地址
+      	</router-link> -->
       	<ul class="goodsList">
       		<li>
       			<div class="goodsList-tp">
@@ -148,10 +148,11 @@
 	</div>
 </template>
 <script>
+	import { Header,MessageBox} from 'mint-ui';
+	import {GET_MYADDRESS1} from '../../api/api';
 	export default{
 		data(){
 			return{
-
 			}
 		},
 		methods:{
@@ -161,7 +162,21 @@
 			goPay(){
 				this.$router.push({name:'payselect'})
 			}
-		}
+		},
+		mounted(){
+	      // MessageBox({title: '您还未设置收货地址，请设置地址?',message: '点击确认设置',showCancelButton: true}).then(action => {
+	      //     if(action=='confirm'){//表示点击了确定
+	            
+	      //     }else if(action=='cancel'){//表示点击了取消
+	      //       // console.log('点击了取消')
+	      //     }
+	      // })
+	      	let params = []
+			let _this=this
+	    	GET_MYADDRESS1(params, function (res) {
+	    		console.log(res)
+	      	})
+	    }
 	}
 </script>
 <style scoped>
@@ -397,4 +412,25 @@
 	.exhibition .goods-intPrice{
 		font-size: 0.16rem
 	}
+	.noDeliveryAddress{
+		margin-top: 0.55rem;
+		height: 0.5rem;
+		line-height: 0.5rem;
+		background: #646C89;
+		padding:0 0.1rem;
+		font-size: 0.14rem;
+		color: #fff;
+		text-align: left;
+		position: relative;
+	}
+	.noDeliveryAddress:after{
+  		content: '';
+	    position: absolute;
+	    width: 0.065rem;
+	    height: 0.12rem;
+	    top: 0.19rem;
+	    right: 0.1rem;
+	    background: url('../../assets/images/userinfo-03.png') no-repeat center center;
+	    background-size: cover;
+  	}
 </style>

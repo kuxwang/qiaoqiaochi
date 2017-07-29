@@ -1,12 +1,12 @@
 <template>
   <transition name="slide">
   <div class="main order-detail-header">
-    <mt-header title="订单详情" class="ocolor myOrderDetail">
+    <mt-header title="订单详情" >
       <a @click="goBack" slot="left">
         <mt-button icon="back"></mt-button>
       </a>
     </mt-header>
-    <div class="buyer-info ocolor">
+    <div class="buyer-info">
       <div class="buyer-info-box">
         <div class="iconfont" >
           &#xe66f;
@@ -85,7 +85,7 @@
   </transition>
 </template>
 <script>
-  import { Header} from 'mint-ui'
+  import { Header,MessageBox} from 'mint-ui'
   import PageNavbar from "../../view/Order.vue";
   import {orderDetail} from "../../api/api.js"
   export default {
@@ -154,45 +154,40 @@
     overflow:auto;
     z-index:20;
   }
-  .mint-header{
+ /* .mint-header{
     border-bottom:none;
+  }*/
+/*  .mint-header-title{
     color:#fff;
-  }
-  .mint-header a{
-    color:#fff;
-  }
-  .mint-header-title{
-    color:#fff;
-  }
+  }*/
   .order-detail-header .mint-header {
     height:.45rem;
   }
   .buyer-info{
-    height:1rem;
+    height:.8rem;
     width:100%;
-    background: rgba(245,117,29,.2);
+    margin-bottom: .1rem;
   }
   .buyer-info-box{
-    height:1rem;
+    height:.8rem;
     width:100%;
-    background: rgba(0,0,0,.25);
     position:relative;
+    background: #fff;
   }
   .buyer-info-box>div.iconfont{
     position:absolute;
     left:.05rem;
-    top:.28rem;
-    color:#fff;
+    top:.18rem;
     font-size:.35rem;
   }
   .order-state{
     position:absolute;
     left:.48rem;
-    top:.2rem;
+    top:.1rem;
   }
   .order-state li{
     text-align: left;
-    color:#fff;
+    /*color:#fff;*/
     font-size:.13rem;
     margin-bottom:.03rem;
   }

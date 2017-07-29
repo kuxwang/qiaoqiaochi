@@ -11,7 +11,10 @@
   }
 </script>
 
+<<<<<<< HEAD
+=======
 <style>
+  @import './assets/css/fonts/iconfont.css';
   #app {
     /*width: 3.75rem;*/
     height: 100%;
@@ -88,3 +91,4 @@
     display:none;
   }
 </style>
+>>>>>>> 562645b9c04b518fc8cf5d826ec244fd0a22fd8d

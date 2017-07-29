@@ -14,10 +14,10 @@
     <ul class="nav-tab">
       <li :class="{tabActive: selected==1 }" @click="selecttab(1)">
       <!--<router-link @click="selecttab(1)" to="/extension1" tag="li" :class="{tabActive: selected==1 }"  >-->
-        <div class="title">全部{{selected}}</div>
+        <div class="title">全部</div>
         <div class="iconfont listicon">&#xe624;</div>
         <div>
-          <span class="num">1</span><span class="yuan"> 单</span>
+          <span class="num">{{ordernum.total.order_count}}</span><span class="yuan"> 单</span>
         </div>
       <!--</router-link>-->
       </li>
@@ -26,7 +26,7 @@
         <div class="title">未结算</div>
         <div class="iconfont listicon">&#xe624;</div>
         <div>
-          <span class="num">1</span><span class="yuan"> 单</span>
+          <span class="num">{{ordernum.lock.order_count}}</span><span class="yuan"> 单</span>
         </div>
       <!--</router-link>-->
       <!--</li>-->
@@ -37,7 +37,7 @@
         <div class="title">已退款</div>
         <div class="iconfont listicon">&#xe8b5;</div>
         <div>
-          <span class="num">1</span><span class="yuan"> 单</span>
+          <span class="num">{{ordernum.refund.order_count}}</span><span class="yuan"> 单</span>
         </div>
         </li>
       <!--</router-link>-->
@@ -48,7 +48,7 @@
         <div class="title">已结算</div>
         <div class="iconfont listicon">&#xe619;</div>
         <div>
-          <span class="num">1</span><span class="yuan"> 单</span>
+          <span class="num">{{ordernum.lock.order_count}}</span><span class="yuan"> 单</span>
         </div>
         </li>
       <!--</router-link>-->
@@ -73,12 +73,14 @@
 //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
   import { Search } from 'mint-ui';
   import {mapMutations, mapGetters} from 'vuex';
+  import {orderStatistics} from '../../api/api'
   export default{
     data () {
       return {
         active:'tab-container1',
         selected: 1,
-        find:''
+        find:'',
+        ordernum:{}
       }
     },
     components: {
@@ -95,6 +97,18 @@
     },
     created(){
       this.selected=this.tabselect
+    },
+    mounted(){
+        let params={
+
+        }
+      orderStatistics(params,(res)=>{
+          if(res.statusCode==1){
+            this.ordernum=res.data
+            console.log(this.ordernum)
+          }
+
+      })
     },
     computed:{
     ...mapGetters([

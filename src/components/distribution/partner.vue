@@ -17,7 +17,7 @@
         <div class="title">所有伙伴</div>
         <div class="iconfont listicon">&#xe646;</div>
         <div>
-          <span class="num">1</span><span class="yuan"> 人</span>
+          <span class="num">{{personnum.all}}</span><span class="yuan"> 人</span>
         </div>
       <!--</router-link>-->
       <!--<router-link to="/partner2" tag="li">-->
@@ -26,7 +26,7 @@
         <div class="title">已购买伙伴</div>
         <div class="iconfont listicon">&#xe600;</div>
         <div>
-          <span class="num">10</span><span class="yuan"> 人</span>
+          <span class="num">{{personnum.purchased}}</span><span class="yuan"> 人</span>
         </div>
       <!--</router-link>
       <router-link to="/partner3" tag="li">-->
@@ -35,7 +35,7 @@
         <div class="title">未购买伙伴</div>
         <div class="iconfont listicon">&#xe60d;</div>
         <div>
-          <span class="num">100</span><span class="yuan"> 人</span>
+          <span class="num">{{personnum.purchased}}</span><span class="yuan"> 人</span>
         </div>
       <!--</router-link>-->
       </li>
@@ -57,7 +57,7 @@
 <script>
   import {Popup, Picker} from 'mint-ui';
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
-  import {Carts,Goods,ApiLogin} from '../../api/api.js'
+  import {teamsStatistics} from '../../api/api.js'
   import {mapMutations, mapGetters} from 'vuex';
   export default{
     data () {
@@ -65,29 +65,8 @@
         active:'tab-container1',
         selected: 1,
         find:'',
-        cell: [
-          {
-              icon:'&#xe612',
-              type: '新的粉丝',
-              num:'1'
-          },
-          {
-            icon:'&#xe612',
-            type: '新的粉丝',
-            num:'1'
-          },
-          {
-            icon:'&#xe610;',
-            type: '高价值粉丝',
-            num:'1'
-          },{
-            icon:'&#xe612',
-            type: '分享达人',
-            num:'1'
-          },
-
-        ],
-        popupVisible:false
+        popupVisible:false,
+        personnum:{}
       }
     },
     components: {
@@ -114,8 +93,15 @@
       console.log(this.selected)
     },
     mounted() {
-      this.selected = this.tabselect;
-      console.log(this.selected)
+        let params={
+
+        }
+      teamsStatistics(params,(res)=>{
+          if(res.statusCode==1){
+              console.log(res);
+              this.personnum=res.data
+          }
+      })
 
 
     }

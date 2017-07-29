@@ -2,27 +2,38 @@
   <div class="mian1">
     <!--<mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">-->
     <ul class="p-list" >
-      <li class="p-cell" v-for="n in 10">
-        <div class="logo">
-          <img :src="thumb"/>
+      <li class="p-cell" v-for="(i,index) in orderlist">
+        <div class="up">
+          <span class="ordernum">订单编号{{i.ordersn}}</span>
+          <span class="time">{{i.createtime}}</span>
         </div>
-        <div class="info">
-          <h5>名字</h5>
-          <span>123112</span>
-          <span class="usertime">关注</span>
+        <div class="down">
+          <div class="logo">
+            <img :src="i.avatar"/>
+          </div>
+          <div class="info">
+            <h5>{{i.nickname}}</h5>
+            <span>{{i.mid}}</span>
+          </div>
+          <div class="ordertype">
+            <span>{{i.status}}</span>
+            <span>￥{{i.price}}</span>
+          </div>
         </div>
       </li>
     </ul>
-    <!--</mt-loadmore>-->
   </div>
 </template>
 
 <script>
   import { Loadmore } from  'mint-ui'
+  import {orderStatistics,orderLists} from '../../api/api';
+  import {mapMutations,mapGetters} from 'vuex'
   export default{
     data(){
       return {
-        thumb:require('../../assets/images/userinfo-02.png')
+        thumb:require('../../assets/images/userinfo-02.png'),
+        orderlist:{}
       }
     },
     components: {
@@ -37,8 +48,36 @@
       },
       allLoaded(){
 
+      },
+      orderinfo(){
+        this.ordersn(this.orderlist(index).ordersn);
+        this.$router.push({name: `orderinfo`})
+      },
+      ...mapMutations({
+        ordersn:'ORDERSN',
+      })
+    },
+    mounted(){
+      let params={
+        data: {
+          type:'ok',
+          page:1,
+          psize:10
+        }
       }
-    }
+      orderLists(params,(res)=>{
+        if(res.statusCode==1){
+          this.orderlist=res.data;
+          console.log(this.orderlist)
+        }else {
+          console.log('请求失败')
+        }
+
+
+
+      })
+    },
+
   }
 </script>
 
@@ -52,38 +91,7 @@
     overflow-y: scroll;
 
   }
-  .p-cell {
-    display: flex;
-    height: 0.78rem;
-    padding: 0.1rem 0.2rem;
-    border-top:1px solid #e2e2e2;
-    background-color: #fff;
-    margin-top: 0.05rem;
-  }
-  .logo {
-    flex: 1;
-  }
-  .info {
-    flex: 5;
-    text-align: left;
-    margin-left: 0.1rem;
-    position: relative;
-  }
-  .info h5 {
-    margin-top: 0.1rem;
-    color: #27272f;
-    font-size: 0.14rem;
-  }
-  .info span {
-    font-size: 0.14rem;
-    color: #666;
-  }
-  .logo img {
-    width: 70%;
-    border-radius: 50%;
-    display: block;
-    margin: 15% auto;
-  }
+
   .mian1 {
     position: fixed;
     top: 2.05rem;
@@ -100,4 +108,77 @@
     font-size: 0.12rem;
   }
 
+
+  .p-cell {
+    display: flex;
+    flex-direction: column;
+    padding:  0;
+    margin-top: 0.05rem;
+    background-color: #fff;
+    border-top:1px solid #eee;
+  }
+  .up {
+    flex: 1;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    padding: 0 0.1rem;
+    line-height: .36rem;
+  }
+  .up .ordernum {
+    font-size: 0.12rem;
+  }
+
+  .up .time {
+    float: right;
+    font-size: 0.1rem;
+
+  }
+
+  .down {
+    flex: 3;
+    height: 0.68rem;
+    display: flex;
+    padding: 0 0.1rem;
+  }
+  .logo {
+    flex: 1;
+    padding: 0.1rem 0;
+  }
+  .info {
+    flex: 4;
+    text-align: left;
+    margin-left: 0.1rem;
+    padding: 0.05rem 0;
+    color: #666;
+  }
+  .info h5 {
+    margin-top: 0.1rem;
+    color: #27272f;
+    font-size: 0.14rem;
+  }
+  .info span {
+    color: #000;
+    font-size: 0.14rem;
+    color: #666;
+  }
+  .logo img {
+    width: 100%;
+    border-radius: 50%;
+    vertical-align: middle;
+    display: block;
+  }
+  .ordertype {
+    flex: 3;
+    padding: 0.05rem 0;
+    color: #666;
+  }
+  .ordertype span {
+    display: block;
+    text-align: right;
+    font-size: 0.14rem;
+    margin-top: 0.05rem;
+  }
+  .ordertype span:last-child {
+    margin-top: 0.1rem;
+  }
 </style>
