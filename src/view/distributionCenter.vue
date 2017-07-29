@@ -22,11 +22,11 @@
     <section class="top">
       <div class="top_1">
         <span class="title">营业额</span>
-        <span class="num">{{cg_money_sum}}</span><span class="yuan"> 元</span>
+        <span class="num">12312</span><span class="yuan"> 元</span>
       </div>
       <div>
         <span class="title">佣金</span>
-        <span class="num">{{c_money_sum}}</span><span class="yuan"> 元</span>
+        <span class="num">123313</span><span class="yuan"> 元</span>
       </div>
     </section>
     <section class="content">
@@ -190,7 +190,7 @@
       })
     },
     created(){
-      this.init()
+//      this.init()
 
     },
     mounted()
