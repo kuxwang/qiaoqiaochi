@@ -1,6 +1,6 @@
 <template>
  	<div class="main">
- 		<section>
+ 		<section>sdfghj
 	      <mt-header fixed title="我的资料">
 	        <router-link to="/vipCenter" slot="left">
 	          <mt-button icon="back" ></mt-button>
@@ -10,7 +10,7 @@
 	    <ul class="userinfo-list">
 	    	 <li class="userinfo-header">
 	          <span class="fl">
-	            头像
+	            头像12
 	          </span>
 	          <span class="fr">
 	            <img id="img_upload" :src="imgurl"/>
@@ -120,10 +120,10 @@
 
 			},
 			testWx(val){//微信号
-				
+
 			},
 			testZfb(val){//支付宝账号
-				
+
 			},
 			testZfbName(val){//支支付宝真实姓名
 			},

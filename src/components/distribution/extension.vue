@@ -17,7 +17,7 @@
         <div class="title">全部</div>
         <div class="iconfont listicon">&#xe624;</div>
         <div>
-          <span class="num">{{ordernum.total.order_count}}</span><span class="yuan"> 单</span>
+          <span class="num">{{ordertotal}}</span><span class="yuan"> 单</span>
         </div>
       <!--</router-link>-->
       </li>
@@ -26,7 +26,7 @@
         <div class="title">未结算</div>
         <div class="iconfont listicon">&#xe624;</div>
         <div>
-          <span class="num">{{ordernum.lock.order_count}}</span><span class="yuan"> 单</span>
+          <span class="num">{{orderlock}}</span><span class="yuan"> 单</span>
         </div>
       <!--</router-link>-->
       <!--</li>-->
@@ -37,7 +37,8 @@
         <div class="title">已退款</div>
         <div class="iconfont listicon">&#xe8b5;</div>
         <div>
-          <span class="num">{{ordernum.refund.order_count}}</span><span class="yuan"> 单</span>
+          <span class="num">{{orderrefund}}</span><span class="yuan"> 单</span>
+          <!--<span class="num">{{ordernum.refund.order_count}}</span><span class="yuan"> 单</span>-->
         </div>
         </li>
       <!--</router-link>-->
@@ -48,7 +49,7 @@
         <div class="title">已结算</div>
         <div class="iconfont listicon">&#xe619;</div>
         <div>
-          <span class="num">{{ordernum.lock.order_count}}</span><span class="yuan"> 单</span>
+          <span class="num">{{orderok}}</span><span class="yuan"> 单</span>
         </div>
         </li>
       <!--</router-link>-->
@@ -80,7 +81,11 @@
         active:'tab-container1',
         selected: 1,
         find:'',
-        ordernum:{}
+        ordernum:{},
+        ordertotal:'',
+        orderlock:'',
+        orderrefund:'',
+        orderok:''
       }
     },
     components: {
@@ -106,6 +111,10 @@
           if(res.statusCode==1){
             this.ordernum=res.data
             console.log(this.ordernum)
+            this.ordertotal=res.data.total.order_count
+            this.orderrefund=res.data.refund.order_count
+            this.orderlock=res.data.lock.order_count
+            this.orderok=res.data.ok.order_count
           }
 
       })

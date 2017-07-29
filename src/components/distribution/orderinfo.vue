@@ -10,35 +10,35 @@
     <ul class="order-info">
       <li class="order-cell">
         <div class="left">订单号</div>
-        <div class="right">{{ordernum.order.ordersn}}</div>
+        <div class="right">{{ordernum.ordersn}}</div>
       </li>
       <li class="order-cell">
         <div class="left">订单状态</div>
-        <div class="right">{{ordernum.order.ordersn}}</div>
+        <div class="right">{{ordernum.ordersn}}</div>
       </li>
       <li class="order-cell">
         <div class="left">下单时间</div>
-        <div class="right">{{ordernum.order.createtime}}</div>
+        <div class="right">{{ordernum.createtime}}</div>
       </li>
       <li class="order-cell">
         <div class="left">订单金额</div>
-        <div class="right">{{ordernum.order.goodsprice}}</div>
+        <div class="right">{{ordernum.goodsprice}}</div>
       </li>
       <li class="order-cell">
         <div class="left">粉丝昵称</div>
-        <div class="right">{{ordernum.commssion[0].nickname}}</div>
+        <!--<div class="right">{{ordernum.commssion[0].nickname}}</div>-->
       </li>
       <li class="order-cell">
         <div class="left">粉丝ID</div>
-        <div class="right">{{ordernum.order.id}}</div>
+        <div class="right">{{ordernum.id}}</div>
       </li>
       <li class="order-cell">
         <div class="left">是否拼团</div>
-        <div class="right">{{ordernum.order.ordersn}}</div>
+        <div class="right">{{ordernum.ordersn}}</div>
       </li>
       <li class="order-cell">
         <div class="left">直接奖励</div>
-        <div class="right">{{ordernum.order.ordersn}}</div>
+        <div class="right">{{ordernum.ordersn}}</div>
       </li>
       <li class="order-cell">
         <div class="left">备注</div>
@@ -56,7 +56,10 @@
   export default{
     data () {
       return {
-        orderinfo:{}
+        ordernum:{},
+        ordercom:{
+
+        }
       }
     },
     components: {
@@ -69,16 +72,16 @@
 
     },
     mounted(){
-
       let params={
           data:{
             ordersn:this.ordersn
           }
       }
       orders(params,(res)=>{
-        this.ordernum=res.data
-        console.log(res)
+        this.ordernum=res.data.order
+        this.ordercom=res.data.commssion
         console.log(this.ordernum)
+        console.log(this.ordercom)
       })
     },
     computed:{

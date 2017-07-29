@@ -2,7 +2,7 @@
   <div class="mian1">
     <!--<mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">-->
       <ul class="p-list" >
-        <li class="p-cell" v-for="i in personlist.lists">
+        <li class="p-cell" v-for="(i,index) in personlist.lists" @click="popshow(index)">
           <div class="logo">
             <img :src="i.avatar"/>
           </div>
@@ -14,12 +14,32 @@
         </li>
       </ul>
     <!--</mt-loadmore>-->
+    <mt-popup
+      v-model="popupVisible"
+      popup-transition="popup-fade" v-if="popupVisible">
+
+      <div class="pop-up">
+        <img class="sharelogo" :src="teamsinfo.avatar"/>
+        <h5>{{teamsinfo.nickname}}</h5>
+        <span>ID:{{teamsinfo.id}}</span>
+      </div>
+      <div class="pop-down">
+        <ul>
+          <li><span class="pop-left">粉丝：</span><span class="pop-right">{{teamsinfo.agentid}}</span></li>
+          <li><span class="pop-left">关注方式：</span><span class="pop-right">{{teamsinfo.agentid}}</span></li>
+          <li><span class="pop-left">等级：</span><span class="pop-right">{{teamsinfo.level.levelname}}</span></li>
+          <li><span class="pop-left">消费金额：</span><span class="pop-right">{{teamsinfo.recordStatistics.c_money_sum}}</span></li>
+          <li><span class="pop-left">手机号：</span><span class="pop-right">{{teamsinfo.mobile}}</span></li>
+          <!--<li><span class="pop-left">创建时间： </span><span class="pop-right">{{teamsinfo.createtime}}</span></li>-->
+        </ul>
+      </div>
+    </mt-popup>
   </div>
 </template>
 
 <script>
   import { Loadmore,Popup, Picker } from  'mint-ui';
-  import { teamsLists } from '../../api/api.js'
+  import { teamsLists,teams } from '../../api/api.js'
   import {mapMutations, mapGetters} from 'vuex';
   export default{
       data(){
@@ -27,10 +47,13 @@
             thumb:require('../../assets/images/userinfo-02.png'),
             personlist:{},
             popupVisible:false,
+            teamsinfo:{
+
+            }
         }
       },
       components: {
-
+        'mt-popup':Popup
       },
       methods: {
           loadTop(){
@@ -41,7 +64,23 @@
           },
           allLoaded(){
 
-          }
+          },
+        popshow(index){
+              let params={
+                  data: {
+                      openid:this.personlist.lists[index].openid,
+//                     id:this.personlist.lists[index].id,
+//                     mobile:this.personlist.lists[index].mobile
+                  }
+              }
+          teams(params,(res)=>{
+             if(res.statusCode==1){
+               this.teamsinfo=res.data;
+               console.log(this.teamsinfo)
+               this.popupVisible=true
+             }
+          })
+        }
       },
     mounted(){
       let params={
@@ -123,4 +162,37 @@
     bottom:0.05rem;
     font-size: 0.12rem;
   }
+  .mint-popup {
+    width: 1.5rem;
+    padding: 0.1rem;
+  }
+  .pop-up img{
+    width: 40%;
+  }
+  .pop-up h5 {
+    font-size: 0.14rem;
+  }
+  .pop-up span {
+    font-size: 0.12rem;
+  }
+
+  .pop-down ul {
+    width: 100%;
+    font-size: 0.12rem;
+  }
+  .pop-down li {
+    display: block;
+    text-align: left;
+    padding-left: 0.05rem;
+  }
+
+
+  .pop-left {
+    /*flex: 1;*/
+  }
+  .pop-right {
+    /*flex: 3;*/
+    text-align: right;
+  }
+
 </style>
