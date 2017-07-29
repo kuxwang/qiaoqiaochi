@@ -51,7 +51,7 @@
           </div>
         <!--</li>-->
         </router-link>
-        <router-link to="/partner" tag="li">
+        <router-link to="/partner2" tag="li">
         <!--<li class="li2">-->
           <div class="title">已购买伙伴</div>
           <div class="iconfont listicon">&#xe600;</div>
@@ -60,7 +60,7 @@
           </div>
         <!--</li>-->
         </router-link>
-        <router-link to="/partner" tag="li">
+        <router-link to="/partner3" tag="li">
         <!--<li class="li3">-->
           <div class="title">未购买伙伴</div>
           <div class="iconfont listicon">&#xe60d;</div>
@@ -76,14 +76,14 @@
       </div>
       <ul class="order-list">
         <!--<li class="li1">-->
-        <router-link to="/extension" tag="li">
+        <router-link to="/extension1" tag="li">
           <div class="title">全部</div>
           <div class="iconfont listicon">&#xe624;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 单</span>
           </div>
         </router-link>
-          <router-link to="/extension" tag="li">
+          <router-link to="/extension2" tag="li">
             <div class="title">未结算</div>
             <div class="iconfont listicon">&#xe624;</div>
             <div>
@@ -91,7 +91,7 @@
             </div>
           </router-link>
         <!--</li>-->
-        <router-link to="/extension" tag="li">
+        <router-link to="/extension3" tag="li">
         <!--<li class="li2">-->
           <div class="title">已退款</div>
           <div class="iconfont listicon">&#xe8b5;</div>
@@ -100,7 +100,7 @@
           </div>
         <!--</li>-->
         </router-link>
-        <router-link to="/extension" tag="li">
+        <router-link to="/extension4" tag="li">
         <!--<li class="li3">-->
           <div class="title">已结算</div>
           <div class="iconfont listicon">&#xe619;</div>
