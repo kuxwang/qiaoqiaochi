@@ -1,2 +1,2 @@
 // export const RECORD_ADDRESS = 'RECORD_ADDRESS'
-
+export const GET_USERADDRESS='GET_USERADDRESS'

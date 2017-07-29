@@ -1,5 +1,5 @@
 import {
-  RECORD_ADDRESS,
+  GET_USERADDRESS
 }
   from
     './mutation-types.js'
@@ -12,4 +12,10 @@ export default {
   //   state.position = position
   //   setStore('position', state.position)
   // },
+
+  //用户收货地址
+  [GET_USERADDRESS](state,data){
+  	state.userAddress=data;
+  	console.log(data)
+  }
 }

@@ -90,8 +90,6 @@ export default new Router({
               component: DrawbackInfo,
             }
           ]
-
-
         },
         {
           path: '/shoppingCart',
@@ -183,5 +181,9 @@ export default new Router({
     //     }
     //   ]
     // },
+    {
+      path:'*',
+      redirect:'/'
+    }
   ]
 })

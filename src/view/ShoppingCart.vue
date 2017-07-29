@@ -253,7 +253,7 @@
   	}
 	.mint-header{
 		/*background: #fff;*/
-		color:#fff;
+		/*color:#fff;*/
 		border-bottom: 1px solid #e3e3e3;
 		font-size:0.16rem;
 	}
