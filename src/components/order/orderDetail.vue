@@ -1,6 +1,6 @@
 <template>
   <div class="main order-detail-header">
-    <mt-header title="订单详情" class="ocolor">
+    <mt-header title="订单详情" class="ocolor myOrderDetail">
       <a @click="goBack" slot="left">
         <mt-button icon="back"></mt-button>
       </a>
@@ -90,6 +90,9 @@
     color:#fff;
   }
   .mint-header a{
+    color:#fff;
+  }
+  .mint-header-title{
     color:#fff;
   }
   .order-detail-header .mint-header {
