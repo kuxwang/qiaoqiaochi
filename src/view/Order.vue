@@ -310,9 +310,9 @@
     border-bottom: 1px solid #e3e3e3;
     height:.45rem;
   }
-  .order-header .mintui-back:before{
+  /*.order-header .mintui-back:before{
     color:#fff;
-  }
+  }*/
 
   div.page-navbar{
     margin-top:.45rem;

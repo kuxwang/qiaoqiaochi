@@ -1,11 +1,11 @@
 <template>
   <div class="main order-detail-header">
-    <mt-header title="查看物流" class="ocolor">
+    <mt-header title="查看物流" class="mylogistics">
       <a @click="goBack" slot="left">
         <mt-button icon="back"></mt-button>
       </a>
     </mt-header>
-    <div class="buyer-info ocolor">
+    <div class="buyer-info">
       <div class="buyer-info-box">
         <div class="iconfont" >
           &#xe66f;
@@ -88,30 +88,24 @@
     z-index:20;
     color:#666;
   }
-  .mint-header{
-    border-bottom:none;
-    color:#fff;
-  }
   .order-detail-header .mint-header {
     height:.45rem;
   }
   .buyer-info{
     height:.8rem;
     width:100%;
-    background: rgba(245,117,29,.2);
     margin-bottom:.1rem;
   }
   .buyer-info-box{
     height:.8rem;
     width:100%;
-    background: rgba(0,0,0,.25);
     position:relative;
+    background:#fff;
   }
   .buyer-info-box>div.iconfont{
     position:absolute;
     left:.08rem;
     top:.2rem;
-    color:#fff;
     font-size:.35rem;
   }
   .order-state{
@@ -121,7 +115,7 @@
   }
   .order-state li{
     text-align: left;
-    color:#fff;
+    color:#000;
     font-size:.13rem;
     margin-bottom:.03rem;
   }

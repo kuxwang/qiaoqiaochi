@@ -1,19 +1,21 @@
 <template>
   <div class="main">
     <section class="avatar">
-      <div class="icon"></div>
+      <div class="icon">
+        <img :src="memberInfo.avatar" alt="头像">
+      </div>
       <div class="message">
         <div>
-          <span>昵称</span>
-          <span>也希腊类</span>
+          <span>昵称:</span>
+          <span>{{memberInfo.nickname}}</span>
         </div>
         <div>
-          <span>会员ID</span>
-          <span>188947</span>
+          <span>会员ID:</span>
+          <span>{{memberInfo.id}}</span>
         </div>
         <div>
-          <span>会员等级</span>
-          <span>塑料</span>
+          <span>会员等级:</span>
+          <span>{{memberInfo.level}}</span>
         </div>
       </div>
       <!-- <i class="iconfont right" @click="goUserInfo">&#xe649;</i> -->
@@ -190,7 +192,12 @@
           lock: '',//未结算
           refund: '',//已退款
           ok: '', //已结算
-
+        },
+        memberInfo: {
+          nickname: '',//昵称
+          id: '',//会员id
+          level: '',//会员等级
+          avatar: ''
         }
       }
     },
@@ -202,8 +209,8 @@
         let _this = this;
 //        let params = {};
         //佣金统计
-        recordStatistics_get({}, function (res) {
-            console.log(res)
+        recordStatistics_get({data: {type: ''}}, function (res) {
+//          console.log(res)
           if (res.statusCode == 1) {
             let data = res.data
             _this.recordStatistics_get.cg_money_sum = res.data.total.cg_money_sum;
@@ -235,6 +242,15 @@
             _this.orderStatistics.ok = res.data.ok.order_count
           } else {
             console.log('订单统计接口数据异常')
+          }
+        });
+        memberInfo({}, function (res) {
+            console.log(res)
+          if (res.statusCode == 1) {
+            _this.memberInfo.nickname = res.data.nickname
+            _this.memberInfo.id = res.data.id
+            _this.memberInfo.level = res.data.level
+            _this.memberInfo.avatar = res.data.avatar
           }
         })
 
@@ -297,6 +313,13 @@
     height: .70rem;
     background: grey;
     float: left;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+  }
+  .icon>img{
+    width: .70rem;
+    height: .70rem;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;

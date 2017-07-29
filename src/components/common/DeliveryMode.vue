@@ -6,31 +6,60 @@
         </a>
       </mt-header>
       <ul class="deliverymode-list">
-      	<li>
+      	<li :class="{on:busActives==i}" v-for="(v,i) in businessList" @click="getDispatchName(v,i)">
       		<span>
-      			商家配送
-      		</span>
-      	</li>
-      	<li>
-      		<span>
-      			商家配送
-      		</span>
-      	</li>
-      	<li>
-      		<span>
-      			商家配送
+      			{{v.dispatchname}}
       		</span>
       	</li>
       </ul>
     </div>
 </template>
 <script>
+  import {mapGetters ,mapMutations} from 'vuex';
 	export default{
+    data(){
+      return{
+        busActives:'',
+        businessList:[
+          {
+            "id": "1",
+            "uniacid": "2",
+            "dispatchname": "商家配送"
+          },
+          {
+            "id": "1",
+            "uniacid": "2",
+            "dispatchname": "免费配送"
+          },
+          {
+            "id": "1",
+            "uniacid": "2",
+            "dispatchname": "商家配送"
+          }
+        ]
+      }
+    },
 		methods:{
 			goBack(){
 				this.$router.go(-1);
-			}
-		}
+			},
+      getDispatchName(v,i){
+        this.busActives=i
+        this.$router.go(-1);
+        this.getBusActive(i)
+      },
+      ...mapMutations({
+        'getBusActive':'GET_BUSACTIVE',
+      })
+		},
+    computed:{
+      ...mapGetters([
+        'busActive'
+      ])
+    },
+    mounted(){
+      this.busActives=this.busActive
+    }
 	}
 </script>
 <style scoped>
@@ -64,7 +93,7 @@
   		color:#666;
   		position: relative;
   	}
-  	.deliverymode-list li:after{
+  	.deliverymode-list li.on:after{
   		content:'✔';
   		position: absolute;
   		left:0.2rem;

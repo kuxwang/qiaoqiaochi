@@ -669,6 +669,7 @@ export var _webapp = {
     str += 'key=' + accessToken.auth_key;
 
     res.sign = hex_md5(str);
+    // console.log(res);
     return res;
   },
 

@@ -1,5 +1,8 @@
 export default {
-  tabselect: state => state.tabselect,
-  ordersn: state => state.ordersn,
+	userAddress:state=>state.userAddress,
+	tabselect: state => state.tabselect,
+	onActive:state=>state.onActive,
+	busActive:state=>state.busActive,
+  	ordersn: state => state.ordersn,
 }
 

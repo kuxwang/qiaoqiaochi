@@ -11,6 +11,8 @@
   }
 </script>
 
+<<<<<<< HEAD
+=======
 <style>
   @import './assets/css/fonts/iconfont.css';
   #app {
@@ -89,3 +91,4 @@
     display:none;
   }
 </style>
+>>>>>>> 562645b9c04b518fc8cf5d826ec244fd0a22fd8d

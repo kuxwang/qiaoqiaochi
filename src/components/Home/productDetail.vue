@@ -28,12 +28,12 @@
         </p>
       </div>
       <div class="bottom-navbar">
-        <router-link class="icon-box" :to="{name:''}"  tag="a">
+        <!-- <router-link class="icon-box" :to="{name:''}"  tag="a">
           <div class="icon-b">
             <div class="iconfont tabIcon">&#xe613;</div>
             收藏
           </div>
-        </router-link>
+        </router-link> -->
         <router-link class="icon-box icon-box-car" :to="{name:'shoppingCart'}"  tag="a">
           <div class="icon-b">
             <div class="iconfont tabIcon icon-car">&#xe607;</div>
@@ -68,7 +68,6 @@
       </mt-popup>
     </div>
   </transition>
-
 </template>
 <script>
   import { Header,Popup} from 'mint-ui'
@@ -188,7 +187,7 @@
     /*border-top: 1px solid #DDDDDD;*/
   }
   .icon-box{
-    width:18%;
+    width:32%;
     height:48px;
     float:left;
     text-align: center;
@@ -212,7 +211,7 @@
   }
   .icon-btn{
     margin:0;
-    width:32.5%;
+    width:34.4%;
     height:48px;
     outline: none;
     color:#fff;
