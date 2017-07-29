@@ -60,7 +60,10 @@
       <button>搜索</button>
     </div>
 
+
       <router-view></router-view>
+
+
 
   </div>
 

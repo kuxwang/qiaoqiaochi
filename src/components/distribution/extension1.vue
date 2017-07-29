@@ -22,6 +22,7 @@
         </div>
       </li>
     </ul>
+    <!--</mt-loadmore>-->
   </div>
 </template>
 
@@ -165,6 +166,7 @@
     border-radius: 50%;
     vertical-align: middle;
     display: block;
+
   }
   .ordertype {
     flex: 3;
