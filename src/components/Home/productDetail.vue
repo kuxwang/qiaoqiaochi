@@ -63,7 +63,7 @@
             </div>
             <p>购买数量</p>
           </div>
-          <router-link class="confirm ocolor" to="shoppingCart" tag="button">确认</router-link>
+          <button class="confirm ocolor" @click="toast">确认</button>
         </div>
       </mt-popup>
     </div>
@@ -71,7 +71,7 @@
 
 </template>
 <script>
-  import { Header,Popup} from 'mint-ui'
+  import { Header,Popup,Toast} from 'mint-ui'
   export default {
     data(){
       return{
@@ -82,6 +82,14 @@
     methods:{
       handleClick:function () {
         this.popupVisible = true
+      },
+      toast:function () {
+        this.popupVisible = false,
+        Toast({
+          message: '操作成功 商品已在购物车',
+          position: 'bottom',
+          duration: 1000
+        });
       },
       reduce:function (num) {
         if(num>1){

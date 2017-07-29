@@ -1,5 +1,5 @@
 <template>
-
+  <transition name="slide">
     <div class="main order-header">
       <mt-header title="我的订单" fixed>
         <router-link to="/" slot="left" >
@@ -8,7 +8,7 @@
       </mt-header>
       <div class="page-navbar">
         <mt-navbar class="page-part" v-model="selected">
-          <mt-tab-item id="all">全部</mt-tab-item>
+          <mt-tab-item id="all" @click="">全部</mt-tab-item>
           <mt-tab-item id="will-pay">待付款</mt-tab-item>
           <mt-tab-item id="will-send">待发货</mt-tab-item>
           <mt-tab-item id="will-reserve">待收货</mt-tab-item>
@@ -19,7 +19,7 @@
           <!--<mt-cell class="page-part" title="当前选中">{{ selected }}</mt-cell>-->
         <!--</div>-->
 
-        <mt-tab-container v-model="selected" class="orderList">
+        <mt-tab-container v-model="selected" class="orderList" id="content-list">
           <mt-tab-container-item id="all">
             <ul class="order-list">
               <li>
@@ -168,14 +168,6 @@
             </ul>
           </mt-tab-container-item>
           <mt-tab-container-item id="will-reserve">
-            <div class="share-page">
-              <div class="iconfont">
-                &#xe60f;
-              </div>
-              <p>您还没有相关订单</p>
-              <p>赶快去购物吧</p>
-              <router-link tag="button" to="/details">再逛逛</router-link>
-            </div>
           </mt-tab-container-item>
           <mt-tab-container-item id="done">
             <ul class="order-list">
@@ -229,10 +221,19 @@
             </ul>
           </mt-tab-container-item>
         </mt-tab-container>
+        <div class="share-page" v-show="isShow">
+          <div class="iconfont">
+            &#xe60f;
+          </div>
+          <p>您还没有相关订单</p>
+          <p>赶快去购物吧</p>
+          <router-link tag="button" to="/details">再逛逛</router-link>
+        </div>
       </div>
       <v-tabbar></v-tabbar>
       <router-view></router-view>
     </div>
+  </transition>
 </template>
 <script>
   import { Navbar,MessageBox } from 'mint-ui';
@@ -241,7 +242,8 @@
     name: 'page-navbar',
 		data(){
 			return{
-        selected: 'all'
+        selected: 'all',
+        isShow:false
 			}
 		},
     methods:{
@@ -257,7 +259,13 @@
 
           }
         });
+      },
+      getOrderList:function () {
+        let params
       }
+    },
+    created(){
+      this.getOrderList()
     },
 		components:{
 			vTabbar
