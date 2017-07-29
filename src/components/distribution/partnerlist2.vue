@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import { Loadmore } from  'mint-ui';
+  import { Loadmore,Popup, Picker } from  'mint-ui';
   import { teamsLists } from '../../api/api.js'
   import {mapMutations, mapGetters} from 'vuex';
   export default{

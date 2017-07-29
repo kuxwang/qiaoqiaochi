@@ -1,7 +1,7 @@
 <template>
   <div class="main2">
     <mt-header fixed title="订单详情" >
-      <router-link to="/extension" slot="left">
+      <router-link to="/extension1" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
       <!--<mt-button icon="more" slot="right"></mt-button>-->
@@ -10,35 +10,35 @@
     <ul class="order-info">
       <li class="order-cell">
         <div class="left">订单号</div>
-        <div class="right">213123131</div>
+        <div class="right">{{ordernum.order.ordersn}}</div>
       </li>
       <li class="order-cell">
         <div class="left">订单状态</div>
-        <div class="right">213123131</div>
+        <div class="right">{{ordernum.order.ordersn}}</div>
       </li>
       <li class="order-cell">
         <div class="left">下单时间</div>
-        <div class="right">213123131</div>
+        <div class="right">{{ordernum.order.createtime}}</div>
       </li>
       <li class="order-cell">
         <div class="left">订单金额</div>
-        <div class="right">213123131</div>
+        <div class="right">{{ordernum.order.goodsprice}}</div>
       </li>
       <li class="order-cell">
         <div class="left">粉丝昵称</div>
-        <div class="right">213123131</div>
+        <div class="right">{{ordernum.commssion[0].nickname}}</div>
       </li>
       <li class="order-cell">
         <div class="left">粉丝ID</div>
-        <div class="right">213123131</div>
+        <div class="right">{{ordernum.order.id}}</div>
       </li>
       <li class="order-cell">
         <div class="left">是否拼团</div>
-        <div class="right">213123131</div>
+        <div class="right">{{ordernum.order.ordersn}}</div>
       </li>
       <li class="order-cell">
         <div class="left">直接奖励</div>
-        <div class="right">213123131</div>
+        <div class="right">{{ordernum.order.ordersn}}</div>
       </li>
       <li class="order-cell">
         <div class="left">备注</div>

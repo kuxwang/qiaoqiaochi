@@ -50,6 +50,7 @@ export const recordStatistics_get = function (params, callback) {_webapp.request
  */
 export const teamsStatistics = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.teamsStatistics), function (res) {callback(res)})};
 export const teamsLists = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.teamsLists), function (res) {callback(res)})};
+export const teams = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.teams), function (res) {callback(res)})};
 //订单列表
 export const orderLists = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.orderLists), function (res) {callback(res)})};
 
@@ -59,11 +60,6 @@ export const orderLists = function (params, callback) {_webapp.requestx(Object.a
  * @param callback
  */
 export const orderStatistics = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.orderStatistics), function (res) {callback(res)})};
-/**
- * 订单列表
- * @param params
- * @param callback
- */
 
 /**
  * 订单详情

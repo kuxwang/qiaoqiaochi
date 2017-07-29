@@ -18,14 +18,15 @@
 </template>
 
 <script>
-  import { Loadmore } from  'mint-ui';
+  import { Loadmore,Popup, Picker } from  'mint-ui';
   import { teamsLists } from '../../api/api.js'
   import {mapMutations, mapGetters} from 'vuex';
   export default{
       data(){
           return {
             thumb:require('../../assets/images/userinfo-02.png'),
-            personlist:{}
+            personlist:{},
+            popupVisible:false,
         }
       },
       components: {
