@@ -20,7 +20,6 @@ export const commissions = {
     header,
     dataType
   },
-
   /**
    * 订单统计
    */
@@ -31,30 +30,27 @@ export const commissions = {
     dataType
   }
 }
-
-
 /**
- * 参数合并
+ * 商品详情
  */
-// export const mergeParams = (baseParams, addParams) => {
-//   return baseParams.push(addParams)
-// }
-
-// console.log(_webapp)
-// console.log(Promise())
-// export const recordStatistics = params => {return _webapp.requestx(Object.assign(params,commissions.recordStatistics))};
-
-
+export const product={productDetail:{url:`${base}/goods`, method:'GET', header, dataType}};
 /**
- * 佣金统计
- * @param params
- * @param callback
+ * 加入购物车
  */
-// function requestweb(params, callback){
-//   _webapp.requestx(Object.assign(params, commissions.recordStatistics), res => {
-//     callback(res)
-//   })
-// }
+export const cart={addCart:{url:`${base}/carts`, method:'POST', header, dataType}};
+/**
+ * 订单列表
+ */
+export const order={orderList:{url:`${base}/orders`, method:'GET', header, dataType}};
+/**
+ * 订单详情
+ */
+export const orderd={orderDetail:{url:`${base}/orders`, method:'GET', header, dataType}};
+/**
+ * 快递
+ */
+
+export const express={exp:{url:`${base}/dispatchs`, method:'GET', header, dataType}};
 
 /**
  * 佣金统计
@@ -71,3 +67,24 @@ export const orderStatistics = function(params, callback) {
     callback(res)
   })
 };
+
+/**
+ * 商品详情
+ */
+export const productDetail=function (params,callback) {_webapp.requestx(Object.assign(params,product.productDetail),function (res) {callback(res)})}
+/**
+ * 加入购物车
+ */
+export const addCart=function (params,callback) {_webapp.requestx(Object.assign(params,cart.addCart),function (res) {callback(res)})};
+/**
+ * 订单列表
+ */
+export const orderList=function (params,callback) {_webapp.requestx(Object.assign(params,order.orderList),function (res) {callback(res)})};
+/**
+ * 订单详情
+ */
+export const orderDetail=function (params,callback) {_webapp.requestx(Object.assign(params,orderd.orderDetail),function (res) {callback(res)})};
+/**
+ * 快递
+ */
+export const expressInfo=function (params,callback) {_webapp.requestx(Object.assign(params,express.exp),function (res) {callback(res)})};

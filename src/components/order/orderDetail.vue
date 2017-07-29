@@ -12,9 +12,12 @@
           &#xe66f;
         </div>
         <ul class="order-state">
-          <li>交易完成</li>
-          <li>订单金额(含运费)：￥99.00</li>
-          <li>运费：￥0.00</li>
+          <li v-if="status==3">交易完成</li>
+          <li v-if="status==0">等待付款</li>
+          <li v-if="status==1">等待发货</li>
+          <li v-if="status==2">运输中</li>
+          <li>订单金额(含运费)：￥{{price}}</li>
+          <li>运费：￥{{tranprice}}</li>
         </ul>
       </div>
     </div>
@@ -23,40 +26,57 @@
         &#xe621;
       </div>
       <div class="buyer-address-detail">
-        <p>收件人：XXXXX</p>
-        江苏省无锡市滨湖区山水科教园
+        <p>收件人：{{relname}}</p>
+        {{province}}{{city}}{{area}}{{address}}
       </div>
     </div>
     <div class="product-info-box">
       <div class="pib-header">
         <span class="iconfont">&#xe6ce;</span>
-        朵云家
+        {{shopname}}
       </div>
       <router-link class="good-info" to="/details" tag="div">
-        <img src="../../assets/images/xiaotu.jpg" alt="" class="order-small">
+        <img :src=detailurl class="order-small">
         <p>竹享</p>
         <div class="good-price">
           <p>￥99.00</p>
-          <p>×1</p>
+          <p>×{{num}}</p>
         </div>
       </router-link>
       <ul class="pib-list">
-        <li>商品金额：<p>￥99.00</p></li>
-        <li>运费：<p>￥99.00</p></li>
-        <li>会员折扣：<p>￥99.00</p></li>
-        <li>实付费(含运费)：<p>￥99.00</p></li>
+        <li>商品金额：<p>￥{{price}}</p></li>
+        <li>运费：<p>￥{{tranprice}}</p></li>
+        <li>会员折扣：<p>￥{{discount}}</p></li>
+        <li>实付费(含运费)：<p>￥{{proprice}}</p></li>
       </ul>
     </div>
-    <ul class="trace-info">
-      <li>订单号：<p>WDSFDFGEDEDEDEDE</p></li>
-      <li>交易完成时间：<p>2017-07-27 22:00:00</p></li>
+    <ul class="trace-info" v-if="status==3">
+      <li>订单号：<p>{{ordersin}}</p></li>
+      <li v-show="false">交易完成时间：<p>{{endtime}}</p></li>
     </ul>
     <div class="bottom-box">
-      <router-link to="/drawbackInfo" class="back-money-ing" tag="button">
+      <router-link to="/drawbackInfo" class="back-money-ing" tag="button" v-if="">
         退款申请中
       </router-link>
-      <button class="delete-order">删除订单</button>
-      <router-link to="/logistics" tag="button" class="ocolor">
+      <button class="cancel-order" @click="fn1" v-if="status==0">
+        取消订单
+      </button>
+      <router-link class="charge-order ocolor" to="" tag="button" v-if="status==0">
+        付款
+      </router-link>
+      <router-link class="charge-order ocolor" to="/drawback" tag="button" v-if="status==1">
+        申请退款
+      </router-link>
+      <router-link class="charge-order1" to="" tag="button" v-if="status==2">
+        确认收货
+      </router-link>
+      <router-link class="look-logi ocolor" to="/logistics" tag="button" v-if="status==2">
+        查看物流
+      </router-link>
+      <router-link class="charge-order1 " to="/drawback" tag="button" v-if="status==3">
+        申请退款
+      </router-link>
+      <router-link class="look-logi ocolor" to="/logistics" tag="button" v-if="status==3">
         查看物流
       </router-link>
     </div>
@@ -67,12 +87,59 @@
 <script>
   import { Header} from 'mint-ui'
   import PageNavbar from "../../view/Order.vue";
+  import {orderDetail} from "../../api/api.js"
   export default {
     components: {PageNavbar},
+    data(){
+      return{
+        status:'',
+        price:'0.00',
+        tranprice:'0.00',
+        relname:'',
+        province:'',
+        city:'',
+        area:'',
+        address:'',
+        shopname:'',
+        detailurl:'',
+        proprice:'0.00',
+        realprice:'',
+        num:'',
+        ordersin:'',
+        endtime:''
+      }
+    },
     methods:{
       goBack:function () {
         this.$router.go(-1)
+      },
+    },
+    created:function () {
+      var that=this;
+      this.status=that.$route.query.sta;
+      this.num=that.$route.query.num;
+      let params={
+        data:{
+          orderid:this.$route.query.oid
+        }
       }
+      orderDetail(params,function (res) {
+        console.log(res)
+        that.price=res.data.order.goodsprice;
+        that.tranprice=res.data.dispatchprice;
+        that.relname=res.data.address.realname;
+        that.province=res.data.address.province;
+        that.city=res.data.address.city;
+        that.area=res.data.address.area;
+        that.address=res.data.address.address;
+        that.shopname=res.data.set.name;
+        that.detailurl=res.data.goods.thumb;
+        that.discount=res.data.discountprice;
+        that.proprice=res.data.price;
+        that.realprice=res.data.price;
+        that.ordersin=res.data.ordersn;
+        that.endtime=res.data.finishtime
+      })
     }
   }
 </script>
@@ -237,7 +304,7 @@
     color:#fff;
     border-radius:.03rem;
   }
-  .delete-order{
+  .cacel-order{
     background:#ddd;
     color:#666 !important;
     width:.9rem !important;

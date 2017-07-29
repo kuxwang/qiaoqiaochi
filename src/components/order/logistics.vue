@@ -67,12 +67,32 @@
 </template>
 <script>
   import { Header} from 'mint-ui'
+  import { expressInfo } from '../../api/api.js'
   export default {
-    components: {},
+    data(){
+      return{
+        exp:'',
+        expsn:'',
+      }
+    },
     methods:{
       goBack:function () {
         this.$router.go(-1)
       }
+    },
+    created:function () {
+      var that=this;
+      this.exp=this.$route.query.exp;
+      this.expsn=this.$route.query.expsn;
+      let params={
+        data:{
+          express:exp,
+          expresssn:expsn
+        }
+      }
+      expressInfo(params,function (res) {
+        console.log(res)
+      })
     }
   }
 </script>

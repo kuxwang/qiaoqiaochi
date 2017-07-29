@@ -120,10 +120,10 @@
 
 			},
 			testWx(val){//微信号
-				
+
 			},
 			testZfb(val){//支付宝账号
-				
+
 			},
 			testZfbName(val){//支支付宝真实姓名
 			},

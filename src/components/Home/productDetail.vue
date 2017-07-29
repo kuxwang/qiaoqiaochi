@@ -8,24 +8,21 @@
       </mt-header>
       <div class="box">
         <div class="img-box">
-          <img src="../../assets/images/home-01.jpg" alt="" class="content"/>
+          <img :src="bandimg" class="content"/>
         </div>
       </div>
       <div class="intro">
-        <p>竹享</p>
-        <span>￥199.00</span>
-        <p class="vip-intro"><span class="iconfont">&#xe631;</span>您是<span>高级会员</span> 可享<span>8.00</span>折优惠</p>
+        <p>{{name}}</p>
+        <span>￥{{marketPrice}}</span>
+        <p class="vip-intro" v-show="isVip"><span class="iconfont">&#xe631;</span>您是{{vipname}} 可享{{vipcount}}折优惠</p>
       </div>
       <div class="b-intro">
         <div class="bottom-nav">
           图文详情
         </div>
-        <p class="img-p">
-          <img src="../../assets/images/home-02.jpg" alt=""/>
-          <img src="../../assets/images/home-02.jpg" alt=""/>
-          <img src="../../assets/images/home-02.jpg" alt=""/>
-          <img src="../../assets/images/home-02.jpg" alt=""/>
-        </p>
+        <div id="intro">
+
+        </div>
       </div>
       <div class="bottom-navbar">
         <router-link class="icon-box" :to="{name:''}"  tag="a">
@@ -49,16 +46,15 @@
       </div>
       <mt-popup v-model="popupVisible" position="bottom" modal=true>
         <div class="popup-box">
-          <img src="../../assets/images/xiaotu.jpg" >
+          <img :src="bandimg" >
           <div class="popup-info">
-            <p>￥99.00</p>
-            <span>库存：99999件</span>
+            <p>￥{{marketPrice}}</p>
+            <span>库存：{{total}}件</span>
           </div>
           <div class="cal-box">
-
             <div>
               <button class="reduce-down" @click="reduce(num)">-</button>
-              <input class="num-box" :value=num />
+              <input class="num-box" v-model=num />
               <button class="add-up" @click="add">+</button>
             </div>
             <p>购买数量</p>
@@ -72,11 +68,19 @@
 </template>
 <script>
   import { Header,Popup,Toast} from 'mint-ui'
+  import {productDetail,addCart} from '../../api/api.js'
   export default {
     data(){
       return{
         popupVisible:false,
+        isVip:false,
+        bandimg:'',
         num:'1',
+        name: '',
+        marketPrice:0.00,
+        vipname:'',
+        vipcount:'0.00',
+        total:''
       }
     },
     methods:{
@@ -84,12 +88,30 @@
         this.popupVisible = true
       },
       toast:function () {
-        this.popupVisible = false,
-        Toast({
-          message: '操作成功 商品已在购物车',
-          position: 'bottom',
-          duration: 1000
-        });
+        this.popupVisible = false;
+        let that=this;
+        let params={
+          data:{
+            goodsid:4,
+            total:this.num
+          }
+        }
+        addCart(params,function (res) {
+          if(res.statusCode==1){
+            Toast({
+              message: '操作成功 商品已在购物车',
+              position: 'bottom',
+              duration: 1800
+            });
+          }else{
+            Toast({
+              message: '添加失败',
+              position: 'bottom',
+              duration: 1800
+            });
+          }
+        })
+
       },
       reduce:function (num) {
         if(num>1){
@@ -97,8 +119,34 @@
         }
       },
       add:function () {
-        this.num++
+        this.num++;
+        console.log(this.num)
+      },
+      getInfo:function () {
+        let that=this;
+        let params={
+          data:{
+            goodsid:4,
+          }
+        }
+        productDetail(params,function (res) {
+          console.log(res)
+          let goods=res.data.goods
+          that.name=goods.title;
+          that.marketPrice=goods.marketprice;
+          that.bandimg=res.data.pics[0];
+          that.total=goods.total;
+          document.getElementById("intro").innerHTML=goods.content;
+          if(res.data.level.levelname){
+            that.isVip=true;
+            that.vipname=res.data.level.levelname;
+            that.vipcount=res.data.level.discount;
+          };
+        })
       }
+    },
+    created(){
+      this.getInfo()
     },
     components: {}
   }
@@ -131,7 +179,7 @@
   }
   .img-box {
     position: relative;
-    padding-bottom: 56.25%;
+    padding-bottom: 100%;
     height: 0;
     margin-top: 46px;
   }
