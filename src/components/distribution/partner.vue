@@ -99,7 +99,7 @@
   import {Popup, Picker} from 'mint-ui';
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
   import {Carts,Goods,ApiLogin} from '../../api/api.js'
-  import { MD5 } from 'js-md5'
+//  import { MD5 } from 'js-md5'
   export default{
     data () {
       return {

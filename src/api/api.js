@@ -4,8 +4,8 @@
 /**
  * Created by Crete on 17/6/24.
  */
+/*
 import axios from 'axios'
-import { MD5 } from 'js-md5'
 import qs from 'qs'
 let base = 'https://api.duoyunjiav2.wshoto.com'
 let axios_instance = axios.create({
@@ -25,3 +25,6 @@ export const ApiLogin = params => { return axios_instance.get(`${base}/ApiLogin`
 export const Goods = params => { return axios.get(`${base}/goods?access_token=78dddb9fe91d6ac654af8c4abd9fb036`,params).then(res => res.data) }
 //购物车
 export const Carts = params => { return axios_instance.post(`${base}/carts`, params).then(res => res.data) }
+*/
+
+
