@@ -47,7 +47,7 @@
   .p-list {
     display: block;
     margin-bottom: .5rem;
-    height: 70%;
+    height: 4.68rem;
     overflow: hidden;
     overflow-y: scroll;
 
@@ -64,7 +64,7 @@
     flex: 1;
   }
   .info {
-    flex: 4;
+    flex: 5;
     text-align: left;
     margin-left: 0.1rem;
     position: relative;
@@ -99,4 +99,5 @@
     bottom:0.05rem;
     font-size: 0.12rem;
   }
+
 </style>

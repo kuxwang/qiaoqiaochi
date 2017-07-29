@@ -165,7 +165,7 @@
       <router-view></router-view>
     </transition> -->
     <v-tabbar></v-tabbar>
-    <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight" >
+    <transition name="slide">
       <router-view></router-view>
     </transition>
   </div>

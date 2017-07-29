@@ -47,6 +47,9 @@
   .p-list {
     display: block;
     margin-bottom: .5rem;
+    height: 4.68rem;
+    overflow: hidden;
+    overflow-y: scroll;
 
   }
   .p-cell {
