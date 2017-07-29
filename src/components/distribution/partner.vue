@@ -11,24 +11,6 @@
     </section>
     <section class="top">
     </section>
-   <!-- <ul class="partner-type">
-      <router-link to="/partnerlist" tag="li" class="list-type">
-        <span class="iconfont">&#xe632;</span>新的粉丝
-        <span class="num-right">人</span>
-      </router-link>
-      <router-link to="/partnerlist" tag="li" class="list-type">
-        <span class="iconfont">&#xe628; </span>新成交粉丝
-        <span class="num-right">人</span>
-      </router-link>
-      <router-link to="/partnerlist" tag="li" class="list-type">
-        <span class="iconfont"> &#xe65a;</span>高价值粉丝
-        <span class="num-right">人</span>
-      </router-link>
-      <router-link to="/partnerlist" tag="li" class="list-type">
-        <span class="iconfont">&#xe68e; </span>分享达人
-        <span class="num-right">人</span>
-      </router-link>
-    </ul>-->
 
     <ul class="nav-tab">
       <router-link to="/partner1" tag="li">
@@ -549,5 +531,8 @@
     display: block;
     height: 100%;
     flex: .2;
+  }
+  .mint-header {
+    color: #fff !important;
   }
 </style>

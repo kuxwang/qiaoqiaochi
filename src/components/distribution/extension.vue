@@ -390,5 +390,7 @@
     height: 100%;
     flex: .2;
   }
-
+  .mint-header {
+    color: #fff !important;
+  }
 </style>
