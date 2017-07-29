@@ -148,7 +148,8 @@
 	</div>
 </template>
 <script>
-	import { Header,MessageBox} from 'mint-ui'
+	import { Header,MessageBox} from 'mint-ui';
+	import {GET_MYADDRESS1} from '../../api/api';
 	export default{
 		data(){
 			return{
@@ -163,13 +164,18 @@
 			}
 		},
 		mounted(){
-	      MessageBox({title: '您还未设置收货地址，请设置地址?',message: '点击确认设置',showCancelButton: true}).then(action => {
-	          if(action=='confirm'){//表示点击了确定
+	      // MessageBox({title: '您还未设置收货地址，请设置地址?',message: '点击确认设置',showCancelButton: true}).then(action => {
+	      //     if(action=='confirm'){//表示点击了确定
 	            
-	          }else if(action=='cancel'){//表示点击了取消
-	            // console.log('点击了取消')
-	          }
-	      })
+	      //     }else if(action=='cancel'){//表示点击了取消
+	      //       // console.log('点击了取消')
+	      //     }
+	      // })
+	      	let params = []
+			let _this=this
+	    	GET_MYADDRESS1(params, function (res) {
+	    		console.log(res)
+	      	})
 	    }
 	}
 </script>

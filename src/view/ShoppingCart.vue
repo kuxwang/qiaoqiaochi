@@ -84,20 +84,12 @@
 <script>
 	import { Header,Checklist,MessageBox } from 'mint-ui';
 	import {setStore, getStore} from '../config/myUtils';
+	import {GET_MYCARTS,PUT_MYCARTS,GET_ORDER1} from '../api/api';
 	export default{
 		data(){
 			return {
 				value1: [],
-				getShCartData:[
-					{goodsid:"4",id:"1111",marketprice:"10",maxbuy:"0",optionid:"0",optionstock:"null",optiontitle:"null",productprice:"120.20",specs:"null",stock:"96198",thumb:"http://duoyunjiav2.wshoto.com/attachment/images/2/2017/07/LwQEua5Wt2KBKOalLBou5eaXxauvOo.jpg",title:"植护竹浆本色抽纸10包装",total:"1",isChecked:false
-					},
-					{goodsid:"4",id:"2222",marketprice:"20",maxbuy:"0",optionid:"0",optionstock:"null",optiontitle:"null",productprice:"150.00",specs:"null",stock:"96198",thumb:"http://duoyunjiav2.wshoto.com/attachment/images/2/2017/07/LwQEua5Wt2KBKOalLBou5eaXxauvOo.jpg",title:"植护竹浆本色抽纸10包装",total:"2",isChecked:false
-					},
-					{goodsid:"4",id:"3333",marketprice:"30",maxbuy:"0",optionid:"0",optionstock:"null",optiontitle:"null",productprice:"100.00",specs:"null",stock:"96198",thumb:"http://duoyunjiav2.wshoto.com/attachment/images/2/2017/07/LwQEua5Wt2KBKOalLBou5eaXxauvOo.jpg",title:"植护竹浆本色抽纸10包装",total:"3",isChecked:false
-					},
-					{goodsid:"4",id:"4444",marketprice:"40",maxbuy:"0",optionid:"0",optionstock:"null",optiontitle:"null",productprice:"210.50",specs:"null",stock:"96198",thumb:"http://duoyunjiav2.wshoto.com/attachment/images/2/2017/07/LwQEua5Wt2KBKOalLBou5eaXxauvOo.jpg",title:"植护竹浆本色抽纸10包装",total:"4",isChecked:false
-					},
-				],
+				getShCartData:[],
 				defPrice:'0',
 				defTotal:'0',
 				isTrue:false,
@@ -111,9 +103,24 @@
 				var myTotal=Number(v.total);
 				var myPrice=Number(v.marketprice);
 				var myDefPrice=Number(this.defPrice);
+				// console.log(this.getShCartData[i].isChecked)
 				if(this.getShCartData[i].isChecked==true){
 					this.defPrice=myDefPrice+myPrice;
 					this.defTotal++
+					let params = {
+						'data':{
+							cartid:v.id,
+							type:'1'
+						}
+					}
+					let _this=this
+			    	PUT_MYCARTS(params, function (res) {
+			    		if(res.statusCode===1){
+			    			console.log('加成功')
+			    		}else{
+			    			console.log('请求失败')
+			    		}
+			      	})
 				}
 			},
 			reduceTotal(v,i){//减
@@ -127,6 +134,20 @@
 						this.defPrice=myDefPrice-myPrice;
 						this.defTotal--
 					}
+					let params = {
+						'data':{
+							cartid:v.id,
+							type:'-1'
+						}
+					}
+					let _this=this
+			    	PUT_MYCARTS(params, function (res) {
+			    		if(res.statusCode===1){
+			    			console.log('减成功')
+			    		}else{
+			    			console.log('请求失败')
+			    		}
+			      	})
 				}
 			},
 			allCheckBox(){//全选
@@ -136,7 +157,7 @@
 					var allTotal=0;
 					for(var i=0;i<this.getShCartData.length;i++){
 						this.getShCartData[i].isChecked=true;
-						console.log(this.getShCartData[i])
+						// console.log(this.getShCartData[i])
 						var myTotal=Number(this.getShCartData[i].total);
 						var myPrice=Number(this.getShCartData[i].marketprice);
 						allPrice+=myPrice*myTotal;
@@ -179,6 +200,8 @@
 						}else{
 							this.isTrue=false
 						}
+					}else{
+						this.isTrue=false
 					}
 				}
 			},
@@ -197,7 +220,7 @@
 								this.defPrice=0;
 							}
                     	}
-                    	console.log(this.getShCartData.length)
+                    	// console.log(this.getShCartData.length)
                     	if(this.getShCartData.length==1){
                     		this.isTrue=false;
                     		this.isShow=false;
@@ -211,6 +234,24 @@
 			goConfirmorder(){//去确认订单
 				if(this.defPrice>0){
 					this.$router.push({name:'confirmorder'})
+					// console.log()
+					// let m_goodsid=this.getShCartData.goodsid;
+					// let m_optionid=this.getShCartData.optionid;
+					// let m_cartids=this.getShCartData.cartids;
+					// let m_total=this.getShCartData.total;
+					// let m_type=this.getShCartData.goodsid;
+					let params = {
+						'data':{
+							goodsid:'4',
+							optionid:'0',
+							cartids:'111',
+							total:'22'
+						}
+					}
+					let _this=this
+			    	GET_ORDER1(params, function (res) {
+			    		console.log(res)
+			      	})
 				}
 			}
 		},
@@ -233,6 +274,22 @@
 					return ''
 				}
 			}
+		},
+		mounted(){
+			let params = []
+			let _this=this
+	    	GET_MYCARTS(params, function (res) {
+	    		// console.log(res)
+	        	if(res.statusCode===1){
+	        		// console.log(res.data)
+	        		_this.getShCartData=res.data.list;
+	        		for(let a in _this.getShCartData){
+	        			_this.getShCartData[a].isChecked=false
+	        		}
+	        	}else{
+	        		console.log('请求失败')
+	        	}
+	      	})
 		}
 	}
 </script>

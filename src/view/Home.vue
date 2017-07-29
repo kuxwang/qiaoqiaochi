@@ -19,14 +19,15 @@
   import vTabbar from '../components/common/Tabbar';
   export default{
     data(){
-    return {
+      return {
 
+      }
+    },
+    mounted(){
+    },
+    components:{
+      vTabbar
     }
-  }
-  ,
-  components:{
-    vTabbar
-  }
   }
 </script>
 <style scoped>

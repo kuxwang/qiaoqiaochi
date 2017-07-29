@@ -1,12 +1,12 @@
 <template>
   <div class="main">
     <!--<section>-->
-      <!--<mt-header fixed title="会员中心" class="ocolor">-->
-        <!--<router-link to="/test" slot="left">-->
-          <!--<mt-button icon="back">返回</mt-button>-->
-        <!--</router-link>-->
-        <!--<mt-button icon="more" slot="right"></mt-button>-->
-      <!--</mt-header>-->
+    <!--<mt-header fixed title="会员中心" class="ocolor">-->
+    <!--<router-link to="/test" slot="left">-->
+    <!--<mt-button icon="back">返回</mt-button>-->
+    <!--</router-link>-->
+    <!--<mt-button icon="more" slot="right"></mt-button>-->
+    <!--</mt-header>-->
     <!--</section>-->
     <section class="avatar">
       <div class="icon"></div>
@@ -165,14 +165,16 @@
       <router-view></router-view>
     </transition> -->
     <v-tabbar></v-tabbar>
-    <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight" >
+    <transition name="slide">
       <router-view></router-view>
     </transition>
   </div>
 </template>
 <script>
-  import vTabbar from '../components/common/Tabbar.vue';
-  import {mapMutations,mapGetters} from 'vuex';
+  import vTabbar from '../components/common/Tabbar.vue'
+  import {recordStatistics} from '../api/api'
+  import {_webapp} from '../config/webapp'
+  import {mapMutations,mapGetters} from 'vuex'
   export default{
     data () {
       return {}
@@ -181,11 +183,11 @@
       vTabbar
     },
     methods: {
-        partnertab(idx){
-          this.tabselect(idx)
-          this.$router.push({name: `partnerlist${idx}`})
+      partnertab(idx){
+        this.tabselect(idx)
+        this.$router.push({name: `partnerlist${idx}`})
 
-        },
+      },
       ordertab(idx){
         this.tabselect(idx)
         this.$router.push({name: `extension${idx}`})
@@ -193,6 +195,12 @@
       },
       ...mapMutations({
         tabselect:'TABSELECT',
+      })
+    },
+    mounted(){
+      let params = []
+      recordStatistics(params, function (res) {
+        console.log(res)
       })
     }
   }
@@ -205,7 +213,7 @@
     font-size: .16rem;
   }
 
-  .main,.main1 {
+  .main, .main1 {
     position: fixed;
     top: 0;
     left: 0;
@@ -397,9 +405,11 @@
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
   }
+
   .order-list {
     display: flex;
   }
+
   .order-list li {
     flex: 1;
   }
