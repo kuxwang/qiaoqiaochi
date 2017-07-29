@@ -76,8 +76,8 @@
   .order-detail-header .mint-header-title{
     color:#fff;
   }
- .order-detail-header .mint-header-button a{
-     color:#fff;
+  .order-detail-header .mint-header-button a{
+    color:#fff;
   }
 
   /*yellowStar*/

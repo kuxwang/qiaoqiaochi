@@ -1,12 +1,12 @@
 <template>
   <div class="main">
     <!--<section>-->
-      <!--<mt-header fixed title="会员中心" class="ocolor">-->
-        <!--<router-link to="/test" slot="left">-->
-          <!--<mt-button icon="back">返回</mt-button>-->
-        <!--</router-link>-->
-        <!--<mt-button icon="more" slot="right"></mt-button>-->
-      <!--</mt-header>-->
+    <!--<mt-header fixed title="会员中心" class="ocolor">-->
+    <!--<router-link to="/test" slot="left">-->
+    <!--<mt-button icon="back">返回</mt-button>-->
+    <!--</router-link>-->
+    <!--<mt-button icon="more" slot="right"></mt-button>-->
+    <!--</mt-header>-->
     <!--</section>-->
     <section class="avatar">
       <div class="icon"></div>
@@ -42,73 +42,75 @@
         <span class="mint-cell-text">我的伙伴</span>
       </div>
       <ul>
-        <router-link to="/partner" tag="li">
-        <!--<li class="li1">-->
+        <!--<router-link to="/partner" tag="li">-->
+        <li class="li1" @click="partnertab(1)">
           <div class="title">所有伙伴</div>
           <div class="iconfont listicon">&#xe646;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 人</span>
           </div>
-        <!--</li>-->
-        </router-link>
-        <router-link to="/partner2" tag="li">
-        <!--<li class="li2">-->
+        </li>
+        <!--</router-link>-->
+        <!--<router-link to="/partner2" tag="li">-->
+        <li class="li2" @click="partnertab(2)">
           <div class="title">已购买伙伴</div>
           <div class="iconfont listicon">&#xe600;</div>
           <div>
             <span class="num">10</span><span class="yuan"> 人</span>
           </div>
-        <!--</li>-->
-        </router-link>
-        <router-link to="/partner3" tag="li">
-        <!--<li class="li3">-->
+        </li>
+        <!--</router-link>-->
+        <!--<router-link to="/partner3" tag="li">-->
+        <li class="li3" @click="partnertab(3)">
           <div class="title">未购买伙伴</div>
           <div class="iconfont listicon">&#xe60d;</div>
           <div>
             <span class="num">100</span><span class="yuan"> 人</span>
           </div>
-        <!--</li>-->
-        </router-link>
+        </li>
+        <!--</router-link>-->
       </ul>
 
       <div class="mfriend">
         <span class="mint-cell-text">推广订单</span>
       </div>
       <ul class="order-list">
-        <!--<li class="li1">-->
-        <router-link to="/extension1" tag="li">
+        <li class="li1" @click="ordertab(1)">
+        <!--<router-link to="/extension1" tag="li">-->
           <div class="title">全部</div>
           <div class="iconfont listicon">&#xe624;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 单</span>
           </div>
-        </router-link>
-          <router-link to="/extension2" tag="li">
+        <!--</router-link>-->
+        </li>
+          <!--<router-link to="/extension2" tag="li">-->
+        <li @click="ordertab(2)">
             <div class="title">未结算</div>
             <div class="iconfont listicon">&#xe624;</div>
             <div>
               <span class="num">1</span><span class="yuan"> 单</span>
             </div>
-          </router-link>
-        <!--</li>-->
-        <router-link to="/extension3" tag="li">
-        <!--<li class="li2">-->
+          <!--</router-link>-->
+        </li>
+        <!--<router-link to="/extension3" tag="li">-->
+        <li class="li2" @click="ordertab(3)">
           <div class="title">已退款</div>
           <div class="iconfont listicon">&#xe8b5;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 单</span>
           </div>
-        <!--</li>-->
-        </router-link>
-        <router-link to="/extension4" tag="li">
-        <!--<li class="li3">-->
+        </li>
+        <!--</router-link>-->
+        <!--<router-link to="/extension4" tag="li">-->
+        <li class="li3" @click="ordertab(4)">
           <div class="title">已结算</div>
           <div class="iconfont listicon">&#xe619;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 单</span>
           </div>
-        <!--</li>-->
-        </router-link>
+        </li>
+        <!--</router-link>-->
       </ul>
 
       <div class="mfriend">
@@ -163,19 +165,43 @@
       <router-view></router-view>
     </transition> -->
     <v-tabbar></v-tabbar>
-    <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight" >
+    <transition name="slide">
       <router-view></router-view>
     </transition>
   </div>
 </template>
 <script>
   import vTabbar from '../components/common/Tabbar.vue'
+  import {recordStatistics} from '../api/api'
+  import {_webapp} from '../config/webapp'
+  import {mapMutations,mapGetters} from 'vuex'
   export default{
     data () {
       return {}
     },
     components: {
       vTabbar
+    },
+    methods: {
+      partnertab(idx){
+        this.tabselect(idx)
+        this.$router.push({name: `partnerlist${idx}`})
+
+      },
+      ordertab(idx){
+        this.tabselect(idx)
+        this.$router.push({name: `extension${idx}`})
+
+      },
+      ...mapMutations({
+        tabselect:'TABSELECT',
+      })
+    },
+    mounted(){
+      let params = []
+      recordStatistics(params, function (res) {
+        console.log(res)
+      })
     }
   }
 </script>
@@ -187,7 +213,7 @@
     font-size: .16rem;
   }
 
-  .main,.main1 {
+  .main, .main1 {
     position: fixed;
     top: 0;
     left: 0;
@@ -379,9 +405,11 @@
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
   }
+
   .order-list {
     display: flex;
   }
+
   .order-list li {
     flex: 1;
   }

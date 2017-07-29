@@ -1,10 +1,10 @@
 <template>
   <div class="mian1">
-    <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
+    <!--<mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">-->
       <ul class="p-list" >
         <li class="p-cell" v-for="n in 10">
           <div class="logo">
-            <img src="../../assets/images/shoppingCart-01.jpg"/>
+            <img :src="thumb"/>
           </div>
           <div class="info">
             <h5>名字</h5>
@@ -13,7 +13,7 @@
           </div>
         </li>
       </ul>
-    </mt-loadmore>
+    <!--</mt-loadmore>-->
   </div>
 </template>
 
@@ -22,7 +22,7 @@
   export default{
       data(){
           return {
-
+            thumb:require('../../assets/images/userinfo-02.png')
         }
       },
       components: {
@@ -39,7 +39,6 @@
 
           }
       }
-
   }
 </script>
 
@@ -47,14 +46,19 @@
 <style scoped>
   .p-list {
     display: block;
-    background-color: #fff;
-    /*margin-top: 0.5rem;*/
+    margin-bottom: .5rem;
+    height: 4.68rem;
+    overflow: hidden;
+    overflow-y: scroll;
+
   }
   .p-cell {
     display: flex;
     height: 0.78rem;
     padding: 0.1rem 0.2rem;
     border-top:1px solid #e2e2e2;
+    background-color: #fff;
+    margin-top: 0.05rem;
   }
   .logo {
     flex: 1;
@@ -62,7 +66,7 @@
   .info {
     flex: 4;
     text-align: left;
-    margin-left: 0.2rem;
+    margin-left: 0.1rem;
     position: relative;
   }
   .info h5 {
@@ -75,8 +79,10 @@
     color: #666;
   }
   .logo img {
-    width: 100%;
+    width: 70%;
     border-radius: 50%;
+    display: block;
+    margin: 15% auto;
   }
   .mian1 {
     position: fixed;
