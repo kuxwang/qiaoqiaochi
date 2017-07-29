@@ -1,13 +1,5 @@
 <template>
   <div class="main">
-    <!--<section>-->
-    <!--<mt-header fixed title="会员中心" class="ocolor">-->
-    <!--<router-link to="/test" slot="left">-->
-    <!--<mt-button icon="back">返回</mt-button>-->
-    <!--</router-link>-->
-    <!--<mt-button icon="more" slot="right"></mt-button>-->
-    <!--</mt-header>-->
-    <!--</section>-->
     <section class="avatar">
       <div class="icon"></div>
       <div class="message">
@@ -30,11 +22,11 @@
     <section class="top">
       <div class="top_1">
         <span class="title">营业额</span>
-        <span class="num">703205</span><span class="yuan"> 元</span>
+        <span class="num">{{cg_money_sum}}</span><span class="yuan"> 元</span>
       </div>
       <div>
         <span class="title">佣金</span>
-        <span class="num">1308.34</span><span class="yuan"> 元</span>
+        <span class="num">{{c_money_sum}}</span><span class="yuan"> 元</span>
       </div>
     </section>
     <section class="content">
@@ -76,21 +68,21 @@
       </div>
       <ul class="order-list">
         <li class="li1" @click="ordertab(1)">
-        <!--<router-link to="/extension1" tag="li">-->
+          <!--<router-link to="/extension1" tag="li">-->
           <div class="title">全部</div>
           <div class="iconfont listicon">&#xe624;</div>
           <div>
             <span class="num">1</span><span class="yuan"> 单</span>
           </div>
-        <!--</router-link>-->
+          <!--</router-link>-->
         </li>
-          <!--<router-link to="/extension2" tag="li">-->
+        <!--<router-link to="/extension2" tag="li">-->
         <li @click="ordertab(2)">
-            <div class="title">未结算</div>
-            <div class="iconfont listicon">&#xe624;</div>
-            <div>
-              <span class="num">1</span><span class="yuan"> 单</span>
-            </div>
+          <div class="title">未结算</div>
+          <div class="iconfont listicon">&#xe624;</div>
+          <div>
+            <span class="num">1</span><span class="yuan"> 单</span>
+          </div>
           <!--</router-link>-->
         </li>
         <!--<router-link to="/extension3" tag="li">-->
@@ -161,28 +153,52 @@
         </li>
       </ul>
     </section>
-   <!--  <transition name="slide">
-      <router-view></router-view>
-    </transition> -->
+    <!--  <transition name="slide">
+       <router-view></router-view>
+     </transition> -->
     <v-tabbar></v-tabbar>
-    <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight" >
+    <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight">
       <router-view></router-view>
     </transition>
   </div>
 </template>
 <script>
   import vTabbar from '../components/common/Tabbar.vue'
-  import {recordStatistics} from '../api/api'
+  import {recordStatistics_get} from '../api/api'
   import {_webapp} from '../config/webapp'
-  import {mapMutations,mapGetters} from 'vuex'
+  import {mapMutations, mapGetters} from 'vuex'
   export default{
     data () {
-      return {}
+      return {
+        cg_money_sum: '',//销售总额
+        c_money_sum: '', //佣金总额
+
+
+      }
     },
     components: {
       vTabbar
     },
     methods: {
+      init () {
+        let _this = this;
+        let params = {};
+        //佣金统计
+        recordStatistics_get(params, function (res) {
+          if (res.statusCode == 1) {
+            console.log(res)
+            let data = res.data
+            _this.cg_money_sum = res.data.total.cg_money_sum
+            _this.c_money_sum = res.data.total.c_money_sum
+          } else {
+
+          }
+        })
+        //团队列表
+        
+
+
+      },
       partnertab(idx){
         this.tabselect(idx)
         this.$router.push({name: `partnerlist${idx}`})
@@ -194,15 +210,19 @@
 
       },
       ...mapMutations({
-        tabselect:'TABSELECT',
-      })
+        tabselect: 'TABSELECT',
+      }),
     },
-    mounted(){
-      let params = []
-      recordStatistics(params, function (res) {
-        console.log(res)
-      })
+    created(){
+      this.init()
+
+    },
+    mounted()
+    {
+
     }
+    ,
+
   }
 </script>
 <style scoped>
