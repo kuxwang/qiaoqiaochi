@@ -107,21 +107,23 @@
 				if(this.getShCartData[i].isChecked==true){
 					this.defPrice=myDefPrice+myPrice;
 					this.defTotal++
-					let params = {
-						'data':{
-							cartid:v.id,
-							type:'1'
-						}
-					}
-					let _this=this
-			    	PUT_MYCARTS(params, function (res) {
-			    		if(res.statusCode===1){
-			    			console.log('加成功')
-			    		}else{
-			    			console.log('请求失败')
-			    		}
-			      	})
+
 				}
+				let params = {
+					'data':{
+						cartid:v.id,
+						type:'1'
+					}
+				}
+				let _this=this
+		    	PUT_MYCARTS(params, function (res) {
+		    		console.log(res)
+		    		if(res.statusCode===1){
+		    			console.log('加成功')
+		    		}else{
+		    			console.log('请求失败')
+		    		}
+		      	})
 			},
 			reduceTotal(v,i){//减
 				var total=v.total;
@@ -240,18 +242,18 @@
 					// let m_cartids=this.getShCartData.cartids;
 					// let m_total=this.getShCartData.total;
 					// let m_type=this.getShCartData.goodsid;
-					let params = {
-						'data':{
-							goodsid:'4',
-							optionid:'0',
-							cartids:'111',
-							total:'22'
-						}
-					}
-					let _this=this
-			    	GET_ORDER1(params, function (res) {
-			    		console.log(res)
-			      	})
+					// let params = {
+					// 	'data':{
+					// 		goodsid:'4',
+					// 		optionid:'0',
+					// 		cartids:'111',
+					// 		total:'22'
+					// 	}
+					// }
+					// let _this=this
+			  //   	GET_ORDER1(params, function (res) {
+			  //   		console.log(res)
+			  //     	})
 				}
 			}
 		},
@@ -279,7 +281,7 @@
 			let params = []
 			let _this=this
 	    	GET_MYCARTS(params, function (res) {
-	    		// console.log(res)
+	    		console.log(res)
 	        	if(res.statusCode===1){
 	        		// console.log(res.data)
 	        		_this.getShCartData=res.data.list;

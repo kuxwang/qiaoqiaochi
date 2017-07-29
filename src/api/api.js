@@ -121,12 +121,7 @@ export const memberInfo = function (params, callback) {
 /**
  * 首页商品展示 yellowStar
  */
-const MYGOODS={
-  url: `${base}/goods`,
-  method: 'GET',
-  header,
-  dataType
-}
+const MYGOODS={url: `${base}/goods`,method: 'GET',header,dataType}
 export const GET_MYGOODS = function(params, callback) {
   _webapp.requestx(Object.assign(params,MYGOODS), function(res) {
     callback(res)
@@ -136,24 +131,13 @@ export const GET_MYGOODS = function(params, callback) {
 /**
  * 购物车 yellowStar
  */
-const MYCARTS1={
-  url: `${base}/carts`,
-  method: 'GET',
-  header,
-  dataType
-}
+const MYCARTS1={ url: `${base}/carts`,method: 'GET',header,dataType}
 export const GET_MYCARTS = function(params, callback) {
   _webapp.requestx(Object.assign(params,MYCARTS1), function(res) {
     callback(res)
   })
 };
-
-const MYCARTS2={
-  url: `${base}/carts`,
-  method: 'PUT',
-  header,
-  dataType
-}
+const MYCARTS2={url: `${base}/carts`, method: 'PUT',header,dataType}
 export const PUT_MYCARTS = function(params, callback) {
   _webapp.requestx(Object.assign(params,MYCARTS2), function(res) {
     callback(res)
@@ -163,12 +147,7 @@ export const PUT_MYCARTS = function(params, callback) {
 /**
  * 下单 yellowStar
 */
-const ORDER1={
-  url: `${base}/orders/confirm`,
-  method: 'GET',
-  header,
-  dataType
-}
+const ORDER1={url: `${base}/orders/confirm`,method: 'GET',header,dataType}
 export const GET_ORDER1 = function(params, callback) {
   _webapp.requestx(Object.assign(params,ORDER1), function(res) {
     callback(res)
@@ -178,14 +157,41 @@ export const GET_ORDER1 = function(params, callback) {
 /**
  * 地址管理 yellowStar
 */
-const MYADDRESS1={
-  url: `${base}/orders/addresses`,
-  method: 'GET',
-  header,
-  dataType
-}
+const MYADDRESS1={url: `${base}/orders/addresses`,method: 'GET',header,dataType}
 export const GET_MYADDRESS1 = function(params, callback) {
   _webapp.requestx(Object.assign(params,MYADDRESS1), function(res) {
     callback(res)
   })
 };
+
+/**
+ * 个人中心 yellowStar
+*/
+const USERINFO={url: `${base}/members`,method: 'PUT',header,dataType}
+export const PUT_USERINFO = function(params, callback) {
+  _webapp.requestx(Object.assign(params,USERINFO), function(res) {
+    callback(res)
+  })
+};
+
+
+const USERAVATARS={url: `${base}/avatars`,method: 'PUT',header,dataType}
+export const PUT_USERAVATARS = function(params, callback) {
+  console.log(callback)
+  _webapp.requestx(Object.assign(params,USERAVATARS), function(res) {
+    callback(res)
+  })
+};
+
+
+
+
+/**
+ * 个人信息 yellowStar
+*/
+// const MYADDRESS1={url: `${base}/orders/addresses`,method: 'GET',header,dataType}
+// export const GET_MYADDRESS1 = function(params, callback) {
+//   _webapp.requestx(Object.assign(params,MYADDRESS1), function(res) {
+//     callback(res)
+//   })
+// };
