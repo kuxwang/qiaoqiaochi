@@ -1,5 +1,6 @@
 import {
-  RECORD_ADDRESS,
+  // RECORD_ADDRESS,
+  TABSELECT
 }
   from
     './mutation-types.js'
@@ -12,4 +13,7 @@ export default {
   //   state.position = position
   //   setStore('position', state.position)
   // },
+  [TABSELECT] (state, data) {
+    state.tabselect = data
+  }
 }
