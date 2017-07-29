@@ -22,11 +22,11 @@
     <section class="top">
       <div class="top_1">
         <span class="title">营业额</span>
-        <span class="num">12312</span><span class="yuan"> 元</span>
+        <span class="num">{{recordStatistics_get.cg_money_sum}}</span><span class="yuan"> 元</span>
       </div>
       <div>
         <span class="title">佣金</span>
-        <span class="num">123313</span><span class="yuan"> 元</span>
+        <span class="num">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>
       </div>
     </section>
     <section class="content">
@@ -39,7 +39,7 @@
           <div class="title">所有伙伴</div>
           <div class="iconfont listicon">&#xe646;</div>
           <div>
-            <span class="num">1</span><span class="yuan"> 人</span>
+            <span class="num">{{teamsStatistics.all}}</span><span class="yuan"> 人</span>
           </div>
         </li>
         <!--</router-link>-->
@@ -48,7 +48,7 @@
           <div class="title">已购买伙伴</div>
           <div class="iconfont listicon">&#xe600;</div>
           <div>
-            <span class="num">10</span><span class="yuan"> 人</span>
+            <span class="num">{{teamsStatistics.purchased}}</span><span class="yuan"> 人</span>
           </div>
         </li>
         <!--</router-link>-->
@@ -57,7 +57,7 @@
           <div class="title">未购买伙伴</div>
           <div class="iconfont listicon">&#xe60d;</div>
           <div>
-            <span class="num">100</span><span class="yuan"> 人</span>
+            <span class="num">{{teamsStatistics.no_purchased}}</span><span class="yuan"> 人</span>
           </div>
         </li>
         <!--</router-link>-->
@@ -72,17 +72,17 @@
           <div class="title">全部</div>
           <div class="iconfont listicon">&#xe624;</div>
           <div>
-            <span class="num">1</span><span class="yuan"> 单</span>
+            <span class="num">{{orderStatistics.total}}</span><span class="yuan"> 单</span>
           </div>
-        <!--</router-link>-->
+          <!--</router-link>-->
         </li>
-          <!--<router-link to="/extension2" tag="li">-->
+        <!--<router-link to="/extension2" tag="li">-->
         <li @click="ordertab(2)">
-            <div class="title">未结算</div>
-            <div class="iconfont listicon">&#xe624;</div>
-            <div>
-              <span class="num">1</span><span class="yuan"> 单</span>
-            </div>
+          <div class="title">未结算</div>
+          <div class="iconfont listicon">&#xe624;</div>
+          <div>
+            <span class="num">{{orderStatistics.lock}}</span><span class="yuan"> 单</span>
+          </div>
           <!--</router-link>-->
         </li>
         <!--<router-link to="/extension3" tag="li">-->
@@ -90,7 +90,7 @@
           <div class="title">已退款</div>
           <div class="iconfont listicon">&#xe8b5;</div>
           <div>
-            <span class="num">1</span><span class="yuan"> 单</span>
+            <span class="num">{{orderStatistics.refund}}</span><span class="yuan"> 单</span>
           </div>
         </li>
         <!--</router-link>-->
@@ -99,7 +99,7 @@
           <div class="title">已结算</div>
           <div class="iconfont listicon">&#xe619;</div>
           <div>
-            <span class="num">1</span><span class="yuan"> 单</span>
+            <span class="num">{{orderStatistics.ok}}</span><span class="yuan"> 单</span>
           </div>
         </li>
         <!--</router-link>-->
@@ -113,49 +113,49 @@
           <div class="title">已收货业绩</div>
           <div class="iconfont listicon">&#xe61e;</div>
           <div>
-            <span class="num">1</span><span class="yuan"> 元</span>
+            <span class="num">{{recordStatistics_get.o_status_3}}</span><span class="yuan"> 元</span>
           </div>
         </li>
         <li class="li2">
           <div class="title">已提现业绩</div>
           <div class="iconfont listicon">&#xe630;</div>
           <div>
-            <span class="num">1</span><span class="yuan"> 元</span>
+            <span class="num">{{recordStatistics_get.pay}}</span><span class="yuan"> 元</span>
           </div>
         </li>
         <li class="li3">
           <div class="title">可提现业绩</div>
           <div class="iconfont listicon">&#xe608;</div>
           <div>
-            <span class="num">1</span><span class="yuan"> 元</span>
+            <span class="num">{{recordStatistics_get.check}}</span><span class="yuan"> 元</span>
           </div>
         </li>
         <li class="li4">
           <div class="title">被驳回业绩</div>
           <div class="iconfont listicon">&#xe620;</div>
           <div>
-            <span class="num">1</span><span class="yuan"> 元</span>
+            <span class="num">{{recordStatistics_get.invalid}}</span><span class="yuan"> 元</span>
           </div>
         </li>
         <li class="li5">
           <div class="title">申请中业绩</div>
           <div class="iconfont listicon">&#xe602;</div>
           <div>
-            <span class="num">1</span><span class="yuan"> 元</span>
+            <span class="num">{{recordStatistics_get.apply}}</span><span class="yuan"> 元</span>
           </div>
         </li>
         <li class="li6">
           <div class="title">待打款业绩</div>
           <div class="iconfont listicon">&#xe625;</div>
           <div>
-            <span class="num">1</span><span class="yuan"> 元</span>
+            <span class="num">{{recordStatistics_get.o_status_0}}</span><span class="yuan"> 元</span>
           </div>
         </li>
       </ul>
     </section>
-   <!--  <transition name="slide">
-      <router-view></router-view>
-    </transition> -->
+    <!--  <transition name="slide">
+       <router-view></router-view>
+     </transition> -->
     <v-tabbar></v-tabbar>
     <transition name="slide">
       <router-view></router-view>
@@ -164,17 +164,82 @@
 </template>
 <script>
   import vTabbar from '../components/common/Tabbar.vue'
-  import {recordStatistics} from '../api/api'
+  import {recordStatistics_get, teamsStatistics, orderStatistics} from '../api/api'
   import {_webapp} from '../config/webapp'
-  import {mapMutations,mapGetters} from 'vuex'
+  import {mapMutations, mapGetters} from 'vuex'
   export default{
     data () {
-      return {}
+      return {
+        recordStatistics_get: {
+          cg_money_sum: '',//销售总额
+          c_money_sum: '', //佣金总额
+          o_status_3: '', //已收货
+          pay: '', //已提现
+          check: '', //可提现
+          invalid: '', //被驳回的业绩
+          apply: '', //申请中
+          o_status_0: '' //待打款
+        },
+        teamsStatistics: {
+          all: '',  //总人数
+          purchased: '',  //已购买人数
+          no_purchased: ''  //未购买人数
+        },
+        orderStatistics: {
+          total: '',//全部
+          lock: '',//未结算
+          refund: '',//已退款
+          ok: '', //已结算
+
+
+        }
+      }
     },
     components: {
       vTabbar
     },
     methods: {
+      init () {
+        let _this = this;
+//        let params = {};
+        //佣金统计
+        recordStatistics_get({}, function (res) {
+            console.log(res)
+          if (res.statusCode == 1) {
+            let data = res.data
+            _this.recordStatistics_get.cg_money_sum = res.data.total.cg_money_sum;
+            _this.recordStatistics_get.c_money_sum = res.data.total.c_money_sum;
+            _this.recordStatistics_get.o_status_3 = res.data.o_status_3.cg_money_sum;
+            _this.recordStatistics_get.pay = res.data.pay.cg_money_sum;
+            _this.recordStatistics_get.check = res.data.check.cg_money_sum;
+            _this.recordStatistics_get.invalid = res.data.invalid.cg_money_sum;
+            _this.recordStatistics_get.apply = res.data.apply.cg_money_sum;
+            _this.recordStatistics_get.o_status_0 = res.data.o_status_0.cg_money_sum;
+          } else {
+            console.log('佣金统计接口数据异常')
+          }
+        });
+        teamsStatistics({}, function (res) {
+          if (res.statusCode == 1) {
+            _this.teamsStatistics.all = res.data.all;
+            _this.teamsStatistics.purchased = res.data.purchased;
+            _this.teamsStatistics.no_purchased = res.data.no_purchased;
+          } else {
+            console.log('获取团队数量统计接口数据异常')
+          }
+        })
+        orderStatistics({}, function (res) {
+          if (res.statusCode == 1) {
+            _this.orderStatistics.total = res.data.total.order_count
+            _this.orderStatistics.lock = res.data.lock.order_count
+            _this.orderStatistics.refund = res.data.refund.order_count
+            _this.orderStatistics.ok = res.data.ok.order_count
+          } else {
+            console.log('订单统计接口数据异常')
+          }
+        })
+
+      },
       partnertab(idx){
         this.tabselect(idx)
         this.$router.push({name: `partnerlist${idx}`})
@@ -183,21 +248,19 @@
       ordertab(idx){
         this.tabselect(idx)
         this.$router.push({name: `extension${idx}`})
-
       },
       ...mapMutations({
-        tabselect:'TABSELECT',
+        tabselect: 'TABSELECT',
       })
     },
     created(){
-//      this.init()
+      this.init()
 
     },
     mounted()
     {
 
-    }
-    ,
+    },
 
   }
 </script>

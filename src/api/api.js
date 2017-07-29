@@ -52,5 +52,22 @@ export const teamsStatistics = function (params, callback) {_webapp.requestx(Obj
 export const teamsLists = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.teamsLists), function (res) {callback(res)})};
 //订单列表
 export const orderLists = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.orderLists), function (res) {callback(res)})};
+
+/**
+ * 订单统计
+ * @param params
+ * @param callback
+ */
 export const orderStatistics = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.orderStatistics), function (res) {callback(res)})};
+/**
+ * 订单列表
+ * @param params
+ * @param callback
+ */
+
+/**
+ * 订单详情
+ * @param params
+ * @param callback
+ */
 export const orders = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.orders), function (res) {callback(res)})};
