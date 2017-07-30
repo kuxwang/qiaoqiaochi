@@ -248,14 +248,14 @@
 			},
 			goConfirmorder(){//确认订单
 				let cartIds=[];
+				for(let i=0;i<this.getShCartData.length;i++){
+	          		cartIds.push(this.getShCartData[i].id);
+	          	}
 				let myOrders={
 	            	goodsid:this.goodsId,
 	            	optionid:this.optionId,
-	            	cartids:cartIds,
+	            	cartids:cartIds.join(','),
 	            	total:''
-	          	}
-	          	for(let i=0;i<this.getShCartData.length;i++){
-	          		cartIds.push(this.getShCartData[i].id);
 	          	}
 	          	this.getMyorders(myOrders);
 	          	this.$router.push({name:'confirmorder'});
