@@ -23,7 +23,7 @@
       <li>
         <div class="goodsList-tp">
           <i class="iconfont">&#xe6a8;</i>
-          onet凡兔旗舰店
+          {{shopSet.name}}
         </div>
         <div class="goodsList-mids">
           <div class="goodsList-mid clearfix" v-for="v in orderGoods">
@@ -49,7 +49,7 @@
             配送方式
           </div>
           <div class="deliveryMode-lr fr">
-            {{dispatchname}}
+            {{dispatch.dispatchname}}
           </div>
         </router-link>
         <div class="deliveryMode deflist clearfix">
@@ -57,7 +57,7 @@
             给卖家留言:
           </div>
           <div class="deliveryMode-lr fl">
-            <input type="text" name="" v-model="msg" placeholder="选填:对本次交易的说明)">
+            <input type="text" name="" v-model="remark" placeholder="选填:对本次交易的说明)">
           </div>
         </div>
         <div class="goods-total clearfix">
@@ -116,12 +116,12 @@
         <span class="mygoods-price">
 					¥
 					<span class="goods-intPrice">{{memberDiscount.realprice | calculatePrice1}}.</span>
-					<span class="goods-folatPrice">{{memberDiscount.realprice | calculatePrice2}}.</span>
+					<span class="goods-folatPrice">{{memberDiscount.realprice | calculatePrice2}}</span>
 				</span>
       </div>
-      <div class="settlement-lr fr" @click="goPay">
+      <button id="commitForm" class="settlement-lr fr" @click="goPay">
         提交订单
-      </div>
+      </button>
     </div>
     <!--<transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight">-->
     <transition name="slide">
@@ -130,10 +130,10 @@
   </div>
 </template>
 <script>
-  import {Header, MessageBox} from 'mint-ui';
-  import {GET_MYADDRESS1, GET_ORDER1} from '../../api/api';
+  import {Header, MessageBox, Toast} from 'mint-ui';
+  import {GET_MYADDRESS1, GET_ORDER1, confirm_post} from '../../api/api';
   import {mapMutations, mapState} from 'Vuex';
-  import _ from 'lodash'
+  //  import _ from 'lodash'
   export default{
     data () {
       return {
@@ -141,7 +141,8 @@
         defaultAddress: '',
         memberDiscount: '',
         dispatches: '',
-        msg: ''
+        remark: '',
+        shopSet: ''
       }
     },
     methods: {
@@ -149,9 +150,10 @@
         let _this = this;
         let params = {
           data: {
-            cartids: '1136',
-            optionid: '',
-            total: ''
+            cartids: this.myOrders.cartids || '',
+            optionid: this.myOrders.optionid || '',
+            total: this.myOrders.total || '',
+            goodsid: this.myOrders.goodsid || ''
           }
         };
         GET_ORDER1(params, res => {
@@ -159,7 +161,8 @@
             _this.orderGoods = res.data.orderGoods
             _this.defaultAddress = res.data.defaultAddress
             _this.memberDiscount = res.data.memberDiscount
-            _this.dispatches = res.data.dispatches
+            _this.dispatches = res.data.dispatches[0]
+            _this.shopSet = res.data.shopSet
             _this.ADDRESS(res.data.addressLists)
           }
         })
@@ -168,7 +171,50 @@
         this.$router.push('/shoppingCart');
       },
       goPay () {
-        this.$router.push({name: 'payselect'})
+        let addressid = this.defaultAddress.id || ''
+        let goods = ''
+        let dispatchid = this.dispatch.id
+        let cartids = this.myOrders.cartids
+        let remark = this.remark || '123'
+        if (this.orderGoods) {
+          for (let i = 0, j = this.orderGoods.length; i < j; i++) {
+            console.log(this.orderGoods)
+            if (i != j - 1) {
+              goods = this.orderGoods[i].goodsid + ',' + '0' + ',' + this.orderGoods[i].total + '|'
+            } else {
+              goods = this.orderGoods[i].goodsid + ',' + '0' + ',' + this.orderGoods[i].total
+            }
+          }
+        }
+        let params = {
+          data: {
+            goods,
+            dispatchid,
+            addressid,
+            cartids,
+            remark,
+          }
+        }
+        confirm_post(params, res => {
+          if (res.statusCode == 1) {
+            document.getElementById('commitForm').setAttribute('disabled', 'disabled')
+            Toast({
+              message: '订单提交成功',
+              position: 'middle',
+              duration: 2000
+            });
+            setTimeout(() => {
+              document.getElementById('commitForm').removeAttribute('disabled')
+              this.$router.push({name: 'payselect'})
+            }, 2000)
+          } else {
+            Toast({
+              message: '提交过于频繁',
+              position: 'middle',
+              duration: 2000
+            });
+          }
+        })
       },
       ...mapMutations([
         'ADDRESS'
@@ -176,10 +222,11 @@
     },
     computed: {
       ...mapState([
-        'userAddress', 'delivery'
+        'userAddress', 'delivery', 'myOrders'
       ]),
-      dispatchname () {
-        return this.delivery.dispatchname || '商家配送'
+      dispatch () {
+        let dispatch = this.dispatches || this.delivery
+        return dispatch || '商家配送'
       }
     },
     filters: {
@@ -209,26 +256,16 @@
           this.defaultAddress = this.userAddress
         }
       },
-      msg: _.debounce(function (newValue) {
-        console.log(newValue)
-      })
+      remark: function (newValue) {
+        if (newValue.length > 0) {
+
+        }
+      }
     },
     mounted () {
-//      console.log(1232342)
-//      if (this.$route.query.type) {
-//        this.defaultAddress = this.userAddress
-//      }
-      // MessageBox({title: '您还未设置收货地址，请设置地址?',message: '点击确认设置',showCancelButton: true}).then(action => {
-      //     if(action=='confirm'){//表示点击了确定
-
-      //     }else if(action=='cancel'){//表示点击了取消
-      //       // console.log('点击了取消')
-      //     }
-      // })
-
-      let params = []
-      let _this = this
-
+    },
+    activated () {
+      this.init()
     },
     created () {
       this.init()
@@ -469,6 +506,7 @@
     background: #F5751D;
     color: #fff;
     text-align: center;
+    outline: none;
   }
 
   .settlement-item-lf span {
