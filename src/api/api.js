@@ -94,6 +94,7 @@ const ordersinfo = {
   payment_post: {url: `${base}/orders/payment`, method: 'POST', header, dataType}
 };
 
+const qrimg = {url: `${base}/qrimgs`, method: 'GET', header, dataType}
 
 /**
  * 佣金统计
@@ -323,10 +324,17 @@ export const payment_post = function (params, callback) {
  * app支付接口
  */
 export const paymentFun = function (type, params, callback) {
-  _webapp.requestx(type, params, function (res) {
+  _webapp.payment(type, params, function (res) {
     callback(res)
   })
 };
+
+export const Qrimg = function (params, callback) {
+  _webapp.requestx(Object.assign(params, qrimg), function (res) {
+    callback(res)
+  })
+};
+
 
 /**
  * 个人中心 yellowStar
