@@ -9,7 +9,7 @@
       <ul class="fl deliveryAddress-lr">
         <li class="delivery-people clearfix">
           <span class="fl">收货人：{{defaultAddress.realname}}</span>
-          <span class="fr"></span>
+          <span class="fr">{{defaultAddress.mobile}}</span>
         </li>
         <li class="deliveryAddress-lr-addr">
           收货地址：{{defaultAddress.province}}{{defaultAddress.city}}{{defaultAddress.area}}{{defaultAddress.address}}
@@ -44,12 +44,12 @@
             </div>
           </div>
         </div>
-        <router-link class="deliveryMode deflist" tag="div" :to="{name:'deliverymode'}">
+        <router-link class="deliveryMode bt deflist" tag="div" :to="{name:'deliverymode'}">
           <div class="deliveryMode-lf fl">
             配送方式
           </div>
           <div class="deliveryMode-lr fr">
-            快递免邮
+            {{dispatchname}}
           </div>
         </router-link>
         <div class="deliveryMode deflist clearfix">
@@ -57,7 +57,7 @@
             给卖家留言:
           </div>
           <div class="deliveryMode-lr fl">
-            <input type="text" name="" placeholder="选填:对本次交易的说明)">
+            <input type="text" name="" v-model="msg" placeholder="选填:对本次交易的说明)">
           </div>
         </div>
         <div class="goods-total clearfix">
@@ -133,13 +133,15 @@
   import {Header, MessageBox} from 'mint-ui';
   import {GET_MYADDRESS1, GET_ORDER1} from '../../api/api';
   import {mapMutations, mapState} from 'Vuex';
+  import _ from 'lodash'
   export default{
-    data(){
+    data () {
       return {
         orderGoods: [],
         defaultAddress: '',
         memberDiscount: '',
         dispatches: '',
+        msg: ''
       }
     },
     methods: {
@@ -147,13 +149,12 @@
         let _this = this;
         let params = {
           data: {
-            cartids: '1111',
+            cartids: '1136',
             optionid: '',
             total: ''
           }
         };
         GET_ORDER1(params, res => {
-//          console.log(res)
           if (res.statusCode == 1) {
             _this.orderGoods = res.data.orderGoods
             _this.defaultAddress = res.data.defaultAddress
@@ -175,8 +176,11 @@
     },
     computed: {
       ...mapState([
-        'userAddress'
-      ])
+        'userAddress', 'delivery'
+      ]),
+      dispatchname () {
+        return this.delivery.dispatchname || '商家配送'
+      }
     },
     filters: {
       calculatePrice1 (value) {
@@ -199,14 +203,21 @@
         return num.length == 0 ? num + '00' : num.length == 1 ? num + '0' : num || '00'
       }
     },
-    activated(){
-        console.log(1232342)
-      if (this.$route.query.type) {
-        this.defaultAddress = this.userAddress
-      }
+    watch: {
+      '$route' (to, from) {
+        if (this.$route.query.type) {
+          this.defaultAddress = this.userAddress
+        }
+      },
+      msg: _.debounce(function (newValue) {
+        console.log(newValue)
+      })
     },
     mounted () {
-      init ()
+//      console.log(1232342)
+//      if (this.$route.query.type) {
+//        this.defaultAddress = this.userAddress
+//      }
       // MessageBox({title: '您还未设置收货地址，请设置地址?',message: '点击确认设置',showCancelButton: true}).then(action => {
       //     if(action=='confirm'){//表示点击了确定
 
@@ -217,9 +228,7 @@
 
       let params = []
       let _this = this
-//      GET_MYADDRESS1(params, function (res) {
-//        console.log(res)
-//      })
+
     },
     created () {
       this.init()
@@ -396,6 +405,10 @@
     color: #666;
   }
 
+  .deliveryMode.bt {
+    border-top: 0.01rem solid #E5E5E5;
+  }
+
   .deliveryMode-lr input {
     display: block;
     width: 2.5rem;
@@ -525,5 +538,9 @@
     right: 0.1rem;
     background: url('../../assets/images/userinfo-03.png') no-repeat center center;
     background-size: cover;
+  }
+
+  .mygoods-price, .goods-price, .goods-num {
+    color: red !important;
   }
 </style>

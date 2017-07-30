@@ -17,10 +17,12 @@
         <input type="text" v-model="getAddress" placeholder="请输入收货人地址">
       </li>
       <li>
-        <input type="text" v-model="tel" maxlength="12" placeholder="请输入收货人联系电话">
+        <input v-model="tel" maxlength="12" placeholder="请输入收货人联系电话" onkeyup="this.value=this.value.replace(/\D/g,'')"
+               onafterpaste="this.value=this.value.replace(/\D/g,'')">
       </li>
       <li>
-        <input type="text" v-model="zipCode" maxlength="6" placeholder="请输入邮编">
+        <input v-model="zipCode" maxlength="6" placeholder="请输入邮编" onkeyup="this.value=this.value.replace(/\D/g,'')"
+               onafterpaste="this.value=this.value.replace(/\D/g,'')">
       </li>
     </ul>
     <div class="newlyAdded" @click="save">
@@ -42,7 +44,7 @@
 <script>
   import {Toast, Picker, Popup, DatetimePicker, Checklist} from 'mint-ui';
   import {address, slots} from '../../assets/js/address';
-  import {mapState} from 'Vuex';
+  import {mapState, mapMutations} from 'Vuex';
   import {addresses_post} from '../../api/api';
   export default{
     data(){
@@ -60,11 +62,15 @@
       }
     },
     computed: {
-//      ...mapState([
-//          'address'
-//      ])
+      ...mapState([
+          'addressListNum'
+      ])
     },
     methods: {
+      ...mapMutations({
+        'getUserAddress': 'GET_USERADDRESS',
+        'getOnActive': 'GET_ONACTIVE'
+      }),
       goBack(){
         this.$router.go(-1);
       },
@@ -130,6 +136,16 @@
           Toast('请填写邮编')
           return
         }
+        let telreg = /^0?(13[0-9]|15[012356789]|18[0236789]|14[57])[0-9]{8}$/; //验证手机号
+        let zipCodereg = /^\d{6}$/; //验证邮政编码
+        if (!telreg.test(this.tel)) {
+          Toast('手机格式错误')
+          return
+        }
+        if (!zipCodereg.test(this.zipCode)) {
+          Toast('邮编格式错误')
+          return
+        }
         let _this = this
         let params = {
           data: {
@@ -141,10 +157,29 @@
             address: this.getAddress,
           }
         }
+
         addresses_post(params, res => {
-            if(res.statusCode == 1){
-                _this.$router.push('/confirmorder')
+          if (res.statusCode == 1) {
+            let info = {
+              realname: this.name,
+              mobile: this.tel,
+              province: this.area.province,
+              city: this.area.city,
+              area: this.area.area,
+              address: this.getAddress,
+              id: res.addressid
             }
+            this.getUserAddress(info);
+            this.getOnActive(this.addressListNum)
+            Toast({
+              message: '地址保存成功',
+              position: 'middle',
+              duration: 2000
+            });
+            setTimeout(() => {
+              _this.$router.push('/confirmorder?type=1')
+            }, 2000)
+          }
         })
       }
     },
