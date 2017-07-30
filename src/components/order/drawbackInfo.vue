@@ -1,4 +1,5 @@
-<template>
+ <template>
+  <transition name="slide">
   <div class="main drawback-info-header">
     <mt-header title="查看退款申请">
       <router-link to="/order" slot="left">
@@ -29,6 +30,7 @@
       取消退款申请
     </router-link>
   </div>
+  </transition>
 </template>
 <script>
   import { Header} from 'mint-ui'
