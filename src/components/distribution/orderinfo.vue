@@ -34,11 +34,26 @@
         </div>
         <div class="ordertype">
           <!--<span>i.status}}</span>-->
-          <span>{{ordernum.price}}元</span>
+          <span>{{parseInt(ordernum.goodsprice)}}元</span>
         </div>
       </div>
     </div>
     <ul class="user-list">
+      <li class="user-cell" >
+        <div class="user-left">
+          <!--<img :src="v.thumb"/>-->
+          <div>用户名</div>
+        </div>
+        <div class="user-mid">
+          <span>用户ID</span>
+        </div>
+        <div class="user-right">
+          <span>佣金比例</span>
+        </div>
+        <div class="user-right">
+          <div>佣金额度</div>
+        </div>
+      </li>
       <li class="user-cell" v-for="v in ordercom" >
         <div class="user-left">
           <!--<img :src="v.thumb"/>-->
@@ -52,7 +67,6 @@
         </div>
         <div class="user-right">
           <div>{{v.c_money}}</div>
-
         </div>
       </li>
     </ul>
@@ -152,7 +166,7 @@
     position: relative;
   }
   .info h5 {
-    margin-top: 0.1rem;
+    /*margin-top: 0.1rem;*/
     color: #27272f;
     font-size: 0.14rem;
   }
@@ -213,9 +227,12 @@
     color: #666;
   }
   .info h5 {
-    margin-top: 0.1rem;
+    /*margin-top: 0.1rem;*/
     color: #27272f;
     font-size: 0.14rem;
+  }
+  .down .info h5 {
+    margin-top: 0.1rem;
   }
   .info span {
     font-size: 0.14rem;
@@ -251,6 +268,8 @@
   }
   .user-cell {
     display: flex;
+    border-bottom: 1px solid #eee;
+    padding: .1rem 0;
   }
 
   .user-left {
