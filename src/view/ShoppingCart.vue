@@ -14,7 +14,7 @@
 					</div>
 				</label>
 				<div class="goods-img fl">
-					<img :src="v.thumb">
+					<img :src="v.thumb" style="width:80px;height:80px;" lazy="loaded">
 				</div>
 				<div class="goods-info fl">
 					<h3 class="goods-title lr1">{{v.title}}</h3>
@@ -39,6 +39,7 @@
                     </div>
 				</div>
 			</li>
+			
 		</ul>
 		<div class="total_area clearfix" v-show="isShow">
 			<label class="mint-checklist-label fl">
@@ -82,7 +83,7 @@
 	</div>
 </template>
 <script>
-	import { Header,Checklist,MessageBox } from 'mint-ui';
+	import { Header,Checklist,MessageBox,Lazyload } from 'mint-ui';
 	import {setStore, getStore} from '../config/myUtils';
 	import {GET_MYCARTS,PUT_MYCARTS,GET_ORDER1,DELETE_MYCARTS} from '../api/api';
 	export default{
@@ -222,17 +223,18 @@
 								this.defPrice=0;
 							}
                     	}
-						let params = {
-							'data':{
-								cartid:v.id
-							}
-						}
-						DELETE_MYCARTS(params, function (res) {
-							console.log(res)
-						})
-                    	if(this.getShCartData.length==0){
+						
+                    	if(this.getShCartData.length==1){
                     		this.isTrue=false;
                     		this.isShow=false;
+                    		let params = {
+								'data':{
+									cartid:v.id
+								}
+							}
+							DELETE_MYCARTS(params, function (res) {
+								console.log(res)
+							})
                     	}
                     	this.getShCartData.splice(i,1);
                     }else if(action=='cancel'){//表示点击了取消
@@ -262,6 +264,22 @@
 			  //   		console.log(res)
 			  //     	})
 				}
+			},
+			mycartsInt(){
+				let params = []
+				let _this=this
+		    	GET_MYCARTS(params, function (res) {
+		    		console.log(res)
+		        	if(res.statusCode===1){
+		        		// console.log(res.data)
+		        		_this.getShCartData=res.data.list;
+		        		for(let a in _this.getShCartData){
+		        			_this.getShCartData[a].isChecked=false
+		        		}
+		        	}else{
+		        		console.log('请求失败')
+		        	}
+		      	})
 			}
 		},
 		filters:{
@@ -285,20 +303,7 @@
 			}
 		},
 		mounted(){
-			let params = []
-			let _this=this
-	    	GET_MYCARTS(params, function (res) {
-	    		console.log(res)
-	        	if(res.statusCode===1){
-	        		// console.log(res.data)
-	        		_this.getShCartData=res.data.list;
-	        		for(let a in _this.getShCartData){
-	        			_this.getShCartData[a].isChecked=false
-	        		}
-	        	}else{
-	        		console.log('请求失败')
-	        	}
-	      	})
+			this.mycartsInt()
 		}
 	}
 </script>
