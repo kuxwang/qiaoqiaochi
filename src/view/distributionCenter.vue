@@ -160,10 +160,12 @@
           </div>
         </li>
       </ul>
+      <button class="logOut">退出登录</button>
     </section>
     <!--  <transition name="slide">
        <router-view></router-view>
      </transition> -->
+     
     <v-tabbar></v-tabbar>
     <transition name="slide">
       <router-view></router-view>
@@ -172,7 +174,7 @@
 </template>
 <script>
   import vTabbar from '../components/common/Tabbar.vue'
-  import {recordStatistics_get, teamsStatistics, orderStatistics, memberInfo} from '../api/api'
+  import {recordStatistics_get, teamsStatistics, orderStatistics,memberInfo} from '../api/api'
   import {_webapp} from '../config/webapp'
   import {mapMutations, mapGetters} from 'vuex'
   export default{
@@ -239,7 +241,7 @@
           } else {
             console.log('获取团队数量统计接口数据异常')
           }
-        });
+        })
         orderStatistics({}, function (res) {
           if (res.statusCode == 1) {
             _this.orderStatistics.total = res.data.total.order_count
@@ -499,5 +501,16 @@
 
   .order-list li {
     flex: 1;
+  }
+  .logOut{
+    display: block;
+    margin-top: 0.15rem;
+    width: 100%;
+    height: 0.45rem;
+    -webkit-box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);
+    box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);
+    background: #F5751D;
+    color: #fff;
+    font-size: 0.16rem;
   }
 </style>

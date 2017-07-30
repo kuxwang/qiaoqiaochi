@@ -6,12 +6,14 @@ import {
   ORDERSN,
   ADDRESS,
   ADDRESSLISTNUM,
-  DELIVERY
+  DELIVERY,
+  GET_MYORDERS,
+  SEARCHNUM,
 }
   from
     './mutation-types.js'
 
-import {setStore, getStore} from '../config/myUtils'
+import { setStore, getStore } from '../config/myUtils'
 
 export default {
   //用户收货地址
@@ -38,8 +40,15 @@ export default {
   [ORDERSN] (state, data) {
     state.ordersn = data
   },
+  [SEARCHNUM] (state, data) {
+    state.searchnum = data
+  },
   [ADDRESS] (state, data) {
     state.address = data
+  },
+  [GET_MYORDERS] (state, data) {
+    state.myOrders = data;
+    console.log(data)
   },
   [ADDRESSLISTNUM] (state, addressListNum) {
     state.addressListNum = addressListNum
@@ -47,5 +56,4 @@ export default {
   [DELIVERY] (state, delivery) {
     state.delivery = delivery
   },
-
 }

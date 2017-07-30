@@ -2,7 +2,7 @@
   <div class="mian1">
     <!--<mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">-->
     <ul class="p-list" >
-      <li class="p-cell" v-for="(i,index) in orderlist">
+      <li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">
         <div class="up">
           <span class="ordernum">订单编号{{i.ordersn}}</span>
           <span class="time">{{i.createtime}}</span>
@@ -49,8 +49,8 @@
       allLoaded(){
 
       },
-      orderinfo(){
-        this.ordersn(this.orderlist(index).ordersn);
+      orderinfo(index){
+        this.ordersn(this.orderlist[index].ordersn);
         this.$router.push({name: `orderinfo`})
       },
       ...mapMutations({

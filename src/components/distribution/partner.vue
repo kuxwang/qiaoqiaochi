@@ -22,7 +22,7 @@
       <!--</router-link>-->
       <!--<router-link to="/partner2" tag="li">-->
         </li>
-        <li :class="{tabActive: selected==2 }" @click="selecttab(2)">
+        <li :class="{tabActive: selected==2}" @click="selecttab(2)">
         <div class="title">已购买伙伴</div>
         <div class="iconfont listicon">&#xe600;</div>
         <div>
@@ -35,14 +35,14 @@
         <div class="title">未购买伙伴</div>
         <div class="iconfont listicon">&#xe60d;</div>
         <div>
-          <span class="num">{{personnum.purchased}}</span><span class="yuan"> 人</span>
+          <span class="num">100</span><span class="yuan"> 人</span>
         </div>
       <!--</router-link>-->
       </li>
     </ul>
     <div class="search">
       <input type="search" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
-      <button>搜索</button>
+      <button @click="search">搜索</button>
     </div>
 
     <!--<transition name="slide">-->
@@ -82,6 +82,18 @@
         this.selected = idx;
         this.$router.push({name: `partnerlist${idx}`})
       },
+      search(){
+//        this.searchnum(Number(this.find));
+        this.searchnum(this.find);
+        console.log(Number(this.find))
+        this.$router.push({name: `partnerlist4`}),
+        this.selected=4
+
+      },
+      ...mapMutations({
+        'searchnum' : 'SEARCHNUM',
+        'tabselect': 'TABSELECT'
+      })
     },
     computed:{
     ...mapGetters([

@@ -15,7 +15,13 @@ const state = {
   ordersn:'',  //订单编号
   address: '', //订单确认页的收货地址列表页
   addressListNum: '', //地址列表数量
-  delivery: '' //选中的配送信息
+  delivery: '', //选中的配送信息
+  myOrders:{  //下单页面所需参数
+    goodsid:'',
+    optionid:'',
+    cartids:[],
+    total:''
+  }
 }
 
 export default new Vuex.Store({

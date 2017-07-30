@@ -12,8 +12,8 @@
 	          <span class="fl">
 	            头像
 	          </span>
-	          <span class="fr">
-	            <img id="img_upload" :src="imgurl"/>
+	          <span class="fr" style="overflow:hidden">
+	            <img id="img_upload"/>
 	          </span>
 	          <input id="file_head" type="file" @change="getMyImg($event)"/>
 	        </li>
@@ -23,7 +23,7 @@
 	          </span>
 	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请输入昵称" v-model="myNc" @blur="testNc(myNc)">
 	        </li>
-	        <li>
+	        <li @click="toastPhone">
 	          <span class="userinfo-list-lf fl">
 	            手机号码
 	          </span>
@@ -51,7 +51,7 @@
 	          <span class="userinfo-list-lf fl">
 	            所在城市
 	          </span>
-	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择所在城市" v-model="myCity" disabled>
+	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择所在城市" v-model="myPlace" disabled>
 	        </li>
 	        <li @click="open('picker1')">
 	          <span class="userinfo-list-lf fl">
@@ -60,7 +60,7 @@
 	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择出生日期" v-model="myDate" disabled>
 	        </li>
 	    </ul>
-	    <div class="postUserInfo">
+	    <div class="postUserInfo" @click="postUserInfo">
 	    	 <button class="postUserInfo-item">
 	    		提交
 	    	</button>
@@ -93,26 +93,30 @@
 <script>
 	import {Toast, Picker, Popup, DatetimePicker} from 'mint-ui';
 	import {address, slots} from '../../assets/js/address';
+  import {memberInfo,PUT_USERINFO,PUT_USERAVATARS} from '../../api/api';
 	export default{
 		data(){
 			return{
 				myNc:'',
-				myPhone:'18395319906',
+				myPhone:'',
 				myWx:'',
 				myZfb:'',
 				myZfbName:'',
+        myPlace:'',
+        myProvince:'',
 				myCity:'',
+        myRegion:'',
 				myDate:'',
 				imgurl:'',
 				mypopup1:false,
 				mypopup2:false,
 				slots: slots,
-		        visibleItemCount:5,
-		    	address: '',
-		    	temp_addr:'',
-		    	value1:null,
-		        startDate: new Date('1960'),
-		        endDate: new Date()
+		    visibleItemCount:5,
+		    address: '',
+		    temp_addr:'',
+		    value1:null,
+		    startDate: new Date('1960'),
+		    endDate: new Date()
 			}
 		},
 		methods:{
@@ -132,7 +136,7 @@
 			},
 			cityConfirm(){//城市确认
 				this.mypopup1=false;
-				console.log(this.temp_addr)
+				this.myPlace=`${this.myProvince} ${this.myCity} ${this.myRegion}`;
 			},
 			cityCancel(){//城市取消
 				this.mypopup1=false;
@@ -164,7 +168,10 @@
 		        // 防止没有区时报错
 		        if (values[2]) {
 		          // 这里可以指定地址符，此处以空格进行连接
-		          this.temp_addr = values[0].aname + ' ' + values[1].aname + ' ' + values[2].aname;
+              // this.myPlace=values[0].aname + ' ' + values[1].aname + ' ' + values[2].aname;
+              this.myProvince=values[0].aname;
+              this.myCity=values[1].aname;
+              this.myRegion=values[2].aname;
 		        }
 		    },
 		    setbirth(){//出生日期显示
@@ -174,12 +181,87 @@
 		        this.$refs[picker].open();
 		    },
 		    handleChange(value) {
-		    	console.log(value)
-		    }
+          let y = new Date(value).getFullYear();
+          let d = new Date(value).getDate(); 
+          let m = new Date(value).getMonth() + 1;
+          m = m < 10 ? ('0' + m) : m;
+          d = d < 10 ? ('0' + d) : d;
+          this.myDate=`${y}-${m}-${d}`;   
+		    },
+        getMyImg(e){
+          console.log(666)
+          var img = document.getElementById("img_upload");
+          var reader = new FileReader();
+          reader.onload = function (evt) {
+            img.src = evt.target.result;
+            // console.log(img.src)
+          }
+          reader.readAsDataURL(e.target.files[0]);
+          var file = e.target.files[0];
+          // console.log(file)
+          let params={
+            'data':{
+              // avatar:file
+            }
+          }
+          console.log(params)
+          PUT_USERAVATARS(params, function (res) {
+            console.log(res)
+          })
+        },
+        getUserInfo(){
+          let params={ }
+          let _this=this
+          memberInfo(params, function (res) {
+            if(res.statusCode===1){
+              _this.myPhone=res.data.mobile;
+              _this.myNc=res.data.realname;
+              _this.myWx=res.data.weixin;
+              _this.myZfb=res.data.alipay_account;
+              _this.myZfbName=res.data.alipay_name;
+              _this.myPlace=`${res.data.province} ${res.data.city} ${res.data.area}`;
+              _this.myDate=`${res.data.birthyear}年 ${res.data.birthmonth}月 ${res.data.birthday}日`;
+
+            }
+          })
+        },
+        toastPhone(){
+          Toast({
+            message: '手机号已经绑定无法修改',
+            position: 'top',
+            duration: 2000
+          });
+        },
+        postUserInfo(){
+          let params={
+            'data':{
+              realname:this.myNc,
+              province:this.myProvince,
+              city:this.myCity,
+              alipay_name:this.myZfbName,
+              alipay_account:this.myZfb ,
+              weixin:this.myWx,
+              birth:this.myDate,
+              area:this.myRegion
+            }
+          }
+          let _this=this;
+          PUT_USERINFO(params, function (res) {
+            _this.$router.go(-1);
+            console.log(res);
+            Toast({
+              message: '个人信息提交成功!',
+              position: 'middle',
+              duration: 1000
+            });
+            
+          })
+        }
 		},
 		mounted() {
-	      this.initAddress()
-	    }
+	      this.initAddress();
+        this.getUserInfo();
+	   }
 
 	}
 </script>
@@ -231,6 +313,13 @@
 	    font-size: 0.12rem;
 	    color: #969696;
 	}
+  .userinfo-header span:nth-child(2) img{
+    display: block;
+    width: 0.25rem;
+    height: 0.25rem;
+    border: none;
+    border-radius: 50%;
+  }
 	#file_head {
 	    display: block;
 	    width: 100%;
@@ -239,11 +328,10 @@
 	    position: absolute;
 	}
   	#img_upload {
-	    width: 0.25rem;
+	  /*  width: 0.25rem;
 	    height: 0.25rem;
 	    border: none;
-	    visibility: hidden;
-	    border-radius: 50%;
+	    border-radius: 50%;*/
   	}
   	.userinfo-list-lf{
   		/*width: 20%;*/
@@ -258,7 +346,6 @@
   	}
   	.postUserInfo{
   		width:100%;
-  		padding: 0rem 0.1rem;
   		margin-top: 0.2rem;
   	}
   	.postUserInfo-item{
@@ -268,7 +355,6 @@
   		background: #F5751D;
   		color:#fff;
   		font-size: 0.16rem;
-  		border-radius: 0.04rem;
   	}
   	.picker-toolbar .mint-datetime-action {
    		color: #979696 !important;
@@ -279,7 +365,7 @@
   	}
   	.userpopup-tp {
 	    padding: 0.12rem 0.33rem;
-	    font-size: 0.165rem;
+	    font-size: 0.16rem;
 	    color: #2C2C2C;
 	    border-bottom: 0.01rem solid #ddd;
 	}
