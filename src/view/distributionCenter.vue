@@ -6,7 +6,7 @@
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-    <section class="avatar">
+    <router-link class="avatar" tag="section" :to="{name:'userinfo'}">
       <div class="icon">
         <img :src="memberInfo.avatar" alt="头像">
       </div>
@@ -24,9 +24,9 @@
           <span>{{memberInfo.level}}</span>
         </div>
       </div>
-      <!-- <i class="iconfont right" @click="goUserInfo">&#xe649;</i> -->
-      <router-link class="iconfont right" :to="{name:'userinfo'}" tag="i">&#xe649;</router-link>
-    </section>
+      <i class="iconfont right">&#xe649;</i>
+      <!-- <router-link class="iconfont right" :to="{name:'userinfo'}" tag="i">&#xe649;</router-link> -->
+    </router-link>
     <section class="top">
       <div class="top_1">
         <span class="title">营业额</span>

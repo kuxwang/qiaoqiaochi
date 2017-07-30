@@ -265,6 +265,7 @@
 				let _this=this
 		    	GET_MYCARTS(params, function (res) {
 		        	if(res.statusCode===1){
+		        		console.log(res)
 		        		if(res.data.list.length>=1){
 			        		_this.getShCartData=res.data.list;
 			        		for(let a in _this.getShCartData){
@@ -341,6 +342,7 @@
 	}
 	.goods-list{
 		padding-top: 0.45rem;
+		margin-bottom: 0.6rem;
 	}
 	.goods-list li{
 		height: 1rem;

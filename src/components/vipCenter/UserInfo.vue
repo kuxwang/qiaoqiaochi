@@ -15,7 +15,8 @@
 	          <span class="fr" style="overflow:hidden">
 	            <img id="img_upload"/>
 	          </span>
-	          <input id="file_head" type="file" @change="getMyImg($event)"/>
+	          <!-- <input id="file_head" type="file" @change="getMyImg($event)"/> -->
+	          <input id="file_head" type="button" @click="getMyImg()"/>
 	        </li>
 	         <li>
 	          <span class="userinfo-list-lf fl">
@@ -93,7 +94,8 @@
 <script>
 	import {Toast, Picker, Popup, DatetimePicker} from 'mint-ui';
 	import {address, slots} from '../../assets/js/address';
-  import {memberInfo,PUT_USERINFO,PUT_USERAVATARS} from '../../api/api';
+  	import {memberInfo,PUT_USERINFO,PUT_USERAVATARS} from '../../api/api';
+  	import {_webapp} from '../../config/_webapp.js';
 	export default{
 		data(){
 			return{
@@ -102,21 +104,21 @@
 				myWx:'',
 				myZfb:'',
 				myZfbName:'',
-        myPlace:'',
-        myProvince:'',
+		        myPlace:'',
+		        myProvince:'',
 				myCity:'',
-        myRegion:'',
+		        myRegion:'',
 				myDate:'',
 				imgurl:'',
 				mypopup1:false,
 				mypopup2:false,
 				slots: slots,
-		    visibleItemCount:5,
-		    address: '',
-		    temp_addr:'',
-		    value1:null,
-		    startDate: new Date('1960'),
-		    endDate: new Date()
+			    visibleItemCount:5,
+			    address: '',
+			    temp_addr:'',
+			    value1:null,
+			    startDate: new Date('1960'),
+			    endDate: new Date()
 			}
 		},
 		methods:{
@@ -189,24 +191,28 @@
           this.myDate=`${y}-${m}-${d}`;   
 		    },
         getMyImg(e){
-          console.log(666)
-          var img = document.getElementById("img_upload");
-          var reader = new FileReader();
-          reader.onload = function (evt) {
-            img.src = evt.target.result;
-            // console.log(img.src)
-          }
-          reader.readAsDataURL(e.target.files[0]);
-          var file = e.target.files[0];
-          // console.log(file)
-          let params={
-            'data':{
-              // avatar:file
-            }
-          }
-          console.log(params)
-          PUT_USERAVATARS(params, function (res) {
-            console.log(res)
+          // console.log(666)
+          // var img = document.getElementById("img_upload");
+          // var reader = new FileReader();
+          // reader.onload = function (evt) {
+          //   img.src = evt.target.result;
+          //   // console.log(img.src)
+          // }
+          // reader.readAsDataURL(e.target.files[0]);
+          // var file = e.target.files[0];
+          // // console.log(file)
+          // let params={
+          //   'data':{
+          //     // avatar:file
+          //   }
+          // }
+          // console.log(params)
+          // PUT_USERAVATARS(params, function (res) {
+          //   console.log(res)
+          // })
+          console.log(8282828)
+          _webapp.uploadImg(function(res){
+     
           })
         },
         getUserInfo(){
