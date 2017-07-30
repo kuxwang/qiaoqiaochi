@@ -131,11 +131,6 @@ export const orderStatistics = function (params, callback) {_webapp.requestx(Obj
  * @param params
  * @param callback
  */
-export const orderLists = function (params, callback) {
-  _webapp.requestx(Object.assign(params, commissions.orderLists), function (res) {
-    callback(res)
-  })
-};
 /**
  * 订单详情
  * @param params
