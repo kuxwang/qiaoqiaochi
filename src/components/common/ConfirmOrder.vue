@@ -57,7 +57,7 @@
             给卖家留言:
           </div>
           <div class="deliveryMode-lr fl">
-            <input type="text" name="" v-model="msg" placeholder="选填:对本次交易的说明)">
+            <input type="text" name="" v-model="remark" placeholder="选填:对本次交易的说明)">
           </div>
         </div>
         <div class="goods-total clearfix">
@@ -116,7 +116,7 @@
         <span class="mygoods-price">
 					¥
 					<span class="goods-intPrice">{{memberDiscount.realprice | calculatePrice1}}.</span>
-					<span class="goods-folatPrice">{{memberDiscount.realprice | calculatePrice2}}.</span>
+					<span class="goods-folatPrice">{{memberDiscount.realprice | calculatePrice2}}</span>
 				</span>
       </div>
       <div class="settlement-lr fr" @click="goPay">
@@ -131,9 +131,9 @@
 </template>
 <script>
   import {Header, MessageBox} from 'mint-ui';
-  import {GET_MYADDRESS1, GET_ORDER1} from '../../api/api';
+  import {GET_MYADDRESS1, GET_ORDER1, confirm_post} from '../../api/api';
   import {mapMutations, mapState} from 'Vuex';
-  import _ from 'lodash'
+  //  import _ from 'lodash'
   export default{
     data () {
       return {
@@ -141,7 +141,7 @@
         defaultAddress: '',
         memberDiscount: '',
         dispatches: '',
-        msg: ''
+        remark: ''
       }
     },
     methods: {
@@ -149,9 +149,10 @@
         let _this = this;
         let params = {
           data: {
-            cartids: '1136',
-            optionid: '',
-            total: ''
+            cartids: this.myOrders.cartids || '1136',
+            optionid: this.myOrders.optionid || '',
+            total: this.myOrders.total || '',
+            goodsid: this.myOrders.goodsid || ''
           }
         };
         GET_ORDER1(params, res => {
@@ -168,7 +169,16 @@
         this.$router.push('/shoppingCart');
       },
       goPay () {
-        this.$router.push({name: 'payselect'})
+//          let params = {
+//            goods: ,
+//            dispatchid:
+//            addressid
+//            cartids
+//            remark
+//          }
+//        confirm_post(params, res => {
+//        })
+//        this.$router.push({name: 'payselect'})
       },
       ...mapMutations([
         'ADDRESS'
@@ -176,7 +186,7 @@
     },
     computed: {
       ...mapState([
-        'userAddress', 'delivery'
+        'userAddress', 'delivery', 'myOrders'
       ]),
       dispatchname () {
         return this.delivery.dispatchname || '商家配送'
@@ -209,26 +219,14 @@
           this.defaultAddress = this.userAddress
         }
       },
-      msg: function (newValue) {
+      remark: function (newValue) {
 
+        if (newValue.length > 0) {
+
+        }
       }
     },
     mounted () {
-//      console.log(1232342)
-//      if (this.$route.query.type) {
-//        this.defaultAddress = this.userAddress
-//      }
-      // MessageBox({title: '您还未设置收货地址，请设置地址?',message: '点击确认设置',showCancelButton: true}).then(action => {
-      //     if(action=='confirm'){//表示点击了确定
-
-      //     }else if(action=='cancel'){//表示点击了取消
-      //       // console.log('点击了取消')
-      //     }
-      // })
-
-      let params = []
-      let _this = this
-
     },
     created () {
       this.init()
