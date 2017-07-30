@@ -10,14 +10,12 @@ import fastclick from 'fastclick'
 import 'vue2-animate/dist/vue2-animate.css'
 import 'mint-ui/lib/style.css'
 import MintUI from 'mint-ui'
+import { Lazyload } from 'mint-ui';
 
+Vue.use(Lazyload);
 Vue.use(Vuex)
 Vue.use(MintUI)
 Vue.config.productionTip = false
-// fastclick.attach(document.body)
-
-
-/* eslint-disable no-new */
 new Vue({
   router,
   store,

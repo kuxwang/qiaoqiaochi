@@ -53,13 +53,26 @@ export const commissions = {
   withdrawals_get: {url: `${base}/commissions/withdrawals`, method: 'GET', header, dataType},
   withdrawals_post: {url: `${base}/commissions/withdrawals`, method: 'POST', header, dataType},
 };
-
+/**
+ * 用户中心
+ * @type {{memberInfo: {url: string, method: string, header: string, dataType: string}}}
+ */
 const members = {
   memberInfo: {url: `${base}/members/memberInfo`, method: 'GET', header, dataType}
 }
+/**
+ * 地址中心
+ */
 const addresses = {
   addresses_post: {url: `${base}/addresses`, method: 'POST', header, dataType},
   addresses_get: {url: `${base}/addresses`, method: 'GET', header, dataType}
+}
+
+/**
+ * 配送
+ */
+const dispatchs = {
+  dispatchs_get: {url: `${base}/dispatches`, method: 'GET', header, dataType}
 }
 /**
  * 商品详情
@@ -80,7 +93,16 @@ const orderd={orderDetail:{url:`${base}/orders`, method:'GET', header, dataType}
 /**
  * 快递
  */
-const express={exp:{url:`${base}/expresses`, method:'GET', header, dataType}};
+const express = {exp: {url: `${base}/expresses`, method: 'GET', header, dataType}};
+
+/**
+ * 提交订单确认
+ */
+const confirm = {
+  confirm_post: {url: `${base}/orders/confirm`, method: 'POST', header, dataType}
+};
+
+
 /**
  * 佣金统计
  * @param params
@@ -109,9 +131,21 @@ export const orderStatistics = function (params, callback) {_webapp.requestx(Obj
  * @param params
  * @param callback
  */
-
-
-export const orders = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.orders), function (res) {callback(res)})};
+export const orderLists = function (params, callback) {
+  _webapp.requestx(Object.assign(params, commissions.orderLists), function (res) {
+    callback(res)
+  })
+};
+/**
+ * 订单详情
+ * @param params
+ * @param callback
+ */
+export const orders = function (params, callback) {
+  _webapp.requestx(Object.assign(params, commissions.orders), function (res) {
+    callback(res)
+  })
+};
 
 /**
  * 用户信息获取
@@ -180,6 +214,13 @@ export const PUT_MYCARTS = function (params, callback) {
     callback(res)
   })
 };
+const MYCARTS3 = {url: `${base}/carts`, method: 'DELETE', header, dataType}
+export const DELETE_MYCARTS = function (params, callback) {
+  _webapp.requestx(Object.assign(params, MYCARTS3), function (res) {
+    callback(res)
+  })
+};
+
 
 /**
  * 下单 yellowStar
@@ -233,4 +274,38 @@ export const orderDetail=function (params,callback) {_webapp.requestx(Object.ass
  */
 export const expressInfo=function (params,callback) {_webapp.requestx(Object.assign(params,express.exp),function (res) {callback(res)})};
 
+/**
+ * 配送
+ */
+export const dispatchs_get = function (params, callback) {
+  _webapp.requestx(Object.assign(params, dispatchs.dispatchs_get), function (res) {
+    callback(res)
+  })
+};
+/**
+ * 上传订单
+ * @param params
+ * @param callback
+ */
+export const confirm_post = function (params, callback) {
+  _webapp.requestx(Object.assign(params, confirm.confirm_post), function (res) {
+    callback(res)
+  })
+};
 
+/**
+ * 个人中心 yellowStar
+ */
+const USERINFO = {url: `${base}/members`, method: 'PUT', header, dataType}
+export const PUT_USERINFO = function (params, callback) {
+  _webapp.requestx(Object.assign(params, USERINFO), function (res) {
+    callback(res)
+  })
+};
+const USERAVATARS = {url: `${base}/avatars`, method: 'PUT', header, dataType}
+export const PUT_USERAVATARS = function (params, callback) {
+  console.log(callback)
+  _webapp.requestx(Object.assign(params, USERAVATARS), function (res) {
+    callback(res)
+  })
+};

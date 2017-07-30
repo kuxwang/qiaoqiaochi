@@ -89,7 +89,7 @@
     },
     methods: {
       goBack(){
-        this.$router.go(-1);
+        this.$router.push('/confirmorder');
       },
       getMyAddress(v, i){
         this.onActives = i;
@@ -99,7 +99,8 @@
       },
       ...mapMutations({
         'getUserAddress': 'GET_USERADDRESS',
-        'getOnActive': 'GET_ONACTIVE'
+        'getOnActive': 'GET_ONACTIVE',
+        'getaddressnum':'ADDRESSLISTNUM'
       })
     },
     computed: {
@@ -107,7 +108,7 @@
         "onActive"
       ]),
       ...mapState([
-        'address'
+        'addressListNum'
       ])
     },
     mounted(){
@@ -115,12 +116,16 @@
     },
     created () {
       let _this = this
-//      this.addressLists = this.address
       addresses_get({}, res => {
         console.log(res)
-        _this.addressLists = res.data.list
+        if(res.statusCode==1){
+          _this.getaddressnum(res.data.list.length)
+          _this.addressLists = res.data.list
+        }else{
+            console.log('获取收货地址接口异常')
+        }
       })
-      console.log(this.address)
+//      console.log(this.address)
     }
   }
 </script>
