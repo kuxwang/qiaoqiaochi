@@ -1,12 +1,11 @@
 <template>
-
   <div class="main">
-    <mt-header fixed title="我的资料">
+    <mt-header fixed title="个人信息">
       <router-link to="/vipCenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-    <section class="avatar">
+    <router-link class="avatar" tag="section" :to="{name:'userinfo'}">
       <div class="icon">
         <img :src="memberInfo.avatar" alt="头像">
       </div>
@@ -24,9 +23,9 @@
           <span>{{memberInfo.level}}</span>
         </div>
       </div>
-      <!-- <i class="iconfont right" @click="goUserInfo">&#xe649;</i> -->
-      <router-link class="iconfont right" :to="{name:'userinfo'}" tag="i">&#xe649;</router-link>
-    </section>
+      <i class="iconfont right">&#xe649;</i>
+      <!-- <router-link class="iconfont right" :to="{name:'userinfo'}" tag="i">&#xe649;</router-link> -->
+    </router-link>
     <section class="top">
       <div class="top_1">
         <span class="title">营业额</span>
@@ -87,7 +86,7 @@
           <!--</router-link>-->
         </li>
         <!--<router-link to="/extension2" tag="li">-->
-        <li @click="ordertab(2)">
+        <li @click="ordertab(2)" class="li1">
           <div class="title">未结算</div>
           <div class="iconfont listicon">&#xe624;</div>
           <div>
@@ -162,12 +161,11 @@
           </div>
         </li>
       </ul>
-      <button class="logOut">退出登录</button>
+      <button class="outLogin" @click="outLogin">退出登录</button>
     </section>
     <!--  <transition name="slide">
        <router-view></router-view>
      </transition> -->
-     
     <v-tabbar></v-tabbar>
     <transition name="slide">
       <router-view></router-view>
@@ -175,10 +173,13 @@
   </div>
 </template>
 <script>
+
   import vTabbar from '../components/common/Tabbar.vue'
   import {recordStatistics_get, teamsStatistics, orderStatistics,memberInfo} from '../api/api'
-  import {_webapp} from '../config/webapp'
+  import {_webapp} from '../config/_webapp.js';
   import {mapMutations, mapGetters} from 'vuex'
+  import { MessageBox } from 'mint-ui';
+  
   export default{
     data () {
       return {
@@ -274,16 +275,25 @@
         this.tabselect(idx)
         this.$router.push({name: `extension${idx}`})
       },
+      outLogin(){
+        MessageBox({title: '确认退出当前账号?',message: '点击确认退出',showCancelButton: true}).then(action => {
+          if(action=='confirm'){//表示点击了确定
+            _webapp.logOut((res)=>{
+
+            })
+          }else if(action=='cancel'){//表示点击了取消
+            
+          }
+        })
+      },
       ...mapMutations({
         tabselect: 'TABSELECT',
       })
     },
     created(){
-      this.init()
-
+      this.init();
     },
-    mounted()
-    {
+    mounted(){
 
     },
 
@@ -407,7 +417,7 @@
 
   .num {
     color: red;
-    font-size: .18rem;
+    font-size: .14rem;
   }
 
   .top_1:after {
@@ -421,7 +431,7 @@
   }
 
   .content {
-    margin-bottom: .6rem;
+    margin-bottom: .7rem;
   }
 
   .content .mfriend {
@@ -429,10 +439,13 @@
     text-align: left;
     color: rgba(0, 0, 0, .7);
     background-color: #fff;
-    padding: .1rem .2rem;
+    padding: .08rem .2rem;
     border-bottom: 1px solid rgba(0, 0, 0, .1);
   }
-
+  .mint-cell-text{
+     font-size: 0.14rem;
+    font-weight: 700;
+  }
   .content ul {
     /*margin-top: .1rem;*/
     height: .90rem;
@@ -490,29 +503,28 @@
   .details {
     margin-top: .1rem;
   }
-
   .details li {
     margin-top: .04rem;
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
   }
-
   .order-list {
     display: flex;
   }
-
   .order-list li {
     flex: 1;
   }
-  .logOut{
+  .outLogin{
     display: block;
-    margin-top: 0.15rem;
+    margin-top: 0.05rem;
     width: 100%;
     height: 0.45rem;
     -webkit-box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);
     box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);
-    background: #F5751D;
-    color: #fff;
+    background: #fff;
+    color: rgba(0, 0, 0, .5);
     font-size: 0.16rem;
+    border:none;
+    outline: none;
   }
 </style>

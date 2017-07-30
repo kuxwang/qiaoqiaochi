@@ -603,5 +603,47 @@ export var _webapp = {
         }
 
         return res;
-    }
+    },
+    //退出登录
+    //退出登录
+    logOut: function () {
+        var handler = 'logOut';
+
+        if (_env.ios) {
+          _webapp.setupWebViewJavascriptBridge(function (bridge) {
+            bridge.callHandler(handler, function (response) {
+              //return _webapp.callback(response, callback);
+            });
+
+            bridge.registerHandler(handler, function (data) {
+              return _webapp.callback(data, callback);
+            });
+          });
+        }
+
+        if (_env.android) {
+          _webapp.connectWebViewJavascriptBridge(function (bridge) {
+            if (_webapp.init === false) {
+              //初始化
+              _webapp.init = true;
+              bridge.init(function (message, responseCallback) {
+                var data = {
+                  'Javascript Responds': 'Wee!'
+                };
+                responseCallback(data);
+              });
+            }
+
+            bridge.callHandler(handler, function (response) {
+              //response = eval('(' + response + ')');
+              //return _webapp.callback(response, callback);
+            });
+
+            bridge.registerHandler(handler, function (response) {
+              response = eval('(' + response + ')');
+              return _webapp.callback(response, callback);
+            });
+          });
+        }
+      },
 };

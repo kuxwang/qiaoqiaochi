@@ -1,7 +1,7 @@
 <template>
  	<div class="main">
  		<section>
-	      <mt-header fixed title="我的资料">
+	      <mt-header fixed title="个人信息">
 	        <router-link to="/vipCenter" slot="left">
 	          <mt-button icon="back" ></mt-button>
 	        </router-link>
@@ -15,13 +15,14 @@
 	          <span class="fr" style="overflow:hidden">
 	            <img id="img_upload"/>
 	          </span>
-	          <input id="file_head" type="file" @change="getMyImg($event)"/>
+	          <!-- <input id="file_head" type="file" @change="getMyImg($event)"/> -->
+	          <input id="file_head" type="button" @click="getMyImg()"/>
 	        </li>
 	         <li>
 	          <span class="userinfo-list-lf fl">
 	            昵称
 	          </span>
-	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请输入昵称" v-model="myNc" @blur="testNc(myNc)">
+	          <input type="search" name="" class="userinfo-list-lr fl" placeholder="请输入昵称" v-model="myNc" @blur="testNc(myNc)">
 	        </li>
 	        <li @click="toastPhone">
 	          <span class="userinfo-list-lf fl">
@@ -33,19 +34,19 @@
 	          <span class="userinfo-list-lf fl">
 	            微信号
 	          </span>
-	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请输入微信号" v-model="myWx" @blur="testWx(myWx)">
+	          <input type="search" name="" class="userinfo-list-lr fl" placeholder="请输入微信号" v-model="myWx" @blur="testWx(myWx)">
 	        </li>
 	        <li>
 	          <span class="userinfo-list-lf fl">
 	            支付宝-账
 	          </span>
-	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请输入支付宝账号" v-model="myZfb" @blur="testZfb(myZfb)">
+	          <input type="search" name="" class="userinfo-list-lr fl" placeholder="请输入支付宝账号" v-model="myZfb" @blur="testZfb(myZfb)">
 	        </li>
 	        <li>
 	          <span class="userinfo-list-lf fl">
 	            支付宝-名
 	          </span>
-	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请输入支付宝真实姓名" v-model="myZfbName" @blur="testZfbName(myZfbName)" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')">
+	          <input type="search" name="" class="userinfo-list-lr fl" placeholder="请输入支付宝真实姓名" v-model="myZfbName" @blur="testZfbName(myZfbName)" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')">
 	        </li>
 	        <li @click="setCity">
 	          <span class="userinfo-list-lf fl">
@@ -73,7 +74,7 @@
 	          选择所在城市
 	          <span class="fr userpopup-lr" @click="cityConfirm">确定</span>
 	        </div>
-	       <mt-picker :slots="slots" value-key="aname" @change="cityValuesChange" class="myCityPopup"></mt-picker>
+	       <mt-picker :slots="myslots" value-key="aname" @change="cityValuesChange" class="myCityPopup"></mt-picker>
 	      </div>
 	    </mt-popup>
 	     <!-- 出生日期 -->
@@ -92,31 +93,51 @@
 </template>
 <script>
 	import {Toast, Picker, Popup, DatetimePicker} from 'mint-ui';
-	import {address, slots} from '../../assets/js/address';
-  import {memberInfo,PUT_USERINFO,PUT_USERAVATARS} from '../../api/api';
+	import {address} from '../../assets/js/address';
+  	import {memberInfo,PUT_USERINFO,PUT_USERAVATARS} from '../../api/api';
+  	import {_webapp} from '../../config/_webapp.js';
 	export default{
 		data(){
 			return{
+				visible:'',
+				value:'',
 				myNc:'',
 				myPhone:'',
 				myWx:'',
 				myZfb:'',
 				myZfbName:'',
-        myPlace:'',
-        myProvince:'',
+		        myPlace:'',
+		        myProvince:'',
 				myCity:'',
-        myRegion:'',
+		        myRegion:'',
 				myDate:'',
+				myDate2:'',
 				imgurl:'',
 				mypopup1:false,
 				mypopup2:false,
-				slots: slots,
-		    visibleItemCount:5,
-		    address: '',
-		    temp_addr:'',
-		    value1:null,
-		    startDate: new Date('1960'),
-		    endDate: new Date()
+				myslots: [{
+				    flex: 1,
+				    values: [],
+				    className: 'slot1',
+				    textAlign: 'center'
+				  },
+				  {
+				    flex: 1,
+				    values: [],
+				    className: 'slot2',
+				    textAlign: 'center'
+				  },
+				  {
+				    flex: 1,
+				    values: [],
+				    className: 'slot3',
+				    textAlign: 'center'
+				  }],
+			    visibleItemCount:5,
+			    temp_addr:'',
+			    value1:'',
+			    startDate: new Date('1960'),
+			    endDate: new Date(),
 			}
 		},
 		methods:{
@@ -142,7 +163,7 @@
 				this.mypopup1=false;
 			},
 			initAddress() {//城市初始化
-		        this.slots[0].values = address.filter((item, index) => {
+		        this.myslots[0].values = address.filter((item, index) => {
 		          if (item.apid === 0) {
 		            return item;
 		          }
@@ -151,7 +172,7 @@
 	    	cityValuesChange(picker, values) {
 		        // 防止没有省份时报错
 		        if (values[0]) {
-		          this.slots[1].values = address.filter((item, index) => {
+		          this.myslots[1].values = address.filter((item, index) => {
 		            if (item.apid === values[0].aid) {
 		              return item;
 		            }
@@ -159,7 +180,7 @@
 		        }
 		        // 防止没有市时报错
 		        if (values[1]) {
-		          this.slots[2].values = address.filter((item, index) => {
+		          this.myslots[2].values = address.filter((item, index) => {
 		            if (item.apid === values[1].aid) {
 		              return item;
 		            }
@@ -168,10 +189,10 @@
 		        // 防止没有区时报错
 		        if (values[2]) {
 		          // 这里可以指定地址符，此处以空格进行连接
-              // this.myPlace=values[0].aname + ' ' + values[1].aname + ' ' + values[2].aname;
-              this.myProvince=values[0].aname;
-              this.myCity=values[1].aname;
-              this.myRegion=values[2].aname;
+	              // this.myPlace=values[0].aname + ' ' + values[1].aname + ' ' + values[2].aname;
+	              this.myProvince=values[0].aname;
+	              this.myCity=values[1].aname;
+	              this.myRegion=values[2].aname;
 		        }
 		    },
 		    setbirth(){//出生日期显示
@@ -181,32 +202,37 @@
 		        this.$refs[picker].open();
 		    },
 		    handleChange(value) {
-          let y = new Date(value).getFullYear();
-          let d = new Date(value).getDate(); 
-          let m = new Date(value).getMonth() + 1;
-          m = m < 10 ? ('0' + m) : m;
-          d = d < 10 ? ('0' + d) : d;
-          this.myDate=`${y}-${m}-${d}`;   
+	          let y = new Date(value).getFullYear();
+	          let d = new Date(value).getDate(); 
+	          let m = new Date(value).getMonth() + 1;
+	          m = m < 10 ? ('0' + m) : m;
+	          d = d < 10 ? ('0' + d) : d;
+	          this.myDate2=`${y}-${m}-${d}`;
+	          this.myDate=`${y}年${m}月${d}日`;     
 		    },
-        getMyImg(e){
-          console.log(666)
-          var img = document.getElementById("img_upload");
-          var reader = new FileReader();
-          reader.onload = function (evt) {
-            img.src = evt.target.result;
-            // console.log(img.src)
-          }
-          reader.readAsDataURL(e.target.files[0]);
-          var file = e.target.files[0];
-          // console.log(file)
-          let params={
-            'data':{
-              // avatar:file
-            }
-          }
-          console.log(params)
-          PUT_USERAVATARS(params, function (res) {
-            console.log(res)
+        	getMyImg(e){
+          // console.log(666)
+          // var img = document.getElementById("img_upload");
+          // var reader = new FileReader();
+          // reader.onload = function (evt) {
+          //   img.src = evt.target.result;
+          //   // console.log(img.src)
+          // }
+          // reader.readAsDataURL(e.target.files[0]);
+          // var file = e.target.files[0];
+          // // console.log(file)
+          // let params={
+          //   'data':{
+          //     // avatar:file
+          //   }
+          // }
+          // console.log(params)
+          // PUT_USERAVATARS(params, function (res) {
+          //   console.log(res)
+          // })
+          console.log(8282828)
+          _webapp.uploadImg((res)=>{
+     
           })
         },
         getUserInfo(){
@@ -241,10 +267,11 @@
               alipay_name:this.myZfbName,
               alipay_account:this.myZfb ,
               weixin:this.myWx,
-              birth:this.myDate,
+              birth:this.myDate2,
               area:this.myRegion
             }
           }
+          console.log(params)
           let _this=this;
           PUT_USERINFO(params, function (res) {
             _this.$router.go(-1);

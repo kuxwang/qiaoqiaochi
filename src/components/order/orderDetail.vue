@@ -1,5 +1,4 @@
 <template>
-  <transition name="slide">
   <div class="main order-detail-header">
     <mt-header title="订单详情" >
       <a @click="goBack" slot="left">
@@ -82,7 +81,6 @@
     </div>
     <router-view></router-view>
   </div>
-  </transition>
 </template>
 <script>
   import { Header,MessageBox} from 'mint-ui'

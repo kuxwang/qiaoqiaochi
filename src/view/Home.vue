@@ -4,7 +4,7 @@
       <li class="goodsList-itme1">
         <img src="../assets/images/home-01.jpg">
       </li>
-      <router-link class="goodsList-itme2" to="/details" tag="li">
+      <router-link class="goodsList-itme2" :to="{path:'/details',query:{goodsId:4}}" tag="li">
         <img src="../assets/images/home-02.jpg">
       </router-link>
       <!--<li class="goodsList-itme2">-->

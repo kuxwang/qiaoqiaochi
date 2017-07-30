@@ -200,8 +200,6 @@ export var _webapp = {
       });
     }
   },
-
-
   /**
    * 根据不同key值存储不同val值，val值将会以object(json)数据类型进行返回。\
    * 若设置本地存储内容失效时，val 值请填写空字符串 '';
@@ -688,5 +686,45 @@ export var _webapp = {
       'timestamp': '9501160189'
     };
   },
+  //退出登录
+  logOut: function () {
+    var handler = 'logOut';
 
+    if (_env.ios) {
+      _webapp.setupWebViewJavascriptBridge(function (bridge) {
+        bridge.callHandler(handler, function (response) {
+          //return _webapp.callback(response, callback);
+        });
+
+        bridge.registerHandler(handler, function (data) {
+          return _webapp.callback(data, callback);
+        });
+      });
+    }
+
+    if (_env.android) {
+      _webapp.connectWebViewJavascriptBridge(function (bridge) {
+        if (_webapp.init === false) {
+          //初始化
+          _webapp.init = true;
+          bridge.init(function (message, responseCallback) {
+            var data = {
+              'Javascript Responds': 'Wee!'
+            };
+            responseCallback(data);
+          });
+        }
+
+        bridge.callHandler(handler, function (response) {
+          //response = eval('(' + response + ')');
+          //return _webapp.callback(response, callback);
+        });
+
+        bridge.registerHandler(handler, function (response) {
+          response = eval('(' + response + ')');
+          return _webapp.callback(response, callback);
+        });
+      });
+    }
+  },
 };
