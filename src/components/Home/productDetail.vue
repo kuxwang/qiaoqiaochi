@@ -8,24 +8,21 @@
       </mt-header>
       <div class="box">
         <div class="img-box">
-          <img src="../../assets/images/home-01.jpg" alt="" class="content"/>
+          <img :src="bandimg" class="content"/>
         </div>
       </div>
       <div class="intro">
-        <p>竹享</p>
-        <span>￥199.00</span>
-        <p class="vip-intro"><span class="iconfont">&#xe631;</span>您是<span>高级会员</span> 可享<span>8.00</span>折优惠</p>
+        <p>{{name}}</p>
+        <span>￥{{marketPrice}}</span>
+        <p class="vip-intro" v-show="isVip"><span class="iconfont">&#xe631;</span>您是{{vipname}} 可享{{vipcount}}折优惠</p>
       </div>
       <div class="b-intro">
         <div class="bottom-nav">
           图文详情
         </div>
-        <p class="img-p">
-          <img src="../../assets/images/home-02.jpg" alt=""/>
-          <img src="../../assets/images/home-02.jpg" alt=""/>
-          <img src="../../assets/images/home-02.jpg" alt=""/>
-          <img src="../../assets/images/home-02.jpg" alt=""/>
-        </p>
+        <div id="intro">
+
+        </div>
       </div>
       <div class="bottom-navbar">
         <!-- <router-link class="icon-box" :to="{name:''}"  tag="a">
@@ -38,49 +35,106 @@
           <div class="icon-b">
             <div class="iconfont tabIcon icon-car">&#xe607;</div>
             购物车
+            <i class="carNum">{{goodNums}}</i>
           </div>
         </router-link>
         <button class="icon-btn icon-btn-car ocolor" @click="handleClick">
           加入购物车
         </button>
-        <router-link class="icon-btn icon-btn-con" to="/payselect"  tag="button">
+       <!--  <router-link class="icon-btn icon-btn-con" to="/payselect"  tag="button">
           立即购买
-        </router-link>
+        </router-link> -->
+         <button class="icon-btn icon-btn-con" @click="goPay">
+          立即购买
+        </button>
       </div>
       <mt-popup v-model="popupVisible" position="bottom" modal=true>
         <div class="popup-box">
-          <img src="../../assets/images/xiaotu.jpg" >
+          <img :src="bandimg" >
           <div class="popup-info">
-            <p>￥99.00</p>
-            <span>库存：99999件</span>
+            <p>￥{{marketPrice}}</p>
+            <span>库存：{{total}}件</span>
           </div>
           <div class="cal-box">
-
             <div>
               <button class="reduce-down" @click="reduce(num)">-</button>
-              <input class="num-box" :value=num />
+              <input class="num-box" v-model=num />
               <button class="add-up" @click="add">+</button>
             </div>
             <p>购买数量</p>
           </div>
-          <router-link class="confirm ocolor" to="shoppingCart" tag="button">确认</router-link>
+          <button class="confirm ocolor" @click="toast">确认</button>
         </div>
       </mt-popup>
     </div>
   </transition>
 </template>
 <script>
-  import { Header,Popup} from 'mint-ui'
+  import { Header,Popup,Toast} from 'mint-ui';
+  import {productDetail,addCart} from '../../api/api.js';
+  import {setStore, getStore} from '../../config/myUtils';
+  import {mapMutations, mapGetters } from 'Vuex';
   export default {
     data(){
       return{
         popupVisible:false,
+        isVip:false,
+        bandimg:'',
         num:'1',
+        name: '',
+        marketPrice:0.00,
+        vipname:'',
+        vipcount:'0.00',
+        total:'',
+        myStata:'',
+        goodNums:'',
+        goodsId:'',
+        optionId:0,
+        cartids:[],
+        total:''
       }
     },
     methods:{
       handleClick:function () {
-        this.popupVisible = true
+        this.popupVisible = true;
+        this.myStata=1
+      },
+      toast:function () {
+        if(this.myStata===1){//加入购物车
+          console.log('这是购物车')
+          this.popupVisible = false;
+            let that=this;
+            let params={
+              data:{
+                goodsid:4,
+                total:this.num
+              }
+          }
+          addCart(params,function (res) {
+            if(res.statusCode==1){
+              Toast({
+                message: '操作成功 商品已在购物车',
+                position: 'middle',
+                duration: 1800
+              });
+            }else{
+              Toast({
+                message: '添加失败',
+                position: 'bottom',
+                duration: 1800
+              });
+            }
+          })
+        }else if(this.myStata===2){//立即购买
+          let myOrders={
+            goodsid:this.goodsId,
+            optionid:this.optionId,
+            cartids:[],
+            total:this.num
+          }
+          this.getMyorders(myOrders);
+          // this.$router.push({name:'confirmorder'})
+        }
       },
       reduce:function (num) {
         if(num>1){
@@ -88,8 +142,42 @@
         }
       },
       add:function () {
-        this.num++
-      }
+        this.num++;
+      },
+      getInfo:function () {
+        let that=this;
+        let params={
+          data:{
+            goodsid:4,
+          }
+        }
+        productDetail(params,function (res) {
+          console.log(res)
+          that.goodNums=res.data.goodscount;
+          let goods=res.data.goods
+          that.goodsId=goods.id;
+          that.name=goods.title;
+          that.marketPrice=goods.marketprice;
+          that.bandimg=res.data.pics[0];
+          that.total=goods.total;
+          document.getElementById("intro").innerHTML=goods.content;
+          if(res.data.level.levelname){
+            that.isVip=true;
+            that.vipname=res.data.level.levelname;
+            that.vipcount=res.data.level.discount;
+          };
+        })
+      },
+      goPay(){
+        this.myStata=2;
+        this.popupVisible = true;
+      },
+      ...mapMutations({
+        getMyorders:'GET_MYORDERS'
+      })
+    },
+    created(){
+      this.getInfo()
     },
     components: {}
   }
@@ -122,7 +210,7 @@
   }
   .img-box {
     position: relative;
-    padding-bottom: 56.25%;
+    padding-bottom: 100%;
     height: 0;
     margin-top: 46px;
   }
@@ -199,6 +287,21 @@
   }
   .icon-b{
     font-size:.12rem;
+    position: relative;
+  }
+  .carNum{
+    position: absolute;
+    top:-0.02rem;
+    left:55%;
+    display: inline-block;
+    background-color: #f23030;
+    line-height: 0.1rem;
+    font-style: normal;
+    border-radius: 8px;
+    padding: 0.01rem 0.04rem;
+    font-size: 0.08rem;
+    color: #fff;
+    border:0.01rem solid #fff;
   }
   .iconfont{
     font-size:.19rem;

@@ -63,7 +63,7 @@
 						不含运费
 					</h4>
 				</div>
-				<div class="payment-lr fl lr1" @click="goConfirmorder">
+				<div class="payment-lr fl lr1" @click="goConfirmorder()">
 					结算({{defTotal}})
 				</div>
 			</div>
@@ -86,6 +86,7 @@
 	import { Header,Checklist,MessageBox,Lazyload } from 'mint-ui';
 	import {setStore, getStore} from '../config/myUtils';
 	import {GET_MYCARTS,PUT_MYCARTS,GET_ORDER1,DELETE_MYCARTS} from '../api/api';
+	import {mapMutations, mapGetters } from 'Vuex';
 	export default{
 		data(){
 			return {
@@ -95,7 +96,11 @@
 				defTotal:'0',
 				isTrue:false,
 				checkItem:false,
-				isShow:true
+				isShow:true,
+				goodsId:'',
+		        optionId:'',
+		        cartids:[],
+		        total:''
 			}
 		},
 		methods:{
@@ -107,8 +112,7 @@
 				// console.log(this.getShCartData[i].isChecked)
 				if(this.getShCartData[i].isChecked==true){
 					this.defPrice=myDefPrice+myPrice;
-					this.defTotal++
-
+					this.defTotal++;
 				}
 				let params = {
 					'data':{
@@ -242,45 +246,44 @@
                     }
                 })
 			},
-			goConfirmorder(){//去确认订单
-				if(this.defPrice>0){
-					this.$router.push({name:'confirmorder'})
-					// console.log()
-					// let m_goodsid=this.getShCartData.goodsid;
-					// let m_optionid=this.getShCartData.optionid;
-					// let m_cartids=this.getShCartData.cartids;
-					// let m_total=this.getShCartData.total;
-					// let m_type=this.getShCartData.goodsid;
-					// let params = {
-					// 	'data':{
-					// 		goodsid:'4',
-					// 		optionid:'0',
-					// 		cartids:'111',
-					// 		total:'22'
-					// 	}
-					// }
-					// let _this=this
-			  //   	GET_ORDER1(params, function (res) {
-			  //   		console.log(res)
-			  //     	})
-				}
+			goConfirmorder(){//确认订单
+				let cartIds=[];
+				let myOrders={
+	            	goodsid:this.goodsId,
+	            	optionid:this.optionId,
+	            	cartids:cartIds,
+	            	total:''
+	          	}
+	          	for(let i=0;i<this.getShCartData.length;i++){
+
+	          		cartIds.push(this.getShCartData[i].id);
+	          	}
+	          	this.getMyorders(myOrders);
+	          	// this.$router.push({name:'confirmorder'})
+
 			},
 			mycartsInt(){
 				let params = []
 				let _this=this
 		    	GET_MYCARTS(params, function (res) {
-		    		console.log(res)
 		        	if(res.statusCode===1){
-		        		// console.log(res.data)
-		        		_this.getShCartData=res.data.list;
-		        		for(let a in _this.getShCartData){
-		        			_this.getShCartData[a].isChecked=false
+		        		if(res.data.list.length>=1){
+			        		_this.getShCartData=res.data.list;
+			        		for(let a in _this.getShCartData){
+			        			_this.getShCartData[a].isChecked=false
+			        		}
+		        		}else{
+		        			_this.isTrue=false;
+                    		_this.isShow=false;
 		        		}
 		        	}else{
 		        		console.log('请求失败')
 		        	}
 		      	})
-			}
+			},
+			...mapMutations({
+		        getMyorders:'GET_MYORDERS'
+		    })
 		},
 		filters:{
 			getIntNmb:function(val){

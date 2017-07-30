@@ -26,7 +26,7 @@ export const commissions = {
    * 订单列表
    */
 
-  orderStatistics: {url: `${base}/commissions/orderStatistics`, method:'GET', header, dataType},
+  orderStatistics: {url: `${base}/commissions/orderStatistics`, method: 'GET', header, dataType},
   /**
    * 订单列表
    */
@@ -49,9 +49,33 @@ export const commissions = {
   teamsStatistics: {url: `${base}/commissions/teamsStatistics`, method: 'GET', header, dataType},
 };
 
-export const members = {
+const members = {
   memberInfo: {url: `${base}/members/memberInfo`, method: 'GET', header, dataType}
 }
+const addresses = {
+  addresses_post: {url: `${base}/addresses`, method: 'POST', header, dataType},
+  addresses_get: {url: `${base}/addresses`, method: 'GET', header, dataType}
+}
+/**
+ * 商品详情
+ */
+const product={productDetail:{url:`${base}/goods`, method:'GET', header, dataType}};
+/**
+ * 加入购物车
+ */
+const cart={addCart:{url:`${base}/carts`, method:'POST', header, dataType}};
+/**
+ * 订单列表
+ */
+const order={orderList:{url:`${base}/orders`, method:'GET', header, dataType}};
+/**
+ * 订单详情
+ */
+const orderd={orderDetail:{url:`${base}/orders`, method:'GET', header, dataType}};
+/**
+ * 快递
+ */
+const express={exp:{url:`${base}/expresses`, method:'GET', header, dataType}};
 /**
  * 佣金统计
  * @param params
@@ -72,7 +96,11 @@ export const teamsStatistics = function (params, callback) {
     callback(res)
   })
 };
-export const teamsLists = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.teamsLists), function (res) {callback(res)})};
+export const teamsLists = function (params, callback) {
+  _webapp.requestx(Object.assign(params, commissions.teamsLists), function (res) {
+    callback(res)
+  })
+};
 /**
  * 订单统计
  * @param params
@@ -116,6 +144,34 @@ export const memberInfo = function (params, callback) {
 };
 
 
+/**
+ * 新增地址
+ */
+export const addresses_post = function (params, callback) {
+  _webapp.requestx(Object.assign(params, addresses.addresses_post), function (res) {
+    callback(res)
+  })
+};
+/**
+ * 商品详情
+ */
+export const productDetail=function (params,callback) {_webapp.requestx(Object.assign(params,product.productDetail),function (res) {callback(res)})}
+/**
+ * 加入购物车
+ */
+export const addCart=function (params,callback) {_webapp.requestx(Object.assign(params,cart.addCart),function (res) {callback(res)})};
+/**
+ * 订单列表
+ */
+export const orderList=function (params,callback) {_webapp.requestx(Object.assign(params,order.orderList),function (res) {callback(res)})};
+/**
+ * 订单详情
+ */
+export const orderDetail=function (params,callback) {_webapp.requestx(Object.assign(params,orderd.orderDetail),function (res) {callback(res)})};
+/**
+ * 快递
+ */
+export const expressInfo=function (params,callback) {_webapp.requestx(Object.assign(params,express.exp),function (res) {callback(res)})};
 
 
 /**
@@ -154,9 +210,19 @@ export const DELETE_MYCARTS = function(params, callback) {
 /**
  * 下单 yellowStar
 */
-const ORDER1={url: `${base}/orders/confirm`,method: 'GET',header,dataType}
-export const GET_ORDER1 = function(params, callback) {
-  _webapp.requestx(Object.assign(params,ORDER1), function(res) {
+const ORDER1 = {
+  url: `${base}/orders/confirm`,
+  method: 'GET',
+  header,
+  dataType
+};
+export const GET_ORDER1 = function (params, callback) {
+  _webapp.requestx(Object.assign(params, ORDER1), function (res) {
+    callback(res)
+  })
+};
+export const addresses_get = function (params, callback) {
+  _webapp.requestx(Object.assign(params, addresses.addresses_get), function (res) {
     callback(res)
   })
 };
@@ -180,8 +246,6 @@ export const PUT_USERINFO = function(params, callback) {
     callback(res)
   })
 };
-
-
 const USERAVATARS={url: `${base}/avatars`,method: 'PUT',header,dataType}
 export const PUT_USERAVATARS = function(params, callback) {
   console.log(callback)
@@ -189,16 +253,3 @@ export const PUT_USERAVATARS = function(params, callback) {
     callback(res)
   })
 };
-
-
-
-
-/**
- * 个人信息 yellowStar
-*/
-// const MYADDRESS1={url: `${base}/orders/addresses`,method: 'GET',header,dataType}
-// export const GET_MYADDRESS1 = function(params, callback) {
-//   _webapp.requestx(Object.assign(params,MYADDRESS1), function(res) {
-//     callback(res)
-//   })
-// };
