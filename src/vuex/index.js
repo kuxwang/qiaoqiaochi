@@ -16,7 +16,7 @@ const state = {
   address: '', //订单确认页的收货地址列表页
   myOrders:{  //下单页面所需参数
     goodsid:'',
-    optionid:'',
+    optionid:'', 
     cartids:[],
     total:''
   }

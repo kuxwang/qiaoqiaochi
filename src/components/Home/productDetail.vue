@@ -133,7 +133,7 @@
             total:this.num
           }
           this.getMyorders(myOrders);
-          // this.$router.push({name:'confirmorder'})
+          this.$router.push({name:'confirmorder'})
         }
       },
       reduce:function (num) {

@@ -1,49 +1,58 @@
 <template>
   <div class="main2">
     <mt-header fixed title="订单详情" >
-      <router-link to="/extension" slot="left">
+      <router-link to="/extension1" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
       <!--<mt-button icon="more" slot="right"></mt-button>-->
     </mt-header>
-    <div class="title">预计可提现金额<span>¥3.51</span></div>
+    <div class="title">预计可提现金额<span>¥{{ordercom[0].c_money}}</span></div>
     <ul class="order-info">
       <li class="order-cell">
         <div class="left">订单号</div>
-        <div class="right">213123131</div>
+        <div class="right">{{ordernum.ordersn}}</div>
       </li>
-      <li class="order-cell">
-        <div class="left">订单状态</div>
-        <div class="right">213123131</div>
-      </li>
-      <li class="order-cell">
+
+      <!--<li class="order-cell">
         <div class="left">下单时间</div>
-        <div class="right">213123131</div>
-      </li>
-      <li class="order-cell">
-        <div class="left">订单金额</div>
-        <div class="right">213123131</div>
-      </li>
+        &lt;!&ndash;<div class="right">{{Date(ordernum.createtime).toLocaleString()}}</div>&ndash;&gt;
+        <div class="right">{{timetab(ordernum.createtime)}}</div>
+      </li>-->
       <li class="order-cell">
         <div class="left">粉丝昵称</div>
-        <div class="right">213123131</div>
+        <div class="right">{{ordercom[0].nickname}}</div>
       </li>
       <li class="order-cell">
         <div class="left">粉丝ID</div>
-        <div class="right">213123131</div>
+        <div class="right">{{ordernum.id}}</div>
       </li>
       <li class="order-cell">
-        <div class="left">是否拼团</div>
-        <div class="right">213123131</div>
+        <div class="left">订单金额</div>
+        <div class="right">{{ordernum.goodsprice}}元</div>
+      </li>
+
+      <li class="order-cell">
+        <div class="left">手机号</div>
+        <div class="right">{{ordernum.mobile}}</div>
       </li>
       <li class="order-cell">
+        <div class="left">分拥比例</div>
+        <div class="right">{{ordercom[0].c_rate}}%</div>
+      </li>
+      <li class="order-cell">
+        <div class="left">订单状态</div>
+        <div class="right" v-if="ordernum.status==1">未付款</div>
+        <div class="right" v-if="ordernum.status=='r1'">已退货</div>
+        <div class="right" v-if="ordernum.status==3">已完成</div>
+      </li>
+      <!--<li class="order-cell">
         <div class="left">直接奖励</div>
-        <div class="right">213123131</div>
-      </li>
-      <li class="order-cell">
+        <div class="right">{{ordernum.ordersn}}</div>
+      </li>-->
+      <!--<li class="order-cell">
         <div class="left">备注</div>
         <div class="right">213123131</div>
-      </li>
+      </li>-->
     </ul>
 
   </div>
@@ -56,29 +65,34 @@
   export default{
     data () {
       return {
-        orderinfo:{}
+        ordernum:{},
+        ordercom:{
+
+        }
       }
     },
     components: {
 
     },
     methods: {
-
+      ...mapMutations({
+        tabselect: 'TABSELECT',
+      })
     },
     created(){
-
+      this.tabselect=1
     },
     mounted(){
-
       let params={
           data:{
             ordersn:this.ordersn
           }
       }
       orders(params,(res)=>{
-        this.ordernum=res.data
-        console.log(res)
+        this.ordernum=res.data.order
+        this.ordercom=res.data.commssion
         console.log(this.ordernum)
+        console.log(this.ordercom)
       })
     },
     computed:{

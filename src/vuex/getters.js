@@ -4,6 +4,7 @@ export default {
 	onActive:state=>state.onActive,
 	busActive:state=>state.busActive,
   	ordersn: state => state.ordersn,
-  	myOrders:state => state.myOrders
+  	myOrders:state => state.myOrders,
+  	searchnum: state => state.searchnum,
 }
 

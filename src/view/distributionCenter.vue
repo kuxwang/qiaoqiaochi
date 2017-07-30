@@ -174,7 +174,7 @@
 </template>
 <script>
   import vTabbar from '../components/common/Tabbar.vue'
-  import {recordStatistics_get, teamsStatistics, orderStatistics, memberInfo} from '../api/api'
+  import {recordStatistics_get, teamsStatistics, orderStatistics,memberInfo} from '../api/api'
   import {_webapp} from '../config/webapp'
   import {mapMutations, mapGetters} from 'vuex'
   export default{
@@ -241,7 +241,7 @@
           } else {
             console.log('获取团队数量统计接口数据异常')
           }
-        });
+        })
         orderStatistics({}, function (res) {
           if (res.statusCode == 1) {
             _this.orderStatistics.total = res.data.total.order_count

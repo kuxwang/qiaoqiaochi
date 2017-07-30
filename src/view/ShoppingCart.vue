@@ -255,12 +255,10 @@
 	            	total:''
 	          	}
 	          	for(let i=0;i<this.getShCartData.length;i++){
-
 	          		cartIds.push(this.getShCartData[i].id);
 	          	}
 	          	this.getMyorders(myOrders);
-	          	// this.$router.push({name:'confirmorder'})
-
+	          	this.$router.push({name:'confirmorder'});
 			},
 			mycartsInt(){
 				let params = []

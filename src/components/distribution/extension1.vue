@@ -51,7 +51,6 @@
 
       },
       orderinfo(index){
-
         this.ordersn(this.orderlist[index].ordersn);
         this.$router.push({name: `orderinfo`})
       },
