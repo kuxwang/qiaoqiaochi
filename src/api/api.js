@@ -143,6 +143,13 @@ export const PUT_MYCARTS = function(params, callback) {
     callback(res)
   })
 };
+const MYCARTS3={url: `${base}/carts`, method: 'DELETE',header,dataType}
+export const DELETE_MYCARTS = function(params, callback) {
+  _webapp.requestx(Object.assign(params,MYCARTS3), function(res) {
+    callback(res)
+  })
+};
+
 
 /**
  * 下单 yellowStar

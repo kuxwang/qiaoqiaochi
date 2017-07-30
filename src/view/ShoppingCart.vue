@@ -69,7 +69,7 @@
 		</div>
 		<div class="nogoods" v-show="!isShow">
 			<div class="nogoods-tp">
-				<img src="../assets/images/shoppingCart-02.png">
+				<img src="../assets/images/shoppingCart-02.png" >
 			</div>
 			<p class="nogoods-mid">
 				没有添加商品 <br>
@@ -84,7 +84,7 @@
 <script>
 	import { Header,Checklist,MessageBox } from 'mint-ui';
 	import {setStore, getStore} from '../config/myUtils';
-	import {GET_MYCARTS,PUT_MYCARTS,GET_ORDER1} from '../api/api';
+	import {GET_MYCARTS,PUT_MYCARTS,GET_ORDER1,DELETE_MYCARTS} from '../api/api';
 	export default{
 		data(){
 			return {
@@ -222,8 +222,15 @@
 								this.defPrice=0;
 							}
                     	}
-                    	// console.log(this.getShCartData.length)
-                    	if(this.getShCartData.length==1){
+						let params = {
+							'data':{
+								cartid:v.id
+							}
+						}
+						DELETE_MYCARTS(params, function (res) {
+							console.log(res)
+						})
+                    	if(this.getShCartData.length==0){
                     		this.isTrue=false;
                     		this.isShow=false;
                     	}
