@@ -209,9 +209,9 @@
           this.defaultAddress = this.userAddress
         }
       },
-      msg: _.debounce(function (newValue) {
-        console.log(newValue)
-      })
+      msg: function (newValue) {
+
+      }
     },
     mounted () {
 //      console.log(1232342)
