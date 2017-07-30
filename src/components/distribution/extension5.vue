@@ -78,7 +78,6 @@
       }
       orders(params,(res)=>{
         if(res.statusCode==1){
-
           if(this.searchnum.length==20){
               let obji=[];
               obji.push(res.data.order)
@@ -181,7 +180,6 @@
     font-size: 0.14rem;
   }
   .info span {
-    color: #000;
     font-size: 0.14rem;
     color: #666;
   }
@@ -205,4 +203,5 @@
   .ordertype span:last-child {
     margin-top: 0.1rem;
   }
+
 </style>

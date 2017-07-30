@@ -67,18 +67,23 @@
     padding: 0.1rem;
     background: #fff;
     margin-top: .5rem;
+    border: 1px solid #eee;
+
   }
 
   li {
     display: flex;
-    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    /*border-bottom: 1px solid rgba(0, 0, 0, .1);*/
+    border-top: 1px solid rgba(0, 0, 0, .1) !important;
+    margin-top: 0.05rem;
     padding: 0.1rem 0;
     height: 0.5rem;
 
   }
-  li:first-child{
-    border-top: 1px solid rgba(0, 0, 0, .1);
-     border-bottom: 1px solid rgba(0, 0, 0, .1);
+  li:last-child{
+    color:red;
+    /*border-bottom: 1px solid rgba(0, 0, 0, .1);*/
+
   }
   .left {
     flex: 1;

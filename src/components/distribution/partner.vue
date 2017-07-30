@@ -1,12 +1,11 @@
 <template>
   <div class="main">
     <section>
-      <mt-header fixed title="我的伙伴">
+      <mt-header fixed title="我的伙伴" style="z-index: 3">
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
       </mt-header>
-
     </section>
     <section class="top">
     </section>
@@ -35,7 +34,7 @@
         <div class="title">未购买伙伴</div>
         <div class="iconfont listicon">&#xe60d;</div>
         <div>
-          <span class="num">100</span><span class="yuan"> 人</span>
+          <span class="num">{{personnum.no_purchased}}</span><span class="yuan"> 人</span>
         </div>
       <!--</router-link>-->
       </li>
@@ -83,7 +82,6 @@
         this.$router.push({name: `partnerlist${idx}`})
       },
       search(){
-//        this.searchnum(Number(this.find));
         this.searchnum(this.find);
         console.log(Number(this.find))
         this.$router.push({name: `partnerlist4`}),
@@ -92,7 +90,7 @@
       },
       ...mapMutations({
         'searchnum' : 'SEARCHNUM',
-        'tabselect': 'TABSELECT'
+
       })
     },
     computed:{
@@ -140,6 +138,7 @@
     height: 100%;
     background: #ececec;
     overflow: auto;
+    z-index: 3;
   }
   .mint-header {
     border-bottom: 0;
@@ -497,4 +496,5 @@
   .tabActive .num,.tabActive .yuan {
     color: #fff;
   }
+
 </style>

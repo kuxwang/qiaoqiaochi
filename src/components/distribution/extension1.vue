@@ -184,4 +184,7 @@
   .ordertype span:last-child {
     margin-top: 0.1rem;
   }
+  .mint-header.is-fixed {
+    z-index: 3;
+  }
 </style>

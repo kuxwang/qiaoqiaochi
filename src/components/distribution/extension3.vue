@@ -179,4 +179,7 @@
   .ordertype span:last-child {
     margin-top: 0.1rem;
   }
+  .mint-header  {
+    z-index: 3;
+  }
 </style>

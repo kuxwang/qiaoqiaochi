@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <section>
-      <mt-header fixed title="提现" >
+      <mt-header title="提现" >
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
@@ -22,10 +22,10 @@
         <!--<span class="iconfont">&#xe61b;</span>-->
         <span>1231元</span>
       </li>
-      <li class="cell">
+     <!-- <li class="cell">
         累计消费省钱
         <span>1231元</span>
-      </li>
+      </li>-->
     </ul>
     <h5>支出</h5>
     <ul class="view">
@@ -67,8 +67,13 @@
         }
       }
       withdrawals_get(params,(res)=>{
-          this.moneylist=res.data
-        console.log(this.moneylist)
+          if(res.statusCode==1){
+            this.moneylist=res.data
+            console.log(this.moneylist)
+            console.log(res)
+          }else {
+              console.log('请求失败')
+          }
       })
     },
     methods: {
@@ -116,12 +121,12 @@
   .up {
     font-size: .18rem;
     position: relative;
-    top:.5rem;
+    top:.6rem;
   }
   .down {
     font-size: .28rem;
     position: relative;
-    top:.5rem;
+    top:.75rem;
   }
   h5 {
     text-align: left;
@@ -156,6 +161,9 @@
     color: #fff;
     line-height: .35rem;
 
+  }
+  .mint-header {
+    z-index: 3;
   }
 
 

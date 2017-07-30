@@ -6,25 +6,25 @@
       </router-link>
       <!--<mt-button icon="more" slot="right"></mt-button>-->
     </mt-header>
-    <div class="title">预计可提现金额<span>¥{{ordercom[0].c_money}}</span></div>
+    <div class="title">预计可提现金额<span>¥{{totalmoney}}</span></div>
     <ul class="order-info">
-      <li class="order-cell">
-        <div class="left">订单号</div>
-        <div class="right">{{ordernum.ordersn}}</div>
-      </li>
 
       <li class="order-cell">
-        <div class="left">下单时间</div>
-        <!--<div class="right">{{Date(ordernum.createtime).toLocaleString()}}</div>-->
-        <div class="right">{{ordernum.createtime}}</div>
-      </li>
-      <li class="order-cell">
         <div class="left">粉丝昵称</div>
-        <div class="right">{{ordercom[0].nickname}}</div>
+        <div class="right">{{nickname}}</div>
       </li>
       <li class="order-cell">
         <div class="left">粉丝ID</div>
         <div class="right">{{ordernum.id}}</div>
+      </li>
+      <li class="order-cell">
+        <div class="left">订单号</div>
+        <div class="right">{{ordernum.ordersn}}</div>
+      </li>
+      <li class="order-cell">
+        <div class="left">下单时间</div>
+        <!--<div class="right">{{Date(ordernum.createtime).toLocaleString()}}</div>-->
+        <div class="right">{{ordernum.createtime}}</div>
       </li>
       <li class="order-cell">
         <div class="left">订单金额</div>
@@ -37,7 +37,7 @@
       </li>
       <li class="order-cell">
         <div class="left">分拥比例</div>
-        <div class="right">{{ordercom[0].c_rate}}%</div>
+        <div class="right">{{c_rate}}%</div>
       </li>
       <li class="order-cell">
         <div class="left">订单状态</div>
@@ -54,7 +54,6 @@
         <div class="right">213123131</div>
       </li>-->
     </ul>
-
   </div>
 
 </template>
@@ -65,10 +64,11 @@
   export default{
     data () {
       return {
-        ordernum:{},
-        ordercom:{
-
-        }
+        ordernum:[],
+        ordercom:{},
+        totalmoney:'',
+        nickname:'',
+        c_rate:''
       }
     },
     components: {
@@ -80,9 +80,10 @@
       })
     },
     created(){
-      this.tabselect=1
+      this.tabselect(1)
     },
     mounted(){
+
       let params={
           data:{
             ordersn:this.ordersn
@@ -91,8 +92,13 @@
       orders(params,(res)=>{
         this.ordernum=res.data.order
         this.ordercom=res.data.commssion
+        this.totalmoney=res.data.commssion[0].c_money
+        this.nickname=res.data.commssion[0].nickname
+        this.c_rate=res.data.commssion[0].c_rate
         console.log(this.ordernum)
         console.log(this.ordercom)
+        console.log(res)
+//        this.totalmoney=res.data.order[0].c_money
       })
     },
     computed:{
@@ -127,12 +133,15 @@
     margin-top: 0.5rem;
     text-align: left;
     line-height: 0.28rem;
+    background-color: #F5751D;
+    color: #fff;
   }
   .title span {
     float: right;
     font-size: 0.24rem;
     display: block;
     margin-right: 0.05rem;
+    color: #fff;
   }
   .order-info {
     width: auto;
