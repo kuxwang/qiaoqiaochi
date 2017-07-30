@@ -27,7 +27,7 @@ const partnerlist2 = r => require.ensure([], () => r(require('../components/dist
 const partnerlist3 = r => require.ensure([], () => r(require('../components/distribution/partnerlist3.vue')), 'vipCvnenter')
 const partnerlist4 = r => require.ensure([], () => r(require('../components/distribution/partnerlist4.vue')), 'vipCvnenter')
 const orderinfo = r => require.ensure([], () => r(require('../components/distribution/orderinfo.vue')), 'vipCvnenter')
-const UserInfo = r => require.ensure([], () => r(require('../components/VipCenter/UserInfo.vue')), 'distribution')
+const UserInfo= r => require.ensure([], () => r(require('../components/VipCenter/UserInfo.vue')), 'distribution')
 const extension1 = r => require.ensure([], () => r(require('../components/distribution/extension1.vue')), 'vipCvnenter')
 const extension2 = r => require.ensure([], () => r(require('../components/distribution/extension2.vue')), 'vipCvnenter')
 const extension3 = r => require.ensure([], () => r(require('../components/distribution/extension3.vue')), 'vipCvnenter')
@@ -43,18 +43,18 @@ const payselect = r => require.ensure([], () => r(require('../components/common/
 
 /**
  * 确认订单页面
- */
+*/
 const ConfirmOrder = r => require.ensure([], () => r(require('../components/common/ConfirmOrder.vue')), 'common')
-const DeliveryAddress = r => require.ensure([], () => r(require('../components/common/DeliveryAddress.vue')), 'common')
-const AddAddress = r => require.ensure([], () => r(require('../components/common/AddAddress.vue')), 'common')
-const DeliveryMode = r => require.ensure([], () => r(require('../components/common/DeliveryMode.vue')), 'common')
+const DeliveryAddress= r => require.ensure([], () => r(require('../components/common/DeliveryAddress.vue')), 'common')
+const AddAddress= r => require.ensure([], () => r(require('../components/common/AddAddress.vue')), 'common')
+const DeliveryMode=r => require.ensure([], () => r(require('../components/common/DeliveryMode.vue')), 'common')
 /**
  * 訂單詳情
  */
-const Orderd = r => require.ensure([], () => r(require('../components/order/orderDetail.vue')), 'Orderd')
-const Logistics = r => require.ensure([], () => r(require('../components/order/logistics.vue')), 'Logistics')
-const Drawback = r => require.ensure([], () => r(require('../components/order/drawback.vue')), 'Drawback')
-const DrawbackInfo = r => require.ensure([], () => r(require('../components/order/drawbackInfo.vue')), 'DrawbackInfo')
+const Orderd= r => require.ensure([], () => r(require('../components/order/orderDetail.vue')), 'Orderd')
+const Logistics= r => require.ensure([], () => r(require('../components/order/logistics.vue')), 'Logistics')
+const Drawback= r => require.ensure([], () => r(require('../components/order/drawback.vue')), 'Drawback')
+const DrawbackInfo= r => require.ensure([], () => r(require('../components/order/drawbackInfo.vue')), 'DrawbackInfo')
 
 export default new Router({
   routes: [
@@ -78,7 +78,7 @@ export default new Router({
           path: '/order',
           name: 'order',
           component: Order,
-          children: [
+          children:[
             {
               path: '/orderd',
               name: 'orderd',
@@ -110,11 +110,11 @@ export default new Router({
           path: '/vipCenter',
           name: 'vipCenter',
           component: VipCenter,
-          children: [
+          children:[
             {
-              path: '/vipCenter/userinfo',
-              name: 'userinfo',
-              component: UserInfo
+              path:'/vipCenter/userinfo',
+              name:'userinfo',
+              component:UserInfo
             },
             {
               path: '/extension',
@@ -155,9 +155,9 @@ export default new Router({
               ]
             },
             {
-              path: '/partner',
-              name: 'partner',
-              component: partner,
+              path:'/partner',
+              name:'partner',
+              component:partner,
               children: [
                 {
                   path: '/partnerlist',
@@ -199,39 +199,39 @@ export default new Router({
           component: QrCode
         },
         {
-          path: '/confirmorder',
-          name: 'confirmorder',
-          component: ConfirmOrder,
-          children: [
+          path:'/confirmorder',
+          name:'confirmorder',
+          component:ConfirmOrder,
+          children:[
             {
-              path: '/deliveryaddress',
-              name: 'deliveryaddress',
-              component: DeliveryAddress,
-              children: [
+              path:'/deliveryaddress',
+              name:'deliveryaddress',
+              component:DeliveryAddress,
+              children:[
                 {
-                  path: '/addaddress',
-                  name: 'addaddress',
-                  component: AddAddress
+                  path:'/addaddress',
+                  name:'addaddress',
+                  component:AddAddress
                 },
                 {
-                  path: '/payselect',
-                  name: 'payselect',
-                  component: payselect
+                  path:'/payselect',
+                  name:'payselect',
+                  component:payselect
                 }
               ]
             },
             {
-              path: '/deliverymode',
-              name: 'deliverymode',
-              component: DeliveryMode
+              path:'/deliverymode',
+              name:'deliverymode',
+              component:DeliveryMode
             }
           ]
 
         },
         {
-          path: '/payselect',
-          name: 'payselect',
-          component: payselect
+          path:'/payselect',
+          name:'payselect',
+          component:payselect
         }
       ]
     },
@@ -248,8 +248,8 @@ export default new Router({
     //   ]
     // },
     {
-      path: '*',
-      redirect: '/'
+      path:'*',
+      redirect:'/'
     }
   ]
 })

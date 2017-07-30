@@ -39,7 +39,7 @@
                     </div>
 				</div>
 			</li>
-			
+
 		</ul>
 		<div class="total_area clearfix" v-show="isShow">
 			<label class="mint-checklist-label fl">
@@ -227,7 +227,7 @@
 								this.defPrice=0;
 							}
                     	}
-						
+
                     	if(this.getShCartData.length==1){
                     		this.isTrue=false;
                     		this.isShow=false;
