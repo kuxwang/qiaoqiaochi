@@ -10,7 +10,7 @@
     <ul class="userinfo-list">
       <li class="userinfo-header">
         <span class="fl">
-	            头像32131321
+	            头1231231
         </span>
         <span class="fr">
           <img id="img_upload" :src="imgurl"/>
@@ -140,13 +140,13 @@
       cityCancel(){//城市取消
         this.mypopup1 = false;
       },
-      initAddress() {//城市初始化
-        this.slots[0].values = address.filter((item, index) => {
-          if (item.apid === 0) {
-            return item;
-          }
-        });
-      },
+//      initAddress() {//城市初始化
+//        this.slots[0].values = address.filter((item, index) => {
+//          if (item.apid === 0) {
+//            return item;
+//          }
+//        });
+//      },
       cityValuesChange(picker, values) {
           console.log(values)
         // 防止没有省份时报错
@@ -182,7 +182,7 @@
       }
     },
     mounted() {
-      this.initAddress()
+//      this.initAddress()
     }
 
   }

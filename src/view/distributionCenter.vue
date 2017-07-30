@@ -1,5 +1,11 @@
 <template>
+
   <div class="main">
+    <mt-header fixed title="我的资料">
+      <router-link to="/vipCenter" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+    </mt-header>
     <section class="avatar">
       <div class="icon">
         <img :src="memberInfo.avatar" alt="头像">
@@ -301,7 +307,7 @@
     position: relative;
     top: 0;
     left: 0;
-    /*margin-top: .4rem;*/
+    margin-top: .4rem;
     height: 1rem;
     padding: .15rem;
     color: #fff;
