@@ -32,10 +32,12 @@
         <span class="title">营业额</span>
         <span class="num">{{recordStatistics_get.cg_money_sum}}</span><span class="yuan"> 元</span>
       </div>
-      <div>
+      <!--<div>-->
+        <router-link :to="{name: 'takemoney'}" tag="div">
         <span class="title">佣金</span>
         <span class="num">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>
-      </div>
+        </router-link>
+      <!--</div>-->
     </section>
     <section class="content">
       <div class="mfriend">

@@ -33,7 +33,14 @@ const extension2 = r => require.ensure([], () => r(require('../components/distri
 const extension3 = r => require.ensure([], () => r(require('../components/distribution/extension3.vue')), 'vipCvnenter')
 const extension4 = r => require.ensure([], () => r(require('../components/distribution/extension4.vue')), 'vipCvnenter')
 const extension5 = r => require.ensure([], () => r(require('../components/distribution/extension5.vue')), 'vipCvnenter')
+
+/**
+ *
+ * @param 提现  提现列表
+ */
 const takemoney = r => require.ensure([], () => r(require('../components/distribution/Takemoney.vue')), 'vipCvnenter')
+const Moneylist = r => require.ensure([], () => r(require('../components/distribution/Moneylist.vue')), 'vipCvnenter')
+
 
 /**
  * 商品详情模块
@@ -189,7 +196,14 @@ export default new Router({
             {
               path: '/takemoney',
               name: 'takemoney',
-              component: takemoney
+              component: takemoney,
+              children: [
+                {
+                  path: '/moneylist',
+                  name:'moneylist',
+                  component: Moneylist
+                }
+              ]
             }
           ]
         },

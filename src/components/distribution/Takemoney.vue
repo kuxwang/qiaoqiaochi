@@ -9,40 +9,92 @@
     </section>
     <div class="title">
       <span class="up">可提现金额（元）</span>
-      <span class="down">155</span>
+      <span class="down">{{moneylist.allprice}}</span>
     </div>
     <h5>收入</h5>
     <ul class="view">
       <li class="cell">
         累计销售收益
-        <span class="iconfont">&#xe61b;</span>
-        <span>1231</span>
+        <span>1231元</span>
       </li>
       <li class="cell">
         累计管理收益
-        <span class="iconfont">&#xe61b;</span>
-        <span>1231</span>
+        <!--<span class="iconfont">&#xe61b;</span>-->
+        <span>1231元</span>
       </li>
       <li class="cell">
         累计消费省钱
-        <span class="iconfont">&#xe61b;</span>
-        <span>1231</span>
+        <span>1231元</span>
       </li>
     </ul>
     <h5>支出</h5>
     <ul class="view">
-      <li class="cell">
+      <!--<li class="cell">-->
+        <router-link class="cell" :to="{name: 'moneylist'}" tag="li">
         已提现金额
         <span class="iconfont">&#xe61b;</span>
-        <span>1231</span>
-      </li>
+        <span>{{moneylist.allprice}}元</span>
+        </router-link>
+      <!--</li>-->
     </ul>
-    <buttom class="btn">
+    <div class="btn" @click="outmoney">
       提现
-    </buttom>
+    </div>
+
+    <router-view></router-view>
   </div>
 </template>
+<script>
 
+  import { withdrawals_get, withdrawals_post} from '../../api/api.js'
+
+
+  export default{
+      data(){
+          return {
+            moneylist:''
+          }
+      },
+    created(){
+
+    },
+    mounted(){
+      let params={
+        data: {
+          type:'all',
+          page:1,
+          psize:10
+        }
+      }
+      withdrawals_get(params,(res)=>{
+          this.moneylist=res.data
+        console.log(this.moneylist)
+      })
+    },
+    methods: {
+        outmoney(){
+          /*let params={
+            data: {
+              type:'all',
+              page:1,
+              psize:10
+            }
+          }
+          withdrawals_get(params,(res)=>{
+            console.log(res)
+
+          })*/
+        }
+    }
+
+  }
+
+
+
+
+
+
+</script>
 
 
 <style scoped>

@@ -47,6 +47,11 @@ export const commissions = {
    * 获取团队数量统计
    */
   teamsStatistics: {url: `${base}/commissions/teamsStatistics`, method: 'GET', header, dataType},
+  /**
+   *
+   */
+  withdrawals_get: {url: `${base}/commissions/withdrawals`, method: 'GET', header, dataType},
+  withdrawals_post: {url: `${base}/commissions/withdrawals`, method: 'POST', header, dataType},
 };
 
 const members = {
@@ -118,7 +123,19 @@ export const memberInfo = function (params, callback) {
     callback(res)
   })
 };
-
+/**
+ * 提现
+ */
+export const withdrawals_get = function (params, callback) {
+  _webapp.requestx(Object.assign(params, commissions.withdrawals_get), function (res) {
+    callback(res)
+  })
+};
+export const withdrawals_post = function (params, callback) {
+  _webapp.requestx(Object.assign(params, commissions.withdrawals_post), function (res) {
+    callback(res)
+  })
+};
 
 
 

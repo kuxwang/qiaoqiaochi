@@ -13,11 +13,11 @@
         <div class="right">{{ordernum.ordersn}}</div>
       </li>
 
-      <!--<li class="order-cell">
+      <li class="order-cell">
         <div class="left">下单时间</div>
-        &lt;!&ndash;<div class="right">{{Date(ordernum.createtime).toLocaleString()}}</div>&ndash;&gt;
-        <div class="right">{{timetab(ordernum.createtime)}}</div>
-      </li>-->
+        <!--<div class="right">{{Date(ordernum.createtime).toLocaleString()}}</div>-->
+        <div class="right">{{ordernum.createtime}}</div>
+      </li>
       <li class="order-cell">
         <div class="left">粉丝昵称</div>
         <div class="right">{{ordercom[0].nickname}}</div>
