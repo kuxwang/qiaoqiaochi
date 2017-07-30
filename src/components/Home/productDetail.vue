@@ -90,7 +90,7 @@
         goodNums:'',
         goodsId:'',
         optionId:0,
-        cartids:[],
+        cartids:'',
         total:''
       }
     },
@@ -129,7 +129,7 @@
           let myOrders={
             goodsid:this.goodsId,
             optionid:this.optionId,
-            cartids:[],
+            cartids:'',
             total:this.num
           }
           this.getMyorders(myOrders);

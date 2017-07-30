@@ -99,7 +99,7 @@
 				isShow:true,
 				goodsId:'',
 		        optionId:'',
-		        cartids:[],
+		        cartids:'',
 		        total:''
 			}
 		},

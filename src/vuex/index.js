@@ -19,7 +19,7 @@ const state = {
   myOrders:{  //下单页面所需参数
     goodsid:'',
     optionid:'',
-    cartids:[],
+    cartids:'',
     total:''
   }
 }
