@@ -5,6 +5,8 @@ import {
   GET_BUSACTIVE,
   ORDERSN,
   SEARCHNUM
+
+  ADDRESS
 }
   from
     './mutation-types.js'
@@ -32,5 +34,10 @@ export default {
   },
   [SEARCHNUM] (state, data) {
     state.searchnum = data
-  }
+  },
+
+  [ADDRESS] (state, data) {
+    state.address = data
+  },
+
 }

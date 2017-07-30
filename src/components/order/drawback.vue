@@ -18,15 +18,15 @@
           </li>
           <li>
             <span>退款金额</span>
-            <span class="drawback-num">99.00</span>
+            <span class="drawback-num">{{money}}</span>
           </li>
           <li>
             <span>退款说明</span>
-            <input type="text" placeholder="选填" class="description">
+            <input type="text" placeholder="选填" class="description" v-model="value">
           </li>
         </ul>
       </div>
-      <router-link class="drawback-confirm" to="/orderd" tag="button">确认</router-link>
+      <router-link class="drawback-confirm" to="" tag="button">确认</router-link>
     </div>
   </transition>
 </template>
@@ -35,13 +35,16 @@
   export default{
     data(){
       return{
-
+        money:''
       }
     },
     methods: {
       goBack(){
         this.$router.go(-1);
       }
+    },
+    created:function () {
+      this.money=this.$route.query.money
     }
   }
 </script>

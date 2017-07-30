@@ -26,7 +26,7 @@ export const commissions = {
    * 订单列表
    */
 
-  orderStatistics: {url: `${base}/commissions/orderStatistics`, method:'GET', header, dataType},
+  orderStatistics: {url: `${base}/commissions/orderStatistics`, method: 'GET', header, dataType},
   /**
    * 订单列表
    */
@@ -49,9 +49,33 @@ export const commissions = {
   teamsStatistics: {url: `${base}/commissions/teamsStatistics`, method: 'GET', header, dataType},
 };
 
-export const members = {
+const members = {
   memberInfo: {url: `${base}/members/memberInfo`, method: 'GET', header, dataType}
 }
+const addresses = {
+  addresses_post: {url: `${base}/addresses`, method: 'POST', header, dataType},
+  addresses_get: {url: `${base}/addresses`, method: 'GET', header, dataType}
+}
+/**
+ * 商品详情
+ */
+const product={productDetail:{url:`${base}/goods`, method:'GET', header, dataType}};
+/**
+ * 加入购物车
+ */
+const cart={addCart:{url:`${base}/carts`, method:'POST', header, dataType}};
+/**
+ * 订单列表
+ */
+const order={orderList:{url:`${base}/orders`, method:'GET', header, dataType}};
+/**
+ * 订单详情
+ */
+const orderd={orderDetail:{url:`${base}/orders`, method:'GET', header, dataType}};
+/**
+ * 快递
+ */
+const express={exp:{url:`${base}/expresses`, method:'GET', header, dataType}};
 /**
  * 佣金统计
  * @param params
@@ -59,7 +83,7 @@ export const members = {
  */
 export const recordStatistics_get = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.recordStatistics_get), function (res) {callback(res)})};
 /**
- * 订单操作
+ * 获取团队数量统计
  * @param params
  * @param callback
  */
@@ -81,11 +105,7 @@ export const orderStatistics = function (params, callback) {_webapp.requestx(Obj
  * @param callback
  */
 
-/**
- * 订单详情
- * @param params
- * @param callback
- */
+
 export const orders = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.orders), function (res) {callback(res)})};
 
 /**
@@ -105,14 +125,14 @@ export const memberInfo = function (params, callback) {
 /**
  * 首页商品展示 yellowStar
  */
-const MYGOODS={
+const MYGOODS = {
   url: `${base}/goods`,
   method: 'GET',
   header,
   dataType
 }
-export const GET_MYGOODS = function(params, callback) {
-  _webapp.requestx(Object.assign(params,MYGOODS), function(res) {
+export const GET_MYGOODS = function (params, callback) {
+  _webapp.requestx(Object.assign(params, MYGOODS), function (res) {
     callback(res)
   })
 };
@@ -120,34 +140,34 @@ export const GET_MYGOODS = function(params, callback) {
 /**
  * 购物车 yellowStar
  */
-const MYCARTS1={
+const MYCARTS1 = {
   url: `${base}/carts`,
   method: 'GET',
   header,
   dataType
 }
-export const GET_MYCARTS = function(params, callback) {
-  _webapp.requestx(Object.assign(params,MYCARTS1), function(res) {
+export const GET_MYCARTS = function (params, callback) {
+  _webapp.requestx(Object.assign(params, MYCARTS1), function (res) {
     callback(res)
   })
 };
 
-const MYCARTS2={
+const MYCARTS2 = {
   url: `${base}/carts`,
   method: 'PUT',
   header,
   dataType
 }
-export const PUT_MYCARTS = function(params, callback) {
-  _webapp.requestx(Object.assign(params,MYCARTS2), function(res) {
+export const PUT_MYCARTS = function (params, callback) {
+  _webapp.requestx(Object.assign(params, MYCARTS2), function (res) {
     callback(res)
   })
 };
 
 /**
  * 下单 yellowStar
-*/
-const ORDER1={
+ */
+const ORDER1 = {
   url: `${base}/orders/confirm`,
   method: 'GET',
   header,
@@ -159,17 +179,41 @@ export const GET_ORDER1 = function(params, callback) {
   })
 };
 
-/**
- * 地址管理 yellowStar
-*/
-const MYADDRESS1={
-  url: `${base}/orders/addresses`,
-  method: 'GET',
-  header,
-  dataType
-}
-export const GET_MYADDRESS1 = function(params, callback) {
-  _webapp.requestx(Object.assign(params,MYADDRESS1), function(res) {
+
+
+export const addresses_get = function (params, callback) {
+  _webapp.requestx(Object.assign(params, addresses.addresses_get), function (res) {
     callback(res)
   })
 };
+
+/**
+ * 新增地址
+ */
+export const addresses_post = function (params, callback) {
+  _webapp.requestx(Object.assign(params, addresses.addresses_post), function (res) {
+    callback(res)
+  })
+};
+/**
+ * 商品详情
+ */
+export const productDetail=function (params,callback) {_webapp.requestx(Object.assign(params,product.productDetail),function (res) {callback(res)})}
+/**
+ * 加入购物车
+ */
+export const addCart=function (params,callback) {_webapp.requestx(Object.assign(params,cart.addCart),function (res) {callback(res)})};
+/**
+ * 订单列表
+ */
+export const orderList=function (params,callback) {_webapp.requestx(Object.assign(params,order.orderList),function (res) {callback(res)})};
+/**
+ * 订单详情
+ */
+export const orderDetail=function (params,callback) {_webapp.requestx(Object.assign(params,orderd.orderDetail),function (res) {callback(res)})};
+/**
+ * 快递
+ */
+export const expressInfo=function (params,callback) {_webapp.requestx(Object.assign(params,express.exp),function (res) {callback(res)})};
+
+

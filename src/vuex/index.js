@@ -15,6 +15,7 @@ const state = {
   tabselect: '',  //订单和伙伴状态颜色
   ordersn:'',  //订单编号
   searchnum: ''//搜索内容
+  address: '', //订单确认页的收货地址列表页
 }
 
 export default new Vuex.Store({
