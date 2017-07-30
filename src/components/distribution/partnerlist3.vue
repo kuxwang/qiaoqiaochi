@@ -161,7 +161,7 @@
     bottom:0.05rem;
     font-size: 0.12rem;
   }
-  mint-popup {
+  .mint-popup {
     width: 2rem;
     padding: 0.1rem;
   }

@@ -172,7 +172,7 @@
 </template>
 <script>
   import vTabbar from '../components/common/Tabbar.vue'
-  import {recordStatistics_get, teamsStatistics, orderStatistics} from '../api/api'
+  import {recordStatistics_get, teamsStatistics, orderStatistics,memberInfo} from '../api/api'
   import {_webapp} from '../config/webapp'
   import {mapMutations, mapGetters} from 'vuex'
   export default{

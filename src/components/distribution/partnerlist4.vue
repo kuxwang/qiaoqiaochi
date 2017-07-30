@@ -3,7 +3,7 @@
     <!--<mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">-->
     <ul class="p-list" >
       <!--<li class="p-cell" v-for="(i,index) in personlist.lists" @click="popshow(index)">-->
-      <li class="p-cell"  @click="popshow(index)">
+      <li class="p-cell"  @click="popshow">
         <div class="logo">
           <img :src="personlist.avatar"/>
         </div>
@@ -66,7 +66,7 @@
       allLoaded(){
 
       },
-      popshow(index){
+      popshow(){
         let params={
           data: {
             openid:this.personlist.openid,
@@ -91,10 +91,19 @@
       console.log(this.searchnum)
     },
     mounted(){
-      let params={
-        data: {
+      console.log(typeof (this.searchnum))
+      console.log(this.searchnum.length)
+      if(this.searchnum.length==11){
+        var obj={
+          mobile:this.searchnum
+        }
+      }else if(this.searchnum.length==7) {
+        var obj={
           id:this.searchnum
         }
+      }
+      let params={
+        data: obj
       }
       teams(params,(res)=>{
         if(res.statusCode==1){
@@ -103,9 +112,7 @@
           console.log(this.personlist)
         }else {
           console.log('请求失败');
-
         }
-
       })
     },
     computed: {
@@ -173,7 +180,7 @@
     bottom:0.05rem;
     font-size: 0.12rem;
   }
-  mint-popup {
+  .mint-popup {
     width: 2rem;
     padding: 0.1rem;
   }
@@ -196,8 +203,6 @@
     text-align: left;
     padding-left: 0.1rem;
   }
-
-
   .pop-left {
     /*flex: 1;*/
   }

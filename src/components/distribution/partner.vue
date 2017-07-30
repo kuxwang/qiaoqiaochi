@@ -83,7 +83,8 @@
         this.$router.push({name: `partnerlist${idx}`})
       },
       search(){
-        this.searchnum(Number(this.find));
+//        this.searchnum(Number(this.find));
+        this.searchnum(this.find);
         console.log(Number(this.find))
         this.$router.push({name: `partnerlist4`}),
         this.selected=4
