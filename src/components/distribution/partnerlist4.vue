@@ -2,14 +2,15 @@
   <div class="mian1">
     <!--<mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">-->
     <ul class="p-list" >
-      <li class="p-cell" v-for="(i,index) in personlist.lists" @click="popshow(index)">
+      <!--<li class="p-cell" v-for="(i,index) in personlist.lists" @click="popshow(index)">-->
+      <li class="p-cell"  @click="popshow(index)">
         <div class="logo">
-          <img :src="i.avatar"/>
+          <img :src="personlist.avatar"/>
         </div>
         <div class="info">
-          <h5>{{i.nickname}}</h5>
-          <span>{{i.id}}</span>
-          <span class="usertime">{{i.createtime}}关注</span>
+          <h5>{{personlist.nickname}}</h5>
+          <span>{{personlist.id}}</span>
+          <span class="usertime">{{personlist.createtime}}关注</span>
         </div>
       </li>
     </ul>
@@ -68,7 +69,7 @@
       popshow(index){
         let params={
           data: {
-            openid:this.personlist.lists[index].openid,
+            openid:this.personlist.openid,
 //                     id:this.personlist.lists[index].id,
 //                     mobile:this.personlist.lists[index].mobile
           }
@@ -80,27 +81,38 @@
             this.popupVisible=true
           }
         })
-      }
+      },
+      ...mapMutations({
+        searchnum : 'SEARCHNUM',
+        'tabselect': 'TABSELECT'
+      })
+    },
+    created(){
+      console.log(this.searchnum)
     },
     mounted(){
       let params={
         data: {
-          type:'fans',
-          page:1,
-          psize:10
+          id:this.searchnum
         }
       }
-      teamsLists(params,(res)=>{
+      teams(params,(res)=>{
         if(res.statusCode==1){
           this.personlist=res.data;
           console.log(res)
           console.log(this.personlist)
         }else {
-          console.log('请求失败')
+          console.log('请求失败');
+
         }
 
       })
     },
+    computed: {
+      ...mapGetters([
+        'searchnum',
+      ])
+    }
 
   }
 </script>

@@ -1,6 +1,5 @@
 <template>
   <div class="mian1">
-    <!--<mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">-->
       <ul class="p-list" >
         <li class="p-cell" v-for="(i,index) in personlist.lists" @click="popshow(index)">
           <div class="logo">
@@ -163,11 +162,11 @@
     font-size: 0.12rem;
   }
   .mint-popup {
-    width: 1.5rem;
+    width: 2rem;
     padding: 0.1rem;
   }
   .pop-up img{
-    width: 40%;
+    width: 60%;
   }
   .pop-up h5 {
     font-size: 0.14rem;
@@ -183,7 +182,7 @@
   .pop-down li {
     display: block;
     text-align: left;
-    padding-left: 0.05rem;
+    padding-left: 0.1rem;
   }
 
 

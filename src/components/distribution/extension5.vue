@@ -2,22 +2,23 @@
   <div class="mian1">
     <!--<mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">-->
     <ul class="p-list" >
-      <li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">
+      <!--<li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">-->
+      <li class="p-cell" @click="orderinfo(index)">
         <div class="up">
-          <span class="ordernum">订单编号{{i.ordersn}}</span>
-          <span class="time">{{i.createtime}}</span>
+          <span class="ordernum">订单编号{{orderlist.ordersn}}</span>
+          <span class="time">{{orderlist.createtime}}</span>
         </div>
         <div class="down">
           <div class="logo">
-            <img :src="i.avatar"/>
+            <img :src="orderlist.avatar"/>
           </div>
           <div class="info">
-            <h5>{{i.nickname}}</h5>
-            <span>{{i.mid}}</span>
+            <h5>{{orderlist.nickname}}</h5>
+            <span>{{orderlist.mid}}</span>
           </div>
           <div class="ordertype">
-            <span>{{i.status}}</span>
-            <span>￥{{i.price}}</span>
+            <span v-if="orderlist.status">已完成</span>
+            <span>￥{{orderlist.price}}</span>
           </div>
         </div>
       </li>
@@ -27,7 +28,7 @@
 
 <script>
   import { Loadmore } from  'mint-ui'
-  import {orderStatistics,orderLists} from '../../api/api';
+  import {orderStatistics,orderLists,orders} from '../../api/api';
   import {mapMutations,mapGetters} from 'vuex'
   export default{
     data(){
@@ -60,23 +61,28 @@
     mounted(){
       let params={
         data: {
-          type:'ok',
-          page:1,
-          psize:10
+          ordersn:this.searchnum
         }
       }
-      orderLists(params,(res)=>{
+      orders(params,(res)=>{
         if(res.statusCode==1){
-          this.orderlist=res.data;
+          this.orderlist=res.data.order;
           console.log(this.orderlist)
+          console.log('请求成功')
         }else {
-          console.log('请求失败')
+          console.log('请求失败');
+          console.log(this.searchnum)
         }
 
 
 
       })
     },
+    computed: {
+      ...mapGetters([
+        'searchnum',
+      ])
+    }
 
   }
 </script>

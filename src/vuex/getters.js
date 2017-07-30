@@ -4,5 +4,6 @@ export default {
 	onActive:state=>state.onActive,
 	busActive:state=>state.busActive,
   	ordersn: state => state.ordersn,
+  	searchnum: state => state.searchnum,
 }
 

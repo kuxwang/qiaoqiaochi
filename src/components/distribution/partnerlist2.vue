@@ -162,12 +162,12 @@
     bottom:0.05rem;
     font-size: 0.12rem;
   }
-  .mint-popup {
-    width: 1.5rem;
+  mint-popup {
+    width: 2rem;
     padding: 0.1rem;
   }
   .pop-up img{
-    width: 40%;
+    width: 60%;
   }
   .pop-up h5 {
     font-size: 0.14rem;
@@ -183,7 +183,7 @@
   .pop-down li {
     display: block;
     text-align: left;
-    padding-left: 0.05rem;
+    padding-left: 0.1rem;
   }
 
 

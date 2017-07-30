@@ -56,9 +56,13 @@
     </ul>
 
 
+    <!--<div class="search">
+      <input type="search" results="1" v-model="find" @click="sousuo()" placeholder="输入订单号、粉丝ID"/>
+      <button>搜索</button>
+    </div>-->
     <div class="search">
       <input type="search" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
-      <button>搜索</button>
+      <button @click="search">搜索</button>
     </div>
 
 
@@ -97,6 +101,16 @@
         this.selected = idx;
         this.$router.push({name: `extension${idx}`})
       },
+      search(){
+        this.searchnum(this.find);
+
+        this.$router.push({name: `extension5`}),
+          this.selected=5
+      },
+      ...mapMutations({
+        searchnum : 'SEARCHNUM',
+        'tabselect': 'TABSELECT'
+      })
 
 
     },
@@ -122,6 +136,7 @@
     computed:{
     ...mapGetters([
         'tabselect',
+
       ]),
     }
   }

@@ -3,7 +3,8 @@ import {
   TABSELECT,
   GET_ONACTIVE,
   GET_BUSACTIVE,
-  ORDERSN
+  ORDERSN,
+  SEARCHNUM
 }
   from
     './mutation-types.js'
@@ -28,5 +29,8 @@ export default {
   },
   [ORDERSN] (state, data) {
     state.ordersn = data
+  },
+  [SEARCHNUM] (state, data) {
+    state.searchnum = data
   }
 }
