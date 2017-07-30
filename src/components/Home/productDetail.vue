@@ -146,9 +146,10 @@
       },
       getInfo:function () {
         let that=this;
+        let good_id=this.$route.query.goodsId;
         let params={
           data:{
-            goodsid:4,
+            goodsid:good_id,
           }
         }
         productDetail(params,function (res) {

@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <section>
-      <mt-header fixed title="推广订单" >
+      <mt-header fixed title="推广订单" class="c-1" >
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
@@ -109,7 +109,7 @@
       },
       ...mapMutations({
         searchnum : 'SEARCHNUM',
-        'tabselect': 'TABSELECT'
+//        'tabselect': 'TABSELECT'
       })
 
 
@@ -151,6 +151,7 @@
   .mint-header {
     border-bottom: 0;
     color: #fff;
+    z-index: 2;
   }
 
   .main {
@@ -161,7 +162,7 @@
     height: 100%;
     background: #ececec;
     overflow: auto;
-
+    z-index: 2;
   }
 
   .avatar {
@@ -452,5 +453,8 @@
   }
   .tabActive .num,.tabActive .yuan {
     color: #fff;
+  }
+  .mint-header .c-1 {
+    z-index: 3;
   }
 </style>

@@ -13,20 +13,22 @@
 						<span class="mint-checkbox-core"></span>
 					</div>
 				</label>
-				<div class="goods-img fl">
-					<img :src="v.thumb" style="width:80px;height:80px;" lazy="loaded">
-				</div>
-				<div class="goods-info fl">
-					<h3 class="goods-title lr1">{{v.title}}</h3>
-					<div class="goods-attr">
-						<span class="goods-price">
-							¥
-							<span class="goods-intPrice">{{v.marketprice|getIntNmb}}</span>
-							<span class="goods-folatPrice">{{v.marketprice|getFloatNmb}}</span>
-						</span>
-						<del>¥{{v.productprice}}</del>
+				<div @click="goProductDetail(v)">
+					<div class="goods-img fl">
+						<img :src="v.thumb" style="width:80px;height:80px;" lazy="loaded">
 					</div>
-					<div class="goods-num">X<i>{{v.total}}</i></div>
+					<div class="goods-info fl">
+						<h3 class="goods-title lr1">{{v.title}}</h3>
+						<div class="goods-attr">
+							<span class="goods-price">
+								¥
+								<span class="goods-intPrice">{{v.marketprice|getIntNmb}}</span>
+								<span class="goods-folatPrice">{{v.marketprice|getFloatNmb}}</span>
+							</span>
+							<del>¥{{v.productprice}}</del>
+						</div>
+						<div class="goods-num">X<i>{{v.total}}</i></div>
+					</div>
 				</div>
 				<div class="goods-total fr">
 					 <div class="goods-del" @click="delGoods(v,i)">
@@ -76,14 +78,14 @@
 				没有添加商品 <br>
 				购物车都饿扁了，快去喂它吧!
 			</p>
-			<div class="nogoods-bt">
+			<router-link class="nogoods-bt" tag="div" :to="{name:'home'}">
 				去购物
-			</div>
+			</router-link>
 		</div>
 	</div>
 </template>
 <script>
-	import { Header,Checklist,MessageBox,Lazyload } from 'mint-ui';
+	import { Header,Checklist,MessageBox } from 'mint-ui';
 	import {setStore, getStore} from '../config/myUtils';
 	import {GET_MYCARTS,PUT_MYCARTS,GET_ORDER1,DELETE_MYCARTS} from '../api/api';
 	import {mapMutations, mapGetters } from 'Vuex';
@@ -265,7 +267,8 @@
 				let _this=this
 		    	GET_MYCARTS(params, function (res) {
 		        	if(res.statusCode===1){
-		        		if(res.data.list.length>=1){
+		        		console.log(res)
+		        		if(res.data.list&&res.data.list.length>=1){
 			        		_this.getShCartData=res.data.list;
 			        		for(let a in _this.getShCartData){
 			        			_this.getShCartData[a].isChecked=false
@@ -274,10 +277,15 @@
 		        			_this.isTrue=false;
                     		_this.isShow=false;
 		        		}
+
 		        	}else{
 		        		console.log('请求失败')
 		        	}
 		      	})
+			},
+			goProductDetail(v){
+				let goodsId=v.goodsid;
+				this.$router.push({ name:'details', query: { goodsId: goodsId}})
 			},
 			...mapMutations({
 		        getMyorders:'GET_MYORDERS'
@@ -305,7 +313,11 @@
 		},
 		mounted(){
 			this.mycartsInt()
-		}
+		},
+		activated(){
+			this.mycartsInt();
+			console.log(6666)
+		},
 	}
 </script>
 <style scoped>
@@ -341,6 +353,7 @@
 	}
 	.goods-list{
 		padding-top: 0.45rem;
+		margin-bottom: 0.6rem;
 	}
 	.goods-list li{
 		height: 1rem;

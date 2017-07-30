@@ -159,7 +159,7 @@
     font-size: 0.14rem;
   }
   .info span {
-    color: #000;
+
     font-size: 0.14rem;
     color: #666;
   }
@@ -184,4 +184,16 @@
   .ordertype span:last-child {
     margin-top: 0.1rem;
   }
+  .mint-header.is-fixed {
+    z-index: 3;
+  }
+
+
+
+
+
+
+
+
+
 </style>
