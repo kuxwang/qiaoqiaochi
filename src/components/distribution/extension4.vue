@@ -66,9 +66,10 @@
         }
       }
       orderLists(params,(res)=>{
-        if(res.statusCode==1){
+        if(res.statusCode===1){
           this.orderlist=res.data;
           console.log(this.orderlist)
+          console.log(res)
         }else {
           console.log('请求失败')
         }

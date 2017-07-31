@@ -61,7 +61,7 @@
       <button>搜索</button>
     </div>-->
     <div class="search">
-      <input type="search" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
+      <input type="text" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
       <div @click="search">搜索</div>
     </div>
 
@@ -110,7 +110,7 @@
         let idreg = /^SH[0-9]{18}$/;
         this.searchnum(this.find);
         if (mobilereg.test(this.find) || idreg.test(this.find)) {
-          this.$router.push({name: `extension5`}),
+          this.$router.push({name: `extension5`,query:{text:this.find}}),
             this.selected = 5
         } else {
           console.log('11')

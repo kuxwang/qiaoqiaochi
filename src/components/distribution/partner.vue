@@ -40,7 +40,7 @@
       </li>
     </ul>
     <div class="search">
-      <input type="search" results="1" v-model="find" placeholder="输入手机号、粉丝ID"/>
+      <input type="text" results="1" v-model="find" placeholder="输入手机号、粉丝ID"/>
       <div @click="search">搜索</div>
     </div>
 
