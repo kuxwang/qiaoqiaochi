@@ -260,10 +260,12 @@
 	            	total:''
 	          	}
 	          	this.getMyorders(myOrders);
+	          	if(this.defPrice>0){
 	          	this.$router.push({name:'confirmorder'});
+	          	}
 			},
 			mycartsInt(){
-				let params = []
+				let params = {}
 				let _this=this
 		    	GET_MYCARTS(params, function (res) {
 		        	if(res.statusCode===1){
@@ -313,11 +315,7 @@
 		},
 		mounted(){
 			this.mycartsInt()
-		},
-		activated(){
-			this.mycartsInt();
-			console.log(6666)
-		},
+		}
 	}
 </script>
 <style scoped>

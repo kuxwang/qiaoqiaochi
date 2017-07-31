@@ -114,9 +114,17 @@
           }
           let _this=this;
           addCart(params,function (res) {
-            console.log(res)
+            console.log(_this)
             if(res.statusCode==1){
-               _this.getNum();
+              let params={};
+              let that=_this;
+              GET_CARTNUMS(params,function (res) {//获取购物车当前数量
+                if(res.statusCode===1){
+                  that.delGoodsNum=res.data.cartcount;
+                }else{
+                  console.log('请求失败')
+                }
+              })
               Toast({
                 message: '操作成功 商品已在购物车',
                 position: 'middle',
@@ -153,50 +161,52 @@
         let that=this;
         let good_id=this.$route.query.goodsId;
         let params={
-          data:{
+          'data':{
             goodsid:good_id,
           }
         }
         productDetail(params,function (res) {
-          // console.log(res)
-          that.goodNums=res.data.goodscount;
-          let goods=res.data.goods
-          that.goodsId=goods.id;
-          that.name=goods.title;
-          that.marketPrice=goods.marketprice;
-          that.bandimg=res.data.pics[0];
-          that.total=goods.total;
-          document.getElementById("intro").innerHTML=goods.content;
-          if(res.data.level.levelname){
-            that.isVip=true;
-            that.vipname=res.data.level.levelname;
-            that.vipcount=res.data.level.discount;
-          };
-        })
-      },
-      goPay(){
-          console.log(77777)
-        this.myStata=2;
-        this.popupVisible = true;
-      },
-      getNum(){
-        let params={};
-        let _this=this;
-        GET_CARTNUMS(params,function (res) {
+          console.log(res)
           if(res.statusCode===1){
-            _this.delGoodsNum=res.data.cartcount;
+            that.goodNums=res.data.goodscount;
+            let goods=res.data.goods
+            that.goodsId=goods.id;
+            that.name=goods.title;
+            that.marketPrice=goods.marketprice;
+            that.bandimg=res.data.pics[0];
+            that.total=goods.total;
+            document.getElementById("intro").innerHTML=goods.content;
+            if(res.data.level.levelname){
+              that.isVip=true;
+              that.vipname=res.data.level.levelname;
+              that.vipcount=res.data.level.discount;
+            };
+
+            let params={};
+            let _that=that;
+            GET_CARTNUMS(params,function (res) {//获取购物车当前数量
+              if(res.statusCode===1){
+                _that.delGoodsNum=res.data.cartcount;
+              }else{
+                console.log('请求失败')
+              }
+            })
           }else{
             console.log('请求失败')
           }
         })
       },
+      goPay(){
+        this.myStata=2;
+        this.popupVisible = true;
+      },
       ...mapMutations({
         getMyorders:'GET_MYORDERS'
       })
     },
-    created(){
+    mounted(){
       this.getInfo();
-      this.getNum();
+      // this.getNum();
     },
     components: {}
   }
@@ -250,10 +260,9 @@
     transform: translate3d(100%, 0, 0)
   }
   .intro{
-    padding-top:.1rem;
     text-align: left;
-    padding-left:.06rem;
     background: #fff;
+    padding:0rem 0.05rem;
   }
   .intro>p{
     font-size: .15rem;
@@ -265,16 +274,15 @@
     color:#f01e1f;
   }
   p.vip-intro{
-    margin-top:.06rem;
     font-size:.14rem;
     color:#999;
-    padding-bottom: 0.10rem;
+    padding:0.03rem 0rem 0.10rem 0rem;
   }
    .vip-intro span.iconfont{
     font-size: 0.15rem;
    }
   .b-intro{
-    margin-top: .15rem;
+    margin-top: .1rem;
     background: #fff;
   }
   .bottom-nav{
@@ -431,6 +439,8 @@
   }
   .goodsTitle{
     overflow: hidden;
+    border-bottom:0.01rem solid #eee;
+    padding-bottom: 0.03rem;
   }
   .goodsTitle p{
     float: left;
