@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <v-scroll class="scroll-style">
+    <!--<v-scroll class="scroll-style">-->
       <ul class="goodsList">
         <li class="goodsList-itme1">
           <img src="../assets/images/home-01.jpg">
@@ -14,7 +14,7 @@
       </ul>
       <v-tabbar></v-tabbar>
       <router-view></router-view>
-    </v-scroll>
+    <!--</v-scroll>-->
   </div>
 </template>
 <script>

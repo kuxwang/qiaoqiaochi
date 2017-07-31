@@ -2,7 +2,7 @@
   <div class="main">
     <mt-header fixed title="二维码">
       <!--<router-link to="/vipCenter" slot="left">-->
-        <!--<mt-button icon="back" ></mt-button>-->
+      <!--<mt-button icon="back" ></mt-button>-->
       <!--</router-link>-->
     </mt-header>
     <div class="container">
@@ -27,7 +27,11 @@
     },
     methods: {
       clickhavib () {
-
+        QrimgSave(this.qrimg, (res) => {
+          if (res.statusCode == 1) {
+            console.log('ok')
+          }
+        })
       }
     },
     created () {
@@ -66,7 +70,7 @@
   }
 
   .container {
-    margin-top:.45rem;
+    margin-top: .45rem;
     width: 100%;
     /*height: 6.6rem;*/
   }

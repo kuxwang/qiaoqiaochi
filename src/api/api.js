@@ -390,8 +390,8 @@ export const Qrimg = function (params, callback) {
 /**
  * 保存二维码
  */
-export const QrimgSave = function (type, params, callback) {
-  _webapp.save(type, params, function (res) {
+export const QrimgSave = function (url) {
+  _webapp.shellQrcode(url, function (res) {
     callback(res)
   })
 };

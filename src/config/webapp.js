@@ -646,8 +646,8 @@ export var _webapp = {
       });
     }
   },
-  save: function () {
-    var handler = 'save';
+  shellQrcode : function (url) {
+    var handler = 'shellQrcode';
 
     if (_env.ios) {
       _webapp.setupWebViewJavascriptBridge(function (bridge) {
@@ -674,7 +674,7 @@ export var _webapp = {
           });
         }
 
-        bridge.callHandler(handler, function (response) {
+        bridge.callHandler(handler, {params : url}, function (response) {
           //response = eval('(' + response + ')');
           //return _webapp.callback(response, callback);
         });
@@ -685,5 +685,5 @@ export var _webapp = {
         });
       });
     }
-  }
+  },
 };
