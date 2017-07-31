@@ -23,7 +23,13 @@ const state = {
     cartids:'',
     total:''
   },
-  orderInfo: '' //订单信息
+  orderInfo: '', //订单信息,
+  // reason:"",
+  // backtime: '',
+  // descri:'',
+  // refundid:'',
+  drawbackobj:'', //退款信息
+  orderdetails:''
 }
 
 export default new Vuex.Store({

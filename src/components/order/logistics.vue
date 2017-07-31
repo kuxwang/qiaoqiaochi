@@ -21,14 +21,17 @@
         <span class="iconfont">&#xe6ce;</span>
         物品信息
       </div>
-      <router-link class="good-info" to="/details" tag="div">
-        <img :src="thumb" alt="" class="order-small">
-        <p>{{title}}</p>
-        <div class="good-price">
-          <p>￥{{price}}</p>
-          <p>×{{total}}</p>
+      <!--<router-link class="good-info" to="/details" tag="div">-->
+        <div class="good-info" @click="jumpGoodslink()">
+          <img :src="thumb" alt="" class="order-small">
+          <p>{{title}}</p>
+          <div class="good-price">
+            <p>￥{{price}}</p>
+            <p>×{{total}}</p>
+          </div>
         </div>
-      </router-link>
+
+      <!--</router-link>-->
     </div>
     <div class="logistics-info">
       <div class="pib-header">
@@ -68,6 +71,7 @@
 </template>
 <script>
   import { Header} from 'mint-ui'
+  import { mapState} from 'Vuex'
   import { expressInfo ,orderDetail} from '../../api/api.js'
   export default {
     data(){
@@ -84,9 +88,17 @@
 //        marketprice:''
       }
     },
+    computed:{
+      ...mapState([
+        'orderdetails'
+      ])
+    },
     methods:{
       goBack:function () {
         this.$router.go(-1)
+      },
+      jumpGoodslink () {
+        this.$router.push({path:'details',query:{goodsid:orderdetails.goods.id}})
       }
     },
     created:function () {

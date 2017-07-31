@@ -18,24 +18,80 @@
       <p>协商详情</p>
       <ul>
         <li>退款类型：仅退款</li>
-        <li>退款原因：卖家缺货</li>
-        <li>退款说明：</li>
-        <li>申请时间：2017-07-28 01:27</li>
+        <li>退款原因：{{reason}}</li>
+        <li>退款说明：{{content}}</li>
+        <li>申请时间：{{createtime}}</li>
       </ul>
     </div>
-    <router-link to="/drawback" tag="button" class="render-btn">
-      修改退款申请
-    </router-link>
-    <router-link to="/orderd" tag="button" class="cancel-btn">
+    <!--<router-link to="/drawback" tag="button" class="render-btn">-->
+      <!--修改退款申请-->
+    <!--</router-link>-->
+    <button class="render-btn" @click="jumpOrderd()">
       取消退款申请
-    </router-link>
+    </button>
+    <!--<router-link to="/orderd" tag="button" class="render-btn">-->
+      <!---->
+    <!--</router-link>-->
   </div>
   </transition>
 </template>
 <script>
-  import { Header} from 'mint-ui'
+  import { Header,Toast } from 'mint-ui'
+  import { orderManu } from '../../api/api'
+  import {mapMutations, mapGetters,mapState} from 'vuex'
   export default {
-    components: {}
+     data(){
+       return {
+
+       }
+     },
+    methods: {
+      jumpOrderd () {
+        let params = {
+          data:{
+            type:'canlreful',
+            orderid: this.drawbackobj.orderid
+          }
+        }
+        console.log(params)
+        orderManu(params,res=>{
+          if(res.statusCode==1){
+            Toast({
+              message: '成功取消退款',
+                position: 'bottom',
+                duration: 1500
+            })
+            setTimeout(()=>{
+              this.$router.push({path:'orderd',query:{orderid:this.drawbackob.orderid}})
+            },1500)
+          }else{
+            console.log('取消退款接口异常')
+          }
+        })
+      }
+    },
+    computed: {
+      ...mapState([
+        'drawbackobj'
+      ]),
+      ...mapGetters({
+        'reason':'REASON'
+      }),
+      reason () {
+        return this.drawbackobj.reason || ''
+      },
+      createtime () {
+        return this.drawbackobj.createtime || ''
+      },
+      content () {
+        return this.drawbackobj.content || ''
+      },
+      price () {
+        return this.drawbackobj.price || ''
+      }
+
+    },
+
   }
 </script>
 <style scoped>

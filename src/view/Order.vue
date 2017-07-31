@@ -34,20 +34,27 @@
                   <button class="cancel-order"  v-if="v.status==0" @click="cancel(v.id)">
                     取消订单
                   </button>
-                  <router-link class="charge-order ocolor" to="" tag="button" v-if="v.status==0">
+                  <button class="charge-order ocolor" @click="pay(v.ordersn)" v-if="v.status==0">
                     付款
-                  </router-link>
-                  <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.status==1">
+                  </button>
+                  <!--<router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button"   v-if="v.status==1" v-show="v.canrefund||v.refundid==0"> -->
+                    <router-link class="charge-order ocolor"  :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button"   v-if="v.canrefund&&v.refundid==0" >
                     申请退款
                   </router-link>
+                  <!--<router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">-->
+                    <!--退款申请中-->
+                  <!--</router-link>-->
                   <router-link class="charge-order1" to="" tag="button" v-if="v.status==2" @click="fn1()">
                     确认收货
                   </router-link>
                   <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button" v-if="v.status==2">
                     查看物流
                   </router-link>
-                  <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id,}}" tag="button" v-if="v.status==3">
+                  <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">
                     申请退款
+                  </router-link>
+                  <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
+                    退款申请中
                   </router-link>
                   <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button" v-if="v.status==3">
                     查看物流
@@ -90,9 +97,9 @@
                       <!--<option value="">其他原因</option>-->
                     <!--</select>-->
                   </button>
-                  <router-link class="charge-order ocolor" to="" tag="button">
+                  <button class="charge-order ocolor" @click="pay(v.ordersn)">
                     付款
-                  </router-link>
+                  </button>
                 </div>
               </li>
             </ul>
@@ -121,7 +128,7 @@
                   <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
                 </div>
                 <div class="good-btn">
-                  <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button">
+                  <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">
                     申请退款
                   </router-link>
                 </div>
@@ -186,8 +193,11 @@
                   <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
                 </div>
                 <div class="good-btn">
-                  <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button">
+                  <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">
                     申请退款
+                  </router-link>
+                  <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
+                    退款申请中
                   </router-link>
                   <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button">
                     查看物流
@@ -215,7 +225,8 @@
   import { Navbar,MessageBox } from 'mint-ui';
  	import vTabbar from '../components/common/Tabbar';
  	import {orderList,orderManu} from '../api/api.js'
- 	import {mapMutations} from 'Vuex'
+  import {mapMutations, mapGetters} from 'vuex'
+// 	import {mapMutations} from 'Vuex'
 	export default{
     name: 'page-navbar',
 		data(){
@@ -236,9 +247,6 @@
 			}
 		},
     methods:{
-      ...mapMutations([
-        'orderinfo'
-      ]),
 		  all:function () {
         console.log(1)
       },
@@ -258,6 +266,7 @@
         })
       },
 		  fn1:function (orderid) {
+        let that=this;
         MessageBox({
           title: '提示',
           message: '请确定已收货 否则钱财两空哦',
@@ -273,8 +282,8 @@
             }
             orderManu(params,function (res) {
               console.log(res)
-              if(res.status==1){
-
+              if(res.statusCode==1){
+                location.reload()
               }
               else{
                 MessageBox.alert('操作成功').then(action => {
@@ -296,7 +305,7 @@
           }
         }
         orderList(params,function (res) {
-          console.log(res)
+          console.log(res);
           if(res.statusCode==1){
             that.order0=res.data;
             for(let i=0;i<res.data.length;i++){
@@ -331,10 +340,29 @@
             that.isShow5=true;
           }
         })
+      },
+      ...mapMutations({
+        orderinfo: 'ORDERINFO'
+      }),
+      pay(x){
+        this.orderinfo(x)
+        this.$router.push('payselect');
+      },
+      fun2:function (obj) {
+        let a = obj.status
+        let b = obj.canrefund
+        if(a==1&&b)
+          return true
       }
     },
     created(){
       this.getOrderList()
+    },
+    computed:{
+//      fun2:function (a,b) {
+//        if(a&&b)
+//          return true
+//      }
     },
 		components:{
 			vTabbar
