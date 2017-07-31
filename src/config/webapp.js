@@ -273,7 +273,6 @@ export var _webapp = {
 
                     return _webapp.callback(response, callback);
                 });
-
             });
         }
     },
@@ -316,7 +315,6 @@ export var _webapp = {
                 bridge.callHandler(handler, function (response) {
                     //return _webapp.callback(response, callback);
                 });
-
                 bridge.registerHandler(handler, function (data) {
                     return _webapp.callback(data, callback);
                 });
@@ -333,15 +331,12 @@ export var _webapp = {
                             'Javascript Responds': 'Wee!'
                         };
                         responseCallback(data);
-
                     });
                 }
-
                 bridge.callHandler(handler, function (response) {
                     //response = eval('(' + response + ')');
                     //return _webapp.callback(response, callback);
                 });
-
                 bridge.registerHandler(handler, function (response) {
                     response = eval('(' + response + ')');
                     return _webapp.callback(response, callback);

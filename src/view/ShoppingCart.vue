@@ -263,7 +263,7 @@
 	          	this.$router.push({name:'confirmorder'});
 			},
 			mycartsInt(){
-				let params = []
+				let params = {}
 				let _this=this
 		    	GET_MYCARTS(params, function (res) {
 		        	if(res.statusCode===1){
@@ -277,7 +277,6 @@
 		        			_this.isTrue=false;
                     		_this.isShow=false;
 		        		}
-
 		        	}else{
 		        		console.log('请求失败')
 		        	}
@@ -313,11 +312,7 @@
 		},
 		mounted(){
 			this.mycartsInt()
-		},
-		activated(){
-			this.mycartsInt();
-			console.log(6666)
-		},
+		}
 	}
 </script>
 <style scoped>

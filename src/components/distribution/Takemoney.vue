@@ -107,7 +107,7 @@
 
   }
   .title {
-    margin: .5rem 0 0.1rem 0;
+    margin: .1rem 0 0.1rem 0;
     width: 100%;
     text-align: center;
     height: 2rem;

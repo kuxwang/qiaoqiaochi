@@ -193,6 +193,7 @@ const MYCARTS1 = {
   dataType
 }
 export const GET_MYCARTS = function (params, callback) {
+  console.log(params)
   _webapp.requestx(Object.assign(params, MYCARTS1), function (res) {
     callback(res)
   })
