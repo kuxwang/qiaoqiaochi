@@ -170,6 +170,7 @@
         })
       },
       goPay(){
+          console.log(77777)
         this.myStata=2;
         this.popupVisible = true;
       },

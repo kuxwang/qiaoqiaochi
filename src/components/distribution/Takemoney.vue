@@ -78,17 +78,15 @@
     },
     methods: {
         outmoney(){
-          /*let params={
+          let params={
             data: {
-              type:'all',
-              page:1,
-              psize:10
+              type:0,
             }
           }
-          withdrawals_get(params,(res)=>{
+          withdrawals_post(params,(res)=>{
             console.log(res)
 
-          })*/
+          })
         }
     }
 
@@ -139,9 +137,10 @@
   h5 {
     text-align: left;
     font-size: .14rem;
-    color: #666;
+    color: #000;
+    border-width: 800;
     line-height: 2.5;
-    margin-bottom: .05rem;
+    /*margin-bottom: .05rem;*/
     background-color: #fff;
     padding: 0 0.1rem;
 
@@ -149,13 +148,17 @@
 
   .view {
     background-color: #fff;
-    margin-bottom: .1rem;
+    margin-bottom: .05rem;
+    border-top: 1px solid #efefef;
+    padding: 0 0.1rem 0 0.12rem;
+    color: #666;
   }
   .cell {
     border-bottom: 1px #eee solid;
     text-align: left;
     line-height: 2.5;
     padding: 0 0.1rem;
+
   }
   .cell span {
     float: right;
