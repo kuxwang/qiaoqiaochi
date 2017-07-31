@@ -11,8 +11,8 @@
           &#xe66f;
         </div>
         <ul class="order-state">
-          <li>物流单位</li>
-          <li>运单编号：1234567877</li>
+          <!--<li>物流单位</li>-->
+          <li>运单编号：{{expsn}}</li>
         </ul>
       </div>
     </div>
@@ -22,11 +22,11 @@
         物品信息
       </div>
       <router-link class="good-info" to="/details" tag="div">
-        <img src="../../assets/images/xiaotu.jpg" alt="" class="order-small">
-        <p>竹享</p>
+        <img :src="thumb" alt="" class="order-small">
+        <p>{{title}}</p>
         <div class="good-price">
-          <p>￥99.00</p>
-          <p>×1</p>
+          <p>￥{{price}}</p>
+          <p>×{{total}}</p>
         </div>
       </router-link>
     </div>
@@ -35,44 +35,53 @@
         <span class="iconfont">&#xe606;</span>
         物流跟踪
       </div>
-      <ul>
-        <li class="active">
-          <b></b>
-          <p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>
-          <p>2017-07-22 22:12:22</p>
-        </li>
+      <ul v-for="(v,i) in arr">
         <li>
           <b></b>
-          <p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>
-          <p>2017-07-22 22:12:22</p>
+          <p class="first">{{v.context}}</p>
+          <p>{{v.time}}</p>
         </li>
-        <li>
-          <b></b>
-          <p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>
-          <p>2017-07-22 22:12:22</p>
-        </li>
-        <li>
-          <b></b>
-          <p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>
-          <p>2017-07-22 22:12:22</p>
-        </li>
-        <li>
-          <b></b>
-          <p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>
-          <p>2017-07-22 22:12:22</p>
-        </li>
+        <!--<li>-->
+          <!--<b></b>-->
+          <!--<p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>-->
+          <!--<p>2017-07-22 22:12:22</p>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<b></b>-->
+          <!--<p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>-->
+          <!--<p>2017-07-22 22:12:22</p>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<b></b>-->
+          <!--<p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>-->
+          <!--<p>2017-07-22 22:12:22</p>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<b></b>-->
+          <!--<p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>-->
+          <!--<p>2017-07-22 22:12:22</p>-->
+        <!--</li>-->
       </ul>
+      <div v-show="isShow" class="none-tran">很抱歉！未查到相关物流信息</div>
     </div>
   </div>
 </template>
 <script>
   import { Header} from 'mint-ui'
-  import { expressInfo } from '../../api/api.js'
+  import { expressInfo ,orderDetail} from '../../api/api.js'
   export default {
     data(){
       return{
         exp:'',
         expsn:'',
+        isShow:false,
+        goods:'',
+        price:'',
+        thumb:'',
+        title:'',
+        total:'',
+        arr:''
+//        marketprice:''
       }
     },
     methods:{
@@ -86,12 +95,27 @@
       this.expsn=this.$route.query.expsn;
       let params={
         data:{
-          express:exp,
-          expresssn:expsn
+          express:that.exp,
+          expresssn:that.expsn
         }
       }
       expressInfo(params,function (res) {
         console.log(res)
+        that.arr=res.data
+        if(res.data.errno){
+          that.isShow=true;
+        }
+      });
+      let param={
+        data:{
+          orderid:this.$route.query.id
+        }
+      }
+      orderDetail(param,function (res) {
+        that.price=res.data.goods.price;
+        that.title=res.data.goods.title;
+        that.thumb=res.data.goods.thumb
+        that.total=res.data.goods.total
       })
     }
   }
@@ -108,16 +132,17 @@
     z-index:20;
     color:#666;
   }
-  .order-detail-header .mint-header {
-    height:.45rem;
+  .none-tran{
+    padding:.2rem;
+    font-size:.15rem;
   }
   .buyer-info{
-    height:.8rem;
+    height:.6rem;
     width:100%;
     margin-bottom:.1rem;
   }
   .buyer-info-box{
-    height:.8rem;
+    height:.6rem;
     width:100%;
     position:relative;
     background:#fff;
@@ -125,7 +150,7 @@
   .buyer-info-box>div.iconfont{
     position:absolute;
     left:.08rem;
-    top:.2rem;
+    top:.1rem;
     font-size:.35rem;
   }
   .order-state{
@@ -202,10 +227,10 @@
     font-size:.13rem;
     position:relative;
   }
-  .logistics-info>ul>li.active{
+  .logistics-info>ul>li:first-child{
     color:#F5751D;
   }
-  .logistics-info>ul>li.active>b{
+  .logistics-info>ul>li:first-child>b{
     background:#F5751D ;
   }
   .logistics-info>ul>li>b{

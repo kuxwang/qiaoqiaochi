@@ -1,24 +1,21 @@
 <template>
   <div class="main">
+    <mt-header fixed title="二维码">
+      <router-link to="/vipCenter" slot="left">
+        <mt-button icon="back" ></mt-button>
+      </router-link>
+    </mt-header>
     <div class="container">
-      <!--<div class="title">-->
-      <!--<img src="../assets/images/shoppingCart-01.jpg"/>-->
-      <!--<p>hehhwieh</p>-->
-      <!--</div>-->
-      <div class="imgbox" @click="clickhavib">
+      <div class="imgbox" @click="clickhavib()">
         <img :src="qrimg"/>
       </div>
-      <!--<button>重新生成二维码</button>-->
-      <!--<img class="backg" src="http://duoyunjiav2.wshoto.com/addons/ewei_shop/data/poster/2/4b2e32fbbfb48ba3e8ce299a308351b2.jpg?rand=1891"/>-->
-      <!--<img class="backg" :src="qrimg"/>-->
-
     </div>
     <v-tabbar></v-tabbar>
   </div>
 </template>
 <script>
   import vTabbar from '../components/common/Tabbar';
-  import {Qrimg} from '../api/api';
+  import {Qrimg, QrimgSave} from '../api/api';
   export default{
     data(){
       return {
@@ -28,15 +25,16 @@
     components: {
       vTabbar
     },
-    method: {
+    methods: {
       clickhavib () {
 
       }
     },
     created () {
       Qrimg({}, res => {
+        console.log(1)
         if (res.statusCode == 1) {
-          this.qrimg = res.data.current_qrimg
+          this.qrimg = res.data
         }
       })
     }
@@ -45,11 +43,12 @@
 
 <style scoped>
   .imgbox {
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 100%;
+    height: 5.96rem;
+    left: 0;
+    top: 0;
     margin: 0 auto;
     position: relative;
-    top: 2rem;
   }
 
   .imgbox img {
@@ -67,8 +66,9 @@
   }
 
   .container {
+    margin-top:.45rem;
     width: 100%;
-    height: 6.6rem;
+    /*height: 6.6rem;*/
   }
 
   .title {

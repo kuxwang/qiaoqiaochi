@@ -159,40 +159,6 @@ export var _webapp = {
           //return _webapp.callback(response, callback);
         });
 
-<<<<<<< HEAD
-        if (_env.android) {
-            _webapp.connectWebViewJavascriptBridge(function (bridge) {
-                if (_webapp.init === false) {
-                    //初始化
-                    _webapp.init = true;
-                    //$('#msg').append("INIT RUN. <hr><br />");
-                    bridge.init(function (message, responseCallback) {
-                        //  $('#msg').append("init run message: "  + message + "<hr><br />");
-                        var data = {
-                            'Javascript Responds': 'Wee!'
-                        };
-                        responseCallback(data);
-                    });
-                }
-                //初始化
-                bridge.callHandler(handler, {id: id, params: params}, function (response) {
-                    response = eval('(' + response + ')');
-
-                    return _webapp.callback(response, callback);
-                });
-            });
-        }
-    },
-    setStore: function (id, params, callback) {
-        var handler = 'setStore';
-
-        if (_env.ios) {
-            _webapp.setupWebViewJavascriptBridge(function (bridge) {
-                bridge.callHandler(handler, {id: id, params: params}, function (response) {
-                    return _webapp.callback(response, callback);
-                });
-            });
-=======
         bridge.registerHandler(handler, function (response) {
           response = eval('(' + response + ')');
           return _webapp.callback(response, callback);
@@ -230,70 +196,12 @@ export var _webapp = {
             };
             responseCallback(data);
           });
->>>>>>> a6c7482bfab57413b6195b8681ca8823bd02bf3e
         }
         bridge.callHandler(handler, {key: key, val: val}, function (response) {
           response = eval('(' + response + ')');
           return _webapp.callback(response, callback);
         });
 
-<<<<<<< HEAD
-        if (_env.android) {
-            _webapp.connectWebViewJavascriptBridge(function (bridge) {
-                if (_webapp.init === false) {
-                    //初始化
-                    _webapp.init = true;
-                    bridge.init(function (message, responseCallback) {
-                        var data = {
-                            'Javascript Responds': 'Wee!'
-                        };
-                        responseCallback(data);
-                    });
-                }
-                bridge.callHandler(handler, {id: id, params: params}, function (response) {
-                    response = eval('(' + response + ')');
-
-                    return _webapp.callback(response, callback);
-                });
-
-            });
-        }
-    },
-    uploadImg: function (callback) {
-        var handler = 'uploadImg';
-        if (_env.ios) {
-            _webapp.setupWebViewJavascriptBridge(function (bridge) {
-                bridge.callHandler(handler, function (response) {
-                    //return _webapp.callback(response, callback);
-                });
-                bridge.registerHandler(handler, function (data) {
-                    return _webapp.callback(data, callback);
-                });
-            });
-        }
-
-        if (_env.android) {
-            _webapp.connectWebViewJavascriptBridge(function (bridge) {
-                if (_webapp.init === false) {
-                    //初始化
-                    _webapp.init = true;
-                    bridge.init(function (message, responseCallback) {
-                        var data = {
-                            'Javascript Responds': 'Wee!'
-                        };
-                        responseCallback(data);
-                    });
-                }
-                bridge.callHandler(handler, function (response) {
-                    //response = eval('(' + response + ')');
-                    //return _webapp.callback(response, callback);
-                });
-                bridge.registerHandler(handler, function (response) {
-                    response = eval('(' + response + ')');
-                    return _webapp.callback(response, callback);
-                });
-            });
-=======
       });
     }
   },
@@ -323,7 +231,6 @@ export var _webapp = {
             responseCallback(data);
 
           });
->>>>>>> a6c7482bfab57413b6195b8681ca8823bd02bf3e
         }
 
         bridge.registerHandler(handler, function (response, responseCallback) {
@@ -778,5 +685,46 @@ export var _webapp = {
         });
       });
     }
-  }
+  },
+  //退出登录
+  logOut: function () {
+    var handler = 'logOut';
+
+    if (_env.ios) {
+      _webapp.setupWebViewJavascriptBridge(function (bridge) {
+        bridge.callHandler(handler, function (response) {
+          //return _webapp.callback(response, callback);
+        });
+
+        bridge.registerHandler(handler, function (data) {
+          return _webapp.callback(data, callback);
+        });
+      });
+    }
+
+    if (_env.android) {
+      _webapp.connectWebViewJavascriptBridge(function (bridge) {
+        if (_webapp.init === false) {
+          //初始化
+          _webapp.init = true;
+          bridge.init(function (message, responseCallback) {
+            var data = {
+              'Javascript Responds': 'Wee!'
+            };
+            responseCallback(data);
+          });
+        }
+
+        bridge.callHandler(handler, function (response) {
+          //response = eval('(' + response + ')');
+          //return _webapp.callback(response, callback);
+        });
+
+        bridge.registerHandler(handler, function (response) {
+          response = eval('(' + response + ')');
+          return _webapp.callback(response, callback);
+        });
+      });
+    }
+  },
 };
