@@ -108,13 +108,12 @@
       }
       let params={
         data: obj
-      }
+      };
       teams(params,(res)=>{
-        if(res.statusCode==1){
+        if(res.statusCode === 1){
           this.personlist=res.data;
-
-          if(personlist.length()<=1){
-           this.searched=0
+          if(!this.personlist ||this.personlist.length<=1){
+           this.searched=false
           }else  {
             console.log(res)
             console.log(this.personlist)

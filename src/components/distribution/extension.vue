@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <section>
-      <mt-header fixed title="推广订单" class="c-1" >
+      <mt-header fixed title="推广订单" class="c-1">
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
@@ -13,24 +13,24 @@
     </transition>
     <ul class="nav-tab">
       <li :class="{tabActive: selected==1 }" @click="selecttab(1)">
-      <!--<router-link @click="selecttab(1)" to="/extension1" tag="li" :class="{tabActive: selected==1 }"  >-->
+        <!--<router-link @click="selecttab(1)" to="/extension1" tag="li" :class="{tabActive: selected==1 }"  >-->
         <div class="title">全部</div>
         <div class="iconfont listicon">&#xe624;</div>
         <div>
           <span class="num">{{ordertotal}}</span><span class="yuan"> 单</span>
         </div>
-      <!--</router-link>-->
+        <!--</router-link>-->
       </li>
       <li :class="{tabActive: selected==2 }" @click="selecttab(2)">
-      <!--<router-link @click="selecttab(2)" to="/extension2" tag="li" :class="{tabActive: selected==2 }" >-->
+        <!--<router-link @click="selecttab(2)" to="/extension2" tag="li" :class="{tabActive: selected==2 }" >-->
         <div class="title">未结算</div>
         <div class="iconfont listicon">&#xe624;</div>
         <div>
           <span class="num">{{orderlock}}</span><span class="yuan"> 单</span>
         </div>
-      <!--</router-link>-->
-      <!--</li>-->
-      <!--<router-link  @click="selecttab(3)" to="/extension3" tag="li" :class="{tabActive: selected==3 }">-->
+        <!--</router-link>-->
+        <!--</li>-->
+        <!--<router-link  @click="selecttab(3)" to="/extension3" tag="li" :class="{tabActive: selected==3 }">-->
       </li>
       <li :class="{tabActive: selected==3 }" @click="selecttab(3)">
         <!--<li class="li2">-->
@@ -40,18 +40,18 @@
           <span class="num">{{orderrefund}}</span><span class="yuan"> 单</span>
           <!--<span class="num">{{ordernum.refund.order_count}}</span><span class="yuan"> 单</span>-->
         </div>
-        </li>
+      </li>
       <!--</router-link>-->
 
       <li :class="{tabActive: selected==4 }" @click="selecttab(4)">
-      <!--<router-link to="/extension4" tag="li" :class="{tabActive: selected==4 }" @click="selecttab(4)">-->
+        <!--<router-link to="/extension4" tag="li" :class="{tabActive: selected==4 }" @click="selecttab(4)">-->
         <!--<li class="li3">-->
         <div class="title">已结算</div>
         <div class="iconfont listicon">&#xe619;</div>
         <div>
           <span class="num">{{orderok}}</span><span class="yuan"> 单</span>
         </div>
-        </li>
+      </li>
       <!--</router-link>-->
     </ul>
 
@@ -66,8 +66,7 @@
     </div>
 
 
-      <router-view></router-view>
-
+    <router-view></router-view>
 
 
   </div>
@@ -75,25 +74,25 @@
 </template>
 <script>
   import MtCell from "../../../node_modules/mint-ui/packages/cell/src/cell";
-//  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
-  import { Search } from 'mint-ui';
+  //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
+  import {Search} from 'mint-ui';
   import {mapMutations, mapGetters} from 'vuex';
   import {orderStatistics} from '../../api/api'
   export default{
     data () {
       return {
-        active:'tab-container1',
+        active: 'tab-container1',
         selected: 1,
-        find:'',
-        ordernum:{},
-        ordertotal:'',
-        orderlock:'',
-        orderrefund:'',
-        orderok:''
+        find: '',
+        ordernum: {},
+        ordertotal: '',
+        orderlock: '',
+        orderrefund: '',
+        orderok: ''
       }
     },
     components: {
-      mtSearch:Search
+      mtSearch: Search
 
     },
     methods: {
@@ -103,18 +102,18 @@
       },
 
       ...mapMutations({
-        searchnum : 'SEARCHNUM',
+        searchnum: 'SEARCHNUM',
 //        'tabselect': 'TABSELECT'
       }),
       search(){
-        let mobilereg='^1[3|4|5|7|8][0-9]{9}$';
-        let idreg='^[0-9]*$ ';
-        if(mobilereg.test(this.find) && idreg.test(this.find)){
-          this.searchnum(this.find);
+        let mobilereg = /^[0-9]{7}$/;
+        let idreg = /^SH[0-9]{18}$/;
+        this.searchnum(this.find);
+        if (mobilereg.test(this.find) || idreg.test(this.find)) {
           this.$router.push({name: `extension5`}),
-            this.selected=5
-        }else {
-
+            this.selected = 5
+        } else {
+          console.log('11')
         }
 
       },
@@ -122,26 +121,24 @@
 
     },
     created(){
-      this.selected=this.tabselect
+      this.selected = this.tabselect
     },
     mounted(){
-        let params={
-
+      let params = {}
+      orderStatistics(params, (res) => {
+        if (res.statusCode == 1) {
+          this.ordernum = res.data
+          console.log(this.ordernum)
+          this.ordertotal = res.data.total.order_count
+          this.orderrefund = res.data.refund.order_count
+          this.orderlock = res.data.lock.order_count
+          this.orderok = res.data.ok.order_count
         }
-      orderStatistics(params,(res)=>{
-          if(res.statusCode==1){
-            this.ordernum=res.data
-            console.log(this.ordernum)
-            this.ordertotal=res.data.total.order_count
-            this.orderrefund=res.data.refund.order_count
-            this.orderlock=res.data.lock.order_count
-            this.orderok=res.data.ok.order_count
-          }
 
       })
     },
-    computed:{
-    ...mapGetters([
+    computed: {
+      ...mapGetters([
         'tabselect',
 
       ]),
@@ -155,6 +152,7 @@
   * {
     font-size: .16rem;
   }
+
   .mint-header {
     border-bottom: 0;
     color: #fff;
@@ -230,38 +228,39 @@
   .top {
     /*height: .64rem;*/
     /*background: #fff;*/
-    margin-top:.4rem;
+    margin-top: .4rem;
     background: rgb(244, 127, 47);
     -webkit-box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
     -moz-box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
     box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
     /*display: flex;*/
   }
-/*
 
-  .top > div {
-    position: relative;
-    !*width: 50%;*!
-    height: 100%;
-    background: rgba(0, 0, 0, .2);
-    !*float: left;*!
-    flex: 1;
-  }
+  /*
 
-  .top > div > span {
-    line-height: .32rem;
-    !*color: red;*!
-    color: #fff;
-  }
+    .top > div {
+      position: relative;
+      !*width: 50%;*!
+      height: 100%;
+      background: rgba(0, 0, 0, .2);
+      !*float: left;*!
+      flex: 1;
+    }
 
-  .top .title {
-    display: block;
-    height: .25rem;
-    font-size: .14rem;
-    !*color: #666;*!
-    color: #fff;
-  }
-*/
+    .top > div > span {
+      line-height: .32rem;
+      !*color: red;*!
+      color: #fff;
+    }
+
+    .top .title {
+      display: block;
+      height: .25rem;
+      font-size: .14rem;
+      !*color: #666;*!
+      color: #fff;
+    }
+  */
 
   .yuan {
     color: red;
@@ -283,25 +282,27 @@
     background-color: rgba(0, 0, 0, .1);
   }
 
-
   .details li {
     margin-top: .04rem;
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
   }
+
   .p-list {
     display: block;
     background-color: #fff;
 
   }
+
   .p-cell {
     display: flex;
     flex-direction: column;
-    padding:  0;
+    padding: 0;
     margin-top: 0.05rem;
     background-color: #fff;
-    border-top:1px solid #e2e2e2;
+    border-top: 1px solid #e2e2e2;
   }
+
   .up {
     flex: 1;
     text-align: left;
@@ -311,11 +312,11 @@
 
   }
 
-.up .time {
-  float: right;
-  font-size: 0.12rem;
+  .up .time {
+    float: right;
+    font-size: 0.12rem;
 
-}
+  }
 
   .down {
     flex: 2.5;
@@ -323,10 +324,12 @@
     display: flex;
     padding: 0 0.1rem;
   }
+
   .logo {
     flex: 1;
     padding: 0.1rem 0;
   }
+
   .info {
     flex: 4;
     text-align: left;
@@ -334,46 +337,55 @@
     padding: 0.05rem 0;
     color: #666;
   }
+
   .info h5 {
     margin: 0.05rem 0;
     color: #666;
   }
+
   .info span {
     color: #000;
     font-size: 0.14rem;
     color: #666;
   }
+
   .logo img {
     width: 100%;
     border-radius: 50%;
     vertical-align: middle;
     display: block;
   }
+
   .ordertype {
     flex: 3;
     padding: 0.05rem 0;
     color: #666;
   }
+
   .ordertype span {
     display: block;
     text-align: right;
     font-size: 0.14rem;
     margin-top: 0.05rem;
   }
+
   .ordertype span:last-child {
     margin-top: 0.1rem;
   }
+
   .mint-tab-container-item {
     overflow: hidden;
     overflow-y: scroll;
     height: 4.8rem;
   }
+
   .mint-navbar .mint-tab-item.is-selected {
     color: #F5751D;
 
   }
+
   .mint-navbar .mint-tab-item.is-selected {
-    border-bottom:2px solid #F5751D;
+    border-bottom: 2px solid #F5751D;
   }
 
   .nav-tab {
@@ -384,7 +396,6 @@
     box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
     display: flex;
   }
-
 
   .nav-tab li {
     position: relative;
@@ -397,7 +408,7 @@
     flex: 1;
   }
 
-  .nav-tab .li1:after, .nav-tab .li2:after,.nav-tab .li4:after, .nav-tab .li5:after {
+  .nav-tab .li1:after, .nav-tab .li2:after, .nav-tab .li4:after, .nav-tab .li5:after {
     content: '';
     position: absolute;
     right: 0;
@@ -428,12 +439,14 @@
     /*color: #F5751D;*/
     border-radius: 50%;
   }
+
   .search {
     height: .3rem;
     display: flex;
-    margin: .2rem 2% ;
+    margin: .2rem 2%;
     width: 96%;
   }
+
   .search input {
     border: none;
     display: block;
@@ -442,6 +455,7 @@
     padding: 0 0.2rem;
     background: #fff;
   }
+
   .search div {
     background-color: #F5751D;
     display: block;
@@ -450,19 +464,24 @@
     color: #fff;
     line-height: .3rem;
   }
+
   .mint-header {
     color: #252522 !important;
   }
-  .nav-tab .tabActive{
+
+  .nav-tab .tabActive {
     background-color: #f5751d;
     color: #fff;
   }
+
   .nav-tab .tabActive .title {
     color: #fff;
   }
-  .tabActive .num,.tabActive .yuan {
+
+  .tabActive .num, .tabActive .yuan {
     color: #fff;
   }
+
   .mint-header .c-1 {
     z-index: 3;
   }

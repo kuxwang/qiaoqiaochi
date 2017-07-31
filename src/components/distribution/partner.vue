@@ -101,15 +101,7 @@
         'searchnum' : 'SEARCHNUM',
 
       }),
-      jisuan(){
-        let reg = /^1[0-9]\d{4,8}$/
-        let namereg = /[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*/
-        if (reg.test(this.find)  && namereg.test(this.find)) {
-          return true
-        } else {
-          return false
-        }
-      }
+
     },
     computed:{
     ...mapGetters([
