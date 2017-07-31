@@ -12,8 +12,10 @@
         </div>
       </div>
       <div class="intro">
-        <p>{{name}}</p>
-        <span>￥{{marketPrice}}</span>
+        <div class="goodsTitle">
+           <p>{{name}}</p>
+          <span>￥{{marketPrice}}</span>
+        </div>
         <p class="vip-intro" v-show="isVip"><span class="iconfont">&#xe631;</span>您是{{vipname}} 可享{{vipcount}}折优惠</p>
       </div>
       <div class="b-intro">
@@ -21,7 +23,6 @@
           图文详情
         </div>
         <div id="intro">
-
         </div>
       </div>
       <div class="bottom-navbar">
@@ -256,7 +257,6 @@
   .intro>p{
     font-size: .15rem;
     text-align: left;
-    margin-bottom: .05rem;
     padding-left:.03rem;
   }
   .intro>span{
@@ -267,7 +267,11 @@
     margin-top:.06rem;
     font-size:.14rem;
     color:#999;
+    padding-bottom: 0.10rem;
   }
+   .vip-intro span.iconfont{
+    font-size: 0.15rem;
+   }
   .b-intro{
     margin-top: .15rem;
     background: #fff;
@@ -423,5 +427,19 @@
     width:.62rem;
     height:.33rem;
     text-align: center;
+  }
+  .goodsTitle{
+    overflow: hidden;
+  }
+  .goodsTitle p{
+    float: left;
+    margin-right: 0.05rem;
+    font-size: 0.14rem;
+  }
+  .goodsTitle span{
+    float: left;
+    font-size: 0.16rem;
+    /*font-weight: 700*/
+    /*color: #dd2727;*/
   }
 </style>
