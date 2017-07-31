@@ -62,7 +62,7 @@
     </div>-->
     <div class="search">
       <input type="search" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
-      <button @click="search">搜索</button>
+      <div @click="search">搜索</div>
     </div>
 
 
@@ -101,16 +101,23 @@
         this.selected = idx;
         this.$router.push({name: `extension${idx}`})
       },
-      search(){
-        this.searchnum(this.find);
 
-        this.$router.push({name: `extension5`}),
-          this.selected=5
-      },
       ...mapMutations({
         searchnum : 'SEARCHNUM',
 //        'tabselect': 'TABSELECT'
-      })
+      }),
+      search(){
+        let mobilereg='^1[3|4|5|7|8][0-9]{9}$';
+        let idreg='^[0-9]*$ ';
+        if(mobilereg.test(this.find) && idreg.test(this.find)){
+          this.searchnum(this.find);
+          this.$router.push({name: `extension5`}),
+            this.selected=5
+        }else {
+
+        }
+
+      },
 
 
     },
@@ -433,13 +440,15 @@
     height: 100%;
     flex: 1;
     padding: 0 0.2rem;
+    background: #fff;
   }
-  .search button {
+  .search div {
     background-color: #F5751D;
     display: block;
     height: 100%;
     flex: .3;
     color: #fff;
+    line-height: .3rem;
   }
   .mint-header {
     color: #252522 !important;

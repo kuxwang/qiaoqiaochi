@@ -40,8 +40,8 @@
       </li>
     </ul>
     <div class="search">
-      <input type="search" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
-      <button @click="search">搜索</button>
+      <input type="search" results="1" v-model="find" placeholder="输入手机号、粉丝ID"/>
+      <div @click="search">搜索</div>
     </div>
 
     <!--<transition name="slide">-->
@@ -82,16 +82,34 @@
         this.$router.push({name: `partnerlist${idx}`})
       },
       search(){
-        this.searchnum(this.find);
-        console.log(Number(this.find))
-        this.$router.push({name: `partnerlist4`}),
-        this.selected=4
+          let mobilereg=/^1[3|4|5|7|8][0-9]{9}$/;
+          let idreg=/^[0-9]*$/;
+     /*     console.log(mobilereg.test(this.find))
+          console.log(idreg.test(this.find))*/
+          if(mobilereg.test(!this.find) || idreg.test(this.find)){
+            this.searchnum(this.find);
+            console.log(Number(this.find))
+            this.$router.push({name: `partnerlist4`}),
+              this.selected=4
+
+          }else {
+
+          }
 
       },
       ...mapMutations({
         'searchnum' : 'SEARCHNUM',
 
-      })
+      }),
+      jisuan(){
+        let reg = /^1[0-9]\d{4,8}$/
+        let namereg = /[\u4E00-\u9FA5]{2,5}(?:·[\u4E00-\u9FA5]{2,5})*/
+        if (reg.test(this.find)  && namereg.test(this.find)) {
+          return true
+        } else {
+          return false
+        }
+      }
     },
     computed:{
     ...mapGetters([
@@ -475,8 +493,9 @@
     height: 100%;
     flex: 1;
     padding: 0 0.2rem;
+    background: #fff;
   }
-  .search button {
+  .search div {
     background-color: #F5751D;
     display: block;
     height: 100%;

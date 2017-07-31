@@ -204,6 +204,7 @@
 		        this.$refs[picker].open();
 		    },
 		    handleChange(value) {
+		    	console.log(value)
 	          let y = new Date(value).getFullYear();
 	          let d = new Date(value).getDate(); 
 	          let m = new Date(value).getMonth() + 1;
@@ -213,43 +214,27 @@
 	          this.myDate=`${y}年${m}月${d}日`;     
 		    },
         	getMyImg(e){
-          // console.log(666)
-          // var img = document.getElementById("img_upload");
-          // var reader = new FileReader();
-          // reader.onload = function (evt) {
-          //   img.src = evt.target.result;
-          //   // console.log(img.src)
-          // }
-          // reader.readAsDataURL(e.target.files[0]);
-          // var file = e.target.files[0];
-          // // console.log(file)
-          // let params={
-          //   'data':{
-          //     // avatar:file
-          //   }
-          // }
-          // console.log(params)
-          // PUT_USERAVATARS(params, function (res) {
-          //   console.log(res)
-          // })
-          console.log(8282828)
-          _webapp.uploadImg((res)=>{
-     		this.myImg=res.data
-          })
+          	_webapp.uploadImg((res)=>{
+     			this.myImg=res.data
+          	})
         },
         getUserInfo(){
           let params={ }
           let _this=this
           memberInfo(params, function (res) {
             if(res.statusCode===1){
+            	_this.initAddress();
               _this.myPhone=res.data.mobile;
               _this.myNc=res.data.realname;
               _this.myWx=res.data.weixin;
               _this.myZfb=res.data.alipay_account;
               _this.myZfbName=res.data.alipay_name;
               _this.myPlace=`${res.data.province} ${res.data.city} ${res.data.area}`;
-              _this.myDate=`${res.data.birthyear}年 ${res.data.birthmonth}月 ${res.data.birthday}日`;
+              if(res.data.birthyear!=''&&res.data.birthmonth!=''&&res.data.birthday!=''){
+              	_this.myDate=`${res.data.birthyear}年 ${res.data.birthmonth}月 ${res.data.birthday}日`;
+              }else{
 
+              }
             }
           })
         },
@@ -305,8 +290,8 @@
         }
 		},
 		mounted() {
-	      this.initAddress();
-        this.getUserInfo();
+	      
+        	this.getUserInfo();
 	   }
 
 	}
@@ -428,6 +413,9 @@
 	}
 	.picker-item{
 		font-size: 0.16rem;
+	}
+	input:disabled{
+		color:#727272;
 	}
 </style>
 
