@@ -5,7 +5,7 @@
       <!--<img src="../assets/images/shoppingCart-01.jpg"/>-->
       <!--<p>hehhwieh</p>-->
       <!--</div>-->
-      <div class="imgbox" @click="clickhavib">
+      <div class="imgbox" @click="clickhavib()">
         <img :src="qrimg"/>
       </div>
       <!--<button>重新生成二维码</button>-->
@@ -18,7 +18,7 @@
 </template>
 <script>
   import vTabbar from '../components/common/Tabbar';
-  import {Qrimg} from '../api/api';
+  import {Qrimg,QrimgSave} from '../api/api';
   export default{
     data(){
       return {
@@ -28,13 +28,14 @@
     components: {
       vTabbar
     },
-    method: {
+    methods: {
       clickhavib () {
 
       }
     },
     created () {
       Qrimg({}, res => {
+          console.log(1)
         if (res.statusCode == 1) {
           this.qrimg = res.data.current_qrimg
         }
