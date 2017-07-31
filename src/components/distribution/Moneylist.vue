@@ -22,7 +22,6 @@
           <span class="type" v-if="i.status==1">审核通过</span>
         </div>
       </li>
-
     </ul>
 
   </div>

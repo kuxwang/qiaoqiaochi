@@ -1,7 +1,7 @@
 <template>
   <div class="mian1">
     <!--<mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">-->
-    <ul class="p-list" >
+    <ul class="p-list" v-if="searched">
       <li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">
       <!--<li class="p-cell" @click="orderinfo(index)">-->
         <div class="up">
@@ -23,6 +23,13 @@
         </div>
       </li>
     </ul>
+
+    <div v-else class="tips">
+      <span class="iconfont">&#xe66f;</span>
+      未搜索到订单<br>
+      请您重新搜索
+    </div>
+
   </div>
 </template>
 
@@ -34,7 +41,8 @@
     data(){
       return {
         thumb:require('../../assets/images/userinfo-02.png'),
-        orderlist:{}
+        orderlist:{},
+        searched:true
       }
     },
     components: {
@@ -81,14 +89,18 @@
           if(this.searchnum.length==20){
               let obji=[];
               obji.push(res.data.order)
-              this.orderlist=obji
+              if(obji.length<=0 ){
+                this.searched=false
+              }else {
+                this.orderlist=obji
+              }
+
             console.log(this.orderlist)
           }else {
             this.orderlist=res.data.order;
             console.log(this.orderlist)
           }
 
-          console.log('请求成功')
         }else {
           console.log('请求失败');
           console.log(this.searchnum)
@@ -203,5 +215,17 @@
   .ordertype span:last-child {
     margin-top: 0.1rem;
   }
+
+  .tips {
+    text-align: center;
+    font-size: .14rem;
+    color: #666;
+    margin-top: 1rem;
+
+  }
+    .tips .iconfont {
+      display: block;
+      font-size: .8rem;
+    }
 
 </style>
