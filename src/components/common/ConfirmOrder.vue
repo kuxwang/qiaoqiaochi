@@ -207,7 +207,7 @@
             this.ORDERINFO(ordersn)
             setTimeout(() => {
               document.getElementById('commitForm').removeAttribute('disabled')
-              this.$router.push({name: 'payselect'})
+              this.$router.replace({name: 'payselect'})
             }, 2000)
           } else {
             Toast({

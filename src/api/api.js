@@ -317,13 +317,26 @@ export const paymentFun = function (type, params, callback) {
     callback(res)
   })
 };
-
-export const Qrimg = function (params, callback) {
-  _webapp.requestx(Object.assign(params, qrimg), function (res) {
+/**
+ * 二维码获取
+ * @param params
+ * @param callback
+ * @constructor
+ */
+export const save = function (params, callback) {
+  _webapp.save(Object.assign(params, qrimg), function (res) {
     callback(res)
   })
 };
 
+/**
+ * 保存二维码
+ */
+// export const paymentFun = function (type, params, callback) {
+//   _webapp.payment(type, params, function (res) {
+//     callback(res)
+//   })
+// };
 
 /**
  * 个人中心 yellowStar
