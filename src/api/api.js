@@ -98,10 +98,13 @@ const express = {exp: {url: `${base}/expresses`, method: 'GET', header, dataType
 /**
  * 提交订单确认
  */
-const confirm = {
-  confirm_post: {url: `${base}/orders/confirm`, method: 'POST', header, dataType}
+const ordersinfo = {
+  confirm_post: {url: `${base}/orders/confirm`, method: 'POST', header, dataType},
+  payment_get: {url: `${base}/orders/payment`, method: 'GET', header, dataType},
+  payment_post: {url: `${base}/orders/payment`, method: 'POST', header, dataType}
 };
 
+const qrimg = {url: `${base}/qrimgs`, method: 'GET', header, dataType}
 
 /**
  * 佣金统计
@@ -283,10 +286,57 @@ export const dispatchs_get = function (params, callback) {
  * @param callback
  */
 export const confirm_post = function (params, callback) {
-  _webapp.requestx(Object.assign(params, confirm.confirm_post), function (res) {
+  _webapp.requestx(Object.assign(params, ordersinfo.confirm_post), function (res) {
     callback(res)
   })
 };
+
+/**
+ * 支付订单获取
+ */
+export const payment_get = function (params, callback) {
+  _webapp.requestx(Object.assign(params, ordersinfo.payment_get), function (res) {
+    callback(res)
+  })
+};
+
+/**
+ * 支付订单提交
+ */
+export const payment_post = function (params, callback) {
+  _webapp.requestx(Object.assign(params, ordersinfo.payment_post), function (res) {
+    callback(res)
+  })
+};
+
+/**
+ * app支付接口
+ */
+export const paymentFun = function (type, params, callback) {
+  _webapp.payment(type, params, function (res) {
+    callback(res)
+  })
+};
+/**
+ * 二维码获取
+ * @param params
+ * @param callback
+ * @constructor
+ */
+export const save = function (params, callback) {
+  _webapp.save(Object.assign(params, qrimg), function (res) {
+    callback(res)
+  })
+};
+
+/**
+ * 保存二维码
+ */
+// export const paymentFun = function (type, params, callback) {
+//   _webapp.payment(type, params, function (res) {
+//     callback(res)
+//   })
+// };
 
 /**
  * 个人中心 yellowStar
