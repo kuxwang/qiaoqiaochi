@@ -178,7 +178,7 @@
 
   import vTabbar from '../components/common/Tabbar.vue'
   import {recordStatistics_get, teamsStatistics, orderStatistics,memberInfo} from '../api/api'
-  import {_webapp} from '../config/webapp.js';
+  import {_webapp} from '../config/_webapp.js';
   import {mapMutations, mapGetters} from 'vuex'
   import { MessageBox } from 'mint-ui';
 
