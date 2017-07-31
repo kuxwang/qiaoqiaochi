@@ -1,5 +1,12 @@
 <template>
   <div class="main">
+    <section>
+      <mt-header title="提现明细" >
+        <router-link to="/vipCenter" slot="left">
+          <mt-button icon="back"></mt-button>
+        </router-link>
+      </mt-header>
+    </section>
     <ul class="moneylists">
       <li class="moneycell" v-for="i in moneylist">
         <div class="left">
@@ -58,7 +65,7 @@
     width: 100%;
     height: 100%;
     background: #eee;
-    z-index: 10;
+    z-index: 3;
     overflow: hidden;
   }
 
@@ -66,7 +73,7 @@
     width: 100%;
     padding: 0.1rem;
     background: #fff;
-    margin-top: .5rem;
+    /*margin-top: .5rem;*/
     border: 1px solid #eee;
 
   }

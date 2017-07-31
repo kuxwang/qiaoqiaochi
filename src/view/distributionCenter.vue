@@ -27,10 +27,12 @@
       <!-- <router-link class="iconfont right" :to="{name:'userinfo'}" tag="i">&#xe649;</router-link> -->
     </router-link>
     <section class="top">
-      <div class="top_1">
+      <!--<div class="top_1">-->
+        <router-link :to="{name: 'takemoney'}" tag="div">
         <span class="title">营业额</span>
         <span class="num">{{recordStatistics_get.cg_money_sum}}</span><span class="yuan"> 元</span>
-      </div>
+        </router-link>
+      <!--</div>-->
       <!--<div>-->
         <router-link :to="{name: 'takemoney'}" tag="div">
         <span class="title">佣金</span>
@@ -179,7 +181,7 @@
   import {_webapp} from '../config/_webapp.js';
   import {mapMutations, mapGetters} from 'vuex'
   import { MessageBox } from 'mint-ui';
-  
+
   export default{
     data () {
       return {
@@ -282,7 +284,7 @@
 
             })
           }else if(action=='cancel'){//表示点击了取消
-            
+
           }
         })
       },
