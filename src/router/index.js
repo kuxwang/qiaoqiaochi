@@ -66,10 +66,10 @@ const DrawbackInfo= r => require.ensure([], () => r(require('../components/order
 export default new Router({
   routes: [
     {
-      path: '/',
-      component: app,//顶级路由
-      children: [
-        {
+      // path: '/',
+      // component: app,//顶级路由
+      // children: [
+      //   {
           path: '',
           name: 'home',
           component: Home,
@@ -246,9 +246,9 @@ export default new Router({
           path:'/payselect',
           name:'payselect',
           component:payselect
-        }
-      ]
-    },
+        },
+      // ]
+    // },
     // {
     //   path: '/test',
     //   name: 'test',
