@@ -23,6 +23,7 @@
       </li>
     </ul>
     <!--</mt-loadmore>-->
+    <!--</mt-loadmore>-->
   </div>
 </template>
 
@@ -56,7 +57,16 @@
       },
       ...mapMutations({
         ordersn:'ORDERSN',
-      })
+      }),
+      loadTop() {
+//      ...// 加载更多数据
+        this.$refs.loadmore.onTopLoaded();
+      },
+      loadBottom() {
+//      ...// 加载更多数据
+        this.allLoaded = true;// 若数据已全部获取完毕
+        this.$refs.loadmore.onBottomLoaded();
+      }
     },
     mounted(){
       let params={
