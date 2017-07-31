@@ -96,7 +96,7 @@
 	import {Toast, Picker, Popup, DatetimePicker} from 'mint-ui';
 	import {address} from '../../assets/js/address';
   	import {memberInfo,PUT_USERINFO,PUT_USERAVATARS} from '../../api/api';
-  	import {_webapp} from '../../config/_webapp.js';
+  	import {_webapp} from '../../config/webapp.js';
 	export default{
 		data(){
 			return{
@@ -206,12 +206,12 @@
 		    handleChange(value) {
 		    	console.log(value)
 	          let y = new Date(value).getFullYear();
-	          let d = new Date(value).getDate(); 
+	          let d = new Date(value).getDate();
 	          let m = new Date(value).getMonth() + 1;
 	          m = m < 10 ? ('0' + m) : m;
 	          d = d < 10 ? ('0' + d) : d;
 	          this.myDate2=`${y}-${m}-${d}`;
-	          this.myDate=`${y}年${m}月${d}日`;     
+	          this.myDate=`${y}年${m}月${d}日`;
 		    },
         	getMyImg(e){
           	_webapp.uploadImg((res)=>{
@@ -270,7 +270,7 @@
 		            		avatar:that.myImg
 		            	}
 		            }
-		            PUT_USERAVATARS(params, function (res) {	
+		            PUT_USERAVATARS(params, function (res) {
 		            	if(res.statusCode===1){
 		            		console.log('上传图片成功')
 		            	}else{
@@ -290,7 +290,7 @@
         }
 		},
 		mounted() {
-	      
+
         	this.getUserInfo();
 	   }
 
