@@ -35,7 +35,7 @@
         <span class="iconfont">&#xe6ce;</span>
         {{shopname}}
       </div>
-      <router-link class="good-info" to="/details" tag="div">
+      <router-link class="good-info" to="/" tag="div">
         <img :src=detailurl class="order-small">
         <p>{{title}}</p>
         <div class="good-price">
@@ -67,19 +67,19 @@
       <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:proprice,orderid:oid}}" tag="button" v-if="status==1 && obj.canrefund&&obj.refundid==0">
         申请退款
       </router-link>
-      <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:proprice,orderid:oid}}" tag="button" v-if="status==1 && obj.canrefund&&obj.refundid!=0">
-        退款申请中
-      </router-link>
-      <router-link class="charge-order1" to="" tag="button" v-if="status==2">
+      <!--<router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:proprice,orderid:oid}}" tag="button" v-if="status==1 && obj.canrefund&&obj.refundid!=0">-->
+        <!--退款申请中-->
+      <!--</router-link>-->
+      <button class="charge-order1"  v-if="status==2" @click="fn1(oid)">
         确认收货
-      </router-link>
+      </button>
       <router-link class="look-logi ocolor" :to="{path:'logistics',query:{id:oid,exp:exp,expsn:expsn}}" tag="button" v-if="status==2">
         查看物流
       </router-link>
       <router-link class="charge-order1 " :to="{path:'drawback',query:{money:proprice,orderid:oid}}" tag="button" v-if="status==3 && obj.canrefund&&obj.refundid==0">
         申请退款
       </router-link>
-      <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:proprice,orderid:oid}}" tag="button" v-if="status==3 && obj.canrefund&&obj.refundid!=0">
+      <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:proprice,orderid:oid}}" tag="button" v-if="obj.canrefund&&obj.refundid!=0">
         退款申请中
       </router-link>
       <router-link class="look-logi ocolor" :to="{path:'logistics',query:{id:oid,exp:exp,expsn:expsn}}" tag="button" v-if="status==3">
@@ -128,6 +128,36 @@
     methods:{
       goBack:function () {
         this.$router.go(-1)
+      },
+      fn1:function (orderid) {
+        let that=this;
+        MessageBox({
+          title: '提示',
+          message: '请确定已收货 否则钱财两空哦',
+          showCancelButton: true
+        }).then(action=>{
+          if(action=='confirm'){
+            let params={
+              data:{
+                orderid:that.oid,
+                type:'comf'
+              }
+            }
+            orderManu(params,function (res) {
+              console.log(res)
+              if(res.statusCode==1){
+                location.reload()
+              }
+              else{
+                MessageBox.alert('操作成功').then(action => {
+
+                });
+              }
+            })
+          }else if(action=='cancel'){
+
+          }
+        });
       },
       pay(){
         this.orderinfo(this.ordersin)

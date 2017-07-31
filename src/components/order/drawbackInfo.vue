@@ -62,8 +62,8 @@
                 duration: 1500
             })
             setTimeout(()=>{
-              this.$router.push({path:'orderd',query:{orderid:this.drawbackob.orderid}})
-            },1500)
+              this.$router.push({path:'orderd',query:{oid:this.drawbackobj.orderid}})
+            },500)
           }else{
             console.log('取消退款接口异常')
           }

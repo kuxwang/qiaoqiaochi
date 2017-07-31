@@ -50,9 +50,9 @@
                 <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button" v-if="v.status==2">
                   查看物流
                 </router-link>
-                <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">
-                  申请退款
-                </router-link>
+                <!--<router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">-->
+                  <!--申请退款-->
+                <!--</router-link>-->
                 <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
                   退款申请中
                 </router-link>
@@ -68,7 +68,7 @@
             </div>
             <p>您还没有相关订单</p>
             <p>赶快去购物吧</p>
-            <router-link tag="button" to="/details">再逛逛</router-link>
+            <router-link tag="button" to="/">再逛逛</router-link>
           </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="will-pay">
@@ -109,7 +109,7 @@
             </div>
             <p>您还没有相关订单</p>
             <p>赶快去购物吧</p>
-            <router-link tag="button" to="/details">再逛逛</router-link>
+            <router-link tag="button" to="/">再逛逛</router-link>
           </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="will-send">
@@ -131,6 +131,9 @@
                 <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">
                   申请退款
                 </router-link>
+                <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
+                  退款申请中
+                </router-link>
               </div>
             </li>
           </ul>
@@ -140,7 +143,7 @@
             </div>
             <p>您还没有相关订单</p>
             <p>赶快去购物吧</p>
-            <router-link tag="button" to="/details">再逛逛</router-link>
+            <router-link tag="button" to="/">再逛逛</router-link>
           </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="will-reserve">
@@ -174,7 +177,7 @@
             </div>
             <p>您还没有相关订单</p>
             <p>赶快去购物吧</p>
-            <router-link tag="button" to="/details">再逛逛</router-link>
+            <router-link tag="button" to="/">再逛逛</router-link>
           </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="done">
@@ -212,7 +215,7 @@
             </div>
             <p>您还没有相关订单</p>
             <p>赶快去购物吧</p>
-            <router-link tag="button" to="/details">再逛逛</router-link>
+            <router-link tag="button" to="/">再逛逛</router-link>
           </div>
         </mt-tab-container-item>
       </mt-tab-container>
