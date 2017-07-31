@@ -32,14 +32,15 @@
 </template>
 <script>
   import {header,MessageBox} from 'mint-ui';
-  import {orderManu} from '../../api/api.js'
+  import {orderManu} from '../../api/api.js';
+  import {mapMutations, mapGetters} from 'vuex'
   export default{
     data(){
       return{
         money:'',
         orderid:'',
         reason:'卖家缺货',
-        ing:true
+        ing:true,
       }
     },
     methods: {
@@ -55,6 +56,7 @@
           showCancelButton: true
         }).then(action=>{
           if(action=='confirm'){
+            console.log(1)
             let params={
               data:{
                 orderid:this.orderid,
@@ -64,11 +66,17 @@
             }
             orderManu(params,function (res) {
               console.log(res)
-              if(res.statusCode==-1){
-                console.log(1)
-                that.$router.push({path:'orderd',query:{oid:that.orderid,ing:that.ing}})
+              if(res.statusCode==1){
+//                this.backtime(res.data.createtime)
+                that.setdrawbackobj(res.data)
+//                console.log(2)
+                that.$router.push({path:'orderd',query:{oid:that.orderid}})
               }else{
-                MessageBox.alert('操作失败!', '提示');
+                MessageBox.alert('操作失败!', '提示').then(action => {
+//                  console.log(action)
+//                  if(actioc==1)
+                });
+                that.$router.go(-1);
               }
             })
           }else if(action=='cancel'){
@@ -78,7 +86,14 @@
       },
       fn3(){
 
-      }
+      },
+      ...mapMutations({
+        reason2: 'REASON',
+        backtime:'BACKTIME',
+        descri:'DESCRI',
+        backprice:'BACKPRICE',
+        setdrawbackobj:'DRAWBACKOBJ'
+      })
     },
     created:function () {
       this.money=this.$route.query.money

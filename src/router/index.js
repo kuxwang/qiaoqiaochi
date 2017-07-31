@@ -57,7 +57,7 @@ const DeliveryAddress= r => require.ensure([], () => r(require('../components/co
 const AddAddress= r => require.ensure([], () => r(require('../components/common/AddAddress.vue')), 'common')
 const DeliveryMode=r => require.ensure([], () => r(require('../components/common/DeliveryMode.vue')), 'common')
 /**
- * 訂單詳情
+ * 订单详情
  */
 const Orderd= r => require.ensure([], () => r(require('../components/order/orderDetail.vue')), 'Orderd')
 const Logistics= r => require.ensure([], () => r(require('../components/order/logistics.vue')), 'Logistics')

@@ -21,21 +21,24 @@
         <span class="iconfont">&#xe6ce;</span>
         物品信息
       </div>
-      <router-link class="good-info" to="/details" tag="div">
-        <img :src="thumb" alt="" class="order-small">
-        <p>{{title}}</p>
-        <div class="good-price">
-          <p>￥{{price}}</p>
-          <p>×{{total}}</p>
-        </div>
-      </router-link>
+      <!--<router-link class="good-info" to="/details" tag="div">-->
+        <router-link class="good-info" to="/" tag="div">
+          <img :src="thumb" alt="" class="order-small">
+          <p>{{title}}</p>
+          <div class="good-price">
+            <p>￥{{price}}</p>
+            <p>×{{total}}</p>
+          </div>
+        </router-link>
+
+      <!--</router-link>-->
     </div>
     <div class="logistics-info">
       <div class="pib-header">
         <span class="iconfont">&#xe606;</span>
         物流跟踪
       </div>
-      <ul v-for="(v,i) in arr">
+      <ul v-for="(v,i) in arr" v-if="!isShow">
         <li>
           <b></b>
           <p class="first">{{v.context}}</p>
@@ -68,6 +71,7 @@
 </template>
 <script>
   import { Header} from 'mint-ui'
+  import { mapState} from 'Vuex'
   import { expressInfo ,orderDetail} from '../../api/api.js'
   export default {
     data(){
@@ -84,10 +88,18 @@
 //        marketprice:''
       }
     },
+    computed:{
+      ...mapState([
+        'orderdetails'
+      ])
+    },
     methods:{
       goBack:function () {
         this.$router.go(-1)
-      }
+      },
+//      jumpGoodslink () {
+//        this.$router.push({path:'details',query:{goodsid:orderdetails.goods.id}})
+//      }
     },
     created:function () {
       var that=this;
