@@ -12,8 +12,9 @@
 	          <span class="fl">
 	            头像
 	          </span>
-	          <span class="fr" style="overflow:hidden">
-	            <img id="img_upload"/>
+	          <span class="fr">
+	            <img id="img_upload" src="../../assets/images/userinfo-02.png"  v-show="!myImg" />
+	            <img id="img_upload" :src="myImg"  v-show="myImg" />
 	          </span>
 	          <!-- <input id="file_head" type="file" @change="getMyImg($event)"/> -->
 	          <input id="file_head" type="button" @click="getMyImg()"/>
@@ -58,7 +59,7 @@
 	          <span class="userinfo-list-lf fl">
 	            出生日期
 	          </span>
-	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择出生日期" v-model="myDate" disabled>
+	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择出生日期" v-model="myDate">
 	        </li>
 	    </ul>
 	    <div class="postUserInfo" @click="postUserInfo">
@@ -138,6 +139,7 @@
 			    value1:'',
 			    startDate: new Date('1960'),
 			    endDate: new Date(),
+			    myImg:''
 			}
 		},
 		methods:{
@@ -232,7 +234,7 @@
           // })
           console.log(8282828)
           _webapp.uploadImg((res)=>{
-     
+     		this.myImg=res.data
           })
         },
         getUserInfo(){
@@ -271,17 +273,34 @@
               area:this.myRegion
             }
           }
-          console.log(params)
           let _this=this;
           PUT_USERINFO(params, function (res) {
-            _this.$router.go(-1);
-            console.log(res);
-            Toast({
-              message: '个人信息提交成功!',
-              position: 'middle',
-              duration: 1000
-            });
-            
+          	console.log(res)
+          	if(res.statusCode===1){
+	            _this.$router.go(-1);
+	            let that=_this;
+	            if(that.myImg!=''){
+		            let params={
+		            	'data':{
+		            		avatar:that.myImg
+		            	}
+		            }
+		            PUT_USERAVATARS(params, function (res) {	
+		            	if(res.statusCode===1){
+		            		console.log('上传图片成功')
+		            	}else{
+		            		console.log('请求')
+		            	}
+		            })
+		        }
+	            Toast({
+	              message: '个人信息提交成功!',
+	              position: 'middle',
+	              duration: 1000
+	            });
+            }else{
+            	console.log('请求失败')
+            }
           })
         }
 		},
@@ -334,11 +353,12 @@
 	.userinfo-header span:nth-child(2) {
 	    width: 0.25rem;
 	    height: 0.25rem;
-	     background: url('../../assets/images/userinfo-02.png') no-repeat center center;
+	     /*background: url('../../assets/images/userinfo-02.png') no-repeat center center;*/
 	    background-size: cover;
 	    margin-top: 0.13rem;
 	    font-size: 0.12rem;
 	    color: #969696;
+	    border-radius: 50%;
 	}
   .userinfo-header span:nth-child(2) img{
     display: block;
@@ -355,10 +375,10 @@
 	    position: absolute;
 	}
   	#img_upload {
-	  /*  width: 0.25rem;
+	    width: 0.25rem;
 	    height: 0.25rem;
 	    border: none;
-	    border-radius: 50%;*/
+	    border-radius: 50%;
   	}
   	.userinfo-list-lf{
   		/*width: 20%;*/

@@ -1,11 +1,15 @@
 <template>
-    <div class="main order-header">
-      <mt-header title="我的订单" fixed>
-        <router-link to="/" slot="left" >
-          <mt-button icon="back"></mt-button>
-        </router-link>
-      </mt-header>
+  <div class="main order-header">
+
+    <mt-header title="我的订单" fixed>
+      <router-link to="/" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+    </mt-header>
+    <!--<v-scroll ref="scroll" class="scroll-style">-->
+
       <div class="page-navbar">
+
         <mt-navbar class="page-part" v-model="selected">
           <mt-tab-item id="all" @click="all">全部</mt-tab-item>
           <mt-tab-item id="will-pay">待付款</mt-tab-item>
@@ -13,13 +17,13 @@
           <mt-tab-item id="will-reserve">待收货</mt-tab-item>
           <mt-tab-item id="done">已完成</mt-tab-item>
         </mt-navbar>
-
         <mt-tab-container v-model="selected" class="orderList" id="content-list">
           <mt-tab-container-item id="all">
             <ul class="order-list" v-show="!isShow1" v-for="(v,i) in order0">
               <li>
                 <div>订单号：{{v.ordersn}}</div>
-                <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status,num:v.goods[0].total}}" tag="div">
+                <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status,num:v.goods[0].total}}"
+                             tag="div">
                   <img :src=v.goods[0].thumb alt="" class="order-small">
                   <p>{{v.goods[0].title}}</p>
                   <div class="good-price">
@@ -31,25 +35,31 @@
                   <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
                 </div>
                 <div class="good-btn">
-                  <button class="cancel-order"  v-if="v.status==0" @click="cancel(v.id)">
+                  <button class="cancel-order" v-if="v.status==0" @click="cancel(v.id)">
                     取消订单
                   </button>
                   <router-link class="charge-order ocolor" to="" tag="button" v-if="v.status==0">
                     付款
                   </router-link>
-                  <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.status==1">
+                  <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}"
+                               tag="button" v-if="v.status==1">
                     申请退款
                   </router-link>
                   <router-link class="charge-order1" to="" tag="button" v-if="v.status==2" @click="fn1()">
                     确认收货
                   </router-link>
-                  <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button" v-if="v.status==2">
+                  <router-link class="look-logi ocolor"
+                               :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button"
+                               v-if="v.status==2">
                     查看物流
                   </router-link>
-                  <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id,}}" tag="button" v-if="v.status==3">
+                  <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id,}}"
+                               tag="button" v-if="v.status==3">
                     申请退款
                   </router-link>
-                  <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button" v-if="v.status==3">
+                  <router-link class="look-logi ocolor"
+                               :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button"
+                               v-if="v.status==3">
                     查看物流
                   </router-link>
                 </div>
@@ -68,7 +78,7 @@
             <ul class="order-list" v-show="!isShow2" v-for="(v,i) in order1">
               <li>
                 <div>订单号：{{v.ordersn}}</div>
-                <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}"  tag="div">
+                <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" tag="div">
                   <img :src=v.goods[0].thumb alt="" class="order-small">
                   <p>{{v.goods[0].title}}</p>
                   <div class="good-price">
@@ -83,11 +93,11 @@
                   <button class="cancel-order" @click="cancel(v.id)">
                     取消订单
                     <!--<select id="" v-show="isSelect">-->
-                      <!--<option value="">不取消了</option>-->
-                      <!--<option value="">我不想买了</option>-->
-                      <!--<option value="">信息填写错误，重新拍</option>-->
-                      <!--<option value="">同城见面交易</option>-->
-                      <!--<option value="">其他原因</option>-->
+                    <!--<option value="">不取消了</option>-->
+                    <!--<option value="">我不想买了</option>-->
+                    <!--<option value="">信息填写错误，重新拍</option>-->
+                    <!--<option value="">同城见面交易</option>-->
+                    <!--<option value="">其他原因</option>-->
                     <!--</select>-->
                   </button>
                   <router-link class="charge-order ocolor" to="" tag="button">
@@ -121,7 +131,8 @@
                   <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
                 </div>
                 <div class="good-btn">
-                  <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button">
+                  <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}"
+                               tag="button">
                     申请退款
                   </router-link>
                 </div>
@@ -155,7 +166,8 @@
                   <button class="charge-order1" @click="fn1(v.id)">
                     确认收货
                   </button>
-                  <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button">
+                  <router-link class="look-logi ocolor"
+                               :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button">
                     查看物流
                   </router-link>
                 </div>
@@ -186,10 +198,12 @@
                   <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
                 </div>
                 <div class="good-btn">
-                  <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button">
+                  <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}"
+                               tag="button">
                     申请退款
                   </router-link>
-                  <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button">
+                  <router-link class="look-logi ocolor"
+                               :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button">
                     查看物流
                   </router-link>
 
@@ -206,129 +220,136 @@
             </div>
           </mt-tab-container-item>
         </mt-tab-container>
+
       </div>
-      <v-tabbar></v-tabbar>
-      <router-view></router-view>
-    </div>
+    <!--</v-scroll>-->
+
+    <v-tabbar></v-tabbar>
+    <router-view></router-view>
+
+  </div>
 </template>
 <script>
-  import { Navbar,MessageBox } from 'mint-ui';
- 	import vTabbar from '../components/common/Tabbar';
- 	import {orderList,orderManu} from '../api/api.js'
- 	import {mapMutations} from 'Vuex'
-	export default{
+  import {Navbar, MessageBox} from 'mint-ui';
+  import vTabbar from '../components/common/Tabbar';
+  import vScroll from '../components/common/scroll';
+
+  import {orderList, orderManu} from '../api/api.js'
+  import {mapMutations} from 'Vuex'
+  export default{
     name: 'page-navbar',
-		data(){
-			return{
+    data(){
+      return {
         selected: 'all',
-        isSelect:false,
-        isShow1:false,
-        isShow2:false,
-        isShow3:false,
-        isShow4:false,
-        isShow5:false,
-        order0:[],
-        order1:[],
-        order2:[],
-        order3:[],
-        order4:[],
-        canReason:'其他原因'
-			}
-		},
-    methods:{
+        isSelect: false,
+        isShow1: false,
+        isShow2: false,
+        isShow3: false,
+        isShow4: false,
+        isShow5: false,
+        order0: [],
+        order1: [],
+        order2: [],
+        order3: [],
+        order4: [],
+        canReason: '其他原因'
+      }
+    },
+    methods: {
       ...mapMutations([
         'orderinfo'
       ]),
-		  all:function () {
+      all: function () {
         console.log(1)
       },
-      cancel:function (orderid) {
-		    console.log(11)
-        this.isSelect=!this.isSelect;
-		    let that=this;
-		    let params={
-		      data:{
-		        orderid:orderid,
-            type:'canl',
-            reason:that.canReason
+      cancel: function (orderid) {
+        console.log(11)
+        this.isSelect = !this.isSelect;
+        let that = this;
+        let params = {
+          data: {
+            orderid: orderid,
+            type: 'canl',
+            reason: that.canReason
           }
         }
-        orderManu(params,function (res) {
+        orderManu(params, function (res) {
           console.log(res)
         })
       },
-		  fn1:function (orderid) {
+      fn1: function (orderid) {
         MessageBox({
           title: '提示',
           message: '请确定已收货 否则钱财两空哦',
           showCancelButton: true
-        }).then(action=>{
-          if(action=='confirm'){
+        }).then(action => {
+          if (action == 'confirm') {
             console.log(orderid)
-            let params={
-              data:{
-                orderid:orderid,
-                type:'comf'
+            let params = {
+              data: {
+                orderid: orderid,
+                type: 'comf'
               }
             }
-            orderManu(params,function (res) {
+            orderManu(params, function (res) {
               console.log(res)
-              if(res.status==1){
+              if (res.status == 1) {
 
               }
-              else{
+              else {
                 MessageBox.alert('操作成功').then(action => {
 
                 });
               }
             })
-          }else if(action=='cancel'){
+          } else if (action == 'cancel') {
 
           }
         });
       },
-      getOrderList:function () {
-		    let that=this;
-        let params={
-          data:{
-            page:1,
-            status:''
+      getOrderList: function () {
+        let that = this;
+        let params = {
+          data: {
+            page: 1,
+            status: ''
           }
         }
-        orderList(params,function (res) {
+        orderList(params, function (res) {
           console.log(res)
-          if(res.statusCode==1){
-            that.order0=res.data;
-            for(let i=0;i<res.data.length;i++){
-              if(res.data[i].status==0){
-              that.order1.push(res.data[i])
-              }if(res.data[i].status==1){
+          if (res.statusCode == 1) {
+            that.order0 = res.data;
+            for (let i = 0; i < res.data.length; i++) {
+              if (res.data[i].status == 0) {
+                that.order1.push(res.data[i])
+              }
+              if (res.data[i].status == 1) {
                 that.order2.push(res.data[i])
               }
-              if(res.data[i].status==2){
+              if (res.data[i].status == 2) {
                 that.order3.push(res.data[i])
               }
-              if(res.data[i].status==3){
+              if (res.data[i].status == 3) {
                 that.order4.push(res.data[i])
               }
             }
-          }else{
+          } else {
             console.log('请求出错了')
           }
-          if(that.order0.length==0){
-            that.isShow1=true;
+          if (that.order0.length == 0) {
+            that.isShow1 = true;
           }
-          if(that.order1.length==0){
-            that.isShow2=true;
+          if (that.order1.length == 0) {
+            that.isShow2 = true;
           }
-          if(that.order2.length==0){
-            that.isShow3=true;
+          if (that.order2.length == 0) {
+            that.isShow3 = true;
           }
-          if(that.order3.length==0){
-            that.isShow4=true;
+          if (that.order3.length == 0) {
+            that.isShow4 = true;
           }
-          if(that.order4.length==0){
-            that.isShow5=true;
+          if (that.order4.length == 0) {
+            that.isShow5 = true;
           }
         })
       }
@@ -336,145 +357,183 @@
     created(){
       this.getOrderList()
     },
-		components:{
-			vTabbar
-		},
-	}
+    components: {
+      vTabbar,
+      vScroll
+    },
+  }
 </script>
 <style scoped>
   @import '../assets/css/reset/reset.css';
-  *{
-    font-size:.15rem;
+
+  * {
+    font-size: .15rem;
   }
+
   .slide-enter-active, .slide-leave-active {
     transition: all 0.3s
   }
+
   .slide-enter, .slide-leave-to {
     transform: translate3d(100%, 0, 0)
   }
+
   .main {
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background:#ececec;
-    font-size:.15rem;
-    overflow:auto
+    background: #ececec;
+    font-size: .15rem;
+    overflow: auto
   }
-  .share-page{
-    padding:.5rem 1rem;
-    color:#999;
+
+  .share-page {
+    padding: .5rem 1rem;
+    color: #999;
   }
-  .share-page>div.iconfont{
-    font-size:.7rem;
+
+  .share-page > div.iconfont {
+    font-size: .7rem;
   }
-  .share-page>p{
-    font-size:.14rem;
+
+  .share-page > p {
+    font-size: .14rem;
   }
-  .share-page>button{
-    width:.7rem;
-    height:.35rem;
-    border-radius:.03rem;
-    margin-top:.15rem;
-    background:#ff4f4f;
-    outline:none;
-    color:#ddd;
+
+  .share-page > button {
+    width: .7rem;
+    height: .35rem;
+    border-radius: .03rem;
+    margin-top: .15rem;
+    background: #ff4f4f;
+    outline: none;
+    color: #ddd;
   }
+
   .mint-header {
     color: #252525;
     border-bottom: 1px solid #e3e3e3;
-    height:.45rem;
+    height: .45rem;
   }
-  /*.order-header .mintui-back:before{
-    color:#fff;
-  }*/
 
-  div.page-navbar{
-    margin-top:.45rem;
+  /*.order-header {*/
+  /*height: 100%*/
+  /*}*/
+
+  div.page-navbar {
+    /*height: 6.67rem;*/
+    margin-top: .45rem;
+    overflow: hidden;
   }
-  .order-list{
+
+  .order-list {
     background: #efefef;
-    padding-top:.01rem
+    padding-top: .01rem
   }
-  .order-list>li{
-    margin-top:.09rem;
+
+  .order-list > li {
+    margin-top: .09rem;
     background: #fff;
     text-align: left;
-    padding:0 .12rem;
+    padding: 0 .12rem;
   }
-  .order-small{
-    width:.5rem;
-    height:.5rem;
-    border:1px solid #ddd;
+
+  .order-small {
+    width: .5rem;
+    height: .5rem;
+    border: 1px solid #ddd;
   }
-  .order-list>li>div{
-    padding:.12rem 0;
-    border-bottom:1px solid #ddd;
+
+  .order-list > li > div {
+    padding: .12rem 0;
+    border-bottom: 1px solid #ddd;
   }
-  .good-info{
-    height:.75rem;
+
+  .good-info {
+    height: .75rem;
   }
-  .good-info>img{
-    float:left;
+
+  .good-info > img {
+    float: left;
   }
-  .good-info>p{
-    float:left;
-    margin-left:.08rem;
+
+  .good-info > p {
+    float: left;
+    margin-left: .08rem;
   }
-  .good-price{
-    float:right
+
+  .good-price {
+    float: right
   }
-  .good-price>p{
+
+  .good-price > p {
     text-align: right;
-    margin-bottom:.02rem;
+    margin-bottom: .02rem;
   }
-  .good-pay{
+
+  .good-pay {
     text-align: right;
-    color:#666;
+    color: #666;
   }
-  .good-pay>span{
-    color:#999;
+
+  .good-pay > span {
+    color: #999;
   }
-  div.good-btn{
+
+  div.good-btn {
     text-align: right;
-    padding:.08rem 0 !important;
-    border-bottom:none !important;
+    padding: .08rem 0 !important;
+    border-bottom: none !important;
   }
-  .good-btn>button{
-    width:.9rem;
-    height:.3rem;
-    border:none;
+
+  .good-btn > button {
+    width: .9rem;
+    height: .3rem;
+    border: none;
     outline: none;
-    color:#fff;
-    border-radius:.03rem;
-    font-size:.14rem;
+    color: #fff;
+    border-radius: .03rem;
+    font-size: .14rem;
   }
-  .orderList{
-    margin-bottom:.8rem;
+
+  .orderList {
+    margin-bottom: .8rem;
   }
-  .look-logi{
-    width:.9rem !important;
-    margin-right:.05rem;
+
+  .look-logi {
+    width: .9rem !important;
+    margin-right: .05rem;
   }
+
   /*.delete-order{*/
-    /*background:#ddd;*/
-    /*color:#777 !important;*/
-    /*width:.9rem !important;*/
-    /*margin-right:.05rem;*/
+  /*background:#ddd;*/
+  /*color:#777 !important;*/
+  /*width:.9rem !important;*/
+  /*margin-right:.05rem;*/
   /*}*/
-  .cancel-order{
-    background:#ddd;
-    color:#777 !important;
-    width:.9rem !important;
-    margin-right:.05rem;
+  .cancel-order {
+    background: #ddd;
+    color: #777 !important;
+    width: .9rem !important;
+    margin-right: .05rem;
   }
-  .back-money{
-    width:.9rem !important;
+
+  .back-money {
+    width: .9rem !important;
   }
-  .charge-order1{
-    background:#ddd;
-    color:#777 !important;
-    margin-right:.05rem;
+
+  .charge-order1 {
+    background: #ddd;
+    color: #777 !important;
+    margin-right: .05rem;
+  }
+
+  .scroll-style {
+    height: 100%;
+    /*width: 100%;*/
+    /*height: 6.2rem;*/
+    overflow: hidden;
   }
 </style>

@@ -112,7 +112,11 @@
     z-index: 2;
   }
   .title {
+<<<<<<< HEAD
+    margin: .1rem 0 0.1rem 0;
+=======
     /*margin: .5rem 0 0.1rem 0;*/
+>>>>>>> a6c7482bfab57413b6195b8681ca8823bd02bf3e
     width: 100%;
     text-align: center;
     height: 2rem;
