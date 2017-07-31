@@ -171,13 +171,15 @@
 
   ul.order-list {
     margin-top: .1rem;
+    padding:0rem 0.05rem;
   }
 
   ul.order-list li {
     display: flex;
     overflow: hidden;
     background: #fff;
-    padding: .05rem 0px;
+    padding: .05rem 0rem ;
+    border-bottom: 1px solid #dedede;
   }
 
   ul.order-list .left {
@@ -189,14 +191,16 @@
 
   ul.order-list .left span {
     display: block;
-    width: .4rem;
-    height: .4rem;
+    width: .3rem;
+    height: .3rem;
+    line-height: 0.3rem;
     border-radius: .3rem;
     border: 1px #F5751D solid;
+    background: #F5751D;
+    color: #fff;
   }
 
   ul.order-list .right {
-    border-bottom: 1px solid #dedede;
     text-align: left;
     flex: 6;
     padding: .1rem;
@@ -241,5 +245,21 @@
 .color {
   border-bottom: none !important;
 }
-
+.title h3{
+  font-size: 0.30rem;
+}
+.ordercell div.left{
+  font-size: 0.14rem;
+  color:#666;
+}
+.ordercell div.right{
+  font-size: 0.14rem;
+  color:#999;
+}
+.money{
+  font-size: 0.14rem;
+}
+ul.order-list p.yong{
+  font-size: 0.14rem;
+}
 </style>

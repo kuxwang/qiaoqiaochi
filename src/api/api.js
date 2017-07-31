@@ -278,6 +278,9 @@ export const GET_ORDER1 = function (params, callback) {
 export const addresses_get = function (params, callback) {
   _webapp.requestx(Object.assign(params, addresses.addresses_get), function (res) {
     callback(res)
+
+
+
   })
 };
 
@@ -324,7 +327,11 @@ export const orderDetail = function (params, callback) {
 };
 /**
  * 快递
- */
+
+ 
+
+
+   */
 export const expressInfo = function (params, callback) {
   _webapp.requestx(Object.assign(params, express.exp), function (res) {
     callback(res)

@@ -24,6 +24,7 @@
         <!--<span class="mint-checkbox-core"></span>-->
         <!--</div>-->
         <!--</label>-->
+        <i class="iconfont mySelected" v-show="onActives==i">&#xe67f;</i>
       </li>
     </ul>
     <router-link class="addDeliveryAddress" tag="div" :to="{name:'addaddress'}">
@@ -180,14 +181,14 @@
     background: #c3c3c3;
   }
 
-  .deliveryAddress li.on:before {
+ /* .deliveryAddress li.on:before {
     content: "✔";
     position: absolute;
     top: 0.26rem;
     right: 0.1rem;
     font-size: 0.26rem;
     color: #fff;
-  }
+  }*/
 
   .deliveryAddress li.on .deliveryAddress-tp {
     color: #fff;
@@ -211,6 +212,11 @@
     color: #fff;
     font-size: 0.16rem;
   }
-
-
+  .mySelected{
+    position: absolute;
+    top: 0.26rem;
+    right: 0.1rem;
+    font-size: 0.26rem;
+    color:#fff;
+  }
 </style>

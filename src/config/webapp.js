@@ -686,7 +686,6 @@ export var _webapp = {
       });
     }
   },
-<<<<<<< HEAD
   //退出登录
   logOut: function () {
     var handler = 'logOut';
@@ -727,7 +726,5 @@ export var _webapp = {
         });
       });
     }
-  },
-=======
->>>>>>> a8db2151033587b421d206474712318dab927d63
+  }
 };
