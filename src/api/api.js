@@ -255,7 +255,9 @@ export const addresses_post = function (params, callback) {
 /**
  * 商品详情
  */
-export const productDetail=function (params,callback) {_webapp.requestx(Object.assign(params,product.productDetail),function (res) {callback(res)})}
+export const productDetail=function (params,callback) {
+  console.log(params)
+  _webapp.requestx(Object.assign(params,product.productDetail),function (res) {callback(res)})}
 /**
  * 加入购物车
  */

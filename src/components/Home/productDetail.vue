@@ -9,6 +9,7 @@
       <div class="box">
         <div class="img-box">
           <img :src="bandimg" class="content"/>
+          <!-- <img v-la="bandimg" class="content"/> -->
         </div>
       </div>
       <div class="intro">

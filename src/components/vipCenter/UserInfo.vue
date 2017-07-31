@@ -12,8 +12,9 @@
 	          <span class="fl">
 	            头像
 	          </span>
-	          <span class="fr" style="overflow:hidden">
-	            <img id="img_upload"/>
+	          <span class="fr">
+	            <img id="img_upload" src="../../assets/images/userinfo-02.png"  v-show="!myImg" />
+	            <img id="img_upload" :src="myImg"  v-show="myImg" />
 	          </span>
 	          <!-- <input id="file_head" type="file" @change="getMyImg($event)"/> -->
 	          <input id="file_head" type="button" @click="getMyImg()"/>
@@ -138,6 +139,7 @@
 			    value1:'',
 			    startDate: new Date('1960'),
 			    endDate: new Date(),
+			    myImg:''
 			}
 		},
 		methods:{
@@ -232,7 +234,7 @@
           // })
           console.log(8282828)
           _webapp.uploadImg((res)=>{
-     
+     		this.myImg=res.data
           })
         },
         getUserInfo(){
@@ -334,11 +336,12 @@
 	.userinfo-header span:nth-child(2) {
 	    width: 0.25rem;
 	    height: 0.25rem;
-	     background: url('../../assets/images/userinfo-02.png') no-repeat center center;
+	     /*background: url('../../assets/images/userinfo-02.png') no-repeat center center;*/
 	    background-size: cover;
 	    margin-top: 0.13rem;
 	    font-size: 0.12rem;
 	    color: #969696;
+	    border-radius: 50%;
 	}
   .userinfo-header span:nth-child(2) img{
     display: block;
@@ -355,10 +358,10 @@
 	    position: absolute;
 	}
   	#img_upload {
-	  /*  width: 0.25rem;
+	    width: 0.25rem;
 	    height: 0.25rem;
 	    border: none;
-	    border-radius: 50%;*/
+	    border-radius: 50%;
   	}
   	.userinfo-list-lf{
   		/*width: 20%;*/

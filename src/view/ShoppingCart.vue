@@ -260,7 +260,10 @@
 	            	total:''
 	          	}
 	          	this.getMyorders(myOrders);
-	          	this.$router.push({name:'confirmorder'});
+	          	if(this.defPrice>0){
+	          		this.$router.push({name:'confirmorder'});
+	          	}
+	          	
 			},
 			mycartsInt(){
 				let params = {}
