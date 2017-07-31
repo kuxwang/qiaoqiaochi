@@ -113,7 +113,7 @@
         if(res.statusCode==1){
           this.personlist=res.data;
 
-          if(personlist.length()<=1){
+          if(this.personlist.length()<=1){
            this.searched=0
           }else  {
             console.log(res)
