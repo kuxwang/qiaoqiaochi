@@ -67,43 +67,43 @@
       })
     },
     mounted(){
-        console.log(typeof (this.searchnum))
-      console.log(this.searchnum.length)
-      if(this.searchnum.length==20){
+      if(this.searchnum.length===20){
            var obj={
               ordersn:this.searchnum
             }
-      }else if(this.searchnum.length==7) {
+      }else if(this.searchnum.length===7) {
         obj={
           mid:this.searchnum
         }
       }
       let params={
         data: obj
-        /*data: {
-          ordersn:this.searchnum
-        }*/
-      }
+
+      };
       orders(params,(res)=>{
-        if(res.statusCode==1){
-          if(this.searchnum.length==20){
+        if(res.statusCode===1){
+          if(this.searchnum.length===20){
               let obji=[];
-              obji.push(res.data.order)
-              if(obji.length<=0 ){
+              obji.push(res.data.order);
+              if(!obji || obji.length<=0 ){
                 this.searched=false
               }else {
                 this.orderlist=obji
               }
-
             console.log(this.orderlist)
           }else {
             this.orderlist=res.data.order;
-            console.log(this.orderlist)
+            console.log(this.orderlist);
+            if(!this.orderlist || this.orderlist<=0){
+              this.searched=false
+            }
           }
+          console.log(res)
 
         }else {
           console.log('请求失败');
-          console.log(this.searchnum)
+          this.searched=false
+
         }
       })
     },

@@ -43,12 +43,12 @@
         </div>
         <div class="right" :class="{'color': comparefun(ordercom,index)}">
           <div class="money">
-            <p>+<em>{{i.nickname}}</em></p>
+            <p>昵称：<em>{{i.nickname}}</em></p>
             <p class="yong">佣金金额：{{i.c_money}}</p>
           </div>
           <div class="dec">
-            <p>{{i.id}}</p>
-            <p class="yong">佣金比列:{{i.c_rate}}</p>
+            <p>用户编号：{{i.id}}</p>
+            <p class="yong">佣金比列：{{i.c_rate}}</p>
           </div>
         </div>
       </li>
@@ -124,6 +124,10 @@
     background: #fff;
     padding: .26rem 0px .1rem;
     margin-top: .5rem
+  }
+  .title span {
+    font-weight: 400;
+    color: #666;
   }
 
   .main2 {
@@ -225,7 +229,7 @@
   }
 
   ul.order-list .yong {
-    width: 1rem;
+    width: 1.1rem;
     text-align: left;
     font-size: .12rem;
   }
