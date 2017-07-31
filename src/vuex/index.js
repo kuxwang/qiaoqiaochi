@@ -13,8 +13,17 @@ const state = {
   onActive:'',//默认收货地址选中索引值
   busActive:'',//默认配送方式索引值
   tabselect: '',  //订单和伙伴状态颜色
-  ordersn:'' , //订单编号
-  backTime:''//申请退款时间
+  ordersn:'',  //订单编号
+  address: '', //订单确认页的收货地址列表页
+  addressListNum: '', //地址列表数量
+  delivery: '', //选中的配送信息
+  myOrders:{  //下单页面所需参数
+    goodsid:'',
+    optionid:'',
+    cartids:'',
+    total:''
+  },
+  orderInfo: '' //订单信息
 }
 
 export default new Vuex.Store({

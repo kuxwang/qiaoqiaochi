@@ -1,20 +1,28 @@
 <template>
   <div id="app">
-    <keep-alive>
+    <!-- <keep-alive> -->
       <router-view></router-view>
-    </keep-alive>
+    <!-- </keep-alive> -->
   </div>
 </template>
 <script>
+  import BScroll from 'better-scroll'
   export default {
     name: 'app',
+    created () {
+
+//      const allScroll = new BScroll(this.$refs.app, {})
+    },
+    methods: {
+//        const const allScroll = new BScroll(this.$refs.app, {})
+    }
   }
 </script>
 
-<<<<<<< HEAD
-=======
+
 <style>
   @import './assets/css/fonts/iconfont.css';
+
   #app {
     /*width: 3.75rem;*/
     height: 100%;
@@ -25,6 +33,7 @@
     color: #2c3e50;
     position: relative;
     background-color: #efeff4 !important;
+    overflow: hidden;
   }
 
   /*公共头部*/

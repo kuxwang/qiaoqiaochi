@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <section>
-      <mt-header fixed title="提现" >
+      <mt-header title="提现" >
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
@@ -9,52 +9,117 @@
     </section>
     <div class="title">
       <span class="up">可提现金额（元）</span>
-      <span class="down">155</span>
+      <span class="down">{{moneylist.allprice}}</span>
     </div>
     <h5>收入</h5>
     <ul class="view">
       <li class="cell">
         累计销售收益
-        <span class="iconfont">&#xe61b;</span>
-        <span>1231</span>
+        <span>0元</span>
       </li>
       <li class="cell">
         累计管理收益
-        <span class="iconfont">&#xe61b;</span>
-        <span>1231</span>
+        <!--<span class="iconfont">&#xe61b;</span>-->
+        <span>0元</span>
       </li>
-      <li class="cell">
+     <!-- <li class="cell">
         累计消费省钱
-        <span class="iconfont">&#xe61b;</span>
-        <span>1231</span>
-      </li>
+        <span>1231元</span>
+      </li>-->
     </ul>
     <h5>支出</h5>
     <ul class="view">
-      <li class="cell">
+      <!--<li class="cell">-->
+        <router-link class="cell" :to="{name: 'moneylist'}" tag="li">
         已提现金额
         <span class="iconfont">&#xe61b;</span>
-        <span>1231</span>
-      </li>
+        <span>{{moneylist.allprice}}元</span>
+        </router-link>
+      <!--</li>-->
     </ul>
-    <buttom class="btn">
+    <div class="btn" @click="outmoney">
       提现
-    </buttom>
+    </div>
+
+    <router-view></router-view>
   </div>
 </template>
+<script>
 
+  import { withdrawals_get, withdrawals_post} from '../../api/api.js'
+
+
+  export default{
+      data(){
+          return {
+            moneylist:''
+          }
+      },
+    created(){
+
+    },
+    mounted(){
+      let params={
+        data: {
+          type:'all',
+          page:1,
+          psize:10
+        }
+      }
+      withdrawals_get(params,(res)=>{
+          if(res.statusCode==1){
+            this.moneylist=res.data
+            console.log(this.moneylist)
+            console.log(res)
+          }else {
+              console.log('请求失败')
+          }
+      })
+    },
+    methods: {
+        outmoney(){
+          /*let params={
+            data: {
+              type:'all',
+              page:1,
+              psize:10
+            }
+          }
+          withdrawals_get(params,(res)=>{
+            console.log(res)
+
+          })*/
+        }
+    }
+
+  }
+
+
+
+
+
+
+</script>
 
 
 <style scoped>
   .main {
-
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ececec;
+    overflow: auto;
+    z-index: 2;
   }
   .title {
-    margin: .5rem 0 0.1rem 0;
+    /*margin: .5rem 0 0.1rem 0;*/
     width: 100%;
     text-align: center;
     height: 2rem;
     background-color: #f5751d;
+    margin-bottom: 0.1rem;
 
   }
   .title span {
@@ -64,12 +129,12 @@
   .up {
     font-size: .18rem;
     position: relative;
-    top:.5rem;
+    top:.6rem;
   }
   .down {
     font-size: .28rem;
     position: relative;
-    top:.5rem;
+    top:.75rem;
   }
   h5 {
     text-align: left;
@@ -104,6 +169,9 @@
     color: #fff;
     line-height: .35rem;
 
+  }
+  .mint-header {
+    z-index: 3;
   }
 
 

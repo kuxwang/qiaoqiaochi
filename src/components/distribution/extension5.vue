@@ -3,20 +3,21 @@
     <!--<mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">-->
     <ul class="p-list" >
       <li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">
+      <!--<li class="p-cell" @click="orderinfo(index)">-->
         <div class="up">
           <span class="ordernum">订单编号{{i.ordersn}}</span>
           <span class="time">{{i.createtime}}</span>
         </div>
         <div class="down">
           <div class="logo">
-            <img :src="i.avatar"/>
+            <img :src="i.thumb"/>
           </div>
           <div class="info">
             <h5>{{i.nickname}}</h5>
             <span>{{i.mid}}</span>
           </div>
           <div class="ordertype">
-            <span>{{i.status}}</span>
+            <span v-if="i.status">已完成</span>
             <span>￥{{i.price}}</span>
           </div>
         </div>
@@ -27,7 +28,7 @@
 
 <script>
   import { Loadmore } from  'mint-ui'
-  import {orderStatistics,orderLists} from '../../api/api';
+  import {orderStatistics,orderLists,orders} from '../../api/api';
   import {mapMutations,mapGetters} from 'vuex'
   export default{
     data(){
@@ -58,25 +59,47 @@
       })
     },
     mounted(){
-      let params={
-        data: {
-          type:'lock',
-          page:1,
-          psize:10
+        console.log(typeof (this.searchnum))
+      console.log(this.searchnum.length)
+      if(this.searchnum.length==20){
+           var obj={
+              ordersn:this.searchnum
+            }
+      }else if(this.searchnum.length==7) {
+        obj={
+          mid:this.searchnum
         }
       }
-      orderLists(params,(res)=>{
-          if(res.statusCode==1){
-            this.orderlist=res.data;
+      let params={
+        data: obj
+        /*data: {
+          ordersn:this.searchnum
+        }*/
+      }
+      orders(params,(res)=>{
+        if(res.statusCode==1){
+          if(this.searchnum.length==20){
+              let obji=[];
+              obji.push(res.data.order)
+              this.orderlist=obji
             console.log(this.orderlist)
           }else {
-              console.log('请求失败')
+            this.orderlist=res.data.order;
+            console.log(this.orderlist)
           }
 
-
-
+          console.log('请求成功')
+        }else {
+          console.log('请求失败');
+          console.log(this.searchnum)
+        }
       })
     },
+    computed: {
+      ...mapGetters([
+        'searchnum',
+      ])
+    }
 
   }
 </script>
@@ -157,7 +180,6 @@
     font-size: 0.14rem;
   }
   .info span {
-    color: #000;
     font-size: 0.14rem;
     color: #666;
   }
@@ -181,7 +203,5 @@
   .ordertype span:last-child {
     margin-top: 0.1rem;
   }
-  .mint-header.is-fixed {
-    z-index: 3;
-  }
+
 </style>

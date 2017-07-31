@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <section>
-      <mt-header fixed title="推广订单" >
+      <mt-header fixed title="推广订单" class="c-1" >
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
@@ -17,7 +17,7 @@
         <div class="title">全部</div>
         <div class="iconfont listicon">&#xe624;</div>
         <div>
-          <span class="num">{{ordernum.total.order_count}}</span><span class="yuan"> 单</span>
+          <span class="num">{{ordertotal}}</span><span class="yuan"> 单</span>
         </div>
       <!--</router-link>-->
       </li>
@@ -26,7 +26,7 @@
         <div class="title">未结算</div>
         <div class="iconfont listicon">&#xe624;</div>
         <div>
-          <span class="num">{{ordernum.lock.order_count}}</span><span class="yuan"> 单</span>
+          <span class="num">{{orderlock}}</span><span class="yuan"> 单</span>
         </div>
       <!--</router-link>-->
       <!--</li>-->
@@ -37,7 +37,8 @@
         <div class="title">已退款</div>
         <div class="iconfont listicon">&#xe8b5;</div>
         <div>
-          <span class="num">{{ordernum.refund.order_count}}</span><span class="yuan"> 单</span>
+          <span class="num">{{orderrefund}}</span><span class="yuan"> 单</span>
+          <!--<span class="num">{{ordernum.refund.order_count}}</span><span class="yuan"> 单</span>-->
         </div>
         </li>
       <!--</router-link>-->
@@ -48,16 +49,20 @@
         <div class="title">已结算</div>
         <div class="iconfont listicon">&#xe619;</div>
         <div>
-          <span class="num">{{ordernum.lock.order_count}}</span><span class="yuan"> 单</span>
+          <span class="num">{{orderok}}</span><span class="yuan"> 单</span>
         </div>
         </li>
       <!--</router-link>-->
     </ul>
 
 
+    <!--<div class="search">
+      <input type="search" results="1" v-model="find" @click="sousuo()" placeholder="输入订单号、粉丝ID"/>
+      <button>搜索</button>
+    </div>-->
     <div class="search">
       <input type="search" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
-      <button>搜索</button>
+      <button @click="search">搜索</button>
     </div>
 
 
@@ -80,7 +85,11 @@
         active:'tab-container1',
         selected: 1,
         find:'',
-        ordernum:{}
+        ordernum:{},
+        ordertotal:'',
+        orderlock:'',
+        orderrefund:'',
+        orderok:''
       }
     },
     components: {
@@ -92,6 +101,16 @@
         this.selected = idx;
         this.$router.push({name: `extension${idx}`})
       },
+      search(){
+        this.searchnum(this.find);
+
+        this.$router.push({name: `extension5`}),
+          this.selected=5
+      },
+      ...mapMutations({
+        searchnum : 'SEARCHNUM',
+//        'tabselect': 'TABSELECT'
+      })
 
 
     },
@@ -106,6 +125,10 @@
           if(res.statusCode==1){
             this.ordernum=res.data
             console.log(this.ordernum)
+            this.ordertotal=res.data.total.order_count
+            this.orderrefund=res.data.refund.order_count
+            this.orderlock=res.data.lock.order_count
+            this.orderok=res.data.ok.order_count
           }
 
       })
@@ -113,6 +136,7 @@
     computed:{
     ...mapGetters([
         'tabselect',
+
       ]),
     }
   }
@@ -127,6 +151,7 @@
   .mint-header {
     border-bottom: 0;
     color: #fff;
+    z-index: 2;
   }
 
   .main {
@@ -137,7 +162,7 @@
     height: 100%;
     background: #ececec;
     overflow: auto;
-
+    z-index: 2;
   }
 
   .avatar {
@@ -428,5 +453,8 @@
   }
   .tabActive .num,.tabActive .yuan {
     color: #fff;
+  }
+  .mint-header .c-1 {
+    z-index: 3;
   }
 </style>

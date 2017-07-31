@@ -1,5 +1,4 @@
 <template>
-  <transition name="slide">
     <div class="main order-header">
       <mt-header title="我的订单" fixed>
         <router-link to="/" slot="left" >
@@ -211,7 +210,6 @@
       <v-tabbar></v-tabbar>
       <router-view></router-view>
     </div>
-  </transition>
 </template>
 <script>
   import { Navbar,MessageBox } from 'mint-ui';

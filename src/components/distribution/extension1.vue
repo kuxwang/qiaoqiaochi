@@ -23,6 +23,7 @@
       </li>
     </ul>
     <!--</mt-loadmore>-->
+    <!--</mt-loadmore>-->
   </div>
 </template>
 
@@ -51,13 +52,21 @@
 
       },
       orderinfo(index){
-
         this.ordersn(this.orderlist[index].ordersn);
         this.$router.push({name: `orderinfo`})
       },
       ...mapMutations({
         ordersn:'ORDERSN',
-      })
+      }),
+      loadTop() {
+//      ...// 加载更多数据
+        this.$refs.loadmore.onTopLoaded();
+      },
+      loadBottom() {
+//      ...// 加载更多数据
+        this.allLoaded = true;// 若数据已全部获取完毕
+        this.$refs.loadmore.onBottomLoaded();
+      }
     },
     mounted(){
       let params={
@@ -160,7 +169,7 @@
     font-size: 0.14rem;
   }
   .info span {
-    color: #000;
+
     font-size: 0.14rem;
     color: #666;
   }
@@ -185,4 +194,16 @@
   .ordertype span:last-child {
     margin-top: 0.1rem;
   }
+  .mint-header.is-fixed {
+    z-index: 3;
+  }
+
+
+
+
+
+
+
+
+
 </style>

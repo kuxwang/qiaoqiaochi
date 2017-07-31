@@ -35,14 +35,18 @@
           <div class="icon-b">
             <div class="iconfont tabIcon icon-car">&#xe607;</div>
             购物车
+            <i class="carNum">{{goodNums}}</i>
           </div>
         </router-link>
         <button class="icon-btn icon-btn-car ocolor" @click="handleClick">
           加入购物车
         </button>
-        <router-link class="icon-btn icon-btn-con" to="/payselect"  tag="button">
+       <!--  <router-link class="icon-btn icon-btn-con" to="/payselect"  tag="button">
           立即购买
-        </router-link>
+        </router-link> -->
+         <button class="icon-btn icon-btn-con" @click="goPay">
+          立即购买
+        </button>
       </div>
       <mt-popup v-model="popupVisible" position="bottom" modal=true>
         <div class="popup-box">
@@ -66,8 +70,10 @@
   </transition>
 </template>
 <script>
-  import { Header,Popup,Toast} from 'mint-ui'
-  import {productDetail,addCart} from '../../api/api.js'
+  import { Header,Popup,Toast} from 'mint-ui';
+  import {productDetail,addCart} from '../../api/api.js';
+  import {setStore, getStore} from '../../config/myUtils';
+  import {mapMutations, mapGetters } from 'Vuex';
   export default {
     data(){
       return{
@@ -79,38 +85,56 @@
         marketPrice:0.00,
         vipname:'',
         vipcount:'0.00',
+        total:'',
+        myStata:'',
+        goodNums:'',
+        goodsId:'',
+        optionId:0,
+        cartids:'',
         total:''
       }
     },
     methods:{
       handleClick:function () {
-        this.popupVisible = true
+        this.popupVisible = true;
+        this.myStata=1
       },
       toast:function () {
-        this.popupVisible = false;
-        let that=this;
-        let params={
-          data:{
-            goodsid:4,
+        if(this.myStata===1){//加入购物车
+          console.log('这是购物车')
+          this.popupVisible = false;
+            let that=this;
+            let params={
+              data:{
+                goodsid:4,
+                total:this.num
+              }
+          }
+          addCart(params,function (res) {
+            if(res.statusCode==1){
+              Toast({
+                message: '操作成功 商品已在购物车',
+                position: 'middle',
+                duration: 1800
+              });
+            }else{
+              Toast({
+                message: '添加失败',
+                position: 'bottom',
+                duration: 1800
+              });
+            }
+          })
+        }else if(this.myStata===2){//立即购买
+          let myOrders={
+            goodsid:this.goodsId,
+            optionid:this.optionId,
+            cartids:'',
             total:this.num
           }
+          this.getMyorders(myOrders);
+          this.$router.push({name:'confirmorder'})
         }
-        addCart(params,function (res) {
-          if(res.statusCode==1){
-            Toast({
-              message: '操作成功 商品已在购物车',
-              position: 'bottom',
-              duration: 1800
-            });
-          }else{
-            Toast({
-              message: '添加失败',
-              position: 'bottom',
-              duration: 1800
-            });
-          }
-        })
-
       },
       reduce:function (num) {
         if(num>1){
@@ -119,18 +143,20 @@
       },
       add:function () {
         this.num++;
-        console.log(this.num)
       },
       getInfo:function () {
         let that=this;
+        let good_id=this.$route.query.goodsId;
         let params={
           data:{
-            goodsid:4,
+            goodsid:good_id,
           }
         }
         productDetail(params,function (res) {
           console.log(res)
+          that.goodNums=res.data.goodscount;
           let goods=res.data.goods
+          that.goodsId=goods.id;
           that.name=goods.title;
           that.marketPrice=goods.marketprice;
           that.bandimg=res.data.pics[0];
@@ -142,7 +168,14 @@
             that.vipcount=res.data.level.discount;
           };
         })
-      }
+      },
+      goPay(){
+        this.myStata=2;
+        this.popupVisible = true;
+      },
+      ...mapMutations({
+        getMyorders:'GET_MYORDERS'
+      })
     },
     created(){
       this.getInfo()
@@ -255,6 +288,21 @@
   }
   .icon-b{
     font-size:.12rem;
+    position: relative;
+  }
+  .carNum{
+    position: absolute;
+    top:-0.02rem;
+    left:55%;
+    display: inline-block;
+    background-color: #f23030;
+    line-height: 0.1rem;
+    font-style: normal;
+    border-radius: 8px;
+    padding: 0.01rem 0.04rem;
+    font-size: 0.08rem;
+    color: #fff;
+    border:0.01rem solid #fff;
   }
   .iconfont{
     font-size:.19rem;

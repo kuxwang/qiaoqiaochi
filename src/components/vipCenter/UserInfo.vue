@@ -1,7 +1,7 @@
 <template>
  	<div class="main">
  		<section>
-	      <mt-header fixed title="我的资料">
+	      <mt-header fixed title="个人信息">
 	        <router-link to="/vipCenter" slot="left">
 	          <mt-button icon="back" ></mt-button>
 	        </router-link>
@@ -12,18 +12,19 @@
 	          <span class="fl">
 	            头像
 	          </span>
-	          <span class="fr">
-	            <img id="img_upload" :src="imgurl"/>
+	          <span class="fr" style="overflow:hidden">
+	            <img id="img_upload"/>
 	          </span>
-	          <input id="file_head" type="file" @change="getMyImg($event)"/>
+	          <!-- <input id="file_head" type="file" @change="getMyImg($event)"/> -->
+	          <input id="file_head" type="button" @click="getMyImg()"/>
 	        </li>
 	         <li>
 	          <span class="userinfo-list-lf fl">
 	            昵称
 	          </span>
-	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请输入昵称" v-model="myNc" @blur="testNc(myNc)">
+	          <input type="search" name="" class="userinfo-list-lr fl" placeholder="请输入昵称" v-model="myNc" @blur="testNc(myNc)">
 	        </li>
-	        <li>
+	        <li @click="toastPhone">
 	          <span class="userinfo-list-lf fl">
 	            手机号码
 	          </span>
@@ -33,25 +34,25 @@
 	          <span class="userinfo-list-lf fl">
 	            微信号
 	          </span>
-	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请输入微信号" v-model="myWx" @blur="testWx(myWx)">
+	          <input type="search" name="" class="userinfo-list-lr fl" placeholder="请输入微信号" v-model="myWx" @blur="testWx(myWx)">
 	        </li>
 	        <li>
 	          <span class="userinfo-list-lf fl">
 	            支付宝-账
 	          </span>
-	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请输入支付宝账号" v-model="myZfb" @blur="testZfb(myZfb)">
+	          <input type="search" name="" class="userinfo-list-lr fl" placeholder="请输入支付宝账号" v-model="myZfb" @blur="testZfb(myZfb)">
 	        </li>
 	        <li>
 	          <span class="userinfo-list-lf fl">
 	            支付宝-名
 	          </span>
-	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请输入支付宝真实姓名" v-model="myZfbName" @blur="testZfbName(myZfbName)" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')">
+	          <input type="search" name="" class="userinfo-list-lr fl" placeholder="请输入支付宝真实姓名" v-model="myZfbName" @blur="testZfbName(myZfbName)" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')">
 	        </li>
 	        <li @click="setCity">
 	          <span class="userinfo-list-lf fl">
 	            所在城市
 	          </span>
-	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择所在城市" v-model="myCity" disabled>
+	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择所在城市" v-model="myPlace" disabled>
 	        </li>
 	        <li @click="open('picker1')">
 	          <span class="userinfo-list-lf fl">
@@ -60,7 +61,7 @@
 	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择出生日期" v-model="myDate" disabled>
 	        </li>
 	    </ul>
-	    <div class="postUserInfo">
+	    <div class="postUserInfo" @click="postUserInfo">
 	    	 <button class="postUserInfo-item">
 	    		提交
 	    	</button>
@@ -73,7 +74,7 @@
 	          选择所在城市
 	          <span class="fr userpopup-lr" @click="cityConfirm">确定</span>
 	        </div>
-	       <mt-picker :slots="slots" value-key="aname" @change="cityValuesChange" class="myCityPopup"></mt-picker>
+	       <mt-picker :slots="myslots" value-key="aname" @change="cityValuesChange" class="myCityPopup"></mt-picker>
 	      </div>
 	    </mt-popup>
 	     <!-- 出生日期 -->
@@ -92,27 +93,51 @@
 </template>
 <script>
 	import {Toast, Picker, Popup, DatetimePicker} from 'mint-ui';
-	import {address, slots} from '../../assets/js/address';
+	import {address} from '../../assets/js/address';
+  	import {memberInfo,PUT_USERINFO,PUT_USERAVATARS} from '../../api/api';
+  	import {_webapp} from '../../config/_webapp.js';
 	export default{
 		data(){
 			return{
+				visible:'',
+				value:'',
 				myNc:'',
-				myPhone:'18395319906',
+				myPhone:'',
 				myWx:'',
 				myZfb:'',
 				myZfbName:'',
+		        myPlace:'',
+		        myProvince:'',
 				myCity:'',
+		        myRegion:'',
 				myDate:'',
+				myDate2:'',
 				imgurl:'',
 				mypopup1:false,
 				mypopup2:false,
-				slots: slots,
-		        visibleItemCount:5,
-		    	address: '',
-		    	temp_addr:'',
-		    	value1:null,
-		        startDate: new Date('1960'),
-		        endDate: new Date()
+				myslots: [{
+				    flex: 1,
+				    values: [],
+				    className: 'slot1',
+				    textAlign: 'center'
+				  },
+				  {
+				    flex: 1,
+				    values: [],
+				    className: 'slot2',
+				    textAlign: 'center'
+				  },
+				  {
+				    flex: 1,
+				    values: [],
+				    className: 'slot3',
+				    textAlign: 'center'
+				  }],
+			    visibleItemCount:5,
+			    temp_addr:'',
+			    value1:'',
+			    startDate: new Date('1960'),
+			    endDate: new Date(),
 			}
 		},
 		methods:{
@@ -132,13 +157,13 @@
 			},
 			cityConfirm(){//城市确认
 				this.mypopup1=false;
-				console.log(this.temp_addr)
+				this.myPlace=`${this.myProvince} ${this.myCity} ${this.myRegion}`;
 			},
 			cityCancel(){//城市取消
 				this.mypopup1=false;
 			},
 			initAddress() {//城市初始化
-		        this.slots[0].values = address.filter((item, index) => {
+		        this.myslots[0].values = address.filter((item, index) => {
 		          if (item.apid === 0) {
 		            return item;
 		          }
@@ -147,7 +172,7 @@
 	    	cityValuesChange(picker, values) {
 		        // 防止没有省份时报错
 		        if (values[0]) {
-		          this.slots[1].values = address.filter((item, index) => {
+		          this.myslots[1].values = address.filter((item, index) => {
 		            if (item.apid === values[0].aid) {
 		              return item;
 		            }
@@ -155,7 +180,7 @@
 		        }
 		        // 防止没有市时报错
 		        if (values[1]) {
-		          this.slots[2].values = address.filter((item, index) => {
+		          this.myslots[2].values = address.filter((item, index) => {
 		            if (item.apid === values[1].aid) {
 		              return item;
 		            }
@@ -164,7 +189,10 @@
 		        // 防止没有区时报错
 		        if (values[2]) {
 		          // 这里可以指定地址符，此处以空格进行连接
-		          this.temp_addr = values[0].aname + ' ' + values[1].aname + ' ' + values[2].aname;
+	              // this.myPlace=values[0].aname + ' ' + values[1].aname + ' ' + values[2].aname;
+	              this.myProvince=values[0].aname;
+	              this.myCity=values[1].aname;
+	              this.myRegion=values[2].aname;
 		        }
 		    },
 		    setbirth(){//出生日期显示
@@ -174,12 +202,93 @@
 		        this.$refs[picker].open();
 		    },
 		    handleChange(value) {
-		    	console.log(value)
-		    }
+	          let y = new Date(value).getFullYear();
+	          let d = new Date(value).getDate(); 
+	          let m = new Date(value).getMonth() + 1;
+	          m = m < 10 ? ('0' + m) : m;
+	          d = d < 10 ? ('0' + d) : d;
+	          this.myDate2=`${y}-${m}-${d}`;
+	          this.myDate=`${y}年${m}月${d}日`;     
+		    },
+        	getMyImg(e){
+          // console.log(666)
+          // var img = document.getElementById("img_upload");
+          // var reader = new FileReader();
+          // reader.onload = function (evt) {
+          //   img.src = evt.target.result;
+          //   // console.log(img.src)
+          // }
+          // reader.readAsDataURL(e.target.files[0]);
+          // var file = e.target.files[0];
+          // // console.log(file)
+          // let params={
+          //   'data':{
+          //     // avatar:file
+          //   }
+          // }
+          // console.log(params)
+          // PUT_USERAVATARS(params, function (res) {
+          //   console.log(res)
+          // })
+          console.log(8282828)
+          _webapp.uploadImg((res)=>{
+     
+          })
+        },
+        getUserInfo(){
+          let params={ }
+          let _this=this
+          memberInfo(params, function (res) {
+            if(res.statusCode===1){
+              _this.myPhone=res.data.mobile;
+              _this.myNc=res.data.realname;
+              _this.myWx=res.data.weixin;
+              _this.myZfb=res.data.alipay_account;
+              _this.myZfbName=res.data.alipay_name;
+              _this.myPlace=`${res.data.province} ${res.data.city} ${res.data.area}`;
+              _this.myDate=`${res.data.birthyear}年 ${res.data.birthmonth}月 ${res.data.birthday}日`;
+
+            }
+          })
+        },
+        toastPhone(){
+          Toast({
+            message: '手机号已经绑定无法修改',
+            position: 'top',
+            duration: 2000
+          });
+        },
+        postUserInfo(){
+          let params={
+            'data':{
+              realname:this.myNc,
+              province:this.myProvince,
+              city:this.myCity,
+              alipay_name:this.myZfbName,
+              alipay_account:this.myZfb ,
+              weixin:this.myWx,
+              birth:this.myDate2,
+              area:this.myRegion
+            }
+          }
+          console.log(params)
+          let _this=this;
+          PUT_USERINFO(params, function (res) {
+            _this.$router.go(-1);
+            console.log(res);
+            Toast({
+              message: '个人信息提交成功!',
+              position: 'middle',
+              duration: 1000
+            });
+            
+          })
+        }
 		},
 		mounted() {
-	      this.initAddress()
-	    }
+	      this.initAddress();
+        this.getUserInfo();
+	   }
 
 	}
 </script>
@@ -231,6 +340,13 @@
 	    font-size: 0.12rem;
 	    color: #969696;
 	}
+  .userinfo-header span:nth-child(2) img{
+    display: block;
+    width: 0.25rem;
+    height: 0.25rem;
+    border: none;
+    border-radius: 50%;
+  }
 	#file_head {
 	    display: block;
 	    width: 100%;
@@ -239,11 +355,10 @@
 	    position: absolute;
 	}
   	#img_upload {
-	    width: 0.25rem;
+	  /*  width: 0.25rem;
 	    height: 0.25rem;
 	    border: none;
-	    visibility: hidden;
-	    border-radius: 50%;
+	    border-radius: 50%;*/
   	}
   	.userinfo-list-lf{
   		/*width: 20%;*/
@@ -258,7 +373,6 @@
   	}
   	.postUserInfo{
   		width:100%;
-  		padding: 0rem 0.1rem;
   		margin-top: 0.2rem;
   	}
   	.postUserInfo-item{
@@ -268,7 +382,6 @@
   		background: #F5751D;
   		color:#fff;
   		font-size: 0.16rem;
-  		border-radius: 0.04rem;
   	}
   	.picker-toolbar .mint-datetime-action {
    		color: #979696 !important;
@@ -279,7 +392,7 @@
   	}
   	.userpopup-tp {
 	    padding: 0.12rem 0.33rem;
-	    font-size: 0.165rem;
+	    font-size: 0.16rem;
 	    color: #2C2C2C;
 	    border-bottom: 0.01rem solid #ddd;
 	}
