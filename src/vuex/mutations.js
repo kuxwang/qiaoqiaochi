@@ -9,7 +9,14 @@ import {
   DELIVERY,
   GET_MYORDERS,
   SEARCHNUM,
-  ORDERINFO
+  ORDERINFO,
+  REASON,
+  BACKTIME,
+  DESCRI,
+  REFUNDID,
+  BACKPRICE,
+  DRAWBACKOBJ,
+  ORDERDETAILS
 }
   from
     './mutation-types.js'
@@ -39,7 +46,8 @@ export default {
     state.busActive = data;
   },
   [ORDERSN] (state, data) {
-    state.ordersn = data
+    state.ordersn = data;
+    console.log(data)
   },
   [SEARCHNUM] (state, data) {
     state.searchnum = data
@@ -61,4 +69,11 @@ export default {
     console.log(orderInfo)
     state.orderInfo = orderInfo
   },
+  [DRAWBACKOBJ] (state,drawbackobj) {
+    state.drawbackobj = drawbackobj;
+  },
+  [ORDERDETAILS] (state,orderdetails) {
+    state.orderdetails = orderdetails;
+  },
+
 }

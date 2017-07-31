@@ -1,20 +1,20 @@
 <template>
   <div class="main">
     <section>
-      <mt-header title="支付">
-        <router-link to="/vipCenter" slot="left">
+      <mt-header title="提现">
+        <router-link to="/takemoney" slot="left">
           <mt-button icon="back">返回</mt-button>
         </router-link>
       </mt-header>
     </section>
     <ul class="order">
-      <div class="pic">
-        <!--<img src="../../assets/images/confirmorder-01.jpg" alt="">-->
-        <img :src="goods.thumb" alt="icon">
-      </div>
+     <!-- <div class="pic">
+        &lt;!&ndash;<img src="../../assets/images/confirmorder-01.jpg" alt="">&ndash;&gt;
+        &lt;!&ndash;<img :src="goods.thumb" alt="icon">&ndash;&gt;
+      </div>-->
       <div class="details">
-        <span class="span1">￥{{order.price}}</span>
-        <span class="span2">{{shopSet.name}}-{{order.ordersn}}</span>
+        <span class="span1">￥{{moneytotal}}</span>
+        <!--<span class="span2">{{shopSet.name}}-{{order.ordersn}}</span>-->
       </div>
 
     </ul>
@@ -25,15 +25,15 @@
           <label for="one">微信</label>
         </div>
         <div>
-          <label class="mint-checklist-label fl">
+          <label class="mint-checklist-label fl" @click="isChecked=1">
             <span class="mint-checkbox" v-if="wechat_app.switch">
-              <input type="checkbox" :checked="isChecked==1" class="mint-checkbox-input" @click="isChecked=1">
+              <input type="checkbox" :checked="true" class="mint-checkbox-input" >
               <span class="mint-checkbox-core"></span>
             </span>
-            <span class="mint-checkbox" v-if="!wechat_app.switch">
-              <input type="checkbox" disabled="disabled" class="mint-checkbox-input" value="值A">
+          <!--  <span class="mint-checkbox" v-if="!wechat_app.switch">
+              <input type="checkbox" class="mint-checkbox-input" value="值A">
               <span class="mint-checkbox-core"></span>
-            </span>
+            </span>-->
           </label>
         </div>
       </li>
@@ -43,22 +43,23 @@
           <label for="one">支付宝</label>
         </div>
         <div>
-          <label class="mint-checklist-label fl">
-            <span class="mint-checkbox" v-if="alipay_app.switch">
-              <input type="checkbox" :checked="isChecked==2" class="mint-checkbox-input" @click="isChecked=2">
+          <label class="mint-checklist-label fl" @click="isChecked=2">
+            <span class="mint-checkbox" v-if="alipay_app.switch" >
+              <input type="checkbox" :checked="isChecked==2" class="mint-checkbox-input" >
               <span class="mint-checkbox-core"></span>
             </span>
             <span class="mint-checkbox" v-if="!alipay_app.switch">
-              <input type="checkbox" disabled="disabled" class="mint-checkbox-input" value="值A">
+              <input type="checkbox" class="mint-checkbox-input" value="值A">
               <span class="mint-checkbox-core"></span>
             </span>
+            <input type="checkbox" disabled="disabled" class="mint-checkbox-input" value="值A">
           </label>
         </div>
       </li>
     </ul>
 
     <button class="commit ocolor" @click="pay">
-      支付订单
+      确认提现
     </button>
   </div>
 </template>
@@ -66,7 +67,7 @@
 <script>
   import {Checklist, Toast} from 'mint-ui';
   import {mapState} from 'Vuex';
-  import {payment_post, payment_get, paymentFun} from '../../api/api';
+  import {withdrawals_post,recordStatistics_get} from '../../api/api';
   export default {
     data () {
       return {
@@ -77,42 +78,27 @@
         payment: [],
         wechat_app: [],
         alipay_app: [],
-        payStstus: 0
+        payStstus: 0,
+        value: 0,
+        type: 0,
+        moneytotal:''
       }
     },
     methods: {
       pay () {
         if (this.isChecked) {
-          let _this = this
-          let type = this.isChecked == 1 ? 'wechat_app' : this.isChecked == 2 ? 'alipay_app' : ''
           let params = {
             data: {
-              ordersn: this.order.ordersn || '',
-              type
+              type: this.isChecked
             }
           }
-          payment_post(params, res => {
-            if (res.statusCode == 1) {
-              paymentFun(type, res.data, data => {
-                if (data.statusCode == 1) {
-                  _this.payStstus = 1
-                  Toast({
-                    message: '支付成功，自动返回至首页',
-                    position: 'middle',
-                    duration: 2000
-                  });
-                  setTimeout(() => {
-                    this.$router.push('/')
-                  }, 2000)
-                }
-              })
-            } else {
-              console.log('支付失败')
-            }
+          withdrawals_post(params, (res) => {
+            console.log(res)
+
           })
         } else {
           Toast({
-            message: '请选择支付方式',
+            message: '请选择提现方式',
             position: 'middle',
             duration: 2000
           });
@@ -120,28 +106,30 @@
 
       }
     },
-    computed: {
-      ...mapState([
-        'orderInfo'
-      ])
+    watch: {
+      isChecked(newValue){
+        console.log(newValue)
+      }
     },
+    /* computed: {
+     ...mapState([
+     'orderInfo'
+     ])
+     },*/
     created () {
-      const params = {
+      let params={
         data: {
-          ordersn: this.orderInfo
+
         }
       }
-      console.log(params)
-      payment_get(params, res => {
-        if (res.statusCode == 1) {
-          this.goods = res.data.order.goods[0]
-          this.shopSet = res.data.shopSet
-          this.order = res.data.order
-          this.payment = res.data.payment
-          this.wechat_app = res.data.payment.wechat_app
-          this.alipay_app = res.data.payment.alipay_app
-        } else {
-          console.log('支付订单获取接口异常')
+      recordStatistics_get(params,(res)=>{
+        if(res.statusCode==1){
+          this.moneylist=res.data
+          console.log(this.moneylist)
+          console.log(res)
+          this.moneytotal=res.data.ok.c_money_sum
+        }else {
+          console.log('请求失败')
         }
       })
     }
@@ -156,7 +144,10 @@
   .main {
     font-size: .16rem;
     height: 6.67rem;
-    /*background: #fff;*/
+    background: #fff;
+    width: 100%;
+    /*height: 100%;*/
+    z-index: 3;
   }
 
   ul {
@@ -185,7 +176,8 @@
     border-radius: 50%;
     margin-left: .3rem;
     vertical-align: middle;
-    float: left
+    float: left;
+    text-align: center;
   }
 
   .order > .pic > img {
@@ -194,7 +186,7 @@
   }
 
   .order > .details {
-    width: 70%;
+    width: 100%;
     float: left;
     margin-top: .24rem;
   }
@@ -204,9 +196,13 @@
   }
 
   .order .span1 {
-    padding-left: .2rem;
-    font-size: .24rem;
-    text-align: left;
+    /*padding-left: .2rem;*/
+    font-size: .3rem;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+    color: #F5751D !important;
   }
 
   .order .span2 {
@@ -296,6 +292,9 @@
   .mint-checkbox-input[disabled] + .mint-checkbox-core {
     background-color: #d9d9d9;
     border-color: #ccc;
+  }
+  .detail {
+    width: 100%;
   }
 </style>
 

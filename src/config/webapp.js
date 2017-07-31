@@ -646,12 +646,12 @@ export var _webapp = {
       });
     }
   },
-  shellQrcode : function (url) {
+  shellQrcode: function (url) {
     var handler = 'shellQrcode';
 
     if (_env.ios) {
       _webapp.setupWebViewJavascriptBridge(function (bridge) {
-        bridge.callHandler(handler, function (response) {
+        bridge.callHandler(handler, {params: url}, function (response) {
           //return _webapp.callback(response, callback);
         });
 
@@ -674,7 +674,7 @@ export var _webapp = {
           });
         }
 
-        bridge.callHandler(handler, {params : url}, function (response) {
+        bridge.callHandler(handler, {params: url}, function (response) {
           //response = eval('(' + response + ')');
           //return _webapp.callback(response, callback);
         });

@@ -1,7 +1,7 @@
 <template>
   <div class="mian1">
     <!--<mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">-->
-    <ul class="p-list" >
+    <ul class="p-list" v-if="searched">
       <!--<li class="p-cell" v-for="(i,index) in personlist.lists" @click="popshow(index)">-->
       <li class="p-cell"  @click="popshow">
         <div class="logo">
@@ -14,6 +14,11 @@
         </div>
       </li>
     </ul>
+    <div v-else class="tips">
+      <span class="iconfont">&#xe612;</span>
+      未搜索到结果<br>
+      请您重新搜索
+    </div>
     <!--</mt-loadmore>-->
     <mt-popup
       v-model="popupVisible"
@@ -48,9 +53,8 @@
         thumb:require('../../assets/images/userinfo-02.png'),
         personlist:{},
         popupVisible:false,
-        teamsinfo:{
-
-        }
+        teamsinfo:{},
+        searched:true
       }
     },
     components: {
@@ -104,12 +108,16 @@
       }
       let params={
         data: obj
-      }
+      };
       teams(params,(res)=>{
-        if(res.statusCode==1){
+        if(res.statusCode === 1){
           this.personlist=res.data;
-          console.log(res)
-          console.log(this.personlist)
+          if(!this.personlist ||this.personlist.length<=1){
+           this.searched=false
+          }else  {
+            console.log(res)
+            console.log(this.personlist)
+          }
         }else {
           console.log('请求失败');
         }
@@ -209,6 +217,18 @@
   .pop-right {
     /*flex: 3;*/
     text-align: right;
+  }
+
+  .tips {
+    text-align: center;
+    font-size: .14rem;
+    color: #666;
+    margin-top: 1rem;
+
+  }
+  .tips .iconfont {
+    display: block;
+    font-size: .8rem;
   }
 
 </style>

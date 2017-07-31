@@ -47,6 +47,7 @@ const Moneylist = r => require.ensure([], () => r(require('../components/distrib
  */
 const goodsDetails = r => require.ensure([], () => r(require('../components/Home/productDetail.vue')), 'goodsDetails')
 const payselect = r => require.ensure([], () => r(require('../components/common/payselect.vue')), 'goodsDetails')
+const Outmoney = r => require.ensure([], () => r(require('../components/common/outmoney.vue')), 'goodsDetails')
 
 /**
  * 确认订单页面
@@ -56,7 +57,7 @@ const DeliveryAddress= r => require.ensure([], () => r(require('../components/co
 const AddAddress= r => require.ensure([], () => r(require('../components/common/AddAddress.vue')), 'common')
 const DeliveryMode=r => require.ensure([], () => r(require('../components/common/DeliveryMode.vue')), 'common')
 /**
- * 訂單詳情
+ * 订单详情
  */
 const Orderd= r => require.ensure([], () => r(require('../components/order/orderDetail.vue')), 'Orderd')
 const Logistics= r => require.ensure([], () => r(require('../components/order/logistics.vue')), 'Logistics')
@@ -202,6 +203,11 @@ export default new Router({
                   path: '/moneylist',
                   name:'moneylist',
                   component: Moneylist
+                },
+                {
+                  path: '/outmoney',
+                  name:'outmoney',
+                  component: Outmoney
                 }
               ]
             }

@@ -93,7 +93,8 @@
         optionId:0,
         cartids:'',
         total:'',
-        delGoodsNum:''
+        delGoodsNum:'',
+        goodsid:4,
       }
     },
     methods:{
@@ -103,12 +104,12 @@
       },
       toast:function () {
         if(this.myStata===1){//加入购物车
-          
+
           this.popupVisible = false;
             let that=this;
             let params={
               data:{
-                goodsid:4,
+                goodsid:this.goodsid,
                 total:this.num
               }
           }
@@ -158,6 +159,7 @@
         this.num++;
       },
       getInfo:function () {
+
         let that=this;
         let good_id=this.$route.query.goodsId;
         let params={
@@ -166,6 +168,7 @@
           }
         }
         productDetail(params,function (res) {
+
           console.log(res)
           if(res.statusCode===1){
             that.goodNums=res.data.goodscount;
@@ -206,6 +209,7 @@
     },
     mounted(){
       this.getInfo();
+
       // this.getNum();
     },
     components: {}

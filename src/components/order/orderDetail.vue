@@ -35,7 +35,7 @@
         <span class="iconfont">&#xe6ce;</span>
         {{shopname}}
       </div>
-      <router-link class="good-info" to="/details" tag="div">
+      <router-link class="good-info" to="/" tag="div">
         <img :src=detailurl class="order-small">
         <p>{{title}}</p>
         <div class="good-price">
@@ -55,26 +55,32 @@
       <li v-show="false">交易完成时间：<p>{{endtime}}</p></li>
     </ul>
     <div class="bottom-box">
-      <router-link to="/drawbackInfo" class="back-money-ing" tag="button" v-if="ing==true">
-        退款申请中
-      </router-link>
+      <!--<router-link to="/drawbackInfo" class="back-money-ing" tag="button" v-if="ing==true">-->
+        <!--退款申请中-->
+      <!--</router-link>-->
       <button class="cancel-order" @click="cancel(oid)" v-if="status==0">
         取消订单
       </button>
-      <router-link class="charge-order ocolor" to="" tag="button" v-if="status==0">
+      <button class="charge-order ocolor" @click="pay" v-if="status==0">
         付款
-      </router-link>
-      <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:proprice,orderid:oid}}" tag="button" v-if="status==1">
+      </button>
+      <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:proprice,orderid:oid}}" tag="button" v-if="status==1 && obj.canrefund&&obj.refundid==0">
         申请退款
       </router-link>
-      <router-link class="charge-order1" to="" tag="button" v-if="status==2">
+      <!--<router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:proprice,orderid:oid}}" tag="button" v-if="status==1 && obj.canrefund&&obj.refundid!=0">-->
+        <!--退款申请中-->
+      <!--</router-link>-->
+      <button class="charge-order1"  v-if="status==2" @click="fn1(oid)">
         确认收货
-      </router-link>
+      </button>
       <router-link class="look-logi ocolor" :to="{path:'logistics',query:{id:oid,exp:exp,expsn:expsn}}" tag="button" v-if="status==2">
         查看物流
       </router-link>
-      <router-link class="charge-order1 " :to="{path:'drawback',query:{money:proprice,orderid:oid}}" tag="button" v-if="status==3">
+      <router-link class="charge-order1 " :to="{path:'drawback',query:{money:proprice,orderid:oid}}" tag="button" v-if="status==3 && obj.canrefund&&obj.refundid==0">
         申请退款
+      </router-link>
+      <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:proprice,orderid:oid}}" tag="button" v-if="obj.canrefund&&obj.refundid!=0">
+        退款申请中
       </router-link>
       <router-link class="look-logi ocolor" :to="{path:'logistics',query:{id:oid,exp:exp,expsn:expsn}}" tag="button" v-if="status==3">
         查看物流
@@ -87,7 +93,8 @@
 <script>
   import { Header,MessageBox} from 'mint-ui'
   import PageNavbar from "../../view/Order.vue";
-  import {orderDetail} from "../../api/api.js"
+  import {orderDetail,orderManu} from "../../api/api.js"
+  import {mapMutations, mapGetters} from 'vuex'
   export default {
     components: {PageNavbar},
     data(){
@@ -113,26 +120,77 @@
         exp:'',
         expsn:'',
         oid:'',
-        ing:''
+        ing:'',
+        obj:'',
+        canrefund:''
       }
     },
     methods:{
       goBack:function () {
         this.$router.go(-1)
       },
-      fn1:function () {
+      fn1:function (orderid) {
+        let that=this;
         MessageBox({
           title: '提示',
-          message: '确定执行此操作?',
+          message: '请确定已收货 否则钱财两空哦',
           showCancelButton: true
         }).then(action=>{
           if(action=='confirm'){
+            let params={
+              data:{
+                orderid:that.oid,
+                type:'comf'
+              }
+            }
+            orderManu(params,function (res) {
+              console.log(res)
+              if(res.statusCode==1){
+                location.reload()
+              }
+              else{
+                MessageBox.alert('操作成功').then(action => {
 
+                });
+              }
+            })
           }else if(action=='cancel'){
 
           }
         });
-      }
+      },
+      pay(){
+        this.orderinfo(this.ordersin)
+        this.$router.push('payselect');
+      },
+      cancel:function (orderid) {
+        MessageBox({
+          title: '提示',
+          message: '确认删除订单吗',
+          showCancelButton: true
+        }).then(action=>{
+          if(action=='confirm'){
+            this.isSelect=!this.isSelect;
+            let that=this;
+            let params={
+              data:{
+                orderid:orderid,
+                type:'canl'
+              }
+            }
+            orderManu(params,function (res) {
+              MessageBox.alert('操作成功').then(action => {
+                that.$router.push({path:'order'})
+              });
+            })
+          }else if(action=='cancel'){
+          }
+        });
+      },
+      ...mapMutations({
+        orderinfo: 'ORDERINFO',
+        setorderdetails: 'ORDERDETAILS'
+      }),
     },
     created:function () {
       var that=this;
@@ -146,26 +204,34 @@
         }
       }
       orderDetail(params,function (res) {
-        console.log(res)
-        that.price=res.data.order.goodsprice;
-        that.tranprice=res.data.dispatchprice;
-        that.relname=res.data.address.realname;
-        that.province=res.data.address.province;
-        that.city=res.data.address.city;
-        that.area=res.data.address.area;
-        that.address=res.data.address.address;
-        that.shopname=res.data.set.name;
-        that.detailurl=res.data.goods.thumb;
-        that.discount=res.data.discountprice;
-        that.proprice=res.data.price;
-        that.realprice=res.data.price;
-        that.ordersin=res.data.ordersn;
-        that.endtime=res.data.finishtime;
-        that.mprice=res.data.goods.price;
-        that.title=res.data.goods.title;
-        that.num=res.data.goods.total;
-       that.exp=res.data.express;
-       that.expsn=res.data.expresssn
+        console.log(res);
+        if(res.statusCode==1){
+          that.obj=res.data
+          that.price=res.data.order.goodsprice;
+          that.tranprice=res.data.dispatchprice;
+          that.relname=res.data.address.realname;
+          that.province=res.data.address.province;
+          that.city=res.data.address.city;
+          that.area=res.data.address.area;
+          that.address=res.data.address.address;
+          that.shopname=res.data.set.name;
+          that.detailurl=res.data.goods.thumb;
+          that.discount=res.data.discountprice;
+          that.proprice=res.data.price;
+          that.realprice=res.data.price;
+          that.ordersin=res.data.ordersn;
+          that.endtime=res.data.finishtime;
+          that.mprice=res.data.goods.price;
+          that.title=res.data.goods.title;
+          that.num=res.data.goods.total;
+          that.exp=res.data.express;
+          that.expsn=res.data.expresssn
+          //订单详情存入vuex（orderdetails）
+          that.setorderdetails(res.data)
+        }else {
+          console.log('订单详情接口异常')
+        }
+
       })
     }
   }
