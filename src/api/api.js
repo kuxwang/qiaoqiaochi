@@ -23,8 +23,8 @@ const commissions = {
     method: 'GET',
     header,
     dataType
-  }
-}
+  },
+
 orderStatistics: {url: `${base}/commissions/orderStatistics`, method: 'GET', header, dataType},
 /**
  * 订单列表
@@ -52,6 +52,27 @@ teamsStatistics: {url: `${base}/commissions/teamsStatistics`, method: 'GET', hea
 withdrawals_get: {url: `${base}/commissions/withdrawals`, method: 'GET', header, dataType},
 withdrawals_post: {url: `${base}/commissions/withdrawals`, method: 'POST', header, dataType},
 };
+/**
+ * 商品详情
+ */
+const product={productDetail:{url:`${base}/goods`, method:'GET', header, dataType}};
+/**
+ * 加入购物车
+ */
+const cart={addCart:{url:`${base}/carts`, method:'POST', header, dataType}};
+/**
+ * 订单列表
+ */
+const order={orderList:{url:`${base}/orders`, method:'GET', header, dataType}};
+/**
+ * 订单详情
+ */
+const orderd={orderDetail:{url:`${base}/orders`, method:'GET', header, dataType}};
+/**
+ * 快递
+ */
+const express = {exp: {url: `${base}/expresses`, method: 'GET', header, dataType}};
+
 /**
  * 用户中心
  * @type {{memberInfo: {url: string, method: string, header: string, dataType: string}}}
@@ -116,10 +137,11 @@ export const recordStatistics_get = function (params, callback) {_webapp.request
  * @param params
  * @param callback
  */
-export const teamsStatistics = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.teamsStatistics), function (res) {callback(res)})};
+// export const teamsStatistics = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.teamsStatistics), function (res) {callback(res)})};
 export const teamsLists = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.teamsLists), function (res) {callback(res)})};
 export const teams = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.teams), function (res) {callback(res)})};
 //订单列表
+
 export const orderLists = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.orderLists), function (res) {callback(res)})};/**
  * 订单统计
  * @param params
@@ -339,7 +361,7 @@ export const paymentFun = function (type, params, callback) {
  * @param callback
  * @constructor
  */
-export const save = function (params, callback) {
+export const Qrimg = function (params, callback) {
   _webapp.save(Object.assign(params, qrimg), function (res) {
     callback(res)
   })

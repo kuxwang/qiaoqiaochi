@@ -18,7 +18,7 @@ import { setStore, getStore } from '../config/myUtils'
 
 export default {
   //用户收货地址
-  [GET_USERADDRESS](state,data){
+  [GET_USERADDRESS](state,data) {
     state.userAddress = {
       mobile: data.mobile,
       realname: data.realname,
@@ -27,6 +27,7 @@ export default {
       area: data.area,
       address: data.address,
       id: data.id
+    }
   },
   [TABSELECT] (state, data) {
     state.tabselect = data
