@@ -59,7 +59,7 @@
 	          <span class="userinfo-list-lf fl">
 	            出生日期
 	          </span>
-	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择出生日期" v-model="myDate" disabled>
+	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择出生日期" v-model="myDate">
 	        </li>
 	    </ul>
 	    <div class="postUserInfo" @click="postUserInfo">
@@ -273,17 +273,34 @@
               area:this.myRegion
             }
           }
-          console.log(params)
           let _this=this;
           PUT_USERINFO(params, function (res) {
-            _this.$router.go(-1);
-            console.log(res);
-            Toast({
-              message: '个人信息提交成功!',
-              position: 'middle',
-              duration: 1000
-            });
-            
+          	console.log(res)
+          	if(res.statusCode===1){
+	            _this.$router.go(-1);
+	            let that=_this;
+	            if(that.myImg!=''){
+		            let params={
+		            	'data':{
+		            		avatar:that.myImg
+		            	}
+		            }
+		            PUT_USERAVATARS(params, function (res) {	
+		            	if(res.statusCode===1){
+		            		console.log('上传图片成功')
+		            	}else{
+		            		console.log('请求')
+		            	}
+		            })
+		        }
+	            Toast({
+	              message: '个人信息提交成功!',
+	              position: 'middle',
+	              duration: 1000
+	            });
+            }else{
+            	console.log('请求失败')
+            }
           })
         }
 		},

@@ -35,7 +35,7 @@
           <div class="icon-b">
             <div class="iconfont tabIcon icon-car">&#xe607;</div>
             购物车
-            <i class="carNum">{{goodNums}}</i>
+            <i class="carNum" v-if="delGoodsNum>0">{{goodNums}}</i>
           </div>
         </router-link>
         <button class="icon-btn icon-btn-car ocolor" @click="handleClick">
@@ -71,7 +71,7 @@
 </template>
 <script>
   import { Header,Popup,Toast} from 'mint-ui';
-  import {productDetail,addCart} from '../../api/api.js';
+  import {productDetail,addCart,GET_CARTNUMS} from '../../api/api.js';
   import {setStore, getStore} from '../../config/myUtils';
   import {mapMutations, mapGetters } from 'Vuex';
   export default {
@@ -91,7 +91,8 @@
         goodsId:'',
         optionId:0,
         cartids:'',
-        total:''
+        total:'',
+        delGoodsNum:''
       }
     },
     methods:{
@@ -101,7 +102,7 @@
       },
       toast:function () {
         if(this.myStata===1){//加入购物车
-          console.log('这是购物车')
+          
           this.popupVisible = false;
             let that=this;
             let params={
@@ -110,8 +111,11 @@
                 total:this.num
               }
           }
+          let _this=this;
           addCart(params,function (res) {
+            console.log(res)
             if(res.statusCode==1){
+               _this.getNum();
               Toast({
                 message: '操作成功 商品已在购物车',
                 position: 'middle',
@@ -153,7 +157,7 @@
           }
         }
         productDetail(params,function (res) {
-          console.log(res)
+          // console.log(res)
           that.goodNums=res.data.goodscount;
           let goods=res.data.goods
           that.goodsId=goods.id;
@@ -170,16 +174,27 @@
         })
       },
       goPay(){
-          console.log(77777)
         this.myStata=2;
         this.popupVisible = true;
+      },
+      getNum(){
+        let params={};
+        let _this=this;
+        GET_CARTNUMS(params,function (res) {
+          if(res.statusCode===1){
+            _this.delGoodsNum=res.data.cartcount;
+          }else{
+            console.log('请求失败')
+          }
+        })
       },
       ...mapMutations({
         getMyorders:'GET_MYORDERS'
       })
     },
     created(){
-      this.getInfo()
+      this.getInfo();
+      this.getNum();
     },
     components: {}
   }

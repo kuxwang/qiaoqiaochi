@@ -646,8 +646,8 @@ export var _webapp = {
       });
     }
   },
-  save: function () {
-    var handler = 'save';
+  shellQrcode : function (url) {
+    var handler = 'shellQrcode';
 
     if (_env.ios) {
       _webapp.setupWebViewJavascriptBridge(function (bridge) {
@@ -674,7 +674,7 @@ export var _webapp = {
           });
         }
 
-        bridge.callHandler(handler, function (response) {
+        bridge.callHandler(handler, {params : url}, function (response) {
           //response = eval('(' + response + ')');
           //return _webapp.callback(response, callback);
         });
@@ -686,6 +686,7 @@ export var _webapp = {
       });
     }
   },
+<<<<<<< HEAD
   //退出登录
   logOut: function () {
     var handler = 'logOut';
@@ -727,4 +728,6 @@ export var _webapp = {
       });
     }
   },
+=======
+>>>>>>> a8db2151033587b421d206474712318dab927d63
 };

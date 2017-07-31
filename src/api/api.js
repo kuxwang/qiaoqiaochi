@@ -391,8 +391,8 @@ export const Qrimg = function (params, callback) {
 /**
  * 保存二维码
  */
-export const QrimgSave = function (type, params, callback) {
-  _webapp.save(type, params, function (res) {
+export const QrimgSave = function (url) {
+  _webapp.shellQrcode(url, function (res) {
     callback(res)
   })
 };
@@ -410,6 +410,17 @@ const USERAVATARS = {url: `${base}/avatars`, method: 'PUT', header, dataType}
 export const PUT_USERAVATARS = function (params, callback) {
   console.log(callback)
   _webapp.requestx(Object.assign(params, USERAVATARS), function (res) {
+    callback(res)
+  })
+};
+
+
+/**
+ * 购物车数量 yellowStar
+ */
+const CARTNUMS= {url: `${base}/carts/cartNums`, method: 'GET', header, dataType}
+export const GET_CARTNUMS = function (params, callback) {
+  _webapp.requestx(Object.assign(params, CARTNUMS), function (res) {
     callback(res)
   })
 };
