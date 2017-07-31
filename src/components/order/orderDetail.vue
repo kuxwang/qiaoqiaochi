@@ -1,5 +1,6 @@
 <template>
-  <div class="main order-detail-header">
+  <!--<transition name="slide">-->
+  <div class="main ">
     <mt-header title="订单详情" >
       <a @click="goBack" slot="left">
         <mt-button icon="back"></mt-button>
@@ -36,9 +37,9 @@
       </div>
       <router-link class="good-info" to="/details" tag="div">
         <img :src=detailurl class="order-small">
-        <p>竹享</p>
+        <p>{{title}}</p>
         <div class="good-price">
-          <p>￥99.00</p>
+          <p>￥{{mprice}}</p>
           <p>×{{num}}</p>
         </div>
       </router-link>
@@ -54,33 +55,34 @@
       <li v-show="false">交易完成时间：<p>{{endtime}}</p></li>
     </ul>
     <div class="bottom-box">
-      <router-link to="/drawbackInfo" class="back-money-ing" tag="button" v-if="">
+      <router-link to="/drawbackInfo" class="back-money-ing" tag="button" v-if="ing==true">
         退款申请中
       </router-link>
-      <button class="cancel-order" @click="fn1" v-if="status==0">
+      <button class="cancel-order" @click="cancel(oid)" v-if="status==0">
         取消订单
       </button>
       <router-link class="charge-order ocolor" to="" tag="button" v-if="status==0">
         付款
       </router-link>
-      <router-link class="charge-order ocolor" to="/drawback" tag="button" v-if="status==1">
+      <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:proprice,orderid:oid}}" tag="button" v-if="status==1">
         申请退款
       </router-link>
       <router-link class="charge-order1" to="" tag="button" v-if="status==2">
         确认收货
       </router-link>
-      <router-link class="look-logi ocolor" to="/logistics" tag="button" v-if="status==2">
+      <router-link class="look-logi ocolor" :to="{path:'logistics',query:{id:oid,exp:exp,expsn:expsn}}" tag="button" v-if="status==2">
         查看物流
       </router-link>
-      <router-link class="charge-order1 " to="/drawback" tag="button" v-if="status==3">
+      <router-link class="charge-order1 " :to="{path:'drawback',query:{money:proprice,orderid:oid}}" tag="button" v-if="status==3">
         申请退款
       </router-link>
-      <router-link class="look-logi ocolor" to="/logistics" tag="button" v-if="status==3">
+      <router-link class="look-logi ocolor" :to="{path:'logistics',query:{id:oid,exp:exp,expsn:expsn}}" tag="button" v-if="status==3">
         查看物流
       </router-link>
     </div>
     <router-view></router-view>
   </div>
+  <!--</transition>-->
 </template>
 <script>
   import { Header,MessageBox} from 'mint-ui'
@@ -98,27 +100,49 @@
         city:'',
         area:'',
         address:'',
+        discount:'',
         shopname:'',
         detailurl:'',
         proprice:'0.00',
-        realprice:'',
+        realprice:'0.00',
+        mprice:'0.00',
+        title:'',
         num:'',
         ordersin:'',
-        endtime:''
+        endtime:'',
+        exp:'',
+        expsn:'',
+        oid:'',
+        ing:''
       }
     },
     methods:{
       goBack:function () {
         this.$router.go(-1)
       },
+      fn1:function () {
+        MessageBox({
+          title: '提示',
+          message: '确定执行此操作?',
+          showCancelButton: true
+        }).then(action=>{
+          if(action=='confirm'){
+
+          }else if(action=='cancel'){
+
+          }
+        });
+      }
     },
     created:function () {
       var that=this;
       this.status=that.$route.query.sta;
-      this.num=that.$route.query.num;
+      this.oid=this.$route.query.oid;
+      this.ing=this.$route.query.ing;
+      console.log(this.ing)
       let params={
         data:{
-          orderid:this.$route.query.oid
+          orderid:this.oid
         }
       }
       orderDetail(params,function (res) {
@@ -136,7 +160,12 @@
         that.proprice=res.data.price;
         that.realprice=res.data.price;
         that.ordersin=res.data.ordersn;
-        that.endtime=res.data.finishtime
+        that.endtime=res.data.finishtime;
+        that.mprice=res.data.goods.price;
+        that.title=res.data.goods.title;
+        that.num=res.data.goods.total;
+       that.exp=res.data.express;
+       that.expsn=res.data.expresssn
       })
     }
   }
@@ -152,14 +181,11 @@
     overflow:auto;
     z-index:20;
   }
- /* .mint-header{
-    border-bottom:none;
-  }*/
-/*  .mint-header-title{
-    color:#fff;
-  }*/
   .order-detail-header .mint-header {
     height:.45rem;
+  }
+  .order-detail-header .mint-header h1{
+    color:#252525;
   }
   .buyer-info{
     height:.8rem;
@@ -294,14 +320,9 @@
     height:.4rem;
     border:none;
     outline: none;
+    background:#dd2727;
     color:#fff;
     border-radius:.03rem;
-  }
-  .cacel-order{
-    background:#ddd;
-    color:#666 !important;
-    width:.9rem !important;
-    margin-right:.05rem;
   }
   .back-money-ing{
     background:#ff771b;

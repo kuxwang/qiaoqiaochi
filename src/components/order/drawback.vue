@@ -10,10 +10,10 @@
         <ul>
           <li>
             <span>退款原因</span>
-            <select name="" id="">
-              <option value="">卖家缺货</option>
-              <option value="">拍错了/订单信息错误</option>
-              <option value="">不想买了</option>
+            <select v-model="reason" @change="fn3" id="">
+              <option >卖家缺货</option>
+              <option >拍错了/订单信息错误</option>
+              <option >不想买了</option>
             </select>
           </li>
           <li>
@@ -26,25 +26,64 @@
           </li>
         </ul>
       </div>
-      <router-link class="drawback-confirm" to="" tag="button">确认</router-link>
+      <button class="drawback-confirm"  @click="fn8" >确认</button>
     </div>
   </transition>
 </template>
 <script>
-  import {header} from 'mint-ui';
+  import {header,MessageBox} from 'mint-ui';
+  import {orderManu} from '../../api/api.js'
   export default{
     data(){
       return{
-        money:''
+        money:'',
+        orderid:'',
+        reason:'卖家缺货',
+        ing:true
       }
     },
     methods: {
       goBack(){
         this.$router.go(-1);
+      },
+      fn8(){
+        console.log(this.orderid,this.reason)
+        let that=this;
+        MessageBox({
+          title: '提示',
+          message: '确定是否退款',
+          showCancelButton: true
+        }).then(action=>{
+          if(action=='confirm'){
+            let params={
+              data:{
+                orderid:this.orderid,
+                type:'reful',
+                reason:this.reason
+              }
+            }
+            orderManu(params,function (res) {
+              console.log(res)
+              if(res.statusCode==-1){
+                console.log(1)
+                that.$router.push({path:'orderd',query:{oid:that.orderid,ing:that.ing}})
+              }else{
+                MessageBox.alert('操作失败!', '提示');
+              }
+            })
+          }else if(action=='cancel'){
+            this.$router.go(-1);
+          }
+        });
+      },
+      fn3(){
+
       }
     },
     created:function () {
       this.money=this.$route.query.money
+      this.orderid=this.$route.query.orderid;
+
     }
   }
 </script>
