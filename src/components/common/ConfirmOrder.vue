@@ -197,15 +197,17 @@
         }
         confirm_post(params, res => {
           if (res.statusCode == 1) {
+            let ordersn = res.data.ordersn
             document.getElementById('commitForm').setAttribute('disabled', 'disabled')
             Toast({
               message: '订单提交成功',
               position: 'middle',
               duration: 2000
             });
+            this.ORDERINFO(ordersn)
             setTimeout(() => {
               document.getElementById('commitForm').removeAttribute('disabled')
-              this.$router.push({name: 'payselect'})
+              this.$router.replace({name: 'payselect'})
             }, 2000)
           } else {
             Toast({
@@ -217,7 +219,7 @@
         })
       },
       ...mapMutations([
-        'ADDRESS'
+        'ADDRESS', 'ORDERINFO'
       ])
     },
     computed: {

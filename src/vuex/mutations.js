@@ -9,6 +9,7 @@ import {
   DELIVERY,
   GET_MYORDERS,
   SEARCHNUM,
+  ORDERINFO
 }
   from
     './mutation-types.js'
@@ -56,4 +57,9 @@ export default {
   [DELIVERY] (state, delivery) {
     state.delivery = delivery
   },
+  [ORDERINFO] (state, orderInfo) {
+    console.log(orderInfo)
+    state.orderInfo = orderInfo
+  },
+
 }

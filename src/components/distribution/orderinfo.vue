@@ -11,9 +11,9 @@
       <!--<img :src="i.avatar"/>-->
       <img src="../../assets/images/userinfo-02.png"/>
     </div>
-    <div class="info">
-      <h5>用户名：{{ordernum.nickname}}</h5>
-      <span>ID{{ordernum.id}}</span>
+    <div class="info3">
+      <h5>用户名：{{ordernum.nickname}}<span class="orderid">ID{{ordernum.id}}</span></h5>
+
       <span class="usertime">手机号：{{ordernum.mobile}}</span>
     </div>
   </div>
@@ -34,11 +34,26 @@
         </div>
         <div class="ordertype">
           <!--<span>i.status}}</span>-->
-          <span>{{ordernum.price}}元</span>
+          <span>{{parseInt(ordernum.goodsprice)}}元</span>
         </div>
       </div>
     </div>
     <ul class="user-list">
+      <li class="user-cell" >
+        <div class="user-left">
+          <!--<img :src="v.thumb"/>-->
+          <div>用户名</div>
+        </div>
+        <div class="user-mid">
+          <span>用户ID</span>
+        </div>
+        <div class="user-right">
+          <span>佣金比例</span>
+        </div>
+        <div class="user-right">
+          <div>佣金额度</div>
+        </div>
+      </li>
       <li class="user-cell" v-for="v in ordercom" >
         <div class="user-left">
           <!--<img :src="v.thumb"/>-->
@@ -48,11 +63,10 @@
           <span>{{v.id}}</span>
         </div>
         <div class="user-right">
-          <span>{{v.c_rate}}</span>
+          <span>{{v.c_rate}}%</span>
         </div>
         <div class="user-right">
-          <div>{{v.c_money}}</div>
-
+          <div>{{v.c_money}}元</div>
         </div>
       </li>
     </ul>
@@ -125,7 +139,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: #fff;
+    background: #ececec;
     overflow: auto;
     z-index: 200;
   }
@@ -145,23 +159,25 @@
   .logo {
     flex: 1;
   }
-  .info {
+  .info3 {
     flex: 5;
     text-align: left;
     margin-left: 0.1rem;
     position: relative;
+    color: #fff;
   }
-  .info h5 {
-    margin-top: 0.1rem;
-    color: #27272f;
+  .info3 h5 {
+    /*margin-top: 0.1rem;*/
+    /*color: #27272f;*/
     font-size: 0.14rem;
+    margin-bottom: 0.05rem;
   }
-  .info span {
+  .info3 span {
     font-size: 0.14rem;
-    color: #666;
+    color: #fff;
   }
   .logo img {
-    width: 50%;
+    width: 65%;
     border-radius: 50%;
     display: block;
     margin: 10% auto;
@@ -172,11 +188,14 @@
     display: flex;
     flex-direction: column;
     /*padding:  0;*/
-    margin-top: 0.05rem;
+
     background-color: #fff;
     /*border-top:1px solid #eee;*/
     border:1px solid #eee;
     padding: 0.1rem;
+    margin-top: 0.1rem;
+    width: 96%;
+    margin-left: 2%;
   }
   .up {
     flex: 1;
@@ -213,9 +232,12 @@
     color: #666;
   }
   .info h5 {
-    margin-top: 0.1rem;
+    /*margin-top: 0.1rem;*/
     color: #27272f;
     font-size: 0.14rem;
+  }
+  .down .info h5 {
+    margin-top: 0.1rem;
   }
   .info span {
     font-size: 0.14rem;
@@ -229,9 +251,9 @@
 
   }
   .ordertype {
-    flex: 3;
+    flex: 2;
     padding: 0.05rem 0;
-    color: #666;
+    color: #F5751D;
   }
   .ordertype span {
     display: block;
@@ -248,9 +270,13 @@
     width: 96%;
     margin-left: 2%;
     border: 1px solid #eee;
+    margin-top: 0.1rem;
   }
   .user-cell {
     display: flex;
+    border-bottom: 1px solid #eee;
+    padding: .1rem 0;
+    background-color: #fff;
   }
 
   .user-left {
@@ -259,6 +285,9 @@
 .user-mid,.user-right {
     flex: 1.5;
 
+  }
+  .orderid {
+    margin-left: 0.2rem;
   }
 
 

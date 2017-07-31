@@ -21,7 +21,8 @@ const state = {
     optionid:'',
     cartids:'',
     total:''
-  }
+  },
+  orderInfo: '' //订单信息
 }
 
 export default new Vuex.Store({

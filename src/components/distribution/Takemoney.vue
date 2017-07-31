@@ -15,12 +15,12 @@
     <ul class="view">
       <li class="cell">
         累计销售收益
-        <span>1231元</span>
+        <span>0元</span>
       </li>
       <li class="cell">
         累计管理收益
         <!--<span class="iconfont">&#xe61b;</span>-->
-        <span>1231元</span>
+        <span>0元</span>
       </li>
      <!-- <li class="cell">
         累计消费省钱
@@ -104,14 +104,26 @@
 
 <style scoped>
   .main {
-
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ececec;
+    overflow: auto;
+    z-index: 2;
   }
   .title {
+<<<<<<< HEAD
     margin: .1rem 0 0.1rem 0;
+=======
+    /*margin: .5rem 0 0.1rem 0;*/
+>>>>>>> a6c7482bfab57413b6195b8681ca8823bd02bf3e
     width: 100%;
     text-align: center;
     height: 2rem;
     background-color: #f5751d;
+    margin-bottom: 0.1rem;
 
   }
   .title span {
