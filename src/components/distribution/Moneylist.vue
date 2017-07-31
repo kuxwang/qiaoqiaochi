@@ -2,13 +2,13 @@
   <div class="main">
     <section>
       <mt-header title="提现明细" >
-        <router-link to="/vipCenter" slot="left">
+        <router-link to="/takemoney" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
       </mt-header>
     </section>
     <ul class="moneylists">
-      <li class="moneycell" v-for="i in moneylist">
+      <li class="moneycell" v-for="(i,index) in moneylist" :class="{'colorbor': comparefun(moneylist,index)}">
         <div class="left">
           <div class="time">{{i.applytime.substr(0,10)}}</div>
         </div>
@@ -22,7 +22,6 @@
           <span class="type" v-if="i.status==1">审核通过</span>
         </div>
       </li>
-
     </ul>
 
   </div>
@@ -53,6 +52,18 @@
         console.log(this.moneylist)
       })
     },
+    methods: {
+      comparefun(obj,i){
+        console.log(obj.length)
+        console.log(i)
+        if( i == obj.length-1){
+          return true
+        }else {
+          return false
+        }
+//        return true
+      }
+    }
 
   }
 
@@ -80,8 +91,8 @@
 
   li {
     display: flex;
-    /*border-bottom: 1px solid rgba(0, 0, 0, .1);*/
-    border-top: 1px solid rgba(0, 0, 0, .1) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    /*border-top: 1px solid rgba(0, 0, 0, .1) !important;*/
     margin-top: 0.05rem;
     padding: 0.1rem 0;
     height: 0.5rem;
@@ -100,7 +111,7 @@
 
   .money {
     color: #f5751d;
-    font-size: .2rem;
+    font-size: .18rem;
   }
 
   .right {
@@ -127,6 +138,9 @@
   }
   .mid {
     flex: 2;
+  }
+  .colorbor {
+    border-bottom: none !important;
   }
 </style>
 

@@ -12,8 +12,10 @@
         </div>
       </div>
       <div class="intro">
-        <p>{{name}}</p>
-        <span>￥{{marketPrice}}</span>
+        <div class="goodsTitle">
+           <p>{{name}}</p>
+          <span>￥{{marketPrice}}</span>
+        </div>
         <p class="vip-intro" v-show="isVip"><span class="iconfont">&#xe631;</span>您是{{vipname}} 可享{{vipcount}}折优惠</p>
       </div>
       <div class="b-intro">
@@ -21,7 +23,6 @@
           图文详情
         </div>
         <div id="intro">
-
         </div>
       </div>
       <div class="bottom-navbar">
@@ -35,7 +36,7 @@
           <div class="icon-b">
             <div class="iconfont tabIcon icon-car">&#xe607;</div>
             购物车
-            <i class="carNum">{{goodNums}}</i>
+            <i class="carNum" v-if="delGoodsNum>0">{{goodNums}}</i>
           </div>
         </router-link>
         <button class="icon-btn icon-btn-car ocolor" @click="handleClick">
@@ -71,7 +72,7 @@
 </template>
 <script>
   import { Header,Popup,Toast} from 'mint-ui';
-  import {productDetail,addCart} from '../../api/api.js';
+  import {productDetail,addCart,GET_CARTNUMS} from '../../api/api.js';
   import {setStore, getStore} from '../../config/myUtils';
   import {mapMutations, mapGetters } from 'Vuex';
   export default {
@@ -91,7 +92,8 @@
         goodsId:'',
         optionId:0,
         cartids:'',
-        total:''
+        total:'',
+        delGoodsNum:''
       }
     },
     methods:{
@@ -101,7 +103,7 @@
       },
       toast:function () {
         if(this.myStata===1){//加入购物车
-          console.log('这是购物车')
+          
           this.popupVisible = false;
             let that=this;
             let params={
@@ -110,8 +112,19 @@
                 total:this.num
               }
           }
+          let _this=this;
           addCart(params,function (res) {
+            console.log(_this)
             if(res.statusCode==1){
+              let params={};
+              let that=_this;
+              GET_CARTNUMS(params,function (res) {//获取购物车当前数量
+                if(res.statusCode===1){
+                  that.delGoodsNum=res.data.cartcount;
+                }else{
+                  console.log('请求失败')
+                }
+              })
               Toast({
                 message: '操作成功 商品已在购物车',
                 position: 'middle',
@@ -148,25 +161,39 @@
         let that=this;
         let good_id=this.$route.query.goodsId;
         let params={
-          data:{
+          'data':{
             goodsid:good_id,
           }
         }
         productDetail(params,function (res) {
           console.log(res)
-          that.goodNums=res.data.goodscount;
-          let goods=res.data.goods
-          that.goodsId=goods.id;
-          that.name=goods.title;
-          that.marketPrice=goods.marketprice;
-          that.bandimg=res.data.pics[0];
-          that.total=goods.total;
-          document.getElementById("intro").innerHTML=goods.content;
-          if(res.data.level.levelname){
-            that.isVip=true;
-            that.vipname=res.data.level.levelname;
-            that.vipcount=res.data.level.discount;
-          };
+          if(res.statusCode===1){
+            that.goodNums=res.data.goodscount;
+            let goods=res.data.goods
+            that.goodsId=goods.id;
+            that.name=goods.title;
+            that.marketPrice=goods.marketprice;
+            that.bandimg=res.data.pics[0];
+            that.total=goods.total;
+            document.getElementById("intro").innerHTML=goods.content;
+            if(res.data.level.levelname){
+              that.isVip=true;
+              that.vipname=res.data.level.levelname;
+              that.vipcount=res.data.level.discount;
+            };
+
+            let params={};
+            let _that=that;
+            GET_CARTNUMS(params,function (res) {//获取购物车当前数量
+              if(res.statusCode===1){
+                _that.delGoodsNum=res.data.cartcount;
+              }else{
+                console.log('请求失败')
+              }
+            })
+          }else{
+            console.log('请求失败')
+          }
         })
       },
       goPay(){
@@ -177,8 +204,9 @@
         getMyorders:'GET_MYORDERS'
       })
     },
-    created(){
-      this.getInfo()
+    mounted(){
+      this.getInfo();
+      // this.getNum();
     },
     components: {}
   }
@@ -232,15 +260,13 @@
     transform: translate3d(100%, 0, 0)
   }
   .intro{
-    padding-top:.1rem;
     text-align: left;
-    padding-left:.06rem;
     background: #fff;
+    padding:0rem 0.05rem;
   }
   .intro>p{
     font-size: .15rem;
     text-align: left;
-    margin-bottom: .05rem;
     padding-left:.03rem;
   }
   .intro>span{
@@ -248,12 +274,15 @@
     color:#f01e1f;
   }
   p.vip-intro{
-    margin-top:.06rem;
     font-size:.14rem;
     color:#999;
+    padding:0.03rem 0rem 0.10rem 0rem;
   }
+   .vip-intro span.iconfont{
+    font-size: 0.15rem;
+   }
   .b-intro{
-    margin-top: .15rem;
+    margin-top: .1rem;
     background: #fff;
   }
   .bottom-nav{
@@ -407,5 +436,21 @@
     width:.62rem;
     height:.33rem;
     text-align: center;
+  }
+  .goodsTitle{
+    overflow: hidden;
+    border-bottom:0.01rem solid #eee;
+    padding-bottom: 0.03rem;
+  }
+  .goodsTitle p{
+    float: left;
+    margin-right: 0.05rem;
+    font-size: 0.14rem;
+  }
+  .goodsTitle span{
+    float: left;
+    font-size: 0.16rem;
+    /*font-weight: 700*/
+    /*color: #dd2727;*/
   }
 </style>

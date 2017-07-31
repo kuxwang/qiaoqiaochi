@@ -9,18 +9,18 @@
     </section>
     <div class="title">
       <span class="up">可提现金额（元）</span>
-      <span class="down">{{moneylist.allprice}}</span>
+      <span class="down">{{moneylist.ok.c_money_sum}}</span>
     </div>
     <h5>收入</h5>
     <ul class="view">
       <li class="cell">
         累计销售收益
-        <span>0元</span>
+        <span>{{moneylist.default.c_money_sum}}元</span>
       </li>
       <li class="cell">
         累计管理收益
         <!--<span class="iconfont">&#xe61b;</span>-->
-        <span>0元</span>
+        <span>{{moneylist.manage.c_money_sum}}元</span>
       </li>
      <!-- <li class="cell">
         累计消费省钱
@@ -33,20 +33,20 @@
         <router-link class="cell" :to="{name: 'moneylist'}" tag="li">
         已提现金额
         <span class="iconfont">&#xe61b;</span>
-        <span>{{moneylist.allprice}}元</span>
+        <span>{{moneylist.pay.c_money_sum}}元</span>
         </router-link>
       <!--</li>-->
     </ul>
-    <div class="btn" @click="outmoney">
+    <router-link to="./outmoney" tag="div" class="btn" >
       提现
-    </div>
+    </router-link>
 
     <router-view></router-view>
   </div>
 </template>
 <script>
 
-  import { withdrawals_get, withdrawals_post} from '../../api/api.js'
+  import { withdrawals_get, withdrawals_post,recordStatistics_get} from '../../api/api.js'
 
 
   export default{
@@ -59,7 +59,7 @@
 
     },
     mounted(){
-      let params={
+      /*let params={
         data: {
           type:'all',
           page:1,
@@ -74,21 +74,34 @@
           }else {
               console.log('请求失败')
           }
+      })*/
+      let params={
+        data: {
+//          type:'all',
+
+        }
+      }
+      recordStatistics_get(params,(res)=>{
+        if(res.statusCode==1){
+          this.moneylist=res.data
+          console.log(this.moneylist)
+          console.log(res)
+        }else {
+          console.log('请求失败')
+        }
       })
     },
     methods: {
         outmoney(){
-          /*let params={
+          let params={
             data: {
-              type:'all',
-              page:1,
-              psize:10
+              type:0,
             }
           }
-          withdrawals_get(params,(res)=>{
+          withdrawals_post(params,(res)=>{
             console.log(res)
 
-          })*/
+          })
         }
     }
 
@@ -114,12 +127,13 @@
     z-index: 2;
   }
   .title {
+    margin: .1rem 0 0.1rem 0;
     /*margin: .5rem 0 0.1rem 0;*/
     width: 100%;
     text-align: center;
     height: 2rem;
     background-color: #f5751d;
-    margin-bottom: 0.1rem;
+    /*margin-bottom: 0.1rem;*/
 
   }
   .title span {
@@ -139,9 +153,10 @@
   h5 {
     text-align: left;
     font-size: .14rem;
-    color: #666;
+    color: #000;
+    border-width: 800;
     line-height: 2.5;
-    margin-bottom: .05rem;
+    /*margin-bottom: .05rem;*/
     background-color: #fff;
     padding: 0 0.1rem;
 
@@ -149,25 +164,31 @@
 
   .view {
     background-color: #fff;
-    margin-bottom: .1rem;
+    margin-bottom: .05rem;
+    border-top: 1px solid #efefef;
+    padding: 0 0.1rem 0 0.12rem;
+    color: #666;
   }
   .cell {
     border-bottom: 1px #eee solid;
     text-align: left;
     line-height: 2.5;
     padding: 0 0.1rem;
+
   }
   .cell span {
     float: right;
   }
   .btn {
     display: block;
-    width: 96%;
+    width: 100%;
     margin: 0 auto;
-    height: .35rem;
+    height: .45rem;
     background-color: #f5751d;
     color: #fff;
-    line-height: .35rem;
+    line-height: .45rem;
+    position: fixed;
+    bottom: 0;
 
   }
   .mint-header {

@@ -47,6 +47,7 @@ const Moneylist = r => require.ensure([], () => r(require('../components/distrib
  */
 const goodsDetails = r => require.ensure([], () => r(require('../components/Home/productDetail.vue')), 'goodsDetails')
 const payselect = r => require.ensure([], () => r(require('../components/common/payselect.vue')), 'goodsDetails')
+const Outmoney = r => require.ensure([], () => r(require('../components/common/outmoney.vue')), 'goodsDetails')
 
 /**
  * 确认订单页面
@@ -66,10 +67,10 @@ const DrawbackInfo= r => require.ensure([], () => r(require('../components/order
 export default new Router({
   routes: [
     {
-      path: '/',
-      component: app,//顶级路由
-      children: [
-        {
+      // path: '/',
+      // component: app,//顶级路由
+      // children: [
+      //   {
           path: '',
           name: 'home',
           component: Home,
@@ -202,6 +203,11 @@ export default new Router({
                   path: '/moneylist',
                   name:'moneylist',
                   component: Moneylist
+                },
+                {
+                  path: '/outmoney',
+                  name:'outmoney',
+                  component: Outmoney
                 }
               ]
             }
@@ -246,9 +252,9 @@ export default new Router({
           path:'/payselect',
           name:'payselect',
           component:payselect
-        }
-      ]
-    },
+        },
+      // ]
+    // },
     // {
     //   path: '/test',
     //   name: 'test',

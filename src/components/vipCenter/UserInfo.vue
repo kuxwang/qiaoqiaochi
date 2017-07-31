@@ -12,8 +12,9 @@
 	          <span class="fl">
 	            头像
 	          </span>
-	          <span class="fr" style="overflow:hidden">
-	            <img id="img_upload"/>
+	          <span class="fr">
+	            <img id="img_upload" src="../../assets/images/userinfo-02.png"  v-show="!myImg" />
+	            <img id="img_upload" :src="myImg"  v-show="myImg" />
 	          </span>
 	          <!-- <input id="file_head" type="file" @change="getMyImg($event)"/> -->
 	          <input id="file_head" type="button" @click="getMyImg()"/>
@@ -58,7 +59,7 @@
 	          <span class="userinfo-list-lf fl">
 	            出生日期
 	          </span>
-	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择出生日期" v-model="myDate" disabled>
+	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择出生日期" v-model="myDate">
 	        </li>
 	    </ul>
 	    <div class="postUserInfo" @click="postUserInfo">
@@ -138,6 +139,7 @@
 			    value1:'',
 			    startDate: new Date('1960'),
 			    endDate: new Date(),
+			    myImg:''
 			}
 		},
 		methods:{
@@ -202,6 +204,7 @@
 		        this.$refs[picker].open();
 		    },
 		    handleChange(value) {
+		    	console.log(value)
 	          let y = new Date(value).getFullYear();
 	          let d = new Date(value).getDate(); 
 	          let m = new Date(value).getMonth() + 1;
@@ -211,43 +214,27 @@
 	          this.myDate=`${y}年${m}月${d}日`;     
 		    },
         	getMyImg(e){
-          // console.log(666)
-          // var img = document.getElementById("img_upload");
-          // var reader = new FileReader();
-          // reader.onload = function (evt) {
-          //   img.src = evt.target.result;
-          //   // console.log(img.src)
-          // }
-          // reader.readAsDataURL(e.target.files[0]);
-          // var file = e.target.files[0];
-          // // console.log(file)
-          // let params={
-          //   'data':{
-          //     // avatar:file
-          //   }
-          // }
-          // console.log(params)
-          // PUT_USERAVATARS(params, function (res) {
-          //   console.log(res)
-          // })
-          console.log(8282828)
-          _webapp.uploadImg((res)=>{
-     
-          })
+          	_webapp.uploadImg((res)=>{
+     			this.myImg=res.data
+          	})
         },
         getUserInfo(){
           let params={ }
           let _this=this
           memberInfo(params, function (res) {
             if(res.statusCode===1){
+            	_this.initAddress();
               _this.myPhone=res.data.mobile;
               _this.myNc=res.data.realname;
               _this.myWx=res.data.weixin;
               _this.myZfb=res.data.alipay_account;
               _this.myZfbName=res.data.alipay_name;
               _this.myPlace=`${res.data.province} ${res.data.city} ${res.data.area}`;
-              _this.myDate=`${res.data.birthyear}年 ${res.data.birthmonth}月 ${res.data.birthday}日`;
+              if(res.data.birthyear!=''&&res.data.birthmonth!=''&&res.data.birthday!=''){
+              	_this.myDate=`${res.data.birthyear}年 ${res.data.birthmonth}月 ${res.data.birthday}日`;
+              }else{
 
+              }
             }
           })
         },
@@ -271,23 +258,40 @@
               area:this.myRegion
             }
           }
-          console.log(params)
           let _this=this;
           PUT_USERINFO(params, function (res) {
-            _this.$router.go(-1);
-            console.log(res);
-            Toast({
-              message: '个人信息提交成功!',
-              position: 'middle',
-              duration: 1000
-            });
-            
+          	console.log(res)
+          	if(res.statusCode===1){
+	            _this.$router.go(-1);
+	            let that=_this;
+	            if(that.myImg!=''){
+		            let params={
+		            	'data':{
+		            		avatar:that.myImg
+		            	}
+		            }
+		            PUT_USERAVATARS(params, function (res) {	
+		            	if(res.statusCode===1){
+		            		console.log('上传图片成功')
+		            	}else{
+		            		console.log('请求')
+		            	}
+		            })
+		        }
+	            Toast({
+	              message: '个人信息提交成功!',
+	              position: 'middle',
+	              duration: 1000
+	            });
+            }else{
+            	console.log('请求失败')
+            }
           })
         }
 		},
 		mounted() {
-	      this.initAddress();
-        this.getUserInfo();
+	      
+        	this.getUserInfo();
 	   }
 
 	}
@@ -334,11 +338,12 @@
 	.userinfo-header span:nth-child(2) {
 	    width: 0.25rem;
 	    height: 0.25rem;
-	     background: url('../../assets/images/userinfo-02.png') no-repeat center center;
+	     /*background: url('../../assets/images/userinfo-02.png') no-repeat center center;*/
 	    background-size: cover;
 	    margin-top: 0.13rem;
 	    font-size: 0.12rem;
 	    color: #969696;
+	    border-radius: 50%;
 	}
   .userinfo-header span:nth-child(2) img{
     display: block;
@@ -355,10 +360,10 @@
 	    position: absolute;
 	}
   	#img_upload {
-	  /*  width: 0.25rem;
+	    width: 0.25rem;
 	    height: 0.25rem;
 	    border: none;
-	    border-radius: 50%;*/
+	    border-radius: 50%;
   	}
   	.userinfo-list-lf{
   		/*width: 20%;*/
@@ -408,6 +413,9 @@
 	}
 	.picker-item{
 		font-size: 0.16rem;
+	}
+	input:disabled{
+		color:#727272;
 	}
 </style>
 

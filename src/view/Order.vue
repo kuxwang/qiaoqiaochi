@@ -1,236 +1,236 @@
 <template>
-    <div class="main order-header">
-      <mt-header title="我的订单" fixed>
-        <router-link to="/" slot="left" >
-          <mt-button icon="back"></mt-button>
-        </router-link>
-      </mt-header>
-      <div class="page-navbar">
-        <mt-navbar class="page-part" v-model="selected">
-          <mt-tab-item id="all" @click="all">全部</mt-tab-item>
-          <mt-tab-item id="will-pay">待付款</mt-tab-item>
-          <mt-tab-item id="will-send">待发货</mt-tab-item>
-          <mt-tab-item id="will-reserve">待收货</mt-tab-item>
-          <mt-tab-item id="done">已完成</mt-tab-item>
-        </mt-navbar>
+  <div class="main order-header">
+    <mt-header title="我的订单" fixed>
+      <router-link to="/" slot="left" >
+        <mt-button icon="back"></mt-button>
+      </router-link>
+    </mt-header>
+    <div class="page-navbar">
+      <mt-navbar class="page-part" v-model="selected">
+        <mt-tab-item id="all" @click="all">全部</mt-tab-item>
+        <mt-tab-item id="will-pay">待付款</mt-tab-item>
+        <mt-tab-item id="will-send">待发货</mt-tab-item>
+        <mt-tab-item id="will-reserve">待收货</mt-tab-item>
+        <mt-tab-item id="done">已完成</mt-tab-item>
+      </mt-navbar>
 
-        <mt-tab-container v-model="selected" class="orderList" id="content-list">
-          <mt-tab-container-item id="all">
-            <ul class="order-list" v-show="!isShow1" v-for="(v,i) in order0">
-              <li>
-                <div>订单号：{{v.ordersn}}</div>
-                <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status,num:v.goods[0].total}}" tag="div">
-                  <img :src=v.goods[0].thumb alt="" class="order-small">
-                  <p>{{v.goods[0].title}}</p>
-                  <div class="good-price">
-                    <p>{{v.goods[0].marketprice}}</p>
-                    <p>×{{v.goods[0].total}}</p>
-                  </div>
-                </router-link>
-                <div class="good-pay">
-                  <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
+      <mt-tab-container v-model="selected" class="orderList" id="content-list">
+        <mt-tab-container-item id="all">
+          <ul class="order-list" v-show="!isShow1" v-for="(v,i) in order0">
+            <li>
+              <div>订单号：{{v.ordersn}}</div>
+              <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status,num:v.goods[0].total}}" tag="div">
+                <img :src=v.goods[0].thumb alt="" class="order-small">
+                <p>{{v.goods[0].title}}</p>
+                <div class="good-price">
+                  <p>{{v.goods[0].marketprice}}</p>
+                  <p>×{{v.goods[0].total}}</p>
                 </div>
-                <div class="good-btn">
-                  <button class="cancel-order"  v-if="v.status==0" @click="cancel(v.id)">
-                    取消订单
-                  </button>
-                  <button class="charge-order ocolor" @click="pay(v.ordersn)" v-if="v.status==0">
-                    付款
-                  </button>
-                  <!--<router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button"   v-if="v.status==1" v-show="v.canrefund||v.refundid==0"> -->
-                    <router-link class="charge-order ocolor"  :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button"   v-if="v.canrefund&&v.refundid==0" >
-                    申请退款
-                  </router-link>
-                  <!--<router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">-->
-                    <!--退款申请中-->
-                  <!--</router-link>-->
-                  <router-link class="charge-order1" to="" tag="button" v-if="v.status==2" @click="fn1()">
-                    确认收货
-                  </router-link>
-                  <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button" v-if="v.status==2">
-                    查看物流
-                  </router-link>
-                  <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">
-                    申请退款
-                  </router-link>
-                  <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
-                    退款申请中
-                  </router-link>
-                  <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button" v-if="v.status==3">
-                    查看物流
-                  </router-link>
-                </div>
-              </li>
-            </ul>
-            <div class="share-page" v-show="isShow1">
-              <div class="iconfont">
-                &#xe60f;
+              </router-link>
+              <div class="good-pay">
+                <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
               </div>
-              <p>您还没有相关订单</p>
-              <p>赶快去购物吧</p>
-              <router-link tag="button" to="/details">再逛逛</router-link>
-            </div>
-          </mt-tab-container-item>
-          <mt-tab-container-item id="will-pay">
-            <ul class="order-list" v-show="!isShow2" v-for="(v,i) in order1">
-              <li>
-                <div>订单号：{{v.ordersn}}</div>
-                <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}"  tag="div">
-                  <img :src=v.goods[0].thumb alt="" class="order-small">
-                  <p>{{v.goods[0].title}}</p>
-                  <div class="good-price">
-                    <p>{{v.goods[0].marketprice}}</p>
-                    <p>×{{v.goods[0].total}}</p>
-                  </div>
+              <div class="good-btn">
+                <button class="cancel-order"  v-if="v.status==0" @click="cancel(v.id)">
+                  取消订单
+                </button>
+                <button class="charge-order ocolor" @click="pay(v.ordersn)" v-if="v.status==0">
+                  付款
+                </button>
+                <!--<router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button"   v-if="v.status==1" v-show="v.canrefund||v.refundid==0"> -->
+                <router-link class="charge-order ocolor"  :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button"   v-if="v.canrefund&&v.refundid==0" >
+                  申请退款
                 </router-link>
-                <div class="good-pay">
-                  <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
-                </div>
-                <div class="good-btn">
-                  <button class="cancel-order" @click="cancel(v.id)">
-                    取消订单
-                    <!--<select id="" v-show="isSelect">-->
-                      <!--<option value="">不取消了</option>-->
-                      <!--<option value="">我不想买了</option>-->
-                      <!--<option value="">信息填写错误，重新拍</option>-->
-                      <!--<option value="">同城见面交易</option>-->
-                      <!--<option value="">其他原因</option>-->
-                    <!--</select>-->
-                  </button>
-                  <button class="charge-order ocolor" @click="pay(v.ordersn)">
-                    付款
-                  </button>
-                </div>
-              </li>
-            </ul>
-            <div class="share-page" v-show="isShow2">
-              <div class="iconfont">
-                &#xe60f;
+                <!--<router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">-->
+                <!--退款申请中-->
+                <!--</router-link>-->
+                <router-link class="charge-order1" to="" tag="button" v-if="v.status==2" @click="fn1()">
+                  确认收货
+                </router-link>
+                <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button" v-if="v.status==2">
+                  查看物流
+                </router-link>
+                <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">
+                  申请退款
+                </router-link>
+                <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
+                  退款申请中
+                </router-link>
+                <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button" v-if="v.status==3">
+                  查看物流
+                </router-link>
               </div>
-              <p>您还没有相关订单</p>
-              <p>赶快去购物吧</p>
-              <router-link tag="button" to="/details">再逛逛</router-link>
+            </li>
+          </ul>
+          <div class="share-page" v-show="isShow1">
+            <div class="iconfont">
+              &#xe60f;
             </div>
-          </mt-tab-container-item>
-          <mt-tab-container-item id="will-send">
-            <ul class="order-list" v-show="!isShow3" v-for="(v,i) in order2">
-              <li>
-                <div>订单号：{{v.ordersn}}</div>
-                <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" tag="div">
-                  <img :src=v.goods[0].thumb alt="" class="order-small">
-                  <p>{{v.goods[0].title}}</p>
-                  <div class="good-price">
-                    <p>{{v.goods[0].marketprice}}</p>
-                    <p>×{{v.goods[0].total}}</p>
-                  </div>
-                </router-link>
-                <div class="good-pay">
-                  <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
+            <p>您还没有相关订单</p>
+            <p>赶快去购物吧</p>
+            <router-link tag="button" to="/details">再逛逛</router-link>
+          </div>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="will-pay">
+          <ul class="order-list" v-show="!isShow2" v-for="(v,i) in order1">
+            <li>
+              <div>订单号：{{v.ordersn}}</div>
+              <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}"  tag="div">
+                <img :src=v.goods[0].thumb alt="" class="order-small">
+                <p>{{v.goods[0].title}}</p>
+                <div class="good-price">
+                  <p>{{v.goods[0].marketprice}}</p>
+                  <p>×{{v.goods[0].total}}</p>
                 </div>
-                <div class="good-btn">
-                  <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">
-                    申请退款
-                  </router-link>
-                </div>
-              </li>
-            </ul>
-            <div class="share-page" v-show="isShow3">
-              <div class="iconfont">
-                &#xe60f;
+              </router-link>
+              <div class="good-pay">
+                <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
               </div>
-              <p>您还没有相关订单</p>
-              <p>赶快去购物吧</p>
-              <router-link tag="button" to="/details">再逛逛</router-link>
-            </div>
-          </mt-tab-container-item>
-          <mt-tab-container-item id="will-reserve">
-            <ul class="order-list" v-show="!isShow4" v-for="(v,i) in order3">
-              <li>
-                <div>订单号：{{v.ordersn}}</div>
-                <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" tag="div">
-                  <img :src=v.goods[0].thumb alt="" class="order-small">
-                  <p>{{v.goods[0].title}}</p>
-                  <div class="good-price">
-                    <p>{{v.goods[0].marketprice}}</p>
-                    <p>×{{v.goods[0].total}}</p>
-                  </div>
-                </router-link>
-                <div class="good-pay">
-                  <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
-                </div>
-                <div class="good-btn">
-                  <button class="charge-order1" @click="fn1(v.id)">
-                    确认收货
-                  </button>
-                  <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button">
-                    查看物流
-                  </router-link>
-                </div>
-              </li>
-            </ul>
-            <div class="share-page" v-show="isShow4">
-              <div class="iconfont">
-                &#xe60f;
+              <div class="good-btn">
+                <button class="cancel-order" @click="cancel(v.id)">
+                  取消订单
+                  <!--<select id="" v-show="isSelect">-->
+                  <!--<option value="">不取消了</option>-->
+                  <!--<option value="">我不想买了</option>-->
+                  <!--<option value="">信息填写错误，重新拍</option>-->
+                  <!--<option value="">同城见面交易</option>-->
+                  <!--<option value="">其他原因</option>-->
+                  <!--</select>-->
+                </button>
+                <button class="charge-order ocolor" @click="pay(v.ordersn)">
+                  付款
+                </button>
               </div>
-              <p>您还没有相关订单</p>
-              <p>赶快去购物吧</p>
-              <router-link tag="button" to="/details">再逛逛</router-link>
+            </li>
+          </ul>
+          <div class="share-page" v-show="isShow2">
+            <div class="iconfont">
+              &#xe60f;
             </div>
-          </mt-tab-container-item>
-          <mt-tab-container-item id="done">
-            <ul class="order-list" v-show="!isShow5" v-for="(v,i) in order4">
-              <li>
-                <div>订单号：{{v.ordersn}}</div>
-                <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" tag="div">
-                  <img :src=v.goods[0].thumb alt="" class="order-small">
-                  <p>{{v.goods[0].title}}</p>
-                  <div class="good-price">
-                    <p>{{v.goods[0].marketprice}}</p>
-                    <p>×{{v.goods[0].total}}</p>
-                  </div>
-                </router-link>
-                <div class="good-pay">
-                  <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
+            <p>您还没有相关订单</p>
+            <p>赶快去购物吧</p>
+            <router-link tag="button" to="/details">再逛逛</router-link>
+          </div>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="will-send">
+          <ul class="order-list" v-show="!isShow3" v-for="(v,i) in order2">
+            <li>
+              <div>订单号：{{v.ordersn}}</div>
+              <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" tag="div">
+                <img :src=v.goods[0].thumb alt="" class="order-small">
+                <p>{{v.goods[0].title}}</p>
+                <div class="good-price">
+                  <p>{{v.goods[0].marketprice}}</p>
+                  <p>×{{v.goods[0].total}}</p>
                 </div>
-                <div class="good-btn">
-                  <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">
-                    申请退款
-                  </router-link>
-                  <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
-                    退款申请中
-                  </router-link>
-                  <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button">
-                    查看物流
-                  </router-link>
+              </router-link>
+              <div class="good-pay">
+                <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
+              </div>
+              <div class="good-btn">
+                <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">
+                  申请退款
+                </router-link>
+              </div>
+            </li>
+          </ul>
+          <div class="share-page" v-show="isShow3">
+            <div class="iconfont">
+              &#xe60f;
+            </div>
+            <p>您还没有相关订单</p>
+            <p>赶快去购物吧</p>
+            <router-link tag="button" to="/details">再逛逛</router-link>
+          </div>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="will-reserve">
+          <ul class="order-list" v-show="!isShow4" v-for="(v,i) in order3">
+            <li>
+              <div>订单号：{{v.ordersn}}</div>
+              <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" tag="div">
+                <img :src=v.goods[0].thumb alt="" class="order-small">
+                <p>{{v.goods[0].title}}</p>
+                <div class="good-price">
+                  <p>{{v.goods[0].marketprice}}</p>
+                  <p>×{{v.goods[0].total}}</p>
+                </div>
+              </router-link>
+              <div class="good-pay">
+                <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
+              </div>
+              <div class="good-btn">
+                <button class="charge-order1" @click="fn1(v.id)">
+                  确认收货
+                </button>
+                <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button">
+                  查看物流
+                </router-link>
+              </div>
+            </li>
+          </ul>
+          <div class="share-page" v-show="isShow4">
+            <div class="iconfont">
+              &#xe60f;
+            </div>
+            <p>您还没有相关订单</p>
+            <p>赶快去购物吧</p>
+            <router-link tag="button" to="/details">再逛逛</router-link>
+          </div>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="done">
+          <ul class="order-list" v-show="!isShow5" v-for="(v,i) in order4">
+            <li>
+              <div>订单号：{{v.ordersn}}</div>
+              <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" tag="div">
+                <img :src=v.goods[0].thumb alt="" class="order-small">
+                <p>{{v.goods[0].title}}</p>
+                <div class="good-price">
+                  <p>{{v.goods[0].marketprice}}</p>
+                  <p>×{{v.goods[0].total}}</p>
+                </div>
+              </router-link>
+              <div class="good-pay">
+                <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
+              </div>
+              <div class="good-btn">
+                <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">
+                  申请退款
+                </router-link>
+                <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
+                  退款申请中
+                </router-link>
+                <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button">
+                  查看物流
+                </router-link>
 
-                </div>
-              </li>
-            </ul>
-            <div class="share-page" v-show="isShow5">
-              <div class="iconfont">
-                &#xe60f;
               </div>
-              <p>您还没有相关订单</p>
-              <p>赶快去购物吧</p>
-              <router-link tag="button" to="/details">再逛逛</router-link>
+            </li>
+          </ul>
+          <div class="share-page" v-show="isShow5">
+            <div class="iconfont">
+              &#xe60f;
             </div>
-          </mt-tab-container-item>
-        </mt-tab-container>
-      </div>
-      <v-tabbar></v-tabbar>
-      <router-view></router-view>
+            <p>您还没有相关订单</p>
+            <p>赶快去购物吧</p>
+            <router-link tag="button" to="/details">再逛逛</router-link>
+          </div>
+        </mt-tab-container-item>
+      </mt-tab-container>
     </div>
+    <v-tabbar></v-tabbar>
+    <router-view></router-view>
+  </div>
 </template>
 <script>
   import { Navbar,MessageBox } from 'mint-ui';
- 	import vTabbar from '../components/common/Tabbar';
- 	import {orderList,orderManu} from '../api/api.js'
+  import vTabbar from '../components/common/Tabbar';
+  import {orderList,orderManu} from '../api/api.js'
   import {mapMutations, mapGetters} from 'vuex'
-// 	import {mapMutations} from 'Vuex'
-	export default{
+  // 	import {mapMutations} from 'Vuex'
+  export default{
     name: 'page-navbar',
-		data(){
-			return{
+    data(){
+      return{
         selected: 'all',
         isSelect:false,
         isShow1:false,
@@ -244,19 +244,19 @@
         order3:[],
         order4:[],
         canReason:'其他原因'
-			}
-		},
+      }
+    },
     methods:{
-		  all:function () {
+      all:function () {
         console.log(1)
       },
       cancel:function (orderid) {
-		    console.log(11)
+        console.log(11)
         this.isSelect=!this.isSelect;
-		    let that=this;
-		    let params={
-		      data:{
-		        orderid:orderid,
+        let that=this;
+        let params={
+          data:{
+            orderid:orderid,
             type:'canl',
             reason:that.canReason
           }
@@ -265,7 +265,7 @@
           console.log(res)
         })
       },
-		  fn1:function (orderid) {
+      fn1:function (orderid) {
         let that=this;
         MessageBox({
           title: '提示',
@@ -297,7 +297,7 @@
         });
       },
       getOrderList:function () {
-		    let that=this;
+        let that=this;
         let params={
           data:{
             page:1,
@@ -310,7 +310,7 @@
             that.order0=res.data;
             for(let i=0;i<res.data.length;i++){
               if(res.data[i].status==0){
-              that.order1.push(res.data[i])
+                that.order1.push(res.data[i])
               }if(res.data[i].status==1){
                 that.order2.push(res.data[i])
               }
@@ -364,10 +364,10 @@
 //          return true
 //      }
     },
-		components:{
-			vTabbar
-		},
-	}
+    components:{
+      vTabbar
+    },
+  }
 </script>
 <style scoped>
   @import '../assets/css/reset/reset.css';
@@ -486,10 +486,10 @@
     margin-right:.05rem;
   }
   /*.delete-order{*/
-    /*background:#ddd;*/
-    /*color:#777 !important;*/
-    /*width:.9rem !important;*/
-    /*margin-right:.05rem;*/
+  /*background:#ddd;*/
+  /*color:#777 !important;*/
+  /*width:.9rem !important;*/
+  /*margin-right:.05rem;*/
   /*}*/
   .cancel-order{
     background:#ddd;

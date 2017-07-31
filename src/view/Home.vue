@@ -1,22 +1,26 @@
 <template>
   <div class="content">
-    <ul class="goodsList">
-      <li class="goodsList-itme1">
-        <img src="../assets/images/home-01.jpg">
-      </li>
-      <router-link class="goodsList-itme2" :to="{path:'/details',query:{goodsId:4}}" tag="li">
-        <img src="../assets/images/home-02.jpg">
-      </router-link>
-      <!--<li class="goodsList-itme2">-->
-      <!--<img src="../assets/images/home-02.jpg">-->
-      <!--</li>-->
-    </ul>
-    <v-tabbar></v-tabbar>
-    <router-view></router-view>
+    <!--<v-scroll class="scroll-style">-->
+      <ul class="goodsList">
+        <li class="goodsList-itme1">
+          <img src="../assets/images/home-01.jpg">
+        </li>
+        <router-link class="goodsList-itme2" :to="{path:'/details',query:{goodsId:4}}" tag="li">
+          <img src="../assets/images/home-02.jpg">
+        </router-link>
+        <!--<li class="goodsList-itme2">-->
+        <!--<img src="../assets/images/home-02.jpg">-->
+        <!--</li>-->
+      </ul>
+      <v-tabbar></v-tabbar>
+      <router-view></router-view>
+    <!--</v-scroll>-->
   </div>
 </template>
 <script>
   import vTabbar from '../components/common/Tabbar';
+  import vScroll from '../components/common/scroll';
+
   export default{
     data(){
       return {
@@ -26,7 +30,8 @@
     mounted(){
     },
     components:{
-      vTabbar
+      vTabbar,
+      vScroll
     }
   }
 </script>
@@ -62,5 +67,12 @@
   .goodsList-itme2 img {
     display: block;
     width: 100%;
+  }
+
+  .scroll-style {
+    height: 100%;
+    /*width: 100%;*/
+    /*height: 6.2rem;*/
+    overflow: hidden;
   }
 </style>
