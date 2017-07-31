@@ -178,7 +178,7 @@
 
   import vTabbar from '../components/common/Tabbar.vue'
   import {recordStatistics_get, teamsStatistics, orderStatistics,memberInfo} from '../api/api'
-  import {_webapp} from '../config/_webapp.js';
+  import {_webapp} from '../config/webapp.js';
   import {mapMutations, mapGetters} from 'vuex'
   import { MessageBox } from 'mint-ui';
 
@@ -234,38 +234,70 @@
             _this.recordStatistics_get.invalid = res.data.invalid.cg_money_sum;
             _this.recordStatistics_get.apply = res.data.apply.cg_money_sum;
             _this.recordStatistics_get.o_status_0 = res.data.o_status_0.cg_money_sum;
+
+            teamsStatistics({}, function (res) {
+              if (res.statusCode == 1) {
+                _this.teamsStatistics.all = res.data.all;
+                _this.teamsStatistics.purchased = res.data.purchased;
+                _this.teamsStatistics.no_purchased = res.data.no_purchased;
+
+
+                orderStatistics({}, function (res) {
+                  if (res.statusCode == 1) {
+                    _this.orderStatistics.total = res.data.total.order_count
+                    _this.orderStatistics.lock = res.data.lock.order_count
+                    _this.orderStatistics.refund = res.data.refund.order_count
+                    _this.orderStatistics.ok = res.data.ok.order_count
+
+                    memberInfo({}, function (res) {
+                        console.log(res)
+                      if (res.statusCode == 1) {
+                        _this.memberInfo.nickname = res.data.nickname
+                        _this.memberInfo.id = res.data.id
+                        _this.memberInfo.level = res.data.level
+                        _this.memberInfo.avatar = res.data.avatar
+                      }
+                    })
+                  } else {
+                    console.log('订单统计接口数据异常')
+                  }
+                });
+              } else {
+                console.log('获取团队数量统计接口数据异常')
+              }
+            })
           } else {
             console.log('佣金统计接口数据异常')
           }
         });
-        teamsStatistics({}, function (res) {
-          if (res.statusCode == 1) {
-            _this.teamsStatistics.all = res.data.all;
-            _this.teamsStatistics.purchased = res.data.purchased;
-            _this.teamsStatistics.no_purchased = res.data.no_purchased;
-          } else {
-            console.log('获取团队数量统计接口数据异常')
-          }
-        })
-        orderStatistics({}, function (res) {
-          if (res.statusCode == 1) {
-            _this.orderStatistics.total = res.data.total.order_count
-            _this.orderStatistics.lock = res.data.lock.order_count
-            _this.orderStatistics.refund = res.data.refund.order_count
-            _this.orderStatistics.ok = res.data.ok.order_count
-          } else {
-            console.log('订单统计接口数据异常')
-          }
-        });
-        memberInfo({}, function (res) {
-            console.log(res)
-          if (res.statusCode == 1) {
-            _this.memberInfo.nickname = res.data.nickname
-            _this.memberInfo.id = res.data.id
-            _this.memberInfo.level = res.data.level
-            _this.memberInfo.avatar = res.data.avatar
-          }
-        })
+        // teamsStatistics({}, function (res) {
+        //   if (res.statusCode == 1) {
+        //     _this.teamsStatistics.all = res.data.all;
+        //     _this.teamsStatistics.purchased = res.data.purchased;
+        //     _this.teamsStatistics.no_purchased = res.data.no_purchased;
+        //   } else {
+        //     console.log('获取团队数量统计接口数据异常')
+        //   }
+        // })
+        // orderStatistics({}, function (res) {
+        //   if (res.statusCode == 1) {
+        //     _this.orderStatistics.total = res.data.total.order_count
+        //     _this.orderStatistics.lock = res.data.lock.order_count
+        //     _this.orderStatistics.refund = res.data.refund.order_count
+        //     _this.orderStatistics.ok = res.data.ok.order_count
+        //   } else {
+        //     console.log('订单统计接口数据异常')
+        //   }
+        // });
+        // memberInfo({}, function (res) {
+        //     console.log(res)
+        //   if (res.statusCode == 1) {
+        //     _this.memberInfo.nickname = res.data.nickname
+        //     _this.memberInfo.id = res.data.id
+        //     _this.memberInfo.level = res.data.level
+        //     _this.memberInfo.avatar = res.data.avatar
+        //   }
+        // })
 
       },
       partnertab(idx){

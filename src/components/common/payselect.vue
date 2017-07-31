@@ -92,6 +92,11 @@
             }
           }
           payment_post(params, res => {
+            Toast({
+              message: `${res.statusCode}`,
+              position: 'middle',
+              duration: 2000
+            });
             if (res.statusCode == 1) {
               paymentFun(type, res.data, data => {
                 if (data.statusCode == 1) {
