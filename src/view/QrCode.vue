@@ -1,9 +1,9 @@
 <template>
   <div class="main">
     <mt-header fixed title="二维码">
-      <router-link to="/vipCenter" slot="left">
-        <mt-button icon="back" ></mt-button>
-      </router-link>
+      <!--<router-link to="/vipCenter" slot="left">-->
+        <!--<mt-button icon="back" ></mt-button>-->
+      <!--</router-link>-->
     </mt-header>
     <div class="container">
       <div class="imgbox" @click="clickhavib()">

@@ -28,16 +28,16 @@
     </router-link>
     <section class="top">
       <!--<div class="top_1">-->
-        <router-link :to="{name: 'takemoney'}" tag="div">
+      <router-link :to="{name: 'takemoney'}" tag="div">
         <span class="title">营业额</span>
         <span class="num">{{recordStatistics_get.cg_money_sum}}</span><span class="yuan"> 元</span>
-        </router-link>
+      </router-link>
       <!--</div>-->
       <!--<div>-->
-        <router-link :to="{name: 'takemoney'}" tag="div">
+      <router-link :to="{name: 'takemoney'}" tag="div">
         <span class="title">佣金</span>
         <span class="num">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>
-        </router-link>
+      </router-link>
       <!--</div>-->
     </section>
     <section class="content">
@@ -177,10 +177,10 @@
 <script>
 
   import vTabbar from '../components/common/Tabbar.vue'
-  import {recordStatistics_get, teamsStatistics, orderStatistics,memberInfo} from '../api/api'
+  import {recordStatistics_get, teamsStatistics, orderStatistics, memberInfo} from '../api/api'
   import {_webapp} from '../config/_webapp.js';
   import {mapMutations, mapGetters} from 'vuex'
-  import { MessageBox } from 'mint-ui';
+  import {MessageBox} from 'mint-ui';
 
   export default{
     data () {
@@ -223,7 +223,6 @@
 //        let params = {};
         //佣金统计
         recordStatistics_get({data: {type: ''}}, function (res) {
-//          console.log(res)
           if (res.statusCode == 1) {
             let data = res.data
             _this.recordStatistics_get.cg_money_sum = res.data.total.cg_money_sum;
@@ -237,35 +236,38 @@
           } else {
             console.log('佣金统计接口数据异常')
           }
+          teamsStatistics({}, function (res) {
+            if (res.statusCode == 1) {
+              _this.teamsStatistics.all = res.data.all;
+              _this.teamsStatistics.purchased = res.data.purchased;
+              _this.teamsStatistics.no_purchased = res.data.no_purchased;
+            } else {
+              console.log('获取团队数量统计接口数据异常')
+            }
+            orderStatistics({}, function (res) {
+              if (res.statusCode == 1) {
+                _this.orderStatistics.total = res.data.total.order_count
+                _this.orderStatistics.lock = res.data.lock.order_count
+                _this.orderStatistics.refund = res.data.refund.order_count
+                _this.orderStatistics.ok = res.data.ok.order_count
+              } else {
+                console.log('订单统计接口数据异常')
+              }
+
+              memberInfo({}, function (res) {
+                console.log(res)
+                if (res.statusCode == 1) {
+                  _this.memberInfo.nickname = res.data.nickname
+                  _this.memberInfo.id = res.data.id
+                  _this.memberInfo.level = res.data.level
+                  _this.memberInfo.avatar = res.data.avatar
+                }
+              })
+            });
+          })
+
         });
-        teamsStatistics({}, function (res) {
-          if (res.statusCode == 1) {
-            _this.teamsStatistics.all = res.data.all;
-            _this.teamsStatistics.purchased = res.data.purchased;
-            _this.teamsStatistics.no_purchased = res.data.no_purchased;
-          } else {
-            console.log('获取团队数量统计接口数据异常')
-          }
-        })
-        orderStatistics({}, function (res) {
-          if (res.statusCode == 1) {
-            _this.orderStatistics.total = res.data.total.order_count
-            _this.orderStatistics.lock = res.data.lock.order_count
-            _this.orderStatistics.refund = res.data.refund.order_count
-            _this.orderStatistics.ok = res.data.ok.order_count
-          } else {
-            console.log('订单统计接口数据异常')
-          }
-        });
-        memberInfo({}, function (res) {
-            console.log(res)
-          if (res.statusCode == 1) {
-            _this.memberInfo.nickname = res.data.nickname
-            _this.memberInfo.id = res.data.id
-            _this.memberInfo.level = res.data.level
-            _this.memberInfo.avatar = res.data.avatar
-          }
-        })
+
 
       },
       partnertab(idx){
@@ -278,12 +280,12 @@
         this.$router.push({name: `extension${idx}`})
       },
       outLogin(){
-        MessageBox({title: '确认退出当前账号?',message: '点击确认退出',showCancelButton: true}).then(action => {
-          if(action=='confirm'){//表示点击了确定
-            _webapp.logOut((res)=>{
+        MessageBox({title: '确认退出当前账号?', message: '点击确认退出', showCancelButton: true}).then(action => {
+          if (action == 'confirm') {//表示点击了确定
+            _webapp.logOut((res) => {
 
             })
-          }else if(action=='cancel'){//表示点击了取消
+          } else if (action == 'cancel') {//表示点击了取消
 
           }
         })
@@ -339,7 +341,8 @@
     -moz-border-radius: 50%;
     border-radius: 50%;
   }
-  .icon>img{
+
+  .icon > img {
     width: .70rem;
     height: .70rem;
     -webkit-border-radius: 50%;
@@ -444,10 +447,12 @@
     padding: .08rem .2rem;
     border-bottom: 1px solid rgba(0, 0, 0, .1);
   }
-  .mint-cell-text{
-     font-size: 0.14rem;
+
+  .mint-cell-text {
+    font-size: 0.14rem;
     font-weight: 700;
   }
+
   .content ul {
     /*margin-top: .1rem;*/
     height: .90rem;
@@ -505,18 +510,22 @@
   .details {
     margin-top: .1rem;
   }
+
   .details li {
     margin-top: .04rem;
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
   }
+
   .order-list {
     display: flex;
   }
+
   .order-list li {
     flex: 1;
   }
-  .outLogin{
+
+  .outLogin {
     display: block;
     margin-top: 0.05rem;
     width: 100%;
@@ -526,7 +535,7 @@
     background: #fff;
     color: rgba(0, 0, 0, .5);
     font-size: 0.16rem;
-    border:none;
+    border: none;
     outline: none;
   }
 </style>
