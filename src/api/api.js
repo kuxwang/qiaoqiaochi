@@ -11,17 +11,7 @@ const dataType = 'json';
  * 分销中心
  */
 const commissions = {
-  /**
-   * 佣金统计
-   */
-  recordStatistics: {
-    url: `${base}/commissions/recordStatistics`,
-    method: 'GET',
-    header,
-    dataType
-  },
-  recordStatistics_get: {url: `${base}/commissions/recordStatistics`, method: 'GET', header, dataType},
-  recordStatistics_post: {url: `${base}/commissions/recordStatistics`, method: 'POST', header, dataType},
+
   /**
    * 订单统计
    */
@@ -30,7 +20,32 @@ const commissions = {
     method: 'GET',
     header,
     dataType
-  }
+  },
+  recordStatistics_get: {url: `${base}/commissions/recordStatistics`, method: 'GET', header, dataType},
+  recordStatistics_post: {url: `${base}/commissions/recordStatistics`, method: 'POST', header, dataType},
+  orderStatistics: {url: `${base}/commissions/orderStatistics`, method: 'GET', header, dataType},
+  /**
+   * 订单列表
+   */
+  orderLists: {url: `${base}/commissions/orderLists`, method: 'GET', header, dataType},
+  /**
+   * 订单详情
+   */
+  orders: {url: `${base}/commissions/orders`, method: 'GET', header, dataType},
+  /**
+   * 获取团队列表
+   */
+  teamsLists: {url: `${base}/commissions/teamsLists`, method: 'GET', header, dataType},
+  /**
+   * 获取团队指定用户
+   */
+  teams: {url: `${base}/commissions/teams`, method: 'GET', header, dataType},
+  /**
+   * 获取团队数量统计
+   */
+  teamsStatistics: {url: `${base}/commissions/teamsStatistics`, method: 'GET', header, dataType},
+
+
 }
 /**
  * 商品详情
@@ -51,12 +66,23 @@ const orderd={orderDetail:{url:`${base}/orders`, method:'GET', header, dataType}
 /**
  * 快递
  */
-
+const express={exp:{url:`${base}/expresses`, method:'GET', header, dataType}};
+/**
+ * 订单操作
+ */
+const orderDo={orderD:{url:`${base}/orders/operationOrder`, method:'PUT', header, dataType}};
 /**
  * 获取团队数量统计
  * @param params
  * @param callback
  */
+/**
+ * 用户信息获取
+ * @type {{memberInfo: {url: string, method: string, header: string, dataType: string}}}
+ */
+const members = {
+  memberInfo: {url: `${base}/members/memberInfo`, method: 'GET', header, dataType}
+}
 export const teamsStatistics = function (params, callback) {
   _webapp.requestx(Object.assign(params, commissions.teamsStatistics), function (res) {
     callback(res)
@@ -67,8 +93,8 @@ export const teamsStatistics = function (params, callback) {
  * @param params
  * @param callback
  */
-export const recordStatistics = function(params, callback) {
-  _webapp.requestx(Object.assign(params, commissions.recordStatistics), function(res) {
+export const recordStatistics_get = function(params, callback) {
+  _webapp.requestx(Object.assign(params, commissions.recordStatistics_get), function(res) {
     callback(res)
   })
 };
@@ -209,3 +235,9 @@ export const orderDetail=function (params,callback) {_webapp.requestx(Object.ass
  * 快递
  */
 export const expressInfo=function (params,callback) {_webapp.requestx(Object.assign(params,express.exp),function (res) {callback(res)})};
+/**
+ * 订单操作
+ */
+export const orderManu=function (params,callback) {_webapp.requestx(Object.assign(params,orderDo.orderD),function (res) {callback(res)})};
+
+

@@ -28,5 +28,9 @@ export default {
   },
   [ORDERSN] (state, data) {
     state.ordersn = data
-  }
+  },
+  // [BACKTIME](state,data){
+  //   state.backTime=data
+  // }
 }
+
