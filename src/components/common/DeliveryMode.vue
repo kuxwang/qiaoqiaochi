@@ -42,7 +42,7 @@
     },
     methods: {
       goBack () {
-        this.$router.replace('/confirmorder');
+        this.$router.go(-1);
       },
       getDispatchName(v, i){
         this.busActives = i

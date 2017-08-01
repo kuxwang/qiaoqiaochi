@@ -19,15 +19,16 @@
   export default{
     data(){
       return {
-        qrimg: ''
+        qrimg: '123'
       }
     },
     components: {
       vTabbar
     },
     methods: {
-      clickhavib () {
-        QrimgSave(this.qrimg, (res) => {
+      clickhavib () { 
+        let _this=this;
+        QrimgSave(_this.qrimg, (res) => {
           if (res.statusCode == 1) {
             console.log('ok')
           }
@@ -35,10 +36,11 @@
       }
     },
     created () {
+      let _this=this;
       Qrimg({}, res => {
         console.log(1)
         if (res.statusCode == 1) {
-          this.qrimg = res.data
+          _this.qrimg = res.data
         }
       })
     }

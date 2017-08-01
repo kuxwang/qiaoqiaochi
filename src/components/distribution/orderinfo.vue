@@ -30,13 +30,9 @@
         <div class="left">付款时间</div>
         <div class="right">{{ordernum.paytime}}</div>
       </li>
-
-
     </ul>
     <div class="tianchong"></div>
     <ul class="order-list" >
-
-
       <li v-for="(i,index) in ordercom" >
         <div class="left">
           <span class="icon">{{i.c_rank}}</span>
@@ -195,13 +191,13 @@
 
   ul.order-list .left span {
     display: block;
-    width: .3rem;
-    height: .3rem;
-    line-height: 0.3rem;
-    border-radius: .3rem;
+    width: .45rem;
+    height: .45rem;
+    line-height: 0.45rem;
+    border-radius: .45rem;
     border: 1px #F5751D solid;
-    background: #F5751D;
-    color: #fff;
+    /* background: #F5751D; */
+    color: #333;
   }
 
   ul.order-list .right {

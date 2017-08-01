@@ -177,8 +177,8 @@
 <script>
 
   import vTabbar from '../components/common/Tabbar.vue'
-  import {recordStatistics_get, teamsStatistics, orderStatistics,memberInfo} from '../api/api'
-  import {_webapp} from '../config/webapp.js';
+  import {recordStatistics_get, teamsStatistics, orderStatistics,memberInfo,LOGINOUT} from '../api/api'
+  import {_webapp} from '../config/_webapp.js';
   import {mapMutations, mapGetters} from 'vuex'
   import { MessageBox } from 'mint-ui';
 
@@ -341,7 +341,8 @@
       outLogin(){
         MessageBox({title: '确认退出当前账号?',message: '点击确认退出',showCancelButton: true}).then(action => {
           if(action=='confirm'){//表示点击了确定
-            _webapp.logOut((res)=>{
+            // _webapp.logOut((res)=>{})
+            LOGINOUT(function(res){
 
             })
           }else if(action=='cancel'){//表示点击了取消
@@ -353,13 +354,9 @@
         tabselect: 'TABSELECT',
       })
     },
-    created(){
-      this.init();
-    },
     mounted(){
-
-    },
-
+       this.init();
+    }
   }
 </script>
 <style scoped>
