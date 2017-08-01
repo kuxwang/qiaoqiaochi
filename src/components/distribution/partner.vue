@@ -12,7 +12,7 @@
 
     <ul class="nav-tab">
       <!--<router-link to="/partner1" tag="li">-->
-        <li :class="{tabActive: selected==1 }" @click="selecttab(1)">
+        <li :class="{tabActive: selected==1 }" @click="selecttab(1,1)">
         <div class="title">所有伙伴</div>
         <div class="iconfont listicon">&#xe646;</div>
         <div>
@@ -20,14 +20,14 @@
         </div>
 
         </li>
-        <li :class="{tabActive: selected==2}" @click="selecttab(2)">
+        <li :class="{tabActive: selected==2}" @click="selecttab(2,1)">
         <div class="title">已购买伙伴</div>
         <div class="iconfont listicon">&#xe600;</div>
         <div>
           <span class="num">{{personnum.purchased}}</span><span class="yuan"> 人</span>
         </div>
         </li>
-      <li :class="{tabActive: selected==3 }" @click="selecttab(3)">
+      <li :class="{tabActive: selected==3 }" @click="selecttab(3,1)">
         <div class="title">未购买伙伴</div>
         <div class="iconfont listicon">&#xe60d;</div>
         <div>
@@ -44,7 +44,7 @@
     <!--<transition name="slide">-->
       <!--<router-view></router-view>-->
     <!--</transition>-->
-
+    <mt-loadmore :top-method="loadTop"    :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
     <ul class="p-list" v-if="personlist.length">
       <li class="p-cell" v-for="(i,index) in personlist" @click="popshow(index)">
       <!--<li class="p-cell" >-->
@@ -58,7 +58,13 @@
         </div>
       </li>
     </ul>
-
+      <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
+        <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+        <span v-show="bottomStatus === 'loading'">
+	              	<mt-spinner type="snake"></mt-spinner>
+	            	</span>
+      </div>
+    </mt-loadmore>
 
     <!--</mt-loadmore>-->
     <mt-popup
@@ -100,7 +106,11 @@
         find:'',
         popupVisible:false,
         personnum:{},
-        personlist:{}
+        personlist:{},
+        allLoaded: false,
+        bottomStatus: '',
+        myCurNo: 1,
+        bottomAllLoaded:false,
       }
     },
     components: {
@@ -110,14 +120,14 @@
         open(){
             this.popupVisible=true
         },
-      selecttab(idx){
+      selecttab(idx,page){
         this.selected = idx;
         switch (idx) {
           case 1:
             let params={
               data: {
                 type:'all',
-                page:1,
+                page:page,
                 psize:10
               }
             }
@@ -135,7 +145,7 @@
              params={
               data: {
                 type:'agent',
-                page:1,
+                page:page,
                 psize:10
               }
             }
@@ -151,7 +161,7 @@
              params={
               data: {
                 type:'fans',
-                page:1,
+                page:page,
                 psize:10
               }
             }
@@ -182,7 +192,6 @@
                 if(!this.personlist ||this.personlist.length<=1){
                   this.searched=false
                 }else  {
-//                  console.log(res)
                   let obji=[]
                   obji.push(res.data)
                   this.personlist=obji
@@ -199,10 +208,96 @@
         }
 
       },
+      addlist(){
+        this.selected = idx;
+        switch (idx) {
+          case 1:
+            let params={
+              data: {
+                type:'all',
+                page:page,
+                psize:10
+              }
+            }
+            teamsLists(params,(res)=>{
+              if(res.statusCode==1){
+                this.personlist=this.personlist.concat(res.data.lists);
+
+              }else {
+                console.log('请求失败')
+              }
+            })
+            break;
+          case 2:
+            params={
+              data: {
+                type:'agent',
+                page:page,
+                psize:10
+              }
+            }
+            teamsLists(params,(res)=>{
+              if(res.statusCode===1){
+                this.personlist=this.personlist.concat(res.data.lists);
+              }else {
+                console.log('请求失败')
+              }
+            })
+            break;
+          case 3:
+            params={
+              data: {
+                type:'fans',
+                page:page,
+                psize:10
+              }
+            }
+            teamsLists(params,(res)=>{
+              if(res.statusCode===1){
+                this.personlist=this.personlist.concat(res.data.lists);
+              }else {
+                console.log('请求失败')
+              }
+            })
+            break;
+          case 4:
+            if(this.find.length===11){
+              var obj={
+                mobile:this.find
+              }
+            }else if(this.find.length===7) {
+              var obj={
+                id:this.find
+              }
+            }
+            params={
+              data: obj
+            };
+            teams(params,(res)=>{
+              if(res.statusCode === 1){
+                this.personlist=res.data;
+                if(!this.personlist ||this.personlist.length<=1){
+                  this.searched=false
+                }else  {
+                  let obji=[]
+                  obji.push(res.data)
+                  this.personlist=this.personlist.concat(obji);
+                  console.log(this.personlist)
+                }
+              }else {
+                console.log('请求失败');
+              }
+            })
+            break;
+          default:
+            console.log('hehhe')
+
+        }
+      },
       popshow(index){
         let params={
           data: {
-            openid:this.personlist.lists[index].openid,
+            openid:this.personlist[index].openid,
           }
         }
         teams(params,(res)=>{
@@ -211,7 +306,24 @@
             console.log(this.teamsinfo)
             this.popupVisible=true
           }
-        })
+        });
+
+      },
+      loadTop (){
+        this.selecttab(this.selected,1)
+        this.$refs.loadmore.onBottomLoaded();
+
+      },
+      loadBottom() {
+        this.myCurNo += 1;
+        setTimeout(()=>{
+          this.addlist(this.selected,this.myCurNo);
+          this.$refs.loadmore.onBottomLoaded();
+        },1000)
+
+      },
+      allLoaded(){
+
       },
       search(){
           let mobilereg=/^1[3|4|5|7|8][0-9]{9}$/;
@@ -242,7 +354,7 @@
     created(){
       this.selected = this.tabselect;
       console.log(this.selected)
-      this.selecttab(this.tabselect)
+      this.selecttab(this.tabselect,1)
     },
     mounted() {
         let params={
@@ -254,7 +366,6 @@
               this.personnum=res.data
           }
       })
-
 
     }
 
@@ -553,12 +664,15 @@
   }
 
   .nav-tab {
-    margin-top: .5rem;
     height: .90rem;
     -webkit-box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
     -moz-box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
     box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
     display: flex;
+    position: fixed;
+    width: 100%;
+    top:.45rem;
+    z-index: 1;
   }
 
 
@@ -606,25 +720,36 @@
   }
 
   .search {
-    height: .3rem;
+    height: .5rem;
     display: flex;
-    margin: .2rem 2% ;
-    width: 96%;
+    /*margin: .2rem 2%;*/
+    width: 100%;
+
+    position: fixed;
+    z-index: 2;
+    background-color: #eee;
+    top:1.3rem;
+    padding: 0 2%;
+
   }
+
   .search input {
     border: none;
     display: block;
-    height: 100%;
+    height: .3rem;
     flex: 1;
     padding: 0 0.2rem;
     background: #fff;
+    margin-top: .15rem;
   }
   .search div {
     background-color: #F5751D;
     display: block;
-    height: 100%;
+    height: .3rem;
     flex: .3;
     color: #fff;
+    line-height: .3rem;
+    margin-top: .15rem;
   }
   .mint-header {
     color: #252525 !important;
@@ -701,7 +826,7 @@
     width: 60%;
   }
   .pop-up h5 {
-    font-size: 0.14rem;
+    font-size: 0.16rem;
   }
   .pop-up span {
     font-size: 0.12rem;
@@ -709,7 +834,10 @@
 
   .pop-down ul {
     width: 100%;
-    font-size: 0.12rem;
+    font-size: 0.1rem;
+    color: #333;
+    font-weight: 300;
+  ;
   }
   .pop-down li {
     display: block;
@@ -726,7 +854,14 @@
     text-align: right;
   }
 
-
+  .mint-loadmore {
+    position: absolute;
+    top:1.9rem;
+  }
+  .mint-loadmore {
+    overflow-y: scroll;
+    width: 100%;
+  }
 
 
 </style>
