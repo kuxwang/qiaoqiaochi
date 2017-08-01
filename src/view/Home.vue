@@ -1,20 +1,16 @@
 <template>
   <div class="content">
-    <!--<v-scroll class="scroll-style">-->
       <ul class="goodsList">
         <li class="goodsList-itme1">
-          <img src="../assets/images/home-01.jpg">
+          <!-- <img src="../assets/images/home-01.jpg"> -->
+          <img v-lazy="img1">
         </li>
         <router-link class="goodsList-itme2" :to="{path:'/details',query:{goodsId:4}}" tag="li">
-          <img src="../assets/images/home-02.jpg">
+           <img v-lazy="img2">
         </router-link>
-        <!--<li class="goodsList-itme2">-->
-        <!--<img src="../assets/images/home-02.jpg">-->
-        <!--</li>-->
       </ul>
       <v-tabbar></v-tabbar>
       <router-view></router-view>
-    <!--</v-scroll>-->
   </div>
 </template>
 <script>
@@ -24,7 +20,8 @@
   export default{
     data(){
       return {
-
+        img1:require('../assets/images/home-01.jpg'),
+        img2:require('../assets/images/home-02.jpg')
       }
     },
     mounted(){
@@ -56,17 +53,18 @@
 
   .goodsList-itme1 img {
     display: block;
-    width: 100%;
-  }
-
-  .goodsList-itme2 {
     width: 3.75rem;
-    height: 3.75rem;
+    height: 2.64rem;
+  }
+  .goodsList-itme2 {
+ /*   width: 3.75rem;
+    height: 3.75rem;*/
   }
 
   .goodsList-itme2 img {
     display: block;
-    width: 100%;
+    width: 3.75rem;
+    height: 3.75rem;
   }
 
   .scroll-style {

@@ -92,9 +92,12 @@
             }
           }
           payment_post(params, res => {
+             Toast({
+                message: `${typeof res.statusCode}|${res.statusCode}`,
+                position: 'middle',
+                duration: 2000
+              });
             if (res.statusCode == 1) {
-              paymentFun(type, res.data, data => {
-                if (data.statusCode == 1) {
                   _this.payStstus = 1
                   Toast({
                     message: '支付成功，自动返回至首页',
@@ -104,11 +107,21 @@
                   setTimeout(() => {
                     this.$router.push('/')
                   }, 2000)
-                }
+            }else{
+                  Toast({
+                    message: `支付异常：${res.data}`,
+                    position: 'middle',
+                    duration: 2000
+                  });
+            }
+
+            /*if (res.statusCode == 1) {
+              paymentFun(type, res.data, data => {
+                
               })
             } else {
               console.log('支付失败')
-            }
+            }*/
           })
         } else {
           Toast({

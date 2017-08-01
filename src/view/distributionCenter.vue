@@ -79,7 +79,6 @@
       </div>
       <ul class="order-list">
         <li class="li1" @click="ordertab(1)">
-        <!--<li class="li1" @click="ordertab(1)">-->
           <!--<router-link to="/extension1" tag="li">-->
           <div class="title">全部</div>
           <div class="iconfont listicon">&#xe624;</div>
@@ -178,8 +177,8 @@
 <script>
 
   import vTabbar from '../components/common/Tabbar.vue'
-  import {recordStatistics_get, teamsStatistics, orderStatistics,memberInfo} from '../api/api'
-  import {_webapp} from '../config/webapp.js';
+  import {recordStatistics_get, teamsStatistics, orderStatistics,memberInfo,LOGINOUT} from '../api/api'
+  import {_webapp} from '../config/_webapp.js';
   import {mapMutations, mapGetters} from 'vuex'
   import { MessageBox } from 'mint-ui';
 
@@ -234,6 +233,38 @@
             _this.recordStatistics_get.invalid = res.data.invalid.cg_money_sum;
             _this.recordStatistics_get.apply = res.data.apply.cg_money_sum;
             _this.recordStatistics_get.o_status_0 = res.data.o_status_0.cg_money_sum;
+
+            teamsStatistics({}, function (res) {
+              if (res.statusCode == 1) {
+                _this.teamsStatistics.all = res.data.all;
+                _this.teamsStatistics.purchased = res.data.purchased;
+                _this.teamsStatistics.no_purchased = res.data.no_purchased;
+
+
+                orderStatistics({}, function (res) {
+                  if (res.statusCode == 1) {
+                    _this.orderStatistics.total = res.data.total.order_count
+                    _this.orderStatistics.lock = res.data.lock.order_count
+                    _this.orderStatistics.refund = res.data.refund.order_count
+                    _this.orderStatistics.ok = res.data.ok.order_count
+
+                    memberInfo({}, function (res) {
+                        console.log(res)
+                      if (res.statusCode == 1) {
+                        _this.memberInfo.nickname = res.data.nickname
+                        _this.memberInfo.id = res.data.id
+                        _this.memberInfo.level = res.data.level
+                        _this.memberInfo.avatar = res.data.avatar
+                      }
+                    })
+                  } else {
+                    console.log('订单统计接口数据异常')
+                  }
+                });
+              } else {
+                console.log('获取团队数量统计接口数据异常')
+              }
+            })
           } else {
             console.log('佣金统计接口数据异常')
           }
@@ -269,6 +300,7 @@
 
         });
 
+
       },
       partnertab(idx){
         this.tabselect(idx)
@@ -282,7 +314,8 @@
       outLogin(){
         MessageBox({title: '确认退出当前账号?',message: '点击确认退出',showCancelButton: true}).then(action => {
           if(action=='confirm'){//表示点击了确定
-            _webapp.logOut((res)=>{
+            // _webapp.logOut((res)=>{})
+            LOGINOUT(function(res){
 
             })
           }else if(action=='cancel'){//表示点击了取消
@@ -298,9 +331,8 @@
       this.init();
     },
     mounted(){
-
-    },
-
+       this.init();
+    }
   }
 </script>
 <style scoped>

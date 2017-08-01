@@ -168,7 +168,7 @@
         })
       },
       goBack () {
-        this.$router.push('/shoppingCart');
+        this.$router.push('home');
       },
       goPay () {
         let addressid = this.defaultAddress.id || ''

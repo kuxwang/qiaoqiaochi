@@ -90,7 +90,7 @@
     },
     methods: {
       goBack(){
-        this.$router.push('/confirmorder');
+       this.$router.go(-1);
       },
       getMyAddress(v, i){
         this.onActives = i;

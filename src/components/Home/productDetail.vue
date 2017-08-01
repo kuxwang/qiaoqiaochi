@@ -8,7 +8,8 @@
       </mt-header>
       <div class="box">
         <div class="img-box">
-          <img :src="bandimg" class="content"/>
+          <!-- <img :src="bandimg" class="content"/> -->
+          <img v-lazy="bandimg" class="content"/>
         </div>
       </div>
       <div class="intro">

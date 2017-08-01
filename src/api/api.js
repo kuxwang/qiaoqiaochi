@@ -327,11 +327,7 @@ export const orderDetail = function (params, callback) {
 };
 /**
  * 快递
-
-
-
-
-   */
+  */
 export const expressInfo = function (params, callback) {
   _webapp.requestx(Object.assign(params, express.exp), function (res) {
     callback(res)
@@ -415,12 +411,15 @@ export const PUT_USERINFO = function (params, callback) {
 };
 const USERAVATARS = {url: `${base}/avatars`, method: 'PUT', header, dataType}
 export const PUT_USERAVATARS = function (params, callback) {
-  console.log(callback)
   _webapp.requestx(Object.assign(params, USERAVATARS), function (res) {
     callback(res)
   })
 };
-
+export const USERPHOTO=function(){
+  _webapp.uploadImg((res)=>{
+    callback(res)
+  })
+}
 
 /**
  * 购物车数量 yellowStar
@@ -431,6 +430,15 @@ export const GET_CARTNUMS = function (params, callback) {
     callback(res)
   })
 };
+
+/**
+ * 退出登录 yellowStar
+ */
+export const LOGINOUT=function(){
+  _webapp.logOut((res)=>{
+
+  })
+}
 
 /**
  * 订单操作

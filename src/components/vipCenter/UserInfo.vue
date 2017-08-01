@@ -13,7 +13,7 @@
 	            头像
 	          </span>
 	          <span class="fr">
-	            <img id="img_upload" src="../../assets/images/userinfo-02.png"  v-show="!myImg" />
+	            <img id="img_upload" :src="delImg"  v-show="!myImg" />
 	            <img id="img_upload" :src="myImg"  v-show="myImg" />
 	          </span>
 	          <!-- <input id="file_head" type="file" @change="getMyImg($event)"/> -->
@@ -59,7 +59,7 @@
 	          <span class="userinfo-list-lf fl">
 	            出生日期
 	          </span>
-	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择出生日期" v-model="myDate">
+	          <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择出生日期" v-model="myDate" disabled>
 	        </li>
 	    </ul>
 	    <div class="postUserInfo" @click="postUserInfo">
@@ -95,8 +95,8 @@
 <script>
 	import {Toast, Picker, Popup, DatetimePicker} from 'mint-ui';
 	import {address} from '../../assets/js/address';
-  	import {memberInfo,PUT_USERINFO,PUT_USERAVATARS} from '../../api/api';
-  	import {_webapp} from '../../config/webapp.js';
+  	import {memberInfo,PUT_USERINFO,PUT_USERAVATARS,USERPHOTO} from '../../api/api';
+  	import {_webapp} from '../../config/_webapp.js';
 	export default{
 		data(){
 			return{
@@ -139,7 +139,8 @@
 			    value1:'',
 			    startDate: new Date('1960'),
 			    endDate: new Date(),
-			    myImg:''
+			    myImg:'',
+			    delImg:''
 			}
 		},
 		methods:{
@@ -214,83 +215,89 @@
 	          this.myDate=`${y}年${m}月${d}日`;
 		    },
         	getMyImg(e){
-          	_webapp.uploadImg((res)=>{
-     			this.myImg=res.data
-          	})
-        },
-        getUserInfo(){
-          let params={ }
-          let _this=this
-          memberInfo(params, function (res) {
-            if(res.statusCode===1){
-            	_this.initAddress();
-              _this.myPhone=res.data.mobile;
-              _this.myNc=res.data.realname;
-              _this.myWx=res.data.weixin;
-              _this.myZfb=res.data.alipay_account;
-              _this.myZfbName=res.data.alipay_name;
-              _this.myPlace=`${res.data.province} ${res.data.city} ${res.data.area}`;
-              if(res.data.birthyear!=''&&res.data.birthmonth!=''&&res.data.birthday!=''){
-              	_this.myDate=`${res.data.birthyear}年 ${res.data.birthmonth}月 ${res.data.birthday}日`;
-              }else{
+        		let that=this;
+        		USERPHOTO(function(res){
+        			that.myImg=res.data
+        		})
+	        	// let that=this;
+	         //  	_webapp.uploadImg((res)=>{
+	     			
+	         //  	})
+	        },
+	        getUserInfo(){
+	          let params={ }
+	          let _this=this
+	          memberInfo(params, function (res) {
+	            if(res.statusCode===1){
+	            	_this.initAddress();
+	            	_this.delImg=res.data.avatar;
+	            	console.log(res.data.avatar)
+	              _this.myPhone=res.data.mobile;
+	              _this.myNc=res.data.realname;
+	              _this.myWx=res.data.weixin;
+	              _this.myZfb=res.data.alipay_account;
+	              _this.myZfbName=res.data.alipay_name;
+	              _this.myPlace=`${res.data.province} ${res.data.city} ${res.data.area}`;
+	              if(res.data.birthyear!=''&&res.data.birthmonth!=''&&res.data.birthday!=''){
+	              	_this.myDate=`${res.data.birthyear}年 ${res.data.birthmonth}月 ${res.data.birthday}日`;
+	              }else{
 
-              }
-            }
-          })
-        },
-        toastPhone(){
-          Toast({
-            message: '手机号已经绑定无法修改',
-            position: 'top',
-            duration: 2000
-          });
-        },
-        postUserInfo(){
-          let params={
-            'data':{
-              realname:this.myNc,
-              province:this.myProvince,
-              city:this.myCity,
-              alipay_name:this.myZfbName,
-              alipay_account:this.myZfb ,
-              weixin:this.myWx,
-              birth:this.myDate2,
-              area:this.myRegion
-            }
-          }
-          let _this=this;
-          PUT_USERINFO(params, function (res) {
-          	console.log(res)
-          	if(res.statusCode===1){
-	            _this.$router.go(-1);
-	            let that=_this;
-	            if(that.myImg!=''){
-		            let params={
-		            	'data':{
-		            		avatar:that.myImg
-		            	}
-		            }
-		            PUT_USERAVATARS(params, function (res) {
-		            	if(res.statusCode===1){
-		            		console.log('上传图片成功')
-		            	}else{
-		            		console.log('请求')
-		            	}
-		            })
-		        }
-	            Toast({
-	              message: '个人信息提交成功!',
-	              position: 'middle',
-	              duration: 1000
-	            });
-            }else{
-            	console.log('请求失败')
-            }
-          })
-        }
+	              }
+	            }
+	          })
+	        },
+	        toastPhone(){
+	          Toast({
+	            message: '手机号已经绑定无法修改',
+	            position: 'top',
+	            duration: 2000
+	          });
+	        },
+	        postUserInfo(){
+	          let params={
+	            'data':{
+	              realname:this.myNc,
+	              province:this.myProvince,
+	              city:this.myCity,
+	              alipay_name:this.myZfbName,
+	              alipay_account:this.myZfb ,
+	              weixin:this.myWx,
+	              birth:this.myDate2,
+	              area:this.myRegion,
+	              avatar:this.myImg
+	            }
+	          }
+	          let _this=this;
+	          PUT_USERINFO(params, function (res) {
+	          	if(res.statusCode===1){
+		            _this.$router.go(-1);
+		            let that=_this;
+		            if(that.myImg!=''){
+			            let params={
+			            	'data':{
+			            		avatar:that.myImg
+			            	}
+			            }
+			            PUT_USERAVATARS(params, function (res) {
+			            	if(res.statusCode===1){
+			            		console.log('上传图片成功')
+			            	}else{
+			            		console.log('请求')
+			            	}
+			            })
+			        }
+		            Toast({
+		              message: '个人信息提交成功!',
+		              position: 'middle',
+		              duration: 1000
+		            });
+	            }else{
+	            	console.log('请求失败')
+	            }
+	          })
+	        }
 		},
 		mounted() {
-
         	this.getUserInfo();
 	   }
 
@@ -413,9 +420,6 @@
 	}
 	.picker-item{
 		font-size: 0.16rem;
-	}
-	input:disabled{
-		color:#727272;
 	}
 </style>
 
