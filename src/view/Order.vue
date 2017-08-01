@@ -16,6 +16,8 @@
 
       <mt-tab-container v-model="selected" class="orderList" id="content-list">
         <mt-tab-container-item id="all">
+          <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
+                       :bottom-all-loaded="allLoaded" ref="loadmore">
           <ul class="order-list" v-show="!isShow1" v-for="(v,i) in order0">
             <li>
               <div>订单号：{{v.ordersn}}</div>
@@ -56,7 +58,7 @@
                 <!-- <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0" >
                   退款申请中
                 </router-link> -->
-                <button class="charge-order ocolor" v-if="v.canrefund&&v.refundid!=0" @click="refund(v.refundid)">
+                <button class="charge-order ocolor" v-if="v.canrefund&&v.refundid!=0&&v.status!=0" @click="refund(v.refundid)">
                    退款申请中
                 </button>
                 <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button" v-if="v.status==3">
@@ -65,6 +67,13 @@
               </div>
             </li>
           </ul>
+            <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
+              <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+              <span v-show="bottomStatus === 'loading'">
+	              	<mt-spinner type="snake"></mt-spinner>
+	            	</span>
+            </div>
+          </mt-loadmore>
           <div class="share-page" v-show="isShow1">
             <div class="iconfont">
               &#xe60f;
@@ -75,6 +84,8 @@
           </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="will-pay">
+          <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
+                       :bottom-all-loaded="allLoaded" ref="loadmore">
           <ul class="order-list" v-show="!isShow2" v-for="(v,i) in order1">
             <li>
               <div>订单号：{{v.ordersn}}</div>
@@ -106,6 +117,13 @@
               </div>
             </li>
           </ul>
+            <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
+              <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+              <span v-show="bottomStatus === 'loading'">
+	              	<mt-spinner type="snake"></mt-spinner>
+	            	</span>
+            </div>
+          </mt-loadmore>
           <div class="share-page" v-show="isShow2">
             <div class="iconfont">
               &#xe60f;
@@ -116,6 +134,8 @@
           </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="will-send">
+          <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
+                       :bottom-all-loaded="allLoaded" ref="loadmore">
           <ul class="order-list" v-show="!isShow3" v-for="(v,i) in order2">
             <li>
               <div>订单号：{{v.ordersn}}</div>
@@ -143,6 +163,13 @@
               </div>
             </li>
           </ul>
+            <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
+              <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+              <span v-show="bottomStatus === 'loading'">
+	              	<mt-spinner type="snake"></mt-spinner>
+	            	</span>
+            </div>
+          </mt-loadmore>
           <div class="share-page" v-show="isShow3">
             <div class="iconfont">
               &#xe60f;
@@ -153,6 +180,8 @@
           </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="will-reserve">
+          <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
+                       :bottom-all-loaded="allLoaded" ref="loadmore">
           <ul class="order-list" v-show="!isShow4" v-for="(v,i) in order3">
             <li>
               <div>订单号：{{v.ordersn}}</div>
@@ -177,6 +206,13 @@
               </div>
             </li>
           </ul>
+            <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
+              <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+              <span v-show="bottomStatus === 'loading'">
+	              	<mt-spinner type="snake"></mt-spinner>
+	            	</span>
+            </div>
+          </mt-loadmore>
           <div class="share-page" v-show="isShow4">
             <div class="iconfont">
               &#xe60f;
@@ -187,6 +223,8 @@
           </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="done">
+          <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
+                       :bottom-all-loaded="allLoaded" ref="loadmore">
           <ul class="order-list" v-show="!isShow5" v-for="(v,i) in order4">
             <li>
               <div>订单号：{{v.ordersn}}</div>
@@ -218,6 +256,13 @@
               </div>
             </li>
           </ul>
+            <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
+              <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+              <span v-show="bottomStatus === 'loading'">
+	              	<mt-spinner type="snake"></mt-spinner>
+	            	</span>
+            </div>
+          </mt-loadmore>
           <div class="share-page" v-show="isShow5">
             <div class="iconfont">
               &#xe60f;
@@ -234,7 +279,7 @@
   </div>
 </template>
 <script>
-  import { Navbar,MessageBox } from 'mint-ui';
+  import { Navbar,MessageBox,Loadmore} from 'mint-ui';
   import vTabbar from '../components/common/Tabbar';
   import {orderList,orderManu} from '../api/api.js'
   import {mapMutations, mapGetters} from 'vuex'
@@ -250,12 +295,19 @@
         isShow3:false,
         isShow4:false,
         isShow5:false,
+        page:1,
         order0:[],
         order1:[],
         order2:[],
         order3:[],
         order4:[],
-        canReason:'其他原因'
+        canReason:'其他原因',
+        myPageNum: 10,
+        myCurNo: 1,
+        bottomStatus: '',
+        allLoaded: false,
+        isTrue: false,
+        onePage: false
       }
     },
     methods:{
@@ -267,7 +319,7 @@
       },
       cancel:function (orderid) {
         console.log(11)
-      
+
         MessageBox({title: '确定取消订单吗?',message: '点击确认取消',showCancelButton: true}).then(action => {
           if(action=='confirm'){//表示点击了确定
             this.isSelect=!this.isSelect;
@@ -279,14 +331,93 @@
               reason:that.canReason
             }
           }
-          orderManu(params,function (res) { 
+          orderManu(params,function (res) {
             if(res.statusCode==1){
-
+              for(let i=0; i<that.order0.length; i++) {
+                if(that.order0[i].id ===orderid) {
+                  that.order0.splice(i, 1);
+                  break;
+                }
+              }
             }
           })
           }else if(action=='cancel'){//表示点击了取消
             // console.log('点击了取消')
           }
+        })
+      },
+      handleBottomChange(status) {
+        this.bottomStatus = status
+      },
+      loadBottom() {
+        this.myCurNo += 1
+//        if (this.myCurNo == this.myPageNum) {
+//          this.allLoaded = true
+//        }
+        let that=this;
+//        Orderlist(params).then((res) => {
+//          console.log(res)
+//          if (res.status === 200) {
+//            if (res.orderList.length > 0) {
+//              this.getHistoryList = this.getHistoryList.concat(res.orderList)
+//              console.log(this.getHistoryList)
+//            } else {
+//              this.isShow = false
+//            }
+//          } else {
+//            console.log('请求失败')
+//          }
+//          this.$refs.loadmore.onBottomLoaded()
+//        })
+
+        let params={
+          data:{
+            page:this.myCurNo,
+            status:''
+          }
+        }
+        orderList(params,function (res) {
+          if(res.data.length<10){
+            that.allLoaded = true
+          }
+          console.log(res);
+          if(res.statusCode==1){
+            console.log(that.order0);
+            console.log(res.data)
+            that.order0=that.order0.concat(res.data);
+            for(let i=0;i<res.data.length;i++){
+              if(res.data[i].status==0){
+                that.order1.push(res.data[i])
+              }if(res.data[i].status==1){
+                that.order2.push(res.data[i])
+              }
+              if(res.data[i].status==2){
+                that.order3.push(res.data[i])
+              }
+              if(res.data[i].status==3){
+                that.order4.push(res.data[i])
+              }
+            }
+          }
+          else{
+            console.log('请求出错了')
+          }
+          if(that.order0.length==0){
+            that.isShow1=true;
+          }
+          if(that.order1.length==0){
+            that.isShow2=true;
+          }
+          if(that.order2.length==0){
+            that.isShow3=true;
+          }
+          if(that.order3.length==0){
+            that.isShow4=true;
+          }
+          if(that.order4.length==0){
+            that.isShow5=true;
+          }
+          that.$refs.loadmore.onBottomLoaded()
         })
       },
       fn1:function (orderid) {
@@ -324,7 +455,7 @@
         let that=this;
         let params={
           data:{
-            page:1,
+            page:this.page,
             status:''
           }
         }
@@ -528,5 +659,10 @@
     background:#ddd;
     color:#777 !important;
     margin-right:.05rem;
+  }
+  .mint-loadmore-bottom span {
+    display: inline-block;
+    transition: .2s linear;
+    vertical-align: middle;
   }
 </style>

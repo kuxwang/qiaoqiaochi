@@ -61,7 +61,7 @@
       <button class="cancel-order" @click="cancel(oid)" v-if="status==0">
         取消订单
       </button>
-      <button class="charge-order ocolor" @click="pay" v-if="status==0">
+      <button class="charge-order ocolor" @click="pay(ordersin)" v-if="status==0">
         付款
       </button>
       <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:proprice,orderid:oid}}" tag="button" v-if="status==1 && obj.canrefund&&obj.refundid==0">
@@ -126,6 +126,7 @@
         ing:'',
         obj:'',
         canrefund:'',
+        goodsId:'',
         refundid:'',
         myid:''
       }
@@ -167,13 +168,14 @@
           }
         });
       },
-      pay(){
-        this.orderinfo(this.ordersin)
+      pay(a){
+        this.orderinfo(a);
+        this.$router.push('payselect')
       },
       cancel:function (orderid) {
         MessageBox({
           title: '提示',
-          message: '确认删除订单吗',
+          message: '确定取消订单吗?',
           showCancelButton: true
         }).then(action=>{
           if(action=='confirm'){
@@ -186,9 +188,18 @@
               }
             }
             orderManu(params,function (res) {
-              MessageBox.alert('操作成功').then(action => {
-                that.$router.push({path:'order'})
-              });
+              console.log(res)
+              if(res.statusCode==1){
+//                for(let i=0; i<that.order0.length; i++) {
+//                  if(that.order0[i].id ===orderid) {
+//                    that.order0.splice(i, 1);
+//                    break;
+//                  }
+//                }
+                MessageBox.alert('操作成功').then(action => {
+                  that.$router.push({path:'details',query:{goodsId:that.goodsId}})
+                });
+              }
             })
           }else if(action=='cancel'){
           }
@@ -226,6 +237,7 @@
           that.proprice=res.data.price;
           that.realprice=res.data.price;
           that.ordersin=res.data.ordersn;
+          that.goodsId=res.data.goods.id;
           that.endtime=res.data.finishtime;
           that.mprice=res.data.goods.price;
           that.title=res.data.goods.title;
