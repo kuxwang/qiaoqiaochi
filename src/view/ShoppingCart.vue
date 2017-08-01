@@ -1,9 +1,9 @@
 <template>
 	<div class="content">
 		<mt-header title="购物车" class="is-fixed">
-		  <router-link to="/" slot="left">
+		  <a slot="left" @click="goBack">
 		    <mt-button icon="back"></mt-button>
-		  </router-link>
+		   </a>
 		</mt-header>
 		<ul class="goods-list" v-show="isShow">
 			<li class="clearfix" v-for="(v,i) in getShCartData">
@@ -85,7 +85,7 @@
 	</div>
 </template>
 <script>
-	import { Header,Checklist,MessageBox } from 'mint-ui';
+	import { Header,Checklist,MessageBox,Toast} from 'mint-ui';
 	import {setStore, getStore} from '../config/myUtils';
 	import {GET_MYCARTS,PUT_MYCARTS,GET_ORDER1,DELETE_MYCARTS} from '../api/api';
 	import {mapMutations, mapGetters } from 'Vuex';
@@ -106,6 +106,9 @@
 			}
 		},
 		methods:{
+			goBack () {
+		        this.$router.go(-1)
+		    },
 			addTotal(v,i){//加
 				v.total++;
 				var myTotal=Number(v.total);
@@ -262,6 +265,12 @@
 	          	this.getMyorders(myOrders);
 	          	if(this.defPrice>0){
 	          	this.$router.push({name:'confirmorder'});
+	          	}else{
+	          		Toast({
+					  message: '请选择商品',
+					  position: 'middle',
+					  duration: 2000
+					});
 	          	}
 			},
 			mycartsInt(){
@@ -269,12 +278,12 @@
 				let _this=this
 		    	GET_MYCARTS(params, function (res) {
 		        	if(res.statusCode===1){
-		        		console.log(res)
 		        		if(res.data.list&&res.data.list.length>=1){
 			        		_this.getShCartData=res.data.list;
 			        		for(let a in _this.getShCartData){
 			        			_this.getShCartData[a].isChecked=false
 			        		}
+			        		_this.allCheckBox();
 		        		}else{
 		        			_this.isTrue=false;
                     		_this.isShow=false;
@@ -288,6 +297,9 @@
 			goProductDetail(v){
 				let goodsId=v.goodsid;
 				this.$router.push({ name:'details', query: { goodsId: goodsId}})
+			},
+			delSelect(){
+				console.log(this.getShCartData)
 			},
 			...mapMutations({
 		        getMyorders:'GET_MYORDERS'
@@ -314,7 +326,7 @@
 			}
 		},
 		mounted(){
-			this.mycartsInt()
+			this.mycartsInt();
 		}
 	}
 </script>

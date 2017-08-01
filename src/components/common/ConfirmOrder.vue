@@ -8,7 +8,7 @@
     <router-link class="deliveryAddress" tag="div" :to="{name:'deliveryaddress'}" v-if="defaultAddress" >
       <ul class="fl deliveryAddress-lr">
         <li class="delivery-people clearfix">
-          <span class="fl">收货人：{{defaultAddress.realname}}</span>
+          <span class="fl"><i>收货人：</i>{{defaultAddress.realname}}</span>
           <span class="fr">{{defaultAddress.mobile}}</span>
         </li>
         <li class="deliveryAddress-lr-addr lr1">
@@ -26,7 +26,7 @@
           {{shopSet.name}}
         </div>
         <div class="goodsList-mids">
-          <div class="goodsList-mid clearfix" v-for="v in orderGoods">
+          <div class="goodsList-mid clearfix" v-for="v in orderGoods" @click="goProducts(v)">
             <div class="goods-img fl">
               <img :src="v.thumb">
               <!--<img src="../../assets/images/confirmorder-01.jpg">-->
@@ -142,7 +142,8 @@
         memberDiscount: '',
         dispatches: '',
         remark: '',
-        shopSet: ''
+        shopSet: '',
+        payed : false
       }
     },
     methods: {
@@ -171,6 +172,10 @@
         this.$router.push('home');
       },
       goPay () {
+        let  payed = this.payed;
+
+        if(payed === false){
+          this.payed = true;
         let addressid = this.defaultAddress.id || ''
         let goods = ''
         let dispatchid = this.dispatch.id
@@ -198,25 +203,35 @@
         confirm_post(params, res => {
           if (res.statusCode == 1) {
             let ordersn = res.data.ordersn
-            document.getElementById('commitForm').setAttribute('disabled', 'disabled')
-            Toast({
+            // document.getElementById('commitForm').setAttribute('disabled', 'disabled')
+            /*Toast({
               message: '订单提交成功',
               position: 'middle',
               duration: 2000
-            });
-            this.ORDERINFO(ordersn)
-            setTimeout(() => {
-              document.getElementById('commitForm').removeAttribute('disabled')
+            });*/
+            this.ORDERINFO(ordersn);
+            // setTimeout(() => {
+              // document.getElementById('commitForm').removeAttribute('disabled')
               this.$router.replace({name: 'payselect'})
-            }, 2000)
+            // }, 2000)
           } else {
             Toast({
-              message: '提交过于频繁',
+              message: `${res.data.data}`,
               position: 'middle',
               duration: 2000
             });
+            this.payed = false;
           }
         })
+
+        
+        }
+
+        
+      },
+      goProducts(v){
+        let goodsId=v.goodsid;
+        this.$router.push({ name:'details', query: { goodsId: goodsId}})
       },
       ...mapMutations([
         'ADDRESS', 'ORDERINFO'
@@ -306,7 +321,10 @@
   .delivery-people {
     overflow: hidden
   }
-
+  .delivery-people  span i{
+    color: #333;
+    font-size: 0.15rem;
+  }
   .deliveryAddress:after {
     content: '';
     position: absolute;

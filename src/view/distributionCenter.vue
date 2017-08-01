@@ -7,7 +7,7 @@
     </mt-header>
     <router-link class="avatar" tag="section" :to="{name:'userinfo'}">
       <div class="icon">
-        <img :src="memberInfo.avatar" alt="头像">
+        <img :src="memberInfo.avatar">
       </div>
       <div class="message">
         <div>
@@ -210,7 +210,7 @@
           nickname: '',//昵称
           id: '',//会员id
           level: '',//会员等级
-          avatar: ''
+          avatar: '',
         }
       }
     },
@@ -291,7 +291,7 @@
                 if (res.statusCode == 1) {
                   _this.memberInfo.nickname = res.data.nickname
                   _this.memberInfo.id = res.data.id
-                  _this.memberInfo.level = res.data.level
+                  _this.memberInfo.level = res.data.leveldetail.levelname;
                   _this.memberInfo.avatar = res.data.avatar
                 }
               })
@@ -372,6 +372,7 @@
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
+    overflow: hidden
   }
   .icon>img{
     width: .70rem;

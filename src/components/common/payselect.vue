@@ -2,7 +2,7 @@
   <div class="main">
     <section>
       <mt-header title="支付">
-        <router-link to="/vipCenter" slot="left">
+        <router-link to="/home" slot="left">
           <mt-button icon="back">返回</mt-button>
         </router-link>
       </mt-header>
