@@ -44,15 +44,12 @@
       <!--</router-link>-->
 
       <li :class="{tabActive: selected==4 }" @click="selecttab(4)">
-        <!--<router-link to="/extension4" tag="li" :class="{tabActive: selected==4 }" @click="selecttab(4)">-->
-        <!--<li class="li3">-->
         <div class="title">已结算</div>
         <div class="iconfont listicon">&#xe619;</div>
         <div>
           <span class="num">{{orderok}}</span><span class="yuan"> 单</span>
         </div>
       </li>
-      <!--</router-link>-->
     </ul>
 
 
@@ -64,7 +61,7 @@
       <input type="text" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
       <div @click="selecttab(5)">搜索</div>
     </div>
-    <ul class="p-list" >
+    <ul class="p-list" v-if="orderlist.length">
       <!--<li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">-->
       <li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">
       <!--<li class="p-cell" >-->
@@ -87,6 +84,10 @@
         </div>
       </li>
     </ul>
+    <div v-if="!orderlist.length" class="tips">
+      <span class="iconfont">&#xe66f;</span>
+      没有相关订单<br>
+    </div>
 
     <!--<router-view v-show="routerv"></router-view>-->
 
@@ -418,18 +419,21 @@
 
   .details li {
     margin-top: .04rem;
-    /*border-top: 1px solid rgba(0, 0, 0, .3)*/
-    /*border-top: 1px solid rgba(0, 0, 0, .3)*/
   }
 
   .p-list {
     display: block;
-    background-color: #fff;
+    background-color: #ececec;
 
   }
 
   .p-cell {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
     padding: 0;
     margin-top: 0.05rem;
@@ -438,32 +442,35 @@
   }
 
   .up {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
     flex: 1;
     text-align: left;
-    border-bottom: 1px solid #e2e2e2;
+    border-bottom: 1px solid #eee;
     padding: 0 0.1rem;
-    line-height: 0.32rem;
+    line-height: .36rem;
 
+  }
+
+  .up .ordernum {
+    font-size: 0.12rem;
   }
 
   .up .time {
     float: right;
-    font-size: 0.12rem;
+    font-size: 0.1rem;
 
   }
-
   .down {
-    flex: 2.5;
+    flex: 3;
     height: 0.68rem;
     display: flex;
     padding: 0 0.1rem;
   }
-
   .logo {
     flex: 1;
     padding: 0.1rem 0;
   }
-
   .info {
     flex: 4;
     text-align: left;
@@ -471,38 +478,34 @@
     padding: 0.05rem 0;
     color: #666;
   }
-
   .info h5 {
-    margin: 0.05rem 0;
-    color: #666;
+    margin-top: 0.1rem;
+    color: #27272f;
+    font-size: 0.14rem;
   }
-
   .info span {
-    color: #000;
+
     font-size: 0.14rem;
     color: #666;
   }
-
   .logo img {
     width: 100%;
     border-radius: 50%;
     vertical-align: middle;
     display: block;
-  }
 
+  }
   .ordertype {
     flex: 3;
     padding: 0.05rem 0;
     color: #666;
   }
-
   .ordertype span {
     display: block;
     text-align: right;
     font-size: 0.14rem;
     margin-top: 0.05rem;
   }
-
   .ordertype span:last-child {
     margin-top: 0.1rem;
   }
@@ -618,5 +621,18 @@
 
   .mint-header .c-1 {
     z-index: 3;
+  }
+
+  .tips {
+    text-align: center;
+    font-size: .14rem;
+    color: #666;
+    margin-top: 1rem;
+
+  }
+
+  .tips .iconfont {
+    display: block;
+    font-size: .8rem;
   }
 </style>
