@@ -222,7 +222,9 @@
               orders(params, (res) => {
                 if (res.statusCode === 1) {
                     console.log(res)
-//                  this.orderlist = res.data.order;
+                  let obji = [];
+                  obji.push(res.data.order);
+                  this.orderlist = obji;
                   console.log(this.orderlist);
                  /* if (!this.orderlist || this.orderlist < 1) {
                     this.searched = false
