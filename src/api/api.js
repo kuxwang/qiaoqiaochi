@@ -66,6 +66,10 @@ const orderd = {orderDetail: {url: `${base}/orders`, method: 'GET', header, data
  * 快递
  */
 const express = {exp: {url: `${base}/expresses`, method: 'GET', header, dataType}};
+/**
+ * 退款申请中
+ */
+const orderRes = {orderR: {url: `${base}/orders/refund`, method: 'GET', header, dataType}};
 
 export const orderLists = function (params, callback) {
   _webapp.requestx(Object.assign(params, commissions.orderLists), function (res) {
@@ -279,8 +283,6 @@ export const addresses_get = function (params, callback) {
   _webapp.requestx(Object.assign(params, addresses.addresses_get), function (res) {
     callback(res)
 
-
-
   })
 };
 
@@ -445,6 +447,11 @@ export const LOGINOUT=function(){
  */
 export const orderManu = function (params, callback) {
   _webapp.requestx(Object.assign(params, orderDo.orderD), function (res) {
+    callback(res)
+  })
+};
+export const orderRe = function (params, callback) {
+  _webapp.requestx(Object.assign(params, orderRes.orderR), function (res) {
     callback(res)
   })
 };

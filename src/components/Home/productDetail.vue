@@ -6,18 +6,20 @@
           <mt-button icon="back"></mt-button>
         </router-link>
       </mt-header>
-      <div class="box">
-        <div class="img-box">
-          <!-- <img :src="bandimg" class="content"/> -->
-          <img v-lazy="bandimg" class="content"/>
+      <div v-show="isShow">
+        <div class="box">
+          <div class="img-box">
+            <!-- <img :src="bandimg" class="content"/> -->
+            <img v-lazy="bandimg" class="content"/>
+          </div>
         </div>
-      </div>
-      <div class="intro">
-        <div class="goodsTitle">
-           <p>{{name}}</p>
-          <span>￥{{marketPrice}}</span>
+        <div class="intro">
+          <div class="goodsTitle">
+             <p>{{name}}</p>
+            <span>￥{{marketPrice}}</span>
+          </div>
+          <p class="vip-intro" v-show="isVip"><span class="iconfont">&#xe631;</span>您是{{vipname}} 可享{{vipcount}}折优惠</p>
         </div>
-        <p class="vip-intro" v-show="isVip"><span class="iconfont">&#xe631;</span>您是{{vipname}} 可享{{vipcount}}折优惠</p>
       </div>
       <div class="b-intro">
         <div class="bottom-nav">
@@ -96,6 +98,7 @@
         total:'',
         delGoodsNum:'',
         goodsid:4,
+        isShow:false
       }
     },
     methods:{
@@ -169,8 +172,6 @@
           }
         }
         productDetail(params,function (res) {
-
-          console.log(res)
           if(res.statusCode===1){
             that.goodNums=res.data.goodscount;
             let goods=res.data.goods
@@ -179,13 +180,13 @@
             that.marketPrice=goods.marketprice;
             that.bandimg=res.data.pics[0];
             that.total=goods.total;
+            that.isShow=true;
             document.getElementById("intro").innerHTML=goods.content;
             if(res.data.level.levelname){
               that.isVip=true;
               that.vipname=res.data.level.levelname;
               that.vipcount=res.data.level.discount;
             };
-
             let params={};
             let _that=that;
             GET_CARTNUMS(params,function (res) {//获取购物车当前数量
@@ -343,7 +344,7 @@
     margin-top:.03rem;
   }
   .icon-car{
-    font-size:.24rem;
+    font-size:.28rem;
     margin-top:.015rem;
     margin-bottom:-.037rem;
   }
@@ -428,7 +429,7 @@
   .cal-box>div>button{
     float:left;
     height:.33rem;
-    width:.38rem;
+    width:.37rem;
     background:#eee;
     font-weight:bold;
     font-size:.15rem;
@@ -457,5 +458,8 @@
     font-size: 0.16rem;
     /*font-weight: 700*/
     /*color: #dd2727;*/
+  }
+  button{
+    outline: none;
   }
 </style>

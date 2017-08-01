@@ -18,9 +18,9 @@
       <p>协商详情</p>
       <ul>
         <li>退款类型：仅退款</li>
-        <li>退款原因：{{reason}}</li>
-        <li>退款说明：{{content}}</li>
-        <li>申请时间：{{createtime}}</li>
+        <li>退款原因：{{reason1}}</li>
+        <li>退款说明：{{content1}}</li>
+        <li>申请时间：{{createtime1}}</li>
       </ul>
     </div>
     <!--<router-link to="/drawback" tag="button" class="render-btn">-->
@@ -37,20 +37,25 @@
 </template>
 <script>
   import { Header,Toast } from 'mint-ui'
-  import { orderManu } from '../../api/api'
+  import { orderManu,orderRe} from '../../api/api'
   import {mapMutations, mapGetters,mapState} from 'vuex'
   export default {
      data(){
        return {
-
+          refundid:'',
+          reason1:'',
+          content1:'',
+          createtime1:'',
+          orderid:''
        }
      },
     methods: {
       jumpOrderd () {
+        let that=this;
         let params = {
           data:{
             type:'canlreful',
-            orderid: this.drawbackobj.orderid
+            orderid: this.orderid
           }
         }
         console.log(params)
@@ -58,15 +63,36 @@
           if(res.statusCode==1){
             Toast({
               message: '成功取消退款',
-                position: 'bottom',
+                position: 'midlle',
                 duration: 1500
             })
             setTimeout(()=>{
-              this.$router.push({path:'orderd',query:{oid:this.drawbackobj.orderid}})
+              this.$router.push({path:'orderd',query:{oid:that.orderid}})
             },500)
           }else{
+            Toast({
+              message: '取消退款失败',
+                position: 'middle',
+                duration: 1500
+            })
             console.log('取消退款接口异常')
           }
+        })
+      },
+      getListinfo(){ 
+        let that=this;
+        let refundid=this.$route.query.refundid
+        let params={
+          data:{
+            refundid:refundid
+          }
+        }
+        orderRe(params,function(res){
+          console.log(res);
+          that.reason1=res.data.reason;
+          that.content1=res.data.content;
+          that.createtime1=res.data.createtime;
+          that.orderid=res.data.orderid;
         })
       }
     },
@@ -88,10 +114,11 @@
       },
       price () {
         return this.drawbackobj.price || ''
-      }
-
+      } 
     },
-
+    created(){
+      this.getListinfo()
+    }
   }
 </script>
 <style scoped>

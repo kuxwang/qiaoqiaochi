@@ -5,13 +5,13 @@
         <mt-button icon="back"></mt-button>
       </a>
     </mt-header>
-    <router-link class="deliveryAddress" tag="div" :to="{name:'deliveryaddress'}" v-if="defaultAddress">
+    <router-link class="deliveryAddress" tag="div" :to="{name:'deliveryaddress'}" v-if="defaultAddress" >
       <ul class="fl deliveryAddress-lr">
         <li class="delivery-people clearfix">
           <span class="fl">收货人：{{defaultAddress.realname}}</span>
           <span class="fr">{{defaultAddress.mobile}}</span>
         </li>
-        <li class="deliveryAddress-lr-addr">
+        <li class="deliveryAddress-lr-addr lr1">
           收货地址：{{defaultAddress.province}}{{defaultAddress.city}}{{defaultAddress.area}}{{defaultAddress.address}}
         </li>
       </ul>
@@ -296,10 +296,11 @@
 
   .deliveryAddress {
     padding: 0.15rem;
-    height: 1rem;
+ /*   height: 1rem;*/
     margin-top: 0.54rem;
     background: #fff;
     position: relative;
+    overflow: hidden
   }
 
   .delivery-people {
@@ -311,7 +312,7 @@
     position: absolute;
     width: 0.065rem;
     height: 0.12rem;
-    top: 0.44rem;
+    top: 0.295rem;
     right: 0.1rem;
     background: url('../../assets/images/userinfo-01.png') no-repeat center center;
     background-size: cover;
@@ -335,6 +336,7 @@
 
   .deliveryAddress-lr-addr {
     line-height: 0.22rem;
+    font-size: 0.12rem;
   }
 
   .goods-price {
@@ -383,6 +385,7 @@
   .goodsList-mid {
     height: 0.7rem;
     padding: 0.1rem;
+    background: #fafafa;
   }
 
   .goods-img {
@@ -445,7 +448,7 @@
   }
 
   .deliveryMode.bt {
-    border-top: 0.01rem solid #E5E5E5;
+    /*border-top: 0.01rem solid #E5E5E5;*/
   }
 
   .deliveryMode-lr input {

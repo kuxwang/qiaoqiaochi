@@ -69,6 +69,7 @@
               if(res.statusCode==1){
 //                this.backtime(res.data.createtime)
                 that.setdrawbackobj(res.data)
+                
 //                console.log(2)
                 that.$router.push({path:'orderd',query:{oid:that.orderid}})
               }else{
