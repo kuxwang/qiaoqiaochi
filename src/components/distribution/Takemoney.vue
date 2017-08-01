@@ -84,8 +84,9 @@
       recordStatistics_get(params,(res)=>{
         if(res.statusCode==1){
           this.moneylist=res.data
-          console.log(this.moneylist)
-          console.log(res)
+          // console.log(this.moneylist.apply.c_money_sum)
+
+          // console.log(res)
         }else {
           console.log('请求失败')
         }
@@ -99,7 +100,7 @@
             }
           }
           withdrawals_post(params,(res)=>{
-            console.log(res)
+            // console.log(res)
 
           })
         }

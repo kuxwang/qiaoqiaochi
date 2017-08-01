@@ -1,12 +1,12 @@
 <template>
   <div class="main order-header">
     <mt-header title="我的订单" fixed>
-      <router-link to="/" slot="left" >
+    <!--   <router-link to="/" slot="left" >
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </router-link> -->
     </mt-header>
-    <div class="page-navbar">
-      <mt-navbar class="page-part" v-model="selected">
+    <div class="page-navbar" >
+      <mt-navbar class="page-part" v-model="selected" fixed>
         <mt-tab-item id="all" @click="all">全部</mt-tab-item>
         <mt-tab-item id="will-pay">待付款</mt-tab-item>
         <mt-tab-item id="will-send">待发货</mt-tab-item>
@@ -307,7 +307,8 @@
         bottomStatus: '',
         allLoaded: false,
         isTrue: false,
-        onePage: false
+        onePage: false,
+        psizenum:10
       }
     },
     methods:{
@@ -350,26 +351,11 @@
         this.bottomStatus = status
       },
       loadBottom() {
-        this.myCurNo += 1
+        this.myCurNo += 1;
 //        if (this.myCurNo == this.myPageNum) {
 //          this.allLoaded = true
 //        }
         let that=this;
-//        Orderlist(params).then((res) => {
-//          console.log(res)
-//          if (res.status === 200) {
-//            if (res.orderList.length > 0) {
-//              this.getHistoryList = this.getHistoryList.concat(res.orderList)
-//              console.log(this.getHistoryList)
-//            } else {
-//              this.isShow = false
-//            }
-//          } else {
-//            console.log('请求失败')
-//          }
-//          this.$refs.loadmore.onBottomLoaded()
-//        })
-
         let params={
           data:{
             page:this.myCurNo,
@@ -377,8 +363,9 @@
           }
         }
         orderList(params,function (res) {
-          if(res.data.length<10){
-            // console.log( that.allLoaded)
+          console.log(res.data.length)
+          if(res.data.length<that.psizenum && res.statusCode!=-1){
+            console.log(res.data)
             that.allLoaded = true
           }
           console.log(res);
@@ -546,6 +533,10 @@
     font-size:.15rem;
     overflow:auto
   }
+  .page-part{
+    top:.45rem;
+    height:.4rem
+  }
   .share-page{
     padding:.5rem 1rem;
     color:#999;
@@ -661,9 +652,18 @@
     color:#777 !important;
     margin-right:.05rem;
   }
+  .mint-loadmore-bottom{
+    margin-bottom:-.5rem;
+  }
   .mint-loadmore-bottom span {
     display: inline-block;
     transition: .2s linear;
     vertical-align: middle;
   }
+  #content-list{
+    padding-top:.43rem;
+  }
+  /*#will-pay{*/
+    /*margin-top:.2rem;*/
+  /*}*/
 </style>

@@ -13,7 +13,7 @@
 	            头像
 	          </span>
 	          <span class="fr">
-	            <!-- <img id="img_upload" :src="delImg"  v-show="!myImg" /> -->
+	            <img id="img_upload" :src="delImg"  v-show="!myImg" />
 	            <img id="img_upload" :src="myImg"  v-show="myImg" />
 	          </span>
 	          <!-- <input id="file_head" type="file" @change="getMyImg($event)"/> -->
@@ -215,7 +215,7 @@
 	          this.myDate=`${y}年${m}月${d}日`;
 		    },
         	getMyImg(e){
-        		let that=this;
+
      //    		USERPHOTO(function(res){
      //    			Toast({
 					//   message: `${res.data}`,
@@ -284,7 +284,7 @@
 	          let _this=this;
 	          PUT_USERINFO(params, function (res) {
 	          	if(res.statusCode===1){
-		            // _this.$router.go(-1);
+		            _this.$router.go(-1);
 		            let that=_this;
 		            // if(that.myImg!=''){
 
