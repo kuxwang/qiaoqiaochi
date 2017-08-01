@@ -458,4 +458,7 @@
     /*font-weight: 700*/
     /*color: #dd2727;*/
   }
+  button{
+    outline: none;
+  }
 </style>
