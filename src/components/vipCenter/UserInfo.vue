@@ -13,7 +13,7 @@
 	            头像
 	          </span>
 	          <span class="fr">
-	            <img id="img_upload" :src="delImg"  v-show="!myImg" />
+	            <!-- <img id="img_upload" :src="delImg"  v-show="!myImg" /> -->
 	            <img id="img_upload" :src="myImg"  v-show="myImg" />
 	          </span>
 	          <!-- <input id="file_head" type="file" @change="getMyImg($event)"/> -->
@@ -216,13 +216,28 @@
 		    },
         	getMyImg(e){
         		let that=this;
-        		USERPHOTO(function(res){
-        			that.myImg=res.data
-        		})
-	        	// let that=this;
-	         //  	_webapp.uploadImg((res)=>{
-	     			
-	         //  	})
+     //    		USERPHOTO(function(res){
+     //    			Toast({
+					//   message: `${res.data}`,
+					//   position: 'middle',
+					//   duration: 2000
+					// });
+     //    			that.myImg=res.data
+     //    		})
+     // 			function(res){
+     // 				USERPHOTO(
+     //    			Toast({
+					//   message: `${res.data}`,
+					//   position: 'middle',
+					//   duration: 2000
+					// });
+     //    			that.myImg=res.data
+     //    		}
+
+	        	let that=this;
+	          	_webapp.uploadImg((res)=>{
+	     			this.myImg=res.data
+	          	})
 	        },
 	        getUserInfo(){
 	          let params={ }
@@ -231,7 +246,6 @@
 	            if(res.statusCode===1){
 	            	_this.initAddress();
 	            	_this.delImg=res.data.avatar;
-	            	console.log(res.data.avatar)
 	              _this.myPhone=res.data.mobile;
 	              _this.myNc=res.data.realname;
 	              _this.myWx=res.data.weixin;
@@ -270,22 +284,23 @@
 	          let _this=this;
 	          PUT_USERINFO(params, function (res) {
 	          	if(res.statusCode===1){
-		            _this.$router.go(-1);
+		            // _this.$router.go(-1);
 		            let that=_this;
-		            if(that.myImg!=''){
-			            let params={
-			            	'data':{
-			            		avatar:that.myImg
-			            	}
-			            }
-			            PUT_USERAVATARS(params, function (res) {
-			            	if(res.statusCode===1){
-			            		console.log('上传图片成功')
-			            	}else{
-			            		console.log('请求')
-			            	}
-			            })
-			        }
+		            // if(that.myImg!=''){
+
+			            // let params={
+			            // 	'data':{
+			            // 		avatar:that.myImg
+			            // 	}
+			            // }
+			            // PUT_USERAVATARS(params, function (res) {
+			            // 	if(res.statusCode===1){
+			            // 		console.log('上传图片成功')
+			            // 	}else{
+			            // 		console.log('请求')
+			            // 	}
+			            // })
+			        //  
 		            Toast({
 		              message: '个人信息提交成功!',
 		              position: 'middle',
