@@ -69,8 +69,6 @@
         let params={
           data: {
             openid:this.personlist.lists[index].openid,
-//                     id:this.personlist.lists[index].id,
-//                     mobile:this.personlist.lists[index].mobile
           }
         }
         teams(params,(res)=>{

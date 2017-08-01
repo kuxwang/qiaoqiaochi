@@ -79,6 +79,7 @@
       </div>
       <ul class="order-list">
         <li class="li1" @click="ordertab(1)">
+        <!--<li class="li1" @click="ordertab(1)">-->
           <!--<router-link to="/extension1" tag="li">-->
           <div class="title">全部</div>
           <div class="iconfont listicon">&#xe624;</div>
@@ -268,16 +269,15 @@
 
         });
 
-
       },
       partnertab(idx){
         this.tabselect(idx)
-        this.$router.push({name: `partnerlist${idx}`})
+        this.$router.push({name: `partner`})
 
       },
       ordertab(idx){
         this.tabselect(idx)
-        this.$router.push({name: `extension${idx}`})
+        this.$router.push({name: `extension`})
       },
       outLogin(){
         MessageBox({title: '确认退出当前账号?',message: '点击确认退出',showCancelButton: true}).then(action => {

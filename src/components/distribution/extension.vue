@@ -62,11 +62,33 @@
     </div>-->
     <div class="search">
       <input type="text" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
-      <div @click="search">搜索</div>
+      <div @click="selecttab(5)">搜索</div>
     </div>
+    <ul class="p-list" >
+      <!--<li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">-->
+      <li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">
+      <!--<li class="p-cell" >-->
+        <div class="up">
+          <span class="ordernum">订单编号{{i.ordersn}}</span>
+          <span class="time">{{i.createtime}}</span>
+        </div>
+        <div class="down">
+          <div class="logo">
+            <img :src="i.avatar"/>
+          </div>
+          <div class="info">
+            <h5>{{i.nickname}}</h5>
+            <span>{{i.mid}}</span>
+          </div>
+          <div class="ordertype">
+            <span>{{i.status}}</span>
+            <span>￥{{i.price}}</span>
+          </div>
+        </div>
+      </li>
+    </ul>
 
-
-    <router-view></router-view>
+    <!--<router-view v-show="routerv"></router-view>-->
 
 
   </div>
@@ -77,7 +99,7 @@
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
   import {Search} from 'mint-ui';
   import {mapMutations, mapGetters} from 'vuex';
-  import {orderStatistics} from '../../api/api'
+  import {orderStatistics,orderLists,orders} from '../../api/api'
   export default{
     data () {
       return {
@@ -88,7 +110,10 @@
         ordertotal: '',
         orderlock: '',
         orderrefund: '',
-        orderok: ''
+        orderok: '',
+        orderlist: '',
+        searched: true,
+        routerv: 1
       }
     },
     components: {
@@ -98,30 +123,137 @@
     methods: {
       selecttab(idx){
         this.selected = idx;
-        this.$router.push({name: `extension${idx}`})
+        switch (idx) {
+          case 1:
+            let params = {
+              data: {
+                type: 'total',
+                page: 1,
+                psize: 10
+              }
+            }
+            orderLists(params, (res) => {
+              if (res.statusCode === 1) {
+                this.orderlist = res.data;
+
+              } else {
+                console.log('请求失败')
+              }
+            });
+            break;
+          case 2:
+            params = {
+              data: {
+                type: 'lock',
+                page: 1,
+                psize: 10
+              }
+            };
+            orderLists(params, (res) => {
+              if (res.statusCode === 1) {
+                this.orderlist = res.data;
+                console.log(this.orderlist)
+              } else {
+                console.log('请求失败')
+              }
+            });
+            break;
+          case 3:
+            params = {
+              data: {
+                type: 'refund',
+                page: 1,
+                psize: 10
+              }
+            };
+            orderLists(params, (res) => {
+              if (res.statusCode === 1) {
+                this.orderlist = res.data;
+                console.log(this.orderlist)
+              } else {
+                console.log('请求失败')
+              }
+
+            })
+            break;
+          case 4:
+            params = {
+              data: {
+                type: 'ok',
+                page: 1,
+                psize: 10
+              }
+            };
+            orderLists(params, (res) => {
+              if (res.statusCode === 1) {
+                this.orderlist = res.data;
+                console.log(this.orderlist)
+              } else {
+                console.log('请求失败')
+              }
+            })
+            break;
+          case 5  :
+            if (this.find.length === 20) {
+              let params = {
+                data: {
+                  ordersn: this.find
+                }
+              }
+              orders(params, (res) => {
+                if (res.statusCode === 1) {
+                  let obji = [];
+                  obji.push(res.data.order);
+                  this.orderlist = obji
+                  console.log(this.orderlist)
+                  console.log(res)
+
+                } else {
+                  console.log('请求失败');
+                  this.searched = false
+                }
+              })
+            } else{
+              let params = {
+                data: {
+                  mid: this.find
+                }
+              };
+              orders(params, (res) => {
+                if (res.statusCode === 1) {
+                    console.log(res)
+//                  this.orderlist = res.data.order;
+                  console.log(this.orderlist);
+                 /* if (!this.orderlist || this.orderlist < 1) {
+                    this.searched = false
+                  }*/
+                } else {
+                  console.log('请求失败');
+//                  this.searched = false
+                }
+              })
+            }
+            break;
+          default:
+            console.log('hehhe')
+
+        }
       },
 
+      orderinfo(index){
+        this.ordersn(this.orderlist[index].ordersn);
+        this.$router.push({name: `orderinfo`})
+      },
       ...mapMutations({
         searchnum: 'SEARCHNUM',
-//        'tabselect': 'TABSELECT'
+        ordersn:'ORDERSN',
       }),
-      search(){
-        let mobilereg = /^[0-9]{7}$/;
-        let idreg = /^SH[0-9]{18}$/;
-        this.searchnum(this.find);
-        if (mobilereg.test(this.find) || idreg.test(this.find)) {
-          this.$router.push({name: `extension5`,query:{text:this.find}}),
-            this.selected = 5
-        } else {
-          console.log('11')
-        }
-
-      },
-
-
     },
+
     created(){
-      this.selected = this.tabselect
+      this.selected = this.tabselect;
+      this.selecttab(this.tabselect)
+
     },
     mounted(){
       let params = {}

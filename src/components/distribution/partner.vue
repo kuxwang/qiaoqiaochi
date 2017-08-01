@@ -48,7 +48,39 @@
       <router-view></router-view>
     <!--</transition>-->
 
-
+    <ul class="p-list" >
+      <li class="p-cell" v-for="(i,index) in personlist.lists" @click="popshow(index)">
+      <!--<li class="p-cell" >-->
+        <div class="logo">
+          <img :src="i.avatar"/>
+        </div>
+        <div class="info">
+          <h5>{{i.nickname}}</h5>
+          <span>{{i.id}}</span>
+          <span class="usertime">{{i.createtime}}关注</span>
+        </div>
+      </li>
+    </ul>
+    <!--</mt-loadmore>-->
+    <mt-popup
+      v-model="popupVisible"
+      popup-transition="popup-fade" v-if="popupVisible">
+      <div class="pop-up">
+        <img class="sharelogo" :src="teamsinfo.avatar"/>
+        <h5>{{teamsinfo.nickname}}</h5>
+        <span>ID:{{teamsinfo.id}}</span>
+      </div>
+      <div class="pop-down">
+        <ul>
+          <li><span class="pop-left">粉丝：</span><span class="pop-right">{{teamsinfo.agentid}}</span></li>
+          <li><span class="pop-left">关注方式：</span><span class="pop-right">{{teamsinfo.agentid}}</span></li>
+          <li><span class="pop-left">等级：</span><span class="pop-right">{{teamsinfo.level.levelname}}</span></li>
+          <li><span class="pop-left">消费金额：</span><span class="pop-right">{{teamsinfo.recordStatistics.c_money_sum}}</span></li>
+          <li><span class="pop-left">手机号：</span><span class="pop-right">{{teamsinfo.mobile}}</span></li>
+          <!--<li><span class="pop-left">创建时间： </span><span class="pop-right">{{teamsinfo.createtime}}</span></li>-->
+        </ul>
+      </div>
+    </mt-popup>
 
   </div>
 
@@ -56,7 +88,7 @@
 <script>
   import {Popup, Picker} from 'mint-ui';
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
-  import {teamsStatistics} from '../../api/api.js'
+  import {teamsStatistics,teamsLists,teams} from '../../api/api.js'
   import {mapMutations, mapGetters} from 'vuex';
   export default{
     data () {
@@ -65,13 +97,12 @@
         selected: 1,
         find:'',
         popupVisible:false,
-        personnum:{}
+        personnum:{},
+        personlist:{}
       }
     },
     components: {
-//      'mt-cell': Cell,
-//      'mt-tab-container': TabContainer,
-//      'mt-tab-container-item': TabContainerItem,
+      'mt-popup':Popup
     },
     methods: {
         open(){
@@ -79,13 +110,107 @@
         },
       selecttab(idx){
         this.selected = idx;
-        this.$router.push({name: `partnerlist${idx}`})
+        switch (idx) {
+          case 1:
+            let params={
+              data: {
+                type:'all',
+                page:1,
+                psize:10
+              }
+            }
+            teamsLists(params,(res)=>{
+              if(res.statusCode==1){
+                this.personlist=res.data;
+                console.log(res)
+                console.log(this.personlist)
+              }else {
+                console.log('请求失败')
+              }
+            })
+            break;
+          case 2:
+             params={
+              data: {
+                type:'agent',
+                page:1,
+                psize:10
+              }
+            }
+            teamsLists(params,(res)=>{
+              if(res.statusCode==1){
+                this.personlist=res.data;
+              }else {
+                console.log('请求失败')
+              }
+            })
+            break;
+          case 3:
+             params={
+              data: {
+                type:'fans',
+                page:1,
+                psize:10
+              }
+            }
+            teamsLists(params,(res)=>{
+              if(res.statusCode==1){
+                this.personlist=res.data;
+              }else {
+                console.log('请求失败')
+              }
+            })
+            break;
+          case 4:
+            if(this.find.length===11){
+              var obj={
+                mobile:this.searchnum
+              }
+            }else if(this.find.length===7) {
+              var obj={
+                id:this.find
+              }
+            }
+             params={
+              data: obj
+            };
+            teams(params,(res)=>{
+              if(res.statusCode === 1){
+                this.personlist=res.data;
+                if(!this.personlist ||this.personlist.length<=1){
+                  this.searched=false
+                }else  {
+                  console.log(res)
+                  console.log(this.personlist)
+                }
+              }else {
+                console.log('请求失败');
+              }
+            })
+            break;
+          default:
+            console.log('hehhe')
+
+        }
+
+      },
+      popshow(index){
+        let params={
+          data: {
+            openid:this.personlist.lists[index].openid,
+          }
+        }
+        teams(params,(res)=>{
+          if(res.statusCode==1){
+            this.teamsinfo=res.data;
+            console.log(this.teamsinfo)
+            this.popupVisible=true
+          }
+        })
       },
       search(){
           let mobilereg=/^1[3|4|5|7|8][0-9]{9}$/;
           let idreg=/^[0-9]*$/;
-     /*     console.log(mobilereg.test(this.find))
-          console.log(idreg.test(this.find))*/
           if(mobilereg.test(!this.find) || idreg.test(this.find)){
             this.searchnum(this.find);
             console.log(Number(this.find))
@@ -111,6 +236,7 @@
     created(){
       this.selected = this.tabselect;
       console.log(this.selected)
+      this.selecttab(this.tabselect)
     },
     mounted() {
         let params={
@@ -507,5 +633,94 @@
   .tabActive .num,.tabActive .yuan {
     color: #fff;
   }
+
+
+
+
+
+
+  /*修改样式哦*/
+  .p-list {
+    display: block;
+    margin-bottom: .5rem;
+    height: 4.68rem;
+    overflow: hidden;
+    overflow-y: scroll;
+
+  }
+  .p-cell {
+    display: flex;
+    height: 0.78rem;
+    padding: 0.1rem 0.2rem;
+    border-top:1px solid #e2e2e2;
+    background-color: #fff;
+    margin-top: 0.05rem;
+  }
+  .logo {
+    flex: 1;
+  }
+  .info {
+    flex: 5;
+    text-align: left;
+    margin-left: 0.1rem;
+    position: relative;
+  }
+  .info h5 {
+    margin-top: 0.1rem;
+    color: #27272f;
+    font-size: 0.14rem;
+  }
+  .info span {
+    font-size: 0.14rem;
+    color: #666;
+  }
+  .logo img {
+    width: 80%;
+    border-radius: 50%;
+    display: block;
+    margin: 10% auto;
+  }
+
+  .usertime {
+    position: absolute;
+    right: 0;
+    bottom:0.05rem;
+    font-size: 0.12rem;
+  }
+  .mint-popup {
+    width: 2rem;
+    padding: 0.1rem;
+  }
+  .pop-up img{
+    width: 60%;
+  }
+  .pop-up h5 {
+    font-size: 0.14rem;
+  }
+  .pop-up span {
+    font-size: 0.12rem;
+  }
+
+  .pop-down ul {
+    width: 100%;
+    font-size: 0.12rem;
+  }
+  .pop-down li {
+    display: block;
+    text-align: left;
+    padding-left: 0.1rem;
+  }
+
+
+  .pop-left {
+    /*flex: 1;*/
+  }
+  .pop-right {
+    /*flex: 3;*/
+    text-align: right;
+  }
+
+
+
 
 </style>
