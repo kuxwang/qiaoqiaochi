@@ -56,9 +56,13 @@
       <input type="text" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
       <div @click="selecttab(5)">搜索</div>
     </div>
+    <div class="list-content">
     <!--<mt-loadmore :top-method="loadTop" @translate-change="translateChange" @top-status-change="handleTopChange"       :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">-->
-    <mt-loadmore :top-method="loadTop"    :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
-    <ul class="p-list" v-if="orderlist.length">
+      <!--<mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
+                   :bottom-all-loaded="allLoaded" ref="loadmore">-->
+      <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
+                   :bottom-all-loaded="allLoaded" ref="loadmore">
+    <ul class="p-list"  v-if="orderlist.length">
       <li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">
         <div class="up">
           <span class="ordernum">订单编号{{i.ordersn}}</span>
@@ -79,13 +83,14 @@
         </div>
       </li>
     </ul>
-      <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
-        <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
-        <span v-show="bottomStatus === 'loading'">
+        <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
+          <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+          <span v-show="bottomStatus === 'loading'">
 	              	<mt-spinner type="snake"></mt-spinner>
 	            	</span>
-      </div>
-    </mt-loadmore>
+        </div>
+      </mt-loadmore>
+    </div>
     <div v-if="!orderlist.length" class="tips">
       <span class="iconfont">&#xe66f;</span>
       没有相关订单<br>
@@ -100,7 +105,7 @@
 <script>
   import MtCell from "../../../node_modules/mint-ui/packages/cell/src/cell";
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
-  import {Search,Loadmore} from 'mint-ui';
+  import {Search,Loadmore,InfiniteScroll} from 'mint-ui';
   import {mapMutations, mapGetters} from 'vuex';
   import {orderStatistics,orderLists,orders} from '../../api/api'
   export default{
@@ -118,11 +123,17 @@
         searched: true,
         allLoaded: false,
         bottomStatus: '',
-        myCurNo: 1,
+        /*myCurNo: 1,
         myPageNum: '',
         isTrue: false,
         onePage: false,
-        bottomAllLoaded:false,
+        bottomAllLoaded:false,*/
+        myCurNo: 1,
+        bottomStatus: '',
+        allLoaded: false,
+        myPageNum: '',
+        isTrue: false,
+        onePage: false
       }
     },
     components: {
@@ -268,6 +279,7 @@
             }
             orderLists(params, (res) => {
               if (res.statusCode === 1) {
+
                 this.orderlist=this.orderlist.concat(res.data);
                 console.log(this.orderlist)
               } else {
@@ -391,17 +403,18 @@
       },
       loadBottom() {
         this.myCurNo += 1;
-        setTimeout(()=>{
-          this.addlist(this.selected,this.myCurNo);
-          this.$refs.loadmore.onBottomLoaded();
-        },1000)
+
+        this.addlist(this.selected,this.myCurNo);
+        this.$refs.loadmore.onBottomLoaded();
 
       },
       allLoaded(){
 
       },
     },
-
+    handleBottomChange(status) {
+      this.bottomStatus = status
+    },
     created(){
       this.selected = this.tabselect;
       this.selecttab(this.tabselect,1)
@@ -573,6 +586,8 @@
   .p-list {
     display: block;
     background-color: #ececec;
+    height: 4.75rem;
+    width: 100%;
  /*   height: 4.5rem;
     overflow: hidden;*/
     /*overflow-y: scroll;*/
@@ -584,7 +599,7 @@
     overflow-y: scroll;
   }*/
   .mint-loadmore {
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
     width: 100%;
   }
   .p-cell {
@@ -599,6 +614,7 @@
     margin-top: 0.05rem;
     background-color: #fff;
     border-top: 1px solid #e2e2e2;
+    width: 100%;
   }
 
   .up {
@@ -815,7 +831,18 @@
 
   }
   .mint-loadmore {
+    /*position: absolute;
+    top:1.9rem;*/
+  }
+  .mint-loadmore-content {
+    /*overflow-y: scroll !important;*/
+  }
+  .list-content {
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 4.75rem;
     position: absolute;
-    top:1.9rem;
+    top: 1.9rem;
+    width: 100%;
   }
 </style>
