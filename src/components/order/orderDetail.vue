@@ -79,9 +79,12 @@
       <router-link class="charge-order1 " :to="{path:'drawback',query:{money:proprice,orderid:oid}}" tag="button" v-if="status==3 && obj.canrefund&&obj.refundid==0">
         申请退款
       </router-link>
-      <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:proprice,orderid:oid}}" tag="button" v-if="obj.canrefund&&obj.refundid!=0">
+      <!-- <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:proprice,orderid:oid}}" tag="button" v-if="obj.canrefund&&obj.refundid!=0">
         退款申请中
-      </router-link>
+      </router-link> -->
+      <button class="charge-order ocolor" v-if="obj.canrefund&&obj.refundid!=0" @click="refund(refundid)">
+        退款申请中
+      </button>
       <router-link class="look-logi ocolor" :to="{path:'logistics',query:{id:oid,exp:exp,expsn:expsn}}" tag="button" v-if="status==3">
         查看物流
       </router-link>
@@ -122,12 +125,17 @@
         oid:'',
         ing:'',
         obj:'',
-        canrefund:''
+        canrefund:'',
+        refundid:'',
+        myid:''
       }
     },
     methods:{
       goBack:function () {
         this.$router.go(-1)
+      },
+      refund:function(){
+        this.$router.push({ name:'drawbackInfo', query: { refundid: this.myid}})
       },
       fn1:function (orderid) {
         let that=this;
@@ -161,7 +169,6 @@
       },
       pay(){
         this.orderinfo(this.ordersin)
-        this.$router.push('payselect');
       },
       cancel:function (orderid) {
         MessageBox({
@@ -196,16 +203,15 @@
       var that=this;
       this.status=that.$route.query.sta;
       this.oid=this.$route.query.oid;
-      this.ing=this.$route.query.ing;
-      console.log(this.ing)
       let params={
         data:{
           orderid:this.oid
         }
       }
       orderDetail(params,function (res) {
-        console.log(res);
+        console.log(res)
         if(res.statusCode==1){
+          that.myid=res.data.refundid;
           that.obj=res.data
           that.price=res.data.order.goodsprice;
           that.tranprice=res.data.dispatchprice;
@@ -225,7 +231,9 @@
           that.title=res.data.goods.title;
           that.num=res.data.goods.total;
           that.exp=res.data.express;
-          that.expsn=res.data.expresssn
+          that.expsn=res.data.expresssn;
+          that.refundid=res.data.rufundid;
+          that.canrefund=res.data.canrefund;
           //订单详情存入vuex（orderdetails）
           that.setorderdetails(res.data)
         }else {

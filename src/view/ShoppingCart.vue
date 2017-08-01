@@ -15,7 +15,7 @@
 				</label>
 				<div @click="goProductDetail(v)">
 					<div class="goods-img fl">
-						<img :src="v.thumb" style="width:80px;height:80px;" lazy="loaded">
+						<img :src="v.thumb">
 					</div>
 					<div class="goods-info fl">
 						<h3 class="goods-title lr1">{{v.title}}</h3>

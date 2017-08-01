@@ -53,9 +53,12 @@
                 <!--<router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">-->
                   <!--申请退款-->
                 <!--</router-link>-->
-                <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
+                <!-- <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0" >
                   退款申请中
-                </router-link>
+                </router-link> -->
+                <button class="charge-order ocolor" v-if="v.canrefund&&v.refundid!=0" @click="refund(v.refundid)">
+                   退款申请中
+                </button>
                 <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button" v-if="v.status==3">
                   查看物流
                 </router-link>
@@ -131,9 +134,12 @@
                 <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">
                   申请退款
                 </router-link>
-                <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
+                <!-- <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
                   退款申请中
-                </router-link>
+                </router-link> -->
+                <button class="charge-order ocolor" v-if="v.canrefund&&v.refundid!=0" @click="refund(v.refundid)">
+                   退款申请中
+                </button>
               </div>
             </li>
           </ul>
@@ -199,9 +205,12 @@
                 <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">
                   申请退款
                 </router-link>
-                <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
+                <!-- <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
                   退款申请中
-                </router-link>
+                </router-link> -->
+                <button class="charge-order ocolor" v-if="v.canrefund&&v.refundid!=0" @click="refund(v.refundid)">
+                   退款申请中
+                </button>
                 <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button">
                   查看物流
                 </router-link>
@@ -253,19 +262,31 @@
       all:function () {
         console.log(1)
       },
+      refund:function(refundid){
+        this.$router.push({ name:'drawbackInfo', query: { refundid: refundid}});
+      },
       cancel:function (orderid) {
         console.log(11)
-        this.isSelect=!this.isSelect;
-        let that=this;
-        let params={
-          data:{
-            orderid:orderid,
-            type:'canl',
-            reason:that.canReason
+      
+        MessageBox({title: '确定取消订单吗?',message: '点击确认取消',showCancelButton: true}).then(action => {
+          if(action=='confirm'){//表示点击了确定
+            this.isSelect=!this.isSelect;
+            let that=this;
+            let params={
+            data:{
+              orderid:orderid,
+              type:'canl',
+              reason:that.canReason
+            }
           }
-        }
-        orderManu(params,function (res) {
-          console.log(res)
+          orderManu(params,function (res) { 
+            if(res.statusCode==1){
+
+            }
+          })
+          }else if(action=='cancel'){//表示点击了取消
+            // console.log('点击了取消')
+          }
         })
       },
       fn1:function (orderid) {
