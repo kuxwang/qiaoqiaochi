@@ -18,8 +18,7 @@
         <div>
           <span class="num">{{personnum.all}}</span><span class="yuan"> 人</span>
         </div>
-      <!--</router-link>-->
-      <!--<router-link to="/partner2" tag="li">-->
+
         </li>
         <li :class="{tabActive: selected==2}" @click="selecttab(2)">
         <div class="title">已购买伙伴</div>
@@ -27,8 +26,6 @@
         <div>
           <span class="num">{{personnum.purchased}}</span><span class="yuan"> 人</span>
         </div>
-      <!--</router-link>
-      <router-link to="/partner3" tag="li">-->
         </li>
       <li :class="{tabActive: selected==3 }" @click="selecttab(3)">
         <div class="title">未购买伙伴</div>
@@ -45,11 +42,11 @@
     </div>
 
     <!--<transition name="slide">-->
-      <router-view></router-view>
+      <!--<router-view></router-view>-->
     <!--</transition>-->
 
-    <ul class="p-list" >
-      <li class="p-cell" v-for="(i,index) in personlist.lists" @click="popshow(index)">
+    <ul class="p-list" v-if="personlist.length">
+      <li class="p-cell" v-for="(i,index) in personlist" @click="popshow(index)">
       <!--<li class="p-cell" >-->
         <div class="logo">
           <img :src="i.avatar"/>
@@ -61,6 +58,8 @@
         </div>
       </li>
     </ul>
+
+
     <!--</mt-loadmore>-->
     <mt-popup
       v-model="popupVisible"
@@ -81,7 +80,10 @@
         </ul>
       </div>
     </mt-popup>
-
+    <div v-else class="tips">
+      <span class="iconfont">&#xe612;</span>
+      未找到伙伴<br>
+    </div>
   </div>
 
 </template>
@@ -121,7 +123,7 @@
             }
             teamsLists(params,(res)=>{
               if(res.statusCode==1){
-                this.personlist=res.data;
+                this.personlist=res.data.lists;
                 console.log(res)
                 console.log(this.personlist)
               }else {
@@ -138,8 +140,8 @@
               }
             }
             teamsLists(params,(res)=>{
-              if(res.statusCode==1){
-                this.personlist=res.data;
+              if(res.statusCode===1){
+                this.personlist=res.data.lists;
               }else {
                 console.log('请求失败')
               }
@@ -154,8 +156,8 @@
               }
             }
             teamsLists(params,(res)=>{
-              if(res.statusCode==1){
-                this.personlist=res.data;
+              if(res.statusCode===1){
+                this.personlist=res.data.lists;
               }else {
                 console.log('请求失败')
               }
@@ -164,7 +166,7 @@
           case 4:
             if(this.find.length===11){
               var obj={
-                mobile:this.searchnum
+                mobile:this.find
               }
             }else if(this.find.length===7) {
               var obj={
@@ -180,7 +182,10 @@
                 if(!this.personlist ||this.personlist.length<=1){
                   this.searched=false
                 }else  {
-                  console.log(res)
+//                  console.log(res)
+                  let obji=[]
+                  obji.push(res.data)
+                  this.personlist=obji
                   console.log(this.personlist)
                 }
               }else {
@@ -212,10 +217,11 @@
           let mobilereg=/^1[3|4|5|7|8][0-9]{9}$/;
           let idreg=/^[0-9]*$/;
           if(mobilereg.test(!this.find) || idreg.test(this.find)){
-            this.searchnum(this.find);
-            console.log(Number(this.find))
-            this.$router.push({name: `partnerlist4`}),
+//            this.searchnum(this.find);
+//            console.log(Number(this.find))
+//            this.$router.push({name: `partnerlist4`}),
               this.selected=4
+            this.selecttab(4)
 
           }else {
 
@@ -477,7 +483,7 @@
   }
   .p-list {
     display: block;
-    background-color: #fff;
+    background-color: #ececec;
   }
   .p-cell {
     display: flex;
