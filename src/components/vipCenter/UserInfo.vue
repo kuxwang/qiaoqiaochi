@@ -13,7 +13,6 @@
 	            头像
 	          </span>
 	          <span class="fr">
-	            <img id="img_upload" :src="delImg"  v-show="!myImg" />
 	            <img id="img_upload" :src="myImg"  v-show="myImg" />
 	          </span>
 	          <!-- <input id="file_head" type="file" @change="getMyImg($event)"/> -->
@@ -221,7 +220,7 @@
         		})
 	        	// let that=this;
 	         //  	_webapp.uploadImg((res)=>{
-	     			
+
 	         //  	})
 	        },
 	        getUserInfo(){

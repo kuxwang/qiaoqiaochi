@@ -5,109 +5,102 @@
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
-
       </mt-header>
     </section>
-    <transition name="slide">
-      <router-view></router-view>
-    </transition>
-    <ul class="nav-tab">
-      <li :class="{tabActive: selected==1 }" @click="selecttab(1,1)">
-        <!--<router-link @click="selecttab(1)" to="/extension1" tag="li" :class="{tabActive: selected==1 }"  >-->
-        <div class="title">全部</div>
-        <div class="iconfont listicon">&#xe624;</div>
-        <div>
-          <span class="num">{{ordertotal}}</span><span class="yuan"> 单</span>
-        </div>
-        <!--</router-link>-->
-      </li>
-      <li :class="{tabActive: selected==2 }" @click="selecttab(2,1)">
-        <!--<router-link @click="selecttab(2)" to="/extension2" tag="li" :class="{tabActive: selected==2 }" >-->
-        <div class="title">未结算</div>
-        <div class="iconfont listicon">&#xe624;</div>
-        <div>
-          <span class="num">{{orderlock}}</span><span class="yuan"> 单</span>
-        </div>
-        <!--</router-link>-->
-        <!--</li>-->
-        <!--<router-link  @click="selecttab(3)" to="/extension3" tag="li" :class="{tabActive: selected==3 }">-->
-      </li>
-      <li :class="{tabActive: selected==3 }" @click="selecttab(3,1)">
-        <!--<li class="li2">-->
-        <div class="title">已退款</div>
-        <div class="iconfont listicon">&#xe8b5;</div>
-        <div>
-          <span class="num">{{orderrefund}}</span><span class="yuan"> 单</span>
-          <!--<span class="num">{{ordernum.refund.order_count}}</span><span class="yuan"> 单</span>-->
-        </div>
-      </li>
-      <!--</router-link>-->
 
-      <li :class="{tabActive: selected==4 }" @click="selecttab(4,1)">
-        <div class="title">已结算</div>
-        <div class="iconfont listicon">&#xe619;</div>
-        <div>
-          <span class="num">{{orderok}}</span><span class="yuan"> 单</span>
-        </div>
-      </li>
-    </ul>
+    <div class="list-header c-1">
+      <transition name="slide">
+        <router-view></router-view>
+      </transition>
+      <ul class="nav-tab">
+        <li :class="{tabActive: selected==1 }" @click="selecttab(1,1)">
+          <!--<router-link @click="selecttab(1)" to="/extension1" tag="li" :class="{tabActive: selected==1 }"  >-->
+          <div class="title">全部</div>
+          <div class="iconfont listicon">&#xe624;</div>
+          <div>
+            <span class="num">{{ordertotal}}</span><span class="yuan"> 单</span>
+          </div>
+          <!--</router-link>-->
+        </li>
+        <li :class="{tabActive: selected==2 }" @click="selecttab(2,1)">
+          <!--<router-link @click="selecttab(2)" to="/extension2" tag="li" :class="{tabActive: selected==2 }" >-->
+          <div class="title">未结算</div>
+          <div class="iconfont listicon">&#xe624;</div>
+          <div>
+            <span class="num">{{orderlock}}</span><span class="yuan"> 单</span>
+          </div>
+          <!--</router-link>-->
+          <!--</li>-->
+          <!--<router-link  @click="selecttab(3)" to="/extension3" tag="li" :class="{tabActive: selected==3 }">-->
+        </li>
+        <li :class="{tabActive: selected==3 }" @click="selecttab(3,1)">
+          <!--<li class="li2">-->
+          <div class="title">已退款</div>
+          <div class="iconfont listicon">&#xe8b5;</div>
+          <div>
+            <span class="num">{{orderrefund}}</span><span class="yuan"> 单</span>
+            <!--<span class="num">{{ordernum.refund.order_count}}</span><span class="yuan"> 单</span>-->
+          </div>
+        </li>
+        <!--</router-link>-->
 
-    <div class="search">
-      <input type="text" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
-      <div @click="selecttab(5)">搜索</div>
+        <li :class="{tabActive: selected==4 }" @click="selecttab(4,1)">
+          <div class="title">已结算</div>
+          <div class="iconfont listicon">&#xe619;</div>
+          <div>
+            <span class="num">{{orderok}}</span><span class="yuan"> 单</span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="search">
+        <input type="text" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
+        <div @click="selecttab(5)">搜索</div>
+      </div>
     </div>
-    <div class="list-content">
-    <!--<mt-loadmore :top-method="loadTop" @translate-change="translateChange" @top-status-change="handleTopChange"       :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">-->
-      <!--<mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
-                   :bottom-all-loaded="allLoaded" ref="loadmore">-->
-      <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
-                   :bottom-all-loaded="allLoaded" ref="loadmore">
-    <ul class="p-list"  v-if="orderlist.length">
-      <li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">
-        <div class="up">
-          <span class="ordernum">订单编号{{i.ordersn}}</span>
-          <span class="time">{{i.createtime}}</span>
-        </div>
-        <div class="down">
-          <div class="logo">
-            <img :src="i.avatar"/>
+
+    <mt-loadmore :bottom-method="loadBottom" class="list-content" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
+                 :bottom-all-loaded="allLoaded" ref="loadmore">
+
+      <ul class="p-list" v-if="orderlist.length">
+        <li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">
+          <div class="up">
+            <span class="ordernum">订单编号{{i.ordersn}}</span>
+            <span class="time">{{i.createtime}}</span>
           </div>
-          <div class="info">
-            <h5>{{i.nickname}}</h5>
-            <span>{{i.mid}}</span>
+          <div class="down">
+            <div class="logo">
+              <img :src="i.avatar"/>
+            </div>
+            <div class="info">
+              <h5>{{i.nickname}}</h5>
+              <span>{{i.mid}}</span>
+            </div>
+            <div class="ordertype">
+              <span>{{i.status}}</span>
+              <span>￥{{i.price}}</span>
+            </div>
           </div>
-          <div class="ordertype">
-            <span>{{i.status}}</span>
-            <span>￥{{i.price}}</span>
-          </div>
-        </div>
-      </li>
-    </ul>
-        <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
-          <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
-          <span v-show="bottomStatus === 'loading'">
-	              	<mt-spinner type="snake"></mt-spinner>
-	            	</span>
-        </div>
-      </mt-loadmore>
-    </div>
+        </li>
+      </ul>
+      <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded == false">
+        <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">继续滚动，可加载更多</span>
+        <span v-show="bottomStatus === 'loading'"><mt-spinner type="snake"></mt-spinner></span>
+      </div>
+    </mt-loadmore>
     <div v-if="!orderlist.length" class="tips">
       <span class="iconfont">&#xe66f;</span>
       没有相关订单<br>
     </div>
-
-    <!--<router-view v-show="routerv"></router-view>-->
-
-
   </div>
 
 </template>
 <script>
   import MtCell from "../../../node_modules/mint-ui/packages/cell/src/cell";
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
-  import {Search,Loadmore,InfiniteScroll} from 'mint-ui';
+  import {Search, Loadmore, InfiniteScroll} from 'mint-ui';
   import {mapMutations, mapGetters} from 'vuex';
-  import {orderStatistics,orderLists,orders} from '../../api/api'
+  import {orderStatistics, orderLists, orders} from '../../api/api'
   export default{
     data () {
       return {
@@ -119,47 +112,54 @@
         orderlock: '',
         orderrefund: '',
         orderok: '',
-        orderlist: '',
+        orderlist: [],
         searched: true,
-        allLoaded: false,
-        bottomStatus: '',
-        /*myCurNo: 1,
-        myPageNum: '',
-        isTrue: false,
-        onePage: false,
-        bottomAllLoaded:false,*/
         myCurNo: 1,
+        psizes: 10,
         bottomStatus: '',
         allLoaded: false,
-        myPageNum: '',
-        isTrue: false,
+        isTrue: true,
         onePage: false
       }
     },
-    components: {
-
-
+    created: function () {
+      console.log('a is: ' + this.a)
     },
+    components: {},
     methods: {
-      selecttab(idx,page){
+      selecttab(idx, page){
+        let _this = this;
         this.selected = idx;
+        if(page === 1){
+          this.orderlist = [];
+          this.allLoaded = false;
+          this.myCurNo = 1;
+        }
+
+        console.log(this.allLoaded);
+
         switch (idx) {
           case 1:
             let params = {
               data: {
                 type: 'total',
                 page: page,
-                psize: 4
+                psize: this.psizes
               }
             }
             orderLists(params, (res) => {
-              if (res.statusCode === 1) {
-                this.orderlist = res.data;
-//                this.allLoaded = true;
-//                this.$refs.loadmore.onBottomLoaded();
-              } else {
-                console.log('请求失败')
+
+              if (res.statusCode == 1) {
+                  this.orderlist = this.orderlist.concat(res.data);
+
+                  if (res.data.length < _this.psizes) {
+                    _this.allLoaded = true;
+                  }
+              }else{
+                _this.allLoaded = true;
+                console.log('请求失败`${res.statusCode} , ${res.data}` ')
               }
+
             });
             break;
           case 2:
@@ -167,15 +167,19 @@
               data: {
                 type: 'lock',
                 page: page,
-                psize: 10
+                psize: this.psizes
               }
             };
             orderLists(params, (res) => {
-              if (res.statusCode === 1) {
-                this.orderlist = res.data;
-                console.log(this.orderlist)
-              } else {
-                console.log('请求失败')
+              if (res.statusCode == 1) {
+                this.orderlist = this.orderlist.concat(res.data);
+
+                if (res.data.length < _this.psizes) {
+                  _this.allLoaded = true;
+                }
+              }else{
+                _this.allLoaded = true;
+                console.log('请求失败`${res.statusCode} , ${res.data}` ')
               }
             });
             break;
@@ -184,15 +188,19 @@
               data: {
                 type: 'refund',
                 page: page,
-                psize: 10
+                psize: this.psizes
               }
             };
             orderLists(params, (res) => {
-              if (res.statusCode === 1) {
-                this.orderlist = res.data;
-                console.log(this.orderlist)
-              } else {
-                console.log('请求失败')
+              if (res.statusCode == 1) {
+                this.orderlist = this.orderlist.concat(res.data);
+
+                if (res.data.length < _this.psizes) {
+                  _this.allLoaded = true;
+                }
+              }else{
+                _this.allLoaded = true;
+                console.log('请求失败`${res.statusCode} , ${res.data}` ')
               }
             })
             break;
@@ -201,17 +209,19 @@
               data: {
                 type: 'ok',
                 page: page,
-                psize: 10
+                psize: this.psizes
               }
             };
             orderLists(params, (res) => {
-              if (res.statusCode === 1) {
-                this.orderlist = res.data;
-//                this.allLoaded = true;
-//                this.$refs.loadmore.onBottomLoaded();
-                console.log(this.orderlist)
-              } else {
-                console.log('请求失败')
+              if (res.statusCode == 1) {
+                this.orderlist = this.orderlist.concat(res.data);
+
+                if (res.data.length < _this.psizes) {
+                  _this.allLoaded = true;
+                }
+              }else{
+                _this.allLoaded = true;
+                console.log('请求失败`${res.statusCode} , ${res.data}` ')
               }
             })
             break;
@@ -237,7 +247,7 @@
                   this.searched = false
                 }
               })
-            } else{
+            } else {
               let params = {
                 data: {
                   mid: this.find
@@ -245,140 +255,18 @@
               };
               orders(params, (res) => {
                 if (res.statusCode === 1) {
-                    console.log(res)
+                  console.log(res)
                   let obji = [];
                   obji.push(res.data.order);
                   this.orderlist = obji;
 
                   console.log(this.orderlist);
-                 /* if (!this.orderlist || this.orderlist < 1) {
-                    this.searched = false
-                  }*/
+                  /* if (!this.orderlist || this.orderlist < 1) {
+                   this.searched = false
+                   }*/
                 } else {
                   console.log('请求失败');
 //                  this.searched = false
-                }
-              })
-            }
-            break;
-          default:
-            console.log('hehhe')
-
-        }
-      },
-      addlist(idx,page){
-        this.selected = idx;
-        switch (idx) {
-          case 1:
-            let params = {
-              data: {
-                type: 'total',
-                page: page,
-                psize: 10
-              }
-            }
-            orderLists(params, (res) => {
-              if (res.statusCode === 1) {
-
-                this.orderlist=this.orderlist.concat(res.data);
-                console.log(this.orderlist)
-              } else {
-                console.log('请求失败')
-              }
-            });
-            break;
-          case 2:
-            params = {
-              data: {
-                type: 'lock',
-                page: page,
-                psize: 10
-              }
-            };
-            orderLists(params, (res) => {
-              if (res.statusCode === 1) {
-                this.orderlist=this.orderlist.concat(res.data);
-                console.log(this.orderlist)
-              } else {
-                console.log('请求失败')
-              }
-            });
-            break;
-          case 3:
-            params = {
-              data: {
-                type: 'refund',
-                page: page,
-                psize: 10
-              }
-            };
-            orderLists(params, (res) => {
-              if (res.statusCode === 1) {
-                this.orderlist=this.orderlist.concat(res.data);
-                console.log(this.orderlist)
-              } else {
-                console.log('请求失败')
-              }
-            })
-            break;
-          case 4:
-            params = {
-              data: {
-                type: 'ok',
-                page: page,
-                psize: 10
-              }
-            };
-            orderLists(params, (res) => {
-              if (res.statusCode === 1) {
-                this.orderlist=this.orderlist.concat(res.data);
-//                this.allLoaded = true;
-//                this.$refs.loadmore.onBottomLoaded();
-                console.log(this.orderlist)
-              } else {
-                console.log('请求失败')
-              }
-            })
-            break;
-          case 5  :
-            if (this.find.length === 20) {
-              let params = {
-                data: {
-                  ordersn: this.find
-                }
-              }
-              orders(params, (res) => {
-                if (res.statusCode === 1) {
-                  let obji = [];
-                  obji.push(res.data.order);
-                  this.orderlist.push(obji);
-                  this.orderlist=this.orderlist.push(obji);
-//                  this.allLoaded = true;
-//                  this.$refs.loadmore.onBottomLoaded();
-                  console.log(this.orderlist)
-                  console.log(res)
-
-                } else {
-                  console.log('请求失败');
-                  this.searched = false
-                }
-              })
-            } else{
-              let params = {
-                data: {
-                  mid: this.find
-                }
-              };
-              orders(params, (res) => {
-                if (res.statusCode === 1) {
-                  console.log(res)
-                  let obji = [];
-                  obji.push(res.data.order);
-                  this.orderlist=this.orderlist.push(obji);
-                  console.log(this.orderlist);
-
-                } else {
-                  console.log('请求失败');
                 }
               })
             }
@@ -394,30 +282,26 @@
       },
       ...mapMutations({
         searchnum: 'SEARCHNUM',
-        ordersn:'ORDERSN',
+        ordersn: 'ORDERSN',
       }),
-      loadTop(id){
-        this.selecttab(this.selected,1)
-        this.$refs.loadmore.onBottomLoaded();
-
+      handleBottomChange(status) {
+        console.log(status);
+        this.bottomStatus = status
       },
       loadBottom() {
         this.myCurNo += 1;
-
-        this.addlist(this.selected,this.myCurNo);
         this.$refs.loadmore.onBottomLoaded();
-
+        this.selecttab(this.selected, this.myCurNo);
       },
-      allLoaded(){
 
-      },
+//      allLoaded(){
+//        console.log('allLoaded.');
+//      },
     },
-    handleBottomChange(status) {
-      this.bottomStatus = status
-    },
+
     created(){
       this.selected = this.tabselect;
-      this.selecttab(this.tabselect,1)
+      this.selecttab(this.tabselect, 1)
 
     },
     mounted(){
@@ -586,22 +470,24 @@
   .p-list {
     display: block;
     background-color: #ececec;
-    height: 4.75rem;
+    /*height: 4.75rem;*/
     width: 100%;
- /*   height: 4.5rem;
-    overflow: hidden;*/
+    /*   height: 4.5rem;
+       overflow: hidden;*/
     /*overflow-y: scroll;*/
 
   }
-/*  .mint-loadmore {
-    height: 0.5rem;
-    overflow: hidden;
-    overflow-y: scroll;
-  }*/
+
+  /*  .mint-loadmore {
+      height: 0.5rem;
+      overflow: hidden;
+      overflow-y: scroll;
+    }*/
   .mint-loadmore {
     /*overflow-y: scroll;*/
     width: 100%;
   }
+
   .p-cell {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -637,16 +523,19 @@
     font-size: 0.1rem;
 
   }
+
   .down {
     flex: 3;
     height: 0.68rem;
     display: flex;
     padding: 0 0.1rem;
   }
+
   .logo {
     flex: 1;
     padding: 0.1rem 0;
   }
+
   .info {
     flex: 4;
     text-align: left;
@@ -654,16 +543,19 @@
     padding: 0.05rem 0;
     color: #666;
   }
+
   .info h5 {
     margin-top: 0.1rem;
     color: #27272f;
     font-size: 0.14rem;
   }
+
   .info span {
 
     font-size: 0.14rem;
     color: #666;
   }
+
   .logo img {
     width: 100%;
     border-radius: 50%;
@@ -671,17 +563,20 @@
     display: block;
 
   }
+
   .ordertype {
     flex: 3;
     padding: 0.05rem 0;
     color: #666;
   }
+
   .ordertype span {
     display: block;
     text-align: right;
     font-size: 0.14rem;
     margin-top: 0.05rem;
   }
+
   .ordertype span:last-child {
     margin-top: 0.1rem;
   }
@@ -710,7 +605,7 @@
     display: flex;
     position: fixed;
     width: 100%;
-    top:.45rem;
+    top: .45rem;
     z-index: 1;
   }
 
@@ -766,7 +661,7 @@
     position: fixed;
     z-index: 2;
     background-color: #eee;
-    top:1.35rem;
+    top: 1.35rem;
     padding: 0 2%;
 
   }
@@ -808,15 +703,19 @@
     color: #fff;
   }
 
-  .mint-header .c-1 {
+  .c-1 {
     z-index: 3;
+    top: 0;
+    right: 0;
+    left: 0;
+    position: fixed;
   }
 
   .tips {
     text-align: center;
     font-size: .14rem;
     color: #666;
-    margin-top: 1rem;
+    margin-top: 2.8rem;
 
   }
 
@@ -824,19 +723,23 @@
     display: block;
     font-size: .8rem;
   }
-  .mint-loadmore{
-  /* height: 4.5rem;
-    overflow: hidden;*/
+
+  .mint-loadmore {
+    /* height: 4.5rem;
+      overflow: hidden;*/
     /*overflow-y: scroll;*/
 
   }
+
   .mint-loadmore {
     /*position: absolute;
     top:1.9rem;*/
   }
+
   .mint-loadmore-content {
     /*overflow-y: scroll !important;*/
   }
+
   .list-content {
     overflow: hidden;
     overflow-y: scroll;
@@ -844,5 +747,14 @@
     position: absolute;
     top: 1.9rem;
     width: 100%;
+  }
+
+  .mint-loadmore-bottom span {
+    display: inline-block;
+    transition: .2s linear;
+    vertical-align: middle;
+  }
+  .tips{
+
   }
 </style>

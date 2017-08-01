@@ -20,7 +20,7 @@
         </div>
         <div>
           <span>会员等级:</span>
-          <span>{{memberInfo.level}}</span>
+          <span>{{memberInfo.leveldetail.levelname}}</span>
         </div>
       </div>
       <i class="iconfont right">&#xe649;</i>
@@ -210,7 +210,10 @@
           nickname: '',//昵称
           id: '',//会员id
           level: '',//会员等级
-          avatar: ''
+          avatar: '',
+          leveldetail : {
+              levelname : '默认等级',
+          }
         }
       }
     },
@@ -225,6 +228,10 @@
         recordStatistics_get({data: {type: ''}}, function (res) {
           if (res.statusCode == 1) {
             let data = res.data
+
+            console.log('recordStatistics');
+            console.log(res);
+
             _this.recordStatistics_get.cg_money_sum = res.data.total.cg_money_sum;
             _this.recordStatistics_get.c_money_sum = res.data.total.c_money_sum;
             _this.recordStatistics_get.o_status_3 = res.data.o_status_3.cg_money_sum;
@@ -235,6 +242,8 @@
             _this.recordStatistics_get.o_status_0 = res.data.o_status_0.cg_money_sum;
 
             teamsStatistics({}, function (res) {
+              console.log('teamsStatistics');
+              console.log(res);
               if (res.statusCode == 1) {
                 _this.teamsStatistics.all = res.data.all;
                 _this.teamsStatistics.purchased = res.data.purchased;
@@ -242,6 +251,8 @@
 
 
                 orderStatistics({}, function (res) {
+                  console.log('orderStatistics');
+                  console.log(res);
                   if (res.statusCode == 1) {
                     _this.orderStatistics.total = res.data.total.order_count
                     _this.orderStatistics.lock = res.data.lock.order_count
@@ -249,11 +260,13 @@
                     _this.orderStatistics.ok = res.data.ok.order_count
 
                     memberInfo({}, function (res) {
-                        console.log(res)
+                      console.log('memberInfo');
+                      console.log(res);
                       if (res.statusCode == 1) {
                         _this.memberInfo.nickname = res.data.nickname
                         _this.memberInfo.id = res.data.id
                         _this.memberInfo.level = res.data.level
+                        _this.memberInfo.leveldetail = res.data.leveldetail
                         _this.memberInfo.avatar = res.data.avatar
                       }
                     })
@@ -268,39 +281,7 @@
           } else {
             console.log('佣金统计接口数据异常')
           }
-          teamsStatistics({}, function (res) {
-            if (res.statusCode == 1) {
-              _this.teamsStatistics.all = res.data.all;
-              _this.teamsStatistics.purchased = res.data.purchased;
-              _this.teamsStatistics.no_purchased = res.data.no_purchased;
-            } else {
-              console.log('获取团队数量统计接口数据异常')
-            }
-            orderStatistics({}, function (res) {
-              if (res.statusCode == 1) {
-                _this.orderStatistics.total = res.data.total.order_count
-                _this.orderStatistics.lock = res.data.lock.order_count
-                _this.orderStatistics.refund = res.data.refund.order_count
-                _this.orderStatistics.ok = res.data.ok.order_count
-              } else {
-                console.log('订单统计接口数据异常')
-              }
-
-              memberInfo({}, function (res) {
-                console.log(res)
-                if (res.statusCode == 1) {
-                  _this.memberInfo.nickname = res.data.nickname
-                  _this.memberInfo.id = res.data.id
-                  _this.memberInfo.level = res.data.level
-                  _this.memberInfo.avatar = res.data.avatar
-                }
-              })
-            });
-          })
-
         });
-
-
       },
       partnertab(idx){
         this.tabselect(idx)
@@ -327,9 +308,9 @@
         tabselect: 'TABSELECT',
       })
     },
-    created(){
-      this.init();
-    },
+//    created(){
+//      this.init();
+//    },
     mounted(){
        this.init();
     }

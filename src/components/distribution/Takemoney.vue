@@ -48,15 +48,81 @@
 
   import { withdrawals_get, withdrawals_post,recordStatistics_get} from '../../api/api.js'
 
-
   export default{
       data(){
           return {
-            moneylist:''
+            moneylist : {
+              "total":{
+                "cg_money_sum":"0",
+                "order_count":"0",
+                "c_money_sum":"0"
+              },
+              "ok":{
+                "cg_money_sum":"0",
+                "order_count":"0",
+                "c_money_sum":"0"
+              },
+              "lock":{
+                "cg_money_sum":0,
+                "order_count":"0",
+                "c_money_sum":0
+              },
+              "apply":{
+                "cg_money_sum":0,
+                "order_count":"0",
+                "c_money_sum":0
+              },
+              "check":{
+                "cg_money_sum":0,
+                "order_count":"0",
+                "c_money_sum":0
+              },
+              "pay":{
+                "cg_money_sum":0,
+                "order_count":"0",
+                "c_money_sum":0
+              },
+              "invalid":{
+                "cg_money_sum":0,
+                "order_count":"0",
+                "c_money_sum":0
+              },
+              "o_status_0":{
+                "cg_money_sum":"0",
+                "order_count":"0",
+                "c_money_sum":"0"
+              },
+              "o_status_1":{
+                "cg_money_sum":"0",
+                "order_count":"0",
+                "c_money_sum":"0"
+              },
+              "o_status_2":{
+                "cg_money_sum":0,
+                "order_count":"0",
+                "c_money_sum":0
+              },
+              "o_status_3":{
+                "cg_money_sum":"0",
+                "order_count":"0",
+                "c_money_sum":"0"
+              },
+              "default":{
+                "cg_money_sum":"0",
+                "order_count":"0",
+                "c_money_sum":"0"
+              },
+              "manage":{
+                "cg_money_sum":"0",
+                "order_count":"0",
+                "c_money_sum":"0"
+              }
+            }
           }
       },
     created(){
-
+          console.log('run created.');
+      console.log(this.moneylist);
     },
     mounted(){
       /*let params={
@@ -78,12 +144,12 @@
       let params={
         data: {
 //          type:'all',
-
         }
       }
       recordStatistics_get(params,(res)=>{
         if(res.statusCode==1){
-          this.moneylist=res.data
+          this.moneylist=res.data;
+          console.log('res ');
           console.log(this.moneylist)
           console.log(res)
         }else {
@@ -99,18 +165,12 @@
             }
           }
           withdrawals_post(params,(res)=>{
-            console.log(res)
-
+            console.log(res);
           })
         }
     }
 
   }
-
-
-
-
-
 
 </script>
 
