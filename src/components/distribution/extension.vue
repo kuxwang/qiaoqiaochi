@@ -12,7 +12,7 @@
       <router-view></router-view>
     </transition>
     <ul class="nav-tab">
-      <li :class="{tabActive: selected==1 }" @click="selecttab(1)">
+      <li :class="{tabActive: selected==1 }" @click="selecttab(1,1)">
         <!--<router-link @click="selecttab(1)" to="/extension1" tag="li" :class="{tabActive: selected==1 }"  >-->
         <div class="title">全部</div>
         <div class="iconfont listicon">&#xe624;</div>
@@ -21,7 +21,7 @@
         </div>
         <!--</router-link>-->
       </li>
-      <li :class="{tabActive: selected==2 }" @click="selecttab(2)">
+      <li :class="{tabActive: selected==2 }" @click="selecttab(2,1)">
         <!--<router-link @click="selecttab(2)" to="/extension2" tag="li" :class="{tabActive: selected==2 }" >-->
         <div class="title">未结算</div>
         <div class="iconfont listicon">&#xe624;</div>
@@ -32,7 +32,7 @@
         <!--</li>-->
         <!--<router-link  @click="selecttab(3)" to="/extension3" tag="li" :class="{tabActive: selected==3 }">-->
       </li>
-      <li :class="{tabActive: selected==3 }" @click="selecttab(3)">
+      <li :class="{tabActive: selected==3 }" @click="selecttab(3,1)">
         <!--<li class="li2">-->
         <div class="title">已退款</div>
         <div class="iconfont listicon">&#xe8b5;</div>
@@ -43,7 +43,7 @@
       </li>
       <!--</router-link>-->
 
-      <li :class="{tabActive: selected==4 }" @click="selecttab(4)">
+      <li :class="{tabActive: selected==4 }" @click="selecttab(4,1)">
         <div class="title">已结算</div>
         <div class="iconfont listicon">&#xe619;</div>
         <div>
@@ -52,19 +52,14 @@
       </li>
     </ul>
 
-
-    <!--<div class="search">
-      <input type="search" results="1" v-model="find" @click="sousuo()" placeholder="输入订单号、粉丝ID"/>
-      <button>搜索</button>
-    </div>-->
     <div class="search">
       <input type="text" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
       <div @click="selecttab(5)">搜索</div>
     </div>
+    <!--<mt-loadmore :top-method="loadTop" @translate-change="translateChange" @top-status-change="handleTopChange"       :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :bottom-all-loaded="allLoaded" ref="loadmore">-->
+    <mt-loadmore :top-method="loadTop"    :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
     <ul class="p-list" v-if="orderlist.length">
-      <!--<li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">-->
       <li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">
-      <!--<li class="p-cell" >-->
         <div class="up">
           <span class="ordernum">订单编号{{i.ordersn}}</span>
           <span class="time">{{i.createtime}}</span>
@@ -84,6 +79,13 @@
         </div>
       </li>
     </ul>
+      <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
+        <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+        <span v-show="bottomStatus === 'loading'">
+	              	<mt-spinner type="snake"></mt-spinner>
+	            	</span>
+      </div>
+    </mt-loadmore>
     <div v-if="!orderlist.length" class="tips">
       <span class="iconfont">&#xe66f;</span>
       没有相关订单<br>
@@ -98,7 +100,7 @@
 <script>
   import MtCell from "../../../node_modules/mint-ui/packages/cell/src/cell";
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
-  import {Search} from 'mint-ui';
+  import {Search,Loadmore} from 'mint-ui';
   import {mapMutations, mapGetters} from 'vuex';
   import {orderStatistics,orderLists,orders} from '../../api/api'
   export default{
@@ -114,29 +116,36 @@
         orderok: '',
         orderlist: '',
         searched: true,
-        routerv: 1
+        allLoaded: false,
+        bottomStatus: '',
+        myCurNo: 1,
+        myPageNum: '',
+        isTrue: false,
+        onePage: false,
+        bottomAllLoaded:false,
       }
     },
     components: {
-      mtSearch: Search
+
 
     },
     methods: {
-      selecttab(idx){
+      selecttab(idx,page){
         this.selected = idx;
         switch (idx) {
           case 1:
             let params = {
               data: {
                 type: 'total',
-                page: 1,
-                psize: 10
+                page: page,
+                psize: 4
               }
             }
             orderLists(params, (res) => {
               if (res.statusCode === 1) {
                 this.orderlist = res.data;
-
+//                this.allLoaded = true;
+//                this.$refs.loadmore.onBottomLoaded();
               } else {
                 console.log('请求失败')
               }
@@ -146,7 +155,7 @@
             params = {
               data: {
                 type: 'lock',
-                page: 1,
+                page: page,
                 psize: 10
               }
             };
@@ -163,7 +172,7 @@
             params = {
               data: {
                 type: 'refund',
-                page: 1,
+                page: page,
                 psize: 10
               }
             };
@@ -174,20 +183,21 @@
               } else {
                 console.log('请求失败')
               }
-
             })
             break;
           case 4:
             params = {
               data: {
                 type: 'ok',
-                page: 1,
+                page: page,
                 psize: 10
               }
             };
             orderLists(params, (res) => {
               if (res.statusCode === 1) {
                 this.orderlist = res.data;
+//                this.allLoaded = true;
+//                this.$refs.loadmore.onBottomLoaded();
                 console.log(this.orderlist)
               } else {
                 console.log('请求失败')
@@ -205,7 +215,9 @@
                 if (res.statusCode === 1) {
                   let obji = [];
                   obji.push(res.data.order);
-                  this.orderlist = obji
+                  this.orderlist = obji;
+//                  this.allLoaded = true;
+//                  this.$refs.loadmore.onBottomLoaded();
                   console.log(this.orderlist)
                   console.log(res)
 
@@ -226,6 +238,7 @@
                   let obji = [];
                   obji.push(res.data.order);
                   this.orderlist = obji;
+
                   console.log(this.orderlist);
                  /* if (!this.orderlist || this.orderlist < 1) {
                     this.searched = false
@@ -242,7 +255,127 @@
 
         }
       },
+      addlist(idx,page){
+        this.selected = idx;
+        switch (idx) {
+          case 1:
+            let params = {
+              data: {
+                type: 'total',
+                page: page,
+                psize: 10
+              }
+            }
+            orderLists(params, (res) => {
+              if (res.statusCode === 1) {
+                this.orderlist=this.orderlist.concat(res.data);
+                console.log(this.orderlist)
+              } else {
+                console.log('请求失败')
+              }
+            });
+            break;
+          case 2:
+            params = {
+              data: {
+                type: 'lock',
+                page: page,
+                psize: 10
+              }
+            };
+            orderLists(params, (res) => {
+              if (res.statusCode === 1) {
+                this.orderlist=this.orderlist.concat(res.data);
+                console.log(this.orderlist)
+              } else {
+                console.log('请求失败')
+              }
+            });
+            break;
+          case 3:
+            params = {
+              data: {
+                type: 'refund',
+                page: page,
+                psize: 10
+              }
+            };
+            orderLists(params, (res) => {
+              if (res.statusCode === 1) {
+                this.orderlist=this.orderlist.concat(res.data);
+                console.log(this.orderlist)
+              } else {
+                console.log('请求失败')
+              }
+            })
+            break;
+          case 4:
+            params = {
+              data: {
+                type: 'ok',
+                page: page,
+                psize: 10
+              }
+            };
+            orderLists(params, (res) => {
+              if (res.statusCode === 1) {
+                this.orderlist=this.orderlist.concat(res.data);
+//                this.allLoaded = true;
+//                this.$refs.loadmore.onBottomLoaded();
+                console.log(this.orderlist)
+              } else {
+                console.log('请求失败')
+              }
+            })
+            break;
+          case 5  :
+            if (this.find.length === 20) {
+              let params = {
+                data: {
+                  ordersn: this.find
+                }
+              }
+              orders(params, (res) => {
+                if (res.statusCode === 1) {
+                  let obji = [];
+                  obji.push(res.data.order);
+                  this.orderlist.push(obji);
+                  this.orderlist=this.orderlist.push(obji);
+//                  this.allLoaded = true;
+//                  this.$refs.loadmore.onBottomLoaded();
+                  console.log(this.orderlist)
+                  console.log(res)
 
+                } else {
+                  console.log('请求失败');
+                  this.searched = false
+                }
+              })
+            } else{
+              let params = {
+                data: {
+                  mid: this.find
+                }
+              };
+              orders(params, (res) => {
+                if (res.statusCode === 1) {
+                  console.log(res)
+                  let obji = [];
+                  obji.push(res.data.order);
+                  this.orderlist=this.orderlist.push(obji);
+                  console.log(this.orderlist);
+
+                } else {
+                  console.log('请求失败');
+                }
+              })
+            }
+            break;
+          default:
+            console.log('hehhe')
+
+        }
+      },
       orderinfo(index){
         this.ordersn(this.orderlist[index].ordersn);
         this.$router.push({name: `orderinfo`})
@@ -251,11 +384,27 @@
         searchnum: 'SEARCHNUM',
         ordersn:'ORDERSN',
       }),
+      loadTop(id){
+        this.selecttab(this.selected,1)
+        this.$refs.loadmore.onBottomLoaded();
+
+      },
+      loadBottom() {
+        this.myCurNo += 1;
+        setTimeout(()=>{
+          this.addlist(this.selected,this.myCurNo);
+          this.$refs.loadmore.onBottomLoaded();
+        },1000)
+
+      },
+      allLoaded(){
+
+      },
     },
 
     created(){
       this.selected = this.tabselect;
-      this.selecttab(this.tabselect)
+      this.selecttab(this.tabselect,1)
 
     },
     mounted(){
@@ -424,9 +573,20 @@
   .p-list {
     display: block;
     background-color: #ececec;
+ /*   height: 4.5rem;
+    overflow: hidden;*/
+    /*overflow-y: scroll;*/
 
   }
-
+/*  .mint-loadmore {
+    height: 0.5rem;
+    overflow: hidden;
+    overflow-y: scroll;
+  }*/
+  .mint-loadmore {
+    overflow-y: scroll;
+    width: 100%;
+  }
   .p-cell {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -526,12 +686,16 @@
   }
 
   .nav-tab {
-    margin-top: .5rem;
+    /*margin-top: .5rem;*/
     height: .90rem;
     -webkit-box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
     -moz-box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
     box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
     display: flex;
+    position: fixed;
+    width: 100%;
+    top:.45rem;
+    z-index: 1;
   }
 
   .nav-tab li {
@@ -578,28 +742,37 @@
   }
 
   .search {
-    height: .3rem;
+    height: .5rem;
     display: flex;
-    margin: .2rem 2%;
-    width: 96%;
+    /*margin: .2rem 2%;*/
+    width: 100%;
+
+    position: fixed;
+    z-index: 2;
+    background-color: #eee;
+    top:1.35rem;
+    padding: 0 2%;
+
   }
 
   .search input {
     border: none;
     display: block;
-    height: 100%;
+    height: .3rem;
     flex: 1;
     padding: 0 0.2rem;
     background: #fff;
+    margin-top: .15rem;
   }
 
   .search div {
     background-color: #F5751D;
     display: block;
-    height: 100%;
+    height: .3rem;
     flex: .3;
     color: #fff;
     line-height: .3rem;
+    margin-top: .15rem;
   }
 
   .mint-header {
@@ -634,5 +807,15 @@
   .tips .iconfont {
     display: block;
     font-size: .8rem;
+  }
+  .mint-loadmore{
+  /* height: 4.5rem;
+    overflow: hidden;*/
+    /*overflow-y: scroll;*/
+
+  }
+  .mint-loadmore {
+    position: absolute;
+    top:1.9rem;
   }
 </style>
