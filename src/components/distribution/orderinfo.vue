@@ -1,7 +1,7 @@
 <template>
   <div class="main2">
     <mt-header title="订单详情" fixed class="header">
-      <router-link to="/extension1" slot="left" class="pro-white">
+      <router-link to="/extension" slot="left" class="pro-white">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>

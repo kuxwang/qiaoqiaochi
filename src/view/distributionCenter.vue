@@ -299,44 +299,17 @@
           })
 
         });
-        // teamsStatistics({}, function (res) {
-        //   if (res.statusCode == 1) {
-        //     _this.teamsStatistics.all = res.data.all;
-        //     _this.teamsStatistics.purchased = res.data.purchased;
-        //     _this.teamsStatistics.no_purchased = res.data.no_purchased;
-        //   } else {
-        //     console.log('获取团队数量统计接口数据异常')
-        //   }
-        // })
-        // orderStatistics({}, function (res) {
-        //   if (res.statusCode == 1) {
-        //     _this.orderStatistics.total = res.data.total.order_count
-        //     _this.orderStatistics.lock = res.data.lock.order_count
-        //     _this.orderStatistics.refund = res.data.refund.order_count
-        //     _this.orderStatistics.ok = res.data.ok.order_count
-        //   } else {
-        //     console.log('订单统计接口数据异常')
-        //   }
-        // });
-        // memberInfo({}, function (res) {
-        //     console.log(res)
-        //   if (res.statusCode == 1) {
-        //     _this.memberInfo.nickname = res.data.nickname
-        //     _this.memberInfo.id = res.data.id
-        //     _this.memberInfo.level = res.data.level
-        //     _this.memberInfo.avatar = res.data.avatar
-        //   }
-        // })
+
 
       },
       partnertab(idx){
         this.tabselect(idx)
-        this.$router.push({name: `partnerlist${idx}`})
+        this.$router.push({name: `partner`})
 
       },
       ordertab(idx){
         this.tabselect(idx)
-        this.$router.push({name: `extension${idx}`})
+        this.$router.push({name: `extension`})
       },
       outLogin(){
         MessageBox({title: '确认退出当前账号?',message: '点击确认退出',showCancelButton: true}).then(action => {
@@ -353,6 +326,9 @@
       ...mapMutations({
         tabselect: 'TABSELECT',
       })
+    },
+    created(){
+      this.init();
     },
     mounted(){
        this.init();
