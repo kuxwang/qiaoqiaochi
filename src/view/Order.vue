@@ -307,7 +307,8 @@
         bottomStatus: '',
         allLoaded: false,
         isTrue: false,
-        onePage: false
+        onePage: false,
+        psizenum:10
       }
     },
     methods:{
@@ -363,7 +364,7 @@
         }
         orderList(params,function (res) {
           console.log(res.data.length)
-          if(res.data.length<10 && res.statusCode!=-1){
+          if(res.data.length<that.psizenum && res.statusCode!=-1){
             console.log(res.data)
             that.allLoaded = true
           }
@@ -650,6 +651,9 @@
     background:#ddd;
     color:#777 !important;
     margin-right:.05rem;
+  }
+  .mint-loadmore-bottom{
+    margin-bottom:-.5rem;
   }
   .mint-loadmore-bottom span {
     display: inline-block;
