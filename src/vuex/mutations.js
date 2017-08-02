@@ -16,7 +16,8 @@ import {
   REFUNDID,
   BACKPRICE,
   DRAWBACKOBJ,
-  ORDERDETAILS
+  ORDERDETAILS,
+  IMGURL
 }
   from
     './mutation-types.js'
@@ -33,7 +34,8 @@ export default {
       city: data.city,
       area: data.area,
       address: data.address,
-      id: data.id
+      id: data.id,
+
     }
   },
   [TABSELECT] (state, data) {
@@ -75,5 +77,9 @@ export default {
   [ORDERDETAILS] (state,orderdetails) {
     state.orderdetails = orderdetails;
   },
+  [IMGURL] (state,imgurl) {
+    state.imgurl = imgurl;
+  },
+
 
 }

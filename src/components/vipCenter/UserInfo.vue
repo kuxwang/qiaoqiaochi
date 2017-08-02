@@ -96,7 +96,6 @@
 	import {address} from '../../assets/js/address';
   	import {memberInfo,PUT_USERINFO,PUT_USERAVATARS,USERPHOTO} from '../../api/api';
   	import {_webapp} from '../../config/_webapp.js';
-//  	import {_webapp} from '../../config/webapp.js';
 	export default{
 		data(){
 			return{
@@ -144,6 +143,9 @@
 			}
 		},
 		methods:{
+            ...mapMutations([
+                'IMGURL'
+            ]),
 			testNc(val){//昵称
 
 			},
@@ -218,6 +220,7 @@
 	        	let that=this;
 	          	_webapp.uploadImg((res)=>{
 	     			this.myImg=res.data
+                this.IMGURL(res.data)
 	          	})
 	        },
 	        getUserInfo(){
@@ -281,7 +284,7 @@
 			            // 		console.log('请求')
 			            // 	}
 			            // })
-			        //  
+			        //
 		            Toast({
 		              message: '个人信息提交成功!',
 		              position: 'middle',
