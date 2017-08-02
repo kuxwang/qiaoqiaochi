@@ -118,7 +118,7 @@
         psizes: 10,
         bottomStatus: '',
         allLoaded: false,
-        isTrue: true,
+        isTrue: false,
         onePage: false
       }
     },
@@ -286,9 +286,12 @@
         this.bottomStatus = status
       },
       loadBottom() {
+         console.log('xx1');
+//         return ;
         this.myCurNo += 1;
         this.$refs.loadmore.onBottomLoaded();
         this.selecttab(this.selected, this.myCurNo);
+//        console.log(this.selected)
       },
 
 //      allLoaded(){
@@ -743,8 +746,8 @@
 
   .list-content {
     overflow: hidden;
-    overflow-y: scroll;
-    height: 4.75rem;
+    /*overflow-y: scroll;*/
+    /*height: 4.75rem;*/
     position: absolute;
     top: 1.9rem;
     width: 100%;

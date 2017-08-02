@@ -973,7 +973,7 @@
 
   .list-content {
     /*height:5.25rem;*/
-    overflow: auto;
-    overflow-y: scroll;
+    overflow: hidden;
+    /*overflow-y: scroll;*/
   }
 </style>

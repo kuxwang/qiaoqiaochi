@@ -831,8 +831,9 @@
   }
 
   .mint-loadmore {
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
     width: 100%;
+    overflow: hidden;
   }
 
 
