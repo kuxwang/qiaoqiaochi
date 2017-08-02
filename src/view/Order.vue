@@ -1,7 +1,7 @@
 <template>
   <div class="main order-header">
     <mt-header title="我的订单" fixed>
-      <router-link to="/" slot="left" >
+      <router-link to="/" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
@@ -170,11 +170,11 @@
                                tag="button" v-if="v.canrefund&&v.refundid==0">
                     申请退款
                   </router-link>
-                  <router-link class="charge-order ocolor"
-                               :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button"
-                               v-if="v.canrefund&&v.refundid!=0">
-                    退款申请中
-                  </router-link>
+                  <!--<router-link class="charge-order ocolor"-->
+                               <!--:to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button"-->
+                               <!--v-if="v.canrefund&&v.refundid!=0">-->
+                    <!--退款申请中-->
+                  <!--</router-link>-->
                   <button class="charge-order ocolor" v-if="v.canrefund&&v.refundid!=0" @click="refund(v.refundid)">
                     退款申请中
                   </button>
@@ -395,26 +395,37 @@
         switch (val) {
           case 'all' :
             this.statusType = '';
+//            this.selectedTypeChange(this.statusPage.all);
+            this.statusPage.all = 0;
+            this.statusResult.all = [];
             this.selectedTypeChange(this.statusPage.all);
 
             break;
           case 'will-pay' :
             this.statusType = '0';
+            this.statusPage.will_pay = 0;
+            this.statusResult.will_pay = [];
             this.selectedTypeChange(this.statusPage.will_pay);
 
             break;
           case 'will-send' :
             this.statusType = '1';
+            this.statusPage.will_send = 0;
+            this.statusResult.will_send = [];
             this.selectedTypeChange(this.statusPage.will_send);
 
             break;
           case 'will-reserve' :
             this.statusType = '2';
+            this.statusPage.will_reserve = 0;
+            this.statusResult.will_reserve = [];
             this.selectedTypeChange(this.statusPage.will_reserve);
 
             break;
           case 'done' :
             this.statusType = '3';
+            this.statusPage.donex = 0;
+            this.statusResult.donex = [];
             this.selectedTypeChange(this.statusPage.donex);
             break;
         }
@@ -422,9 +433,9 @@
     },
     methods: {
       selectedTypeChange(page){
-        if (page > 0) {
-          return
-        }
+//        if (page > 0) {
+//          return
+//        }
         this.getOrderList(page);
       },
       changeTypePage(_this){
@@ -660,48 +671,66 @@
         console.log(orderid);
 
         let that = this;
-        MessageBox({
-          title: '提示',
-          message: '请确定已收货 否则钱财两空哦',
-          showCancelButton: true
-        }).then(action => {
-          if (action == 'confirm') {
-            console.log(orderid)
-
-            let params = {
-              data: {
-                orderid: orderid,
-                type: 'comf'
-              }
-            };
-            orderManu(params, function (res) {
-              console.log(res)
+        this.$router.push({path: '/orderd', query:{oid: orderid,sta:2}});
+//        MessageBox({
+//          title: '提示',
+//          message: '请确定已收货 否则钱财两空哦',
+//          showCancelButton: true
+//        }).then(action => {
+//          if (action == 'confirm') {
+//            console.log(orderid)
+//
+//            let params = {
+//              data: {
+//                orderid: orderid,
+//                type: 'comf'
+//              }
+//            };
+////            this.$router.push({path: '/orderd', oid: orderid});
+//            orderManu(params, function (res) {
+//
 //              that.selected = 'done';
-
-              if (res.statusCode == 1) {
-//                location.reload()
-                that.selected = 'done';
-                for (let i = 0; i < that.statusResult.will_reserve.length; i++) {
-                  if (that.statusResult.will_reserve[i].id === orderid) {
-                    that.statusResult.will_reserve.splice(i, 1);
-                    break;
-                  }
-                }
-              }
-              else {
-                MessageBox.alert('操作成功').then(action => {
-
-                });
-              }
-            })
-          } else if (action == 'cancel') {
-
-          }
-        });
+//
+//              if (res.statusCode == 1) {
+//                for (let i = 0; i < that.statusResult.will_reserve.length; i++) {
+//                  if (that.statusResult.will_reserve[i].id === orderid) {
+//                    that.statusResult.will_reserve.splice(i, 1);
+//                    break;
+//                  }
+//                }
+////                ;
+////                let params = {
+////                  data: {
+////                    page: 1,
+////                    status: 3
+////                  }
+////                };
+////                console.log()
+////                orderList(params, function (res) {
+////                  /*_this.changeTypePage(_this);
+////                   _this.saveTypeResult(_this, res);*/
+////                  that.statusResult.donex = res.data;
+////                  console.log(that.statusResult.donex.length)
+////
+////
+////                });
+//
+//
+//              }
+//              else {
+//                MessageBox.alert('操作成功').then(action => {
+//
+//                });
+//              }
+//            })
+//          } else if (action == 'cancel') {
+//
+//          }
+//        });
       },
       getOrderList: function (page) {
         let _this = this;
-//        console.log(this.statusType)
+        console.log(this.statusType)
         let params = {
           data: {
             page: ++page,

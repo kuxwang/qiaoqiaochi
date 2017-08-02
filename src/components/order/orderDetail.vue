@@ -130,6 +130,7 @@
         refundid:'',
         myid:'',
         goodsid : '',
+        orderStatus: ''
       }
     },
     methods:{
@@ -213,7 +214,8 @@
     },
     created:function () {
       var that=this;
-      this.status=that.$route.query.sta;
+      this.status=that.orderStatus;
+//      this.oid=this.$route.query.oid;
       this.oid=this.$route.query.oid;
       let params={
         data:{
@@ -248,6 +250,7 @@
           that.refundid=res.data.rufundid;
           that.canrefund=res.data.canrefund;
           that.goodsid = res.data.goods.id;
+          that.orderStatus = res.data.status;
           //订单详情存入vuex（orderdetails）
           that.setorderdetails(res.data)
         }else {

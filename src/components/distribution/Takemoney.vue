@@ -9,18 +9,18 @@
     </section>
     <div class="title">
       <span class="up">可提现金额（元）</span>
-      <span class="down">{{moneylist.ok.c_money_sum}}</span>
+      <span class="down">{{ok}}</span>
     </div>
     <h5>收入</h5>
     <ul class="view">
       <li class="cell">
         累计销售收益
-        <span>{{moneylist.default.c_money_sum}}元</span>
+        <span>{{defaults}}元</span>
       </li>
       <li class="cell">
         累计管理收益
         <!--<span class="iconfont">&#xe61b;</span>-->
-        <span>{{moneylist.manage.c_money_sum}}元</span>
+        <span>{{manage}}元</span>
       </li>
      <!-- <li class="cell">
         累计消费省钱
@@ -33,91 +33,30 @@
         <router-link class="cell" :to="{name: 'moneylist'}" tag="li">
         已提现金额
         <span class="iconfont">&#xe61b;</span>
-        <span>{{moneylist.pay.c_money_sum}}元</span>
+        <span>{{pay}}元</span>
         </router-link>
       <!--</li>-->
     </ul>
-    <router-link to="./outmoney" tag="div" class="btn" >
+  <!--  <router-link to="./outmoney" tag="div" class="btn" >
       提现
-    </router-link>
+    </router-link>-->
+    <div class="btn" @click="go1">提现</div>
 
     <router-view></router-view>
   </div>
 </template>
 <script>
 
-  import { withdrawals_get, withdrawals_post,recordStatistics_get} from '../../api/api.js'
+  import { withdrawals_get, withdrawals_post,recordStatistics_get} from '../../api/api.js';
+  import { Toast} from 'mint-ui';
 
   export default{
       data(){
           return {
-            moneylist : {
-              "total":{
-                "cg_money_sum":"0",
-                "order_count":"0",
-                "c_money_sum":"0"
-              },
-              "ok":{
-                "cg_money_sum":"0",
-                "order_count":"0",
-                "c_money_sum":"0"
-              },
-              "lock":{
-                "cg_money_sum":0,
-                "order_count":"0",
-                "c_money_sum":0
-              },
-              "apply":{
-                "cg_money_sum":0,
-                "order_count":"0",
-                "c_money_sum":0
-              },
-              "check":{
-                "cg_money_sum":0,
-                "order_count":"0",
-                "c_money_sum":0
-              },
-              "pay":{
-                "cg_money_sum":0,
-                "order_count":"0",
-                "c_money_sum":0
-              },
-              "invalid":{
-                "cg_money_sum":0,
-                "order_count":"0",
-                "c_money_sum":0
-              },
-              "o_status_0":{
-                "cg_money_sum":"0",
-                "order_count":"0",
-                "c_money_sum":"0"
-              },
-              "o_status_1":{
-                "cg_money_sum":"0",
-                "order_count":"0",
-                "c_money_sum":"0"
-              },
-              "o_status_2":{
-                "cg_money_sum":0,
-                "order_count":"0",
-                "c_money_sum":0
-              },
-              "o_status_3":{
-                "cg_money_sum":"0",
-                "order_count":"0",
-                "c_money_sum":"0"
-              },
-              "default":{
-                "cg_money_sum":"0",
-                "order_count":"0",
-                "c_money_sum":"0"
-              },
-              "manage":{
-                "cg_money_sum":"0",
-                "order_count":"0",
-                "c_money_sum":"0"
-              }
-            }
+            ok:'',
+            pay:'',
+            manage:'',
+            defaults:''
           }
       },
     created(){
@@ -125,48 +64,42 @@
       console.log(this.moneylist);
     },
     mounted(){
-      /*let params={
-        data: {
-          type:'all',
-          page:1,
-          psize:10
-        }
-      }
-      withdrawals_get(params,(res)=>{
-          if(res.statusCode==1){
-            this.moneylist=res.data
-            console.log(this.moneylist)
-            console.log(res)
-          }else {
-              console.log('请求失败')
-          }
-      })*/
       let params={
         data: {
 //          type:'all',
         }
       }
       recordStatistics_get(params,(res)=>{
-        if(res.statusCode==1){
-          this.moneylist=res.data;
-          console.log('res ');
-          console.log(this.moneylist)
+        if(res.statusCode===1){
           console.log(res)
+          this.ok=res.data.ok.c_money_sum;
+          this.pay=res.data.pay.c_money_sum;
+          this.defaults=res.data.default.c_money_sum;
+          this.manage=res.data.manage.c_money_sum;
+
+
+
+//          console.log(this.moneylist)
+          console.log(res)
+
         }else {
           console.log('请求失败')
         }
       })
     },
     methods: {
-        outmoney(){
-          let params={
-            data: {
-              type:0,
+
+        go1(){
+            if(this.ok !==0){
+              this.$router.push({name:'outmoney'})
+
+            }else {
+              Toast({
+                message: '没有可提现的金额',
+                position: 'middle',
+                duration: 2000
+              });
             }
-          }
-          withdrawals_post(params,(res)=>{
-            console.log(res);
-          })
         }
     }
 

@@ -7,7 +7,7 @@
         </router-link>
       </mt-header>
     </section>
-    <ul class="moneylists">
+    <ul class="moneylists" v-if="moneylist">
       <li class="moneycell" v-for="(i,index) in moneylist" :class="{'colorbor': comparefun(moneylist,index)}">
         <div class="left">
           <div class="time">{{i.applytime.substr(0,10)}}</div>
@@ -23,7 +23,10 @@
         </div>
       </li>
     </ul>
-
+    <div v-if="!moneylist.length" class="tips">
+      <span class="iconfont">&#xe66f;</span>
+      没有提现记录<br>
+    </div>
   </div>
 </template>
 
@@ -142,6 +145,20 @@
   .colorbor {
     border-bottom: none !important;
   }
+
+  .tips {
+    text-align: center;
+    font-size: .14rem;
+    color: #666;
+    margin-top: 2.8rem;
+
+  }
+
+  .tips .iconfont {
+    display: block;
+    font-size: .8rem;
+  }
+
 </style>
 
 
