@@ -1,13 +1,13 @@
 <template>
   <div class="main order-header">
     <mt-header title="我的订单" fixed>
-      <router-link to="/" slot="left" >
+      <router-link to="/" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-    <div class="page-navbar" >
+    <div class="page-navbar">
       <mt-navbar class="page-part" v-model="selected" fixed>
-        <mt-tab-item id="all" @click="all">全部</mt-tab-item>
+        <mt-tab-item id="all">全部</mt-tab-item>
         <mt-tab-item id="will-pay">待付款</mt-tab-item>
         <mt-tab-item id="will-send">待发货</mt-tab-item>
         <mt-tab-item id="will-reserve">待收货</mt-tab-item>
@@ -16,65 +16,76 @@
 
       <mt-tab-container v-model="selected" class="orderList" id="content-list">
         <mt-tab-container-item id="all">
-          <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
-                       :bottom-all-loaded="allLoaded" ref="loadmore">
-          <ul class="order-list" v-show="!isShow1" v-for="(v,i) in order0">
-            <li>
-              <div>订单号：{{v.ordersn}}</div>
-              <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status,num:v.goods[0].total}}" tag="div">
-                <img :src=v.goods[0].thumb alt="" class="order-small">
-                <p>{{v.goods[0].title}}</p>
-                <div class="good-price">
-                  <p>{{v.goods[0].marketprice}}</p>
-                  <p>×{{v.goods[0].total}}</p>
+          <mt-loadmore class="list-content" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange"
+                       :autoFill="isTrue"
+                       :bottom-all-loaded="statusLoaded.all" ref="loadmore" v-show="!statusShow.all">
+
+            <ul class="order-list" v-show="!statusShow.all" v-for="(v,i) in statusResult.all">
+              <li>
+                <div>订单号：{{v.ordersn}}</div>
+                <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status,num:v.goods[0].total}}"
+                             tag="div">
+                  <img :src=v.goods[0].thumb alt="" class="order-small">
+                  <p>{{v.goods[0].title}}</p>
+                  <div class="good-price">
+                    <p>{{v.goods[0].marketprice}}</p>
+                    <p>×{{v.goods[0].total}}</p>
+                  </div>
+                </router-link>
+                <div class="good-pay">
+                  <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
                 </div>
-              </router-link>
-              <div class="good-pay">
-                <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
-              </div>
-              <div class="good-btn">
-                <button class="cancel-order"  v-if="v.status==0" @click="cancel(v.id)">
-                  取消订单
-                </button>
-                <button class="charge-order ocolor" @click="pay(v.ordersn)" v-if="v.status==0">
-                  付款
-                </button>
-                <!--<router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button"   v-if="v.status==1" v-show="v.canrefund||v.refundid==0"> -->
-                <router-link class="charge-order ocolor"  :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button"   v-if="v.canrefund&&v.refundid==0" >
-                  申请退款
-                </router-link>
-                <!--<router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">-->
-                <!--退款申请中-->
-                <!--</router-link>-->
-                <router-link class="charge-order1" to="" tag="button" v-if="v.status==2" @click="fn1()">
-                  确认收货
-                </router-link>
-                <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button" v-if="v.status==2">
-                  查看物流
-                </router-link>
-                <!--<router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">-->
+                <div class="good-btn">
+                  <button class="cancel-order" v-if="v.status==0" @click="cancel(v.id)">
+                    取消订单
+                  </button>
+                  <button class="charge-order ocolor" @click="pay(v.ordersn)" v-if="v.status==0">
+                    付款
+                  </button>
+                  <!--<router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button"   v-if="v.status==1" v-show="v.canrefund||v.refundid==0"> -->
+                  <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}"
+                               tag="button" v-if="v.canrefund&&v.refundid==0">
+                    申请退款
+                  </router-link>
+                  <!--<router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">-->
+                  <!--退款申请中-->
+                  <!--</router-link>-->
+                  <button class="charge-order1" v-if="v.status==2 && v.refundid==0" @click="fn1(v.id)">
+                    确认收货
+                  </button>
+                  <router-link class="look-logi ocolor"
+                               :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button"
+                               v-if="v.status==2">
+                    查看物流
+                  </router-link>
+                  <!--<router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">-->
                   <!--申请退款-->
-                <!--</router-link>-->
-                <!-- <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0" >
-                  退款申请中
-                </router-link> -->
-                <button class="charge-order ocolor" v-if="v.canrefund&&v.refundid!=0&&v.status!=0" @click="refund(v.refundid)">
-                   退款申请中
-                </button>
-                <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button" v-if="v.status==3">
-                  查看物流
-                </router-link>
-              </div>
-            </li>
-          </ul>
-            <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
-              <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
-              <span v-show="bottomStatus === 'loading'">
+                  <!--</router-link>-->
+                  <!-- <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0" >
+                    退款申请中
+                  </router-link> -->
+                  <button class="charge-order ocolor" v-if="v.canrefund && v.refundid!=0 && v.status!=0"
+                          @click="refund(v.refundid)">
+                    退款申请中
+                  </button>
+                  <router-link class="look-logi ocolor"
+                               :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button"
+                               v-if="v.status==3">
+                    查看物流
+                  </router-link>
+                </div>
+              </li>
+            </ul>
+            <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center"
+                 v-show="statusLoaded.all == false">
+              <span v-show="statusLoadedStatus.all !== 'loading'"
+                    :class="{ 'is-rotate': statusLoadedStatus.all === 'drop' }">继续滚动，可加载更多</span>
+              <span v-show="statusLoadedStatus.all === 'loading'">
 	              	<mt-spinner type="snake"></mt-spinner>
 	            	</span>
             </div>
           </mt-loadmore>
-          <div class="share-page" v-show="isShow1">
+          <div class="share-page" v-show="statusShow.all">
             <div class="iconfont">
               &#xe60f;
             </div>
@@ -84,47 +95,50 @@
           </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="will-pay">
-          <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
-                       :bottom-all-loaded="allLoaded" ref="loadmore">
-          <ul class="order-list" v-show="!isShow2" v-for="(v,i) in order1">
-            <li>
-              <div>订单号：{{v.ordersn}}</div>
-              <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}"  tag="div">
-                <img :src=v.goods[0].thumb alt="" class="order-small">
-                <p>{{v.goods[0].title}}</p>
-                <div class="good-price">
-                  <p>{{v.goods[0].marketprice}}</p>
-                  <p>×{{v.goods[0].total}}</p>
+          <mt-loadmore class="list-content" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange"
+                       :autoFill="isTrue"
+                       :bottom-all-loaded="statusLoaded.will_pay" ref="loadmore">
+            <ul class="order-list" v-show="!statusShow.will_pay" v-for="(v,i) in statusResult.will_pay">
+              <li>
+                <div>订单号：{{v.ordersn}}</div>
+                <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" tag="div">
+                  <img :src=v.goods[0].thumb alt="" class="order-small">
+                  <p>{{v.goods[0].title}}</p>
+                  <div class="good-price">
+                    <p>{{v.goods[0].marketprice}}</p>
+                    <p>×{{v.goods[0].total}}</p>
+                  </div>
+                </router-link>
+                <div class="good-pay">
+                  <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
                 </div>
-              </router-link>
-              <div class="good-pay">
-                <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
-              </div>
-              <div class="good-btn">
-                <button class="cancel-order" @click="cancel(v.id)">
-                  取消订单
-                  <!--<select id="" v-show="isSelect">-->
-                  <!--<option value="">不取消了</option>-->
-                  <!--<option value="">我不想买了</option>-->
-                  <!--<option value="">信息填写错误，重新拍</option>-->
-                  <!--<option value="">同城见面交易</option>-->
-                  <!--<option value="">其他原因</option>-->
-                  <!--</select>-->
-                </button>
-                <button class="charge-order ocolor" @click="pay(v.ordersn)">
-                  付款
-                </button>
-              </div>
-            </li>
-          </ul>
-            <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
-              <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
-              <span v-show="bottomStatus === 'loading'">
+                <div class="good-btn">
+                  <button class="cancel-order" @click="cancel(v.id)">
+                    取消订单
+                    <!--<select id="" v-show="isSelect">-->
+                    <!--<option value="">不取消了</option>-->
+                    <!--<option value="">我不想买了</option>-->
+                    <!--<option value="">信息填写错误，重新拍</option>-->
+                    <!--<option value="">同城见面交易</option>-->
+                    <!--<option value="">其他原因</option>-->
+                    <!--</select>-->
+                  </button>
+                  <button class="charge-order ocolor" @click="pay(v.ordersn)">
+                    付款
+                  </button>
+                </div>
+              </li>
+            </ul>
+            <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center"
+                 v-show="statusLoaded.will_pay == false">
+              <span v-show="statusLoadedStatus.will_pay !== 'loading'"
+                    :class="{ 'is-rotate': statusLoadedStatus.will_pay === 'drop' }">继续滚动，可加载更多</span>
+              <span v-show="statusLoadedStatus.will_pay === 'loading'">
 	              	<mt-spinner type="snake"></mt-spinner>
 	            	</span>
             </div>
           </mt-loadmore>
-          <div class="share-page" v-show="isShow2">
+          <div class="share-page" v-show="statusShow.will_pay">
             <div class="iconfont">
               &#xe60f;
             </div>
@@ -134,43 +148,49 @@
           </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="will-send">
-          <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
-                       :bottom-all-loaded="allLoaded" ref="loadmore">
-          <ul class="order-list" v-show="!isShow3" v-for="(v,i) in order2">
-            <li>
-              <div>订单号：{{v.ordersn}}</div>
-              <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" tag="div">
-                <img :src=v.goods[0].thumb alt="" class="order-small">
-                <p>{{v.goods[0].title}}</p>
-                <div class="good-price">
-                  <p>{{v.goods[0].marketprice}}</p>
-                  <p>×{{v.goods[0].total}}</p>
-                </div>
-              </router-link>
-              <div class="good-pay">
-                <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
-              </div>
-              <div class="good-btn">
-                <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">
-                  申请退款
+          <mt-loadmore class="list-content" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange"
+                       :autoFill="isTrue"
+                       :bottom-all-loaded="statusLoaded.will_send" ref="loadmore" v-show="!statusShow.will_send">
+            <ul class="order-list" v-show="!statusShow.will_send" v-for="(v,i) in statusResult.will_send">
+              <li>
+                <div>订单号：{{v.ordersn}}</div>
+                <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" tag="div">
+                  <img :src=v.goods[0].thumb alt="" class="order-small">
+                  <p>{{v.goods[0].title}}</p>
+                  <div class="good-price">
+                    <p>{{v.goods[0].marketprice}}</p>
+                    <p>×{{v.goods[0].total}}</p>
+                  </div>
                 </router-link>
-                <!-- <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
-                  退款申请中
-                </router-link> -->
-                <button class="charge-order ocolor" v-if="v.canrefund&&v.refundid!=0" @click="refund(v.refundid)">
-                   退款申请中
-                </button>
-              </div>
-            </li>
-          </ul>
-            <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
-              <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
-              <span v-show="bottomStatus === 'loading'">
+                <div class="good-pay">
+                  <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
+                </div>
+                <div class="good-btn">
+                  <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}"
+                               tag="button" v-if="v.canrefund&&v.refundid==0">
+                    申请退款
+                  </router-link>
+                  <router-link class="charge-order ocolor"
+                               :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button"
+                               v-if="v.canrefund&&v.refundid!=0">
+                    退款申请中
+                  </router-link>
+                  <button class="charge-order ocolor" v-if="v.canrefund&&v.refundid!=0" @click="refund(v.refundid)">
+                    退款申请中
+                  </button>
+                </div>
+              </li>
+            </ul>
+            <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center"
+                 v-show="statusLoaded.will_send == false">
+              <span v-show="statusLoadedStatus.will_send !== 'loading'"
+                    :class="{ 'is-rotate': statusLoadedStatus.will_send === 'drop' }">继续滚动，可加载更多</span>
+              <span v-show="statusLoadedStatus.will_send === 'loading'">
 	              	<mt-spinner type="snake"></mt-spinner>
 	            	</span>
             </div>
           </mt-loadmore>
-          <div class="share-page" v-show="isShow3">
+          <div class="share-page" v-show="statusShow.will_send">
             <div class="iconfont">
               &#xe60f;
             </div>
@@ -180,40 +200,44 @@
           </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="will-reserve">
-          <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
-                       :bottom-all-loaded="allLoaded" ref="loadmore">
-          <ul class="order-list" v-show="!isShow4" v-for="(v,i) in order3">
-            <li>
-              <div>订单号：{{v.ordersn}}</div>
-              <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" tag="div">
-                <img :src=v.goods[0].thumb alt="" class="order-small">
-                <p>{{v.goods[0].title}}</p>
-                <div class="good-price">
-                  <p>{{v.goods[0].marketprice}}</p>
-                  <p>×{{v.goods[0].total}}</p>
-                </div>
-              </router-link>
-              <div class="good-pay">
-                <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
-              </div>
-              <div class="good-btn">
-                <button class="charge-order1" @click="fn1(v.id)">
-                  确认收货
-                </button>
-                <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button">
-                  查看物流
+          <mt-loadmore class="list-content" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange"
+                       :autoFill="isTrue"
+                       :bottom-all-loaded="statusLoaded.will_reserve" ref="loadmore" v-show="!statusShow.will_reserve">
+            <ul class="order-list" v-show="!statusShow.will_reserve" v-for="(v,i) in statusResult.will_reserve">
+              <li>
+                <div>订单号：{{v.ordersn}}</div>
+                <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" tag="div">
+                  <img :src=v.goods[0].thumb alt="" class="order-small">
+                  <p>{{v.goods[0].title}}</p>
+                  <div class="good-price">
+                    <p>{{v.goods[0].marketprice}}</p>
+                    <p>×{{v.goods[0].total}}</p>
+                  </div>
                 </router-link>
-              </div>
-            </li>
-          </ul>
-            <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
-              <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
-              <span v-show="bottomStatus === 'loading'">
+                <div class="good-pay">
+                  <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
+                </div>
+                <div class="good-btn">
+                  <button class="charge-order1" @click="fn1(v.id)">
+                    确认收货
+                  </button>
+                  <router-link class="look-logi ocolor"
+                               :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button">
+                    查看物流
+                  </router-link>
+                </div>
+              </li>
+            </ul>
+            <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center"
+                 v-show="statusLoaded.will_reserve == false">
+              <span v-show="statusLoadedStatus.will_reserve !== 'loading'"
+                    :class="{ 'is-rotate': statusLoadedStatus.will_reserve  === 'drop' }">继续滚动，可加载更多</span>
+              <span v-show="statusLoadedStatus.will_reserve === 'loading'">
 	              	<mt-spinner type="snake"></mt-spinner>
 	            	</span>
             </div>
           </mt-loadmore>
-          <div class="share-page" v-show="isShow4">
+          <div class="share-page" v-show="statusShow.will_reserve">
             <div class="iconfont">
               &#xe60f;
             </div>
@@ -223,47 +247,52 @@
           </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="done">
-          <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
-                       :bottom-all-loaded="allLoaded" ref="loadmore">
-          <ul class="order-list" v-show="!isShow5" v-for="(v,i) in order4">
-            <li>
-              <div>订单号：{{v.ordersn}}</div>
-              <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" tag="div">
-                <img :src=v.goods[0].thumb alt="" class="order-small">
-                <p>{{v.goods[0].title}}</p>
-                <div class="good-price">
-                  <p>{{v.goods[0].marketprice}}</p>
-                  <p>×{{v.goods[0].total}}</p>
+          <mt-loadmore class="list-content" :bottom-method="loadBottom" @bottom-status-change="handleBottomChange"
+                       :autoFill="isTrue"
+                       :bottom-all-loaded="statusLoaded.donex" ref="loadmore" v-show="!statusShow.donex">
+            <ul class="order-list" v-show="!statusShow.donex" v-for="(v,i) in statusResult.donex">
+              <li>
+                <div>订单号：{{v.ordersn}}</div>
+                <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" tag="div">
+                  <img :src=v.goods[0].thumb alt="" class="order-small">
+                  <p>{{v.goods[0].title}}</p>
+                  <div class="good-price">
+                    <p>{{v.goods[0].marketprice}}</p>
+                    <p>×{{v.goods[0].total}}</p>
+                  </div>
+                </router-link>
+                <div class="good-pay">
+                  <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
                 </div>
-              </router-link>
-              <div class="good-pay">
-                <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
-              </div>
-              <div class="good-btn">
-                <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid==0">
-                  申请退款
-                </router-link>
-                <!-- <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
-                  退款申请中
-                </router-link> -->
-                <button class="charge-order ocolor" v-if="v.canrefund&&v.refundid!=0" @click="refund(v.refundid)">
-                   退款申请中
-                </button>
-                <router-link class="look-logi ocolor" :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button">
-                  查看物流
-                </router-link>
+                <div class="good-btn">
+                  <router-link class="charge-order1 " :to="{path:'drawback',query:{money:v.price,orderid:v.id}}"
+                               tag="button" v-if="v.canrefund&&v.refundid==0">
+                    申请退款
+                  </router-link>
+                  <!-- <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">
+                    退款申请中
+                  </router-link> -->
+                  <button class="charge-order ocolor" v-if="v.canrefund&&v.refundid!=0" @click="refund(v.refundid)">
+                    退款申请中
+                  </button>
+                  <router-link class="look-logi ocolor"
+                               :to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button">
+                    查看物流
+                  </router-link>
 
-              </div>
-            </li>
-          </ul>
-            <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
-              <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
-              <span v-show="bottomStatus === 'loading'">
+                </div>
+              </li>
+            </ul>
+            <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center"
+                 v-show="statusLoaded.donex == false">
+              <span v-show="statusLoadedStatus.donex !== 'loading'"
+                    :class="{ 'is-rotate': statusLoadedStatus.donex === 'drop' }">继续滚动，可加载更多</span>
+              <span v-show="statusLoadedStatus.donex  === 'loading'">
 	              	<mt-spinner type="snake"></mt-spinner>
 	            	</span>
             </div>
           </mt-loadmore>
-          <div class="share-page" v-show="isShow5">
+          <div class="share-page" v-show="statusShow.donex">
             <div class="iconfont">
               &#xe60f;
             </div>
@@ -279,210 +308,416 @@
   </div>
 </template>
 <script>
-  import { Navbar,MessageBox,Loadmore} from 'mint-ui';
+  import {Navbar, MessageBox, Loadmore, Toast} from 'mint-ui';
   import vTabbar from '../components/common/Tabbar';
-  import {orderList,orderManu} from '../api/api.js'
+  import {orderList, orderManu} from '../api/api.js'
   import {mapMutations, mapGetters} from 'vuex'
   // 	import {mapMutations} from 'Vuex'
   export default{
     name: 'page-navbar',
     data(){
-      return{
+      return {
         selected: 'all',
-        isSelect:false,
-        isShow1:false,
-        isShow2:false,
-        isShow3:false,
-        isShow4:false,
-        isShow5:false,
-        page:1,
-        order0:[],
-        order1:[],
-        order2:[],
-        order3:[],
-        order4:[],
-        canReason:'其他原因',
+        isSelect: false,
+        isShow1: false,
+        isShow2: false,
+        isShow3: false,
+        isShow4: false,
+        isShow5: false,
+        page: 1,
+        order0: [],
+        order1: [],
+        order2: [],
+        order3: [],
+        order4: [],
+        canReason: '其他原因',
         myPageNum: 10,
         myCurNo: 1,
         bottomStatus: '',
         allLoaded: false,
         isTrue: false,
         onePage: false,
-        psizenum:10
+        psizenum: 10,
+        allLoaded_all: false,
+        allLoaded_will_pay: false,
+        allLoaded_will_send: false,
+        allLoaded_will_reserve: false,
+        allLoaded_done: false,
+        statusType: '',
+        statusPage: {
+          'all': 0,
+          'will_pay': 0,
+          'will_send': 0,
+          'will_reserve': 0,
+          'donex': 0,
+        },
+        statusShow: {
+          'all': false,
+          'will_pay': false,
+          'will_send': false,
+          'will_reserve': false,
+          'donex': false,
+        },
+        statusResult: {
+          'all': [],
+          'will_pay': [],
+          'will_send': [],
+          'will_reserve': [],
+          'donex': [],
+        },
+        statusLoaded: {
+          'all': false,
+          'will_pay': false,
+          'will_send': false,
+          'will_reserve': false,
+          'donex': false,
+        },
+        statusLoadedStatus: {
+          'all': '',
+          'will_pay': '',
+          'will_send': '',
+          'will_reserve': '',
+          'donex': '',
+        }
+
       }
     },
-    methods:{
-      all:function () {
-        console.log(1)
-      },
-      refund:function(refundid){
-        this.$router.push({ name:'drawbackInfo', query: { refundid: refundid}});
-      },
-      cancel:function (orderid) {
-        console.log(11)
+    watch: {
+      selected(val){
+//          <mt-tab-item id="all">全部</mt-tab-item>
+//          <mt-tab-item id="will-pay">待付款</mt-tab-item>
+//          <mt-tab-item id="will-send">待发货</mt-tab-item>
+//          <mt-tab-item id="will-reserve">待收货</mt-tab-item>
+//          <mt-tab-item id="done">已完成</mt-tab-item>
+//          console.log('watch run.');
+//          console.log(val);
 
-        MessageBox({title: '确定取消订单吗?',message: '点击确认取消',showCancelButton: true}).then(action => {
-          if(action=='confirm'){//表示点击了确定
-            this.isSelect=!this.isSelect;
-            let that=this;
-            let params={
-            data:{
-              orderid:orderid,
-              type:'canl',
-              reason:that.canReason
+        switch (val) {
+          case 'all' :
+            this.statusType = '';
+            this.selectedTypeChange(this.statusPage.all);
+
+            break;
+          case 'will-pay' :
+            this.statusType = '0';
+            this.selectedTypeChange(this.statusPage.will_pay);
+
+            break;
+          case 'will-send' :
+            this.statusType = '1';
+            this.selectedTypeChange(this.statusPage.will_send);
+
+            break;
+          case 'will-reserve' :
+            this.statusType = '2';
+            this.selectedTypeChange(this.statusPage.will_reserve);
+
+            break;
+          case 'done' :
+            this.statusType = '3';
+            this.selectedTypeChange(this.statusPage.donex);
+            break;
+        }
+      }
+    },
+    methods: {
+      selectedTypeChange(page){
+        if (page > 0) {
+          return
+        }
+        this.getOrderList(page);
+      },
+      changeTypePage(_this){
+        switch (_this.statusType) {
+          case '0' :
+            _this.statusPage.will_pay++;
+            break;
+          case '1' :
+            _this.statusPage.will_send++;
+            break;
+          case '2' :
+            _this.statusPage.will_reserve++;
+            break;
+          case '3' :
+            _this.statusPage.donex++;
+            break;
+          default :
+            _this.statusPage.all++;
+            break;
+        }
+      },
+      saveTypeResult(_that, res){
+        switch (_that.statusType) {
+          case '0' :
+            if ((_that.statusResult.will_pay.length <= 0) && (res.data.length <= 0)) {
+              _that.statusShow.will_pay = true;
             }
-          }
-          orderManu(params,function (res) {
-            if(res.statusCode==1){
-              for(let i=0; i<that.order0.length; i++) {
-                if(that.order0[i].id ===orderid) {
-                  that.order0.splice(i, 1);
-                  break;
-                }
+
+            if (res.statusCode == 1) {
+              _that.statusShow.will_pay = false;
+              _that.statusResult.will_pay = _that.statusResult.will_pay.concat(res.data);
+
+              if (res.data.length < _that.psizenum) {
+                _that.statusLoaded.will_pay = true;
+              }
+            } else {
+              if (!_that.statusLoaded.will_pay) {
+                Toast({
+                  message: '订单已经加载完成',
+                  position: 'middle',
+                  duration: 1000
+                });
+              }
+              _that.statusLoaded.will_pay = true;
+              _that.statusShow.will_pay = true;
+            }
+            break;
+          case '1' :
+            if (_that.statusResult.will_send.length <= 0 && res.data.length <= 0) {
+              _that.statusShow.will_send = true;
+            }
+
+            if (res.statusCode == 1) {
+              _that.statusShow.will_send = false;
+              _that.statusResult.will_send = _that.statusResult.will_send.concat(res.data);
+
+
+              if (res.data.length < _that.psizenum) {
+                _that.statusLoaded.will_send = true;
+              }
+            } else {
+              if (!_that.statusLoaded.will_send) {
+                Toast({
+                  message: '订单已经加载完成',
+                  position: 'middle',
+                  duration: 1000
+                });
+              }
+              _that.statusLoaded.will_send = true;
+              _that.statusShow.will_send = true;
+            }
+            break;
+          case '2' :
+            if (_that.statusResult.will_reserve.length <= 0 && res.data.length <= 0) {
+              _that.statusShow.will_reserve = true;
+            }
+
+            if (res.statusCode == 1) {
+              _that.statusLoaded.will_reserve = false;
+              _that.statusResult.will_reserve = _that.statusResult.will_reserve.concat(res.data);
+              if (res.data.length < _that.psizenum) {
+                _that.statusLoaded.will_reserve = true;
+              }
+            } else {
+              if (!_that.statusLoaded.will_reserve) {
+                Toast({
+                  message: '订单已经加载完成',
+                  position: 'middle',
+                  duration: 1000
+                });
+              }
+              _that.statusShow.will_reserve = true;
+              _that.statusLoaded.will_reserve = true;
+            }
+            break;
+          case '3' :
+            if (_that.statusResult.donex.length <= 0 && res.data.length <= 0) {
+              _that.statusShow.donex = true;
+            }
+
+            if (res.statusCode == 1) {
+              _that.statusShow.donex = false;
+              _that.statusResult.donex = _that.statusResult.donex.concat(res.data);
+
+              if (res.data.length < _that.psizenum) {
+                _that.statusLoaded.donex = true;
+              }
+            } else {
+
+              if (!_that.statusLoaded.donex) {
+                Toast({
+                  message: '订单已经加载完成',
+                  position: 'middle',
+                  duration: 1000
+                });
+              }
+              _that.statusShow.donex = true;
+              _that.statusLoaded.donex = true;
+            }
+            break;
+          default :
+
+            if (_that.statusResult.all.length <= 0 && res.data.length <= 0) {
+              _that.statusShow.all = true;
+            }
+
+            if (res.statusCode == 1) {
+              _that.statusShow.all = false;
+              _that.statusResult.all = _that.statusResult.all.concat(res.data);
+
+              if (res.data.length < _that.psizenum) {
+                _that.statusLoaded.all = true;
+              }
+            } else {
+              Toast({
+                message: '订单已经加载完成',
+                position: 'middle',
+                duration: 1000
+              });
+              _that.statusLoaded.all = true;
+              _that.statusShow.all = true;
+            }
+            break;
+        }
+      },
+
+      refund: function (refundid) {
+        this.$router.push({name: 'drawbackInfo', query: {refundid: refundid}});
+      },
+      cancel: function (orderid) {
+        MessageBox({title: '确定取消订单吗?', message: '点击确认取消', showCancelButton: true}).then(action => {
+          if (action == 'confirm') {//表示点击了确定
+            this.isSelect = !this.isSelect;
+            let that = this;
+            let params = {
+              data: {
+                orderid: orderid,
+                type: 'canl',
+                reason: that.canReason
               }
             }
-          })
-          }else if(action=='cancel'){//表示点击了取消
+            orderManu(params, function (res) {
+              if (res.statusCode == 1) {
+                for (let i = 0; i < that.statusResult.all.length; i++) {
+                  if (that.statusResult.all[i].id === orderid) {
+                    that.statusResult.all.splice(i, 1);
+                    break;
+                  }
+                }
+              } else {
+                Toast({
+                  message: res.data,
+                  position: 'middle',
+                  duration: 1000
+                });
+
+                that.reload();
+              }
+            })
+          } else if (action == 'cancel') {//表示点击了取消
             // console.log('点击了取消')
           }
         })
       },
       handleBottomChange(status) {
-        this.bottomStatus = status
+//        console.log(status);
+        switch (this.statusType) {
+          case 'will-pay' :
+            this.statusLoadedStatus.will_pay = status;
+            break;
+          case 'will-send' :
+            this.statusLoadedStatus.will_send = status;
+            break;
+          case 'will-reserve' :
+            this.statusLoadedStatus.will_reserve = status;
+            break;
+          case 'done' :
+            this.statusLoadedStatus.donex = status;
+            break;
+          default :
+            this.statusLoadedStatus.donex = status;
+            break;
+        }
       },
       loadBottom() {
-        this.myCurNo += 1;
-//        if (this.myCurNo == this.myPageNum) {
-//          this.allLoaded = true
-//        }
-        let that=this;
-        let params={
-          data:{
-            page:this.myCurNo,
-            status:''
-          }
+
+//          console.log('load more.');
+//          console.log(this.statusType);
+
+        switch (this.statusType) {
+          case '0' :
+            this.getOrderList(this.statusPage.will_pay);
+            break;
+          case '1' :
+            this.getOrderList(this.statusPage.will_send);
+            break;
+          case '2' :
+            this.getOrderList(this.statusPage.will_reserve);
+            break;
+          case '3' :
+            this.getOrderList(this.statusPage.donex);
+            break;
+          default :
+            this.getOrderList(this.statusPage.all);
+            break;
         }
-        orderList(params,function (res) {
-          console.log(res.data.length)
-          if(res.data.length<that.psizenum && res.statusCode!=-1){
-            console.log(res.data)
-            that.allLoaded = true
-          }
-          console.log(res);
-          if(res.statusCode==1){
-            console.log(that.order0);
-            console.log(res.data)
-            that.order0=that.order0.concat(res.data);
-            for(let i=0;i<res.data.length;i++){
-              if(res.data[i].status==0){
-                that.order1.push(res.data[i])
-              }if(res.data[i].status==1){
-                that.order2.push(res.data[i])
-              }
-              if(res.data[i].status==2){
-                that.order3.push(res.data[i])
-              }
-              if(res.data[i].status==3){
-                that.order4.push(res.data[i])
-              }
-            }
-          }
-          else{
-            console.log('请求出错了')
-          }
-          if(that.order0.length==0){
-            that.isShow1=true;
-          }
-          if(that.order1.length==0){
-            that.isShow2=true;
-          }
-          if(that.order2.length==0){
-            that.isShow3=true;
-          }
-          if(that.order3.length==0){
-            that.isShow4=true;
-          }
-          if(that.order4.length==0){
-            that.isShow5=true;
-          }
-          that.$refs.loadmore.onBottomLoaded()
-        })
+
+        this.$refs.loadmore.onBottomLoaded();
       },
-      fn1:function (orderid) {
-        let that=this;
+      fn1: function (orderid) {
+
+        console.log('fn1 run');
+        console.log(orderid);
+
+        let that = this;
         MessageBox({
           title: '提示',
           message: '请确定已收货 否则钱财两空哦',
           showCancelButton: true
-        }).then(action=>{
-          if(action=='confirm'){
+        }).then(action => {
+          if (action == 'confirm') {
             console.log(orderid)
-            let params={
-              data:{
-                orderid:orderid,
-                type:'comf'
+
+            let params = {
+              data: {
+                orderid: orderid,
+                type: 'comf'
               }
-            }
-            orderManu(params,function (res) {
+            };
+            orderManu(params, function (res) {
               console.log(res)
-              if(res.statusCode==1){
-                location.reload()
+//              that.selected = 'done';
+
+              if (res.statusCode == 1) {
+//                location.reload()
+                that.selected = 'done';
+                for (let i = 0; i < that.statusResult.will_reserve.length; i++) {
+                  if (that.statusResult.will_reserve[i].id === orderid) {
+                    that.statusResult.will_reserve.splice(i, 1);
+                    break;
+                  }
+                }
               }
-              else{
+              else {
                 MessageBox.alert('操作成功').then(action => {
 
                 });
               }
             })
-          }else if(action=='cancel'){
+          } else if (action == 'cancel') {
 
           }
         });
       },
-      getOrderList:function () {
-        let that=this;
-        let params={
-          data:{
-            page:this.page,
-            status:''
+      getOrderList: function (page) {
+        let _this = this;
+//        console.log(this.statusType)
+        let params = {
+          data: {
+            page: ++page,
+//            page:++page,
+            status: this.statusType
           }
-        }
-        orderList(params,function (res) {
-          console.log(res);
-          if(res.statusCode==1){
-            that.order0=res.data;
-            for(let i=0;i<res.data.length;i++){
-              if(res.data[i].status==0){
-                that.order1.push(res.data[i])
-              }if(res.data[i].status==1){
-                that.order2.push(res.data[i])
-              }
-              if(res.data[i].status==2){
-                that.order3.push(res.data[i])
-              }
-              if(res.data[i].status==3){
-                that.order4.push(res.data[i])
-              }
-            }
-          }else{
-            console.log('请求出错了')
-          }
-          if(that.order0.length==0){
-            that.isShow1=true;
-          }
-          if(that.order1.length==0){
-            that.isShow2=true;
-          }
-          if(that.order2.length==0){
-            that.isShow3=true;
-          }
-          if(that.order3.length==0){
-            that.isShow4=true;
-          }
-          if(that.order4.length==0){
-            that.isShow5=true;
-          }
-        })
+        };
+        console.log()
+        orderList(params, function (res) {
+//            console.log(res)
+          _this.changeTypePage(_this);
+          _this.saveTypeResult(_this, res);
+
+//          console.log(_this.statusResult);
+
+        });
       },
       ...mapMutations({
         orderinfo: 'ORDERINFO'
@@ -491,179 +726,225 @@
         this.orderinfo(x)
         this.$router.push('payselect');
       },
-      fun2:function (obj) {
+      fun2: function (obj) {
         let a = obj.status
         let b = obj.canrefund
-        if(a==1&&b)
+        if (a == 1 && b)
           return true
       }
     },
     created(){
-      this.getOrderList()
+      this.getOrderList(this.statusPage.all);
     },
-    computed:{
+    computed: {
 //      fun2:function (a,b) {
 //        if(a&&b)
 //          return true
 //      }
     },
-    components:{
+    components: {
       vTabbar
     },
   }
 </script>
 <style scoped>
   @import '../assets/css/reset/reset.css';
-  *{
-    font-size:.15rem;
+
+  * {
+    font-size: .15rem;
   }
+
   .slide-enter-active, .slide-leave-active {
     transition: all 0.3s
   }
+
   .slide-enter, .slide-leave-to {
     transform: translate3d(100%, 0, 0)
   }
+
   .main {
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background:#ececec;
-    font-size:.15rem;
-    overflow:auto
+    background: #ececec;
+    font-size: .15rem;
+    overflow: auto
   }
-  .page-part{
-    top:.47rem;
-    height:.4rem
+
+  .page-part {
+    top: .45rem;
+    height: .4rem
   }
-  .share-page{
-    padding:.5rem 1rem;
-    color:#999;
+
+  .share-page {
+    padding: .5rem 1rem;
+    color: #999;
   }
-  .share-page>div.iconfont{
-    font-size:.7rem;
+
+  .share-page > div.iconfont {
+    font-size: .7rem;
   }
-  .share-page>p{
-    font-size:.14rem;
+
+  .share-page > p {
+    font-size: .14rem;
   }
-  .share-page>button{
-    width:.7rem;
-    height:.35rem;
-    border-radius:.03rem;
-    margin-top:.15rem;
-    background:#ff4f4f;
-    outline:none;
-    color:#ddd;
+
+  .share-page > button {
+    width: .7rem;
+    height: .35rem;
+    border-radius: .03rem;
+    margin-top: .15rem;
+    background: #ff4f4f;
+    outline: none;
+    color: #ddd;
   }
+
   .mint-header {
     color: #252525;
     border-bottom: 1px solid #e3e3e3;
-    height:.45rem;
+    height: .45rem;
   }
+
   /*.order-header .mintui-back:before{
     color:#fff;
   }*/
 
-  div.page-navbar{
-    margin-top:.45rem;
+  div.page-navbar {
+    margin-top: .45rem;
   }
-  .order-list{
+
+  .order-list {
     background: #efefef;
-    padding-top:.01rem
+    padding-top: .01rem
   }
-  .order-list>li{
-    margin-top:.09rem;
+
+  .order-list > li {
+    margin-top: .09rem;
     background: #fff;
     text-align: left;
-    padding:0 .12rem;
+    padding: 0 .12rem;
   }
-  .order-small{
-    width:.5rem;
-    height:.5rem;
-    border:1px solid #ddd;
+
+  .order-small {
+    width: .5rem;
+    height: .5rem;
+    border: 1px solid #ddd;
   }
-  .order-list>li>div{
-    padding:.12rem 0;
-    border-bottom:1px solid #ddd;
+
+  .order-list > li > div {
+    padding: .12rem 0;
+    border-bottom: 1px solid #ddd;
   }
-  .good-info{
-    height:.75rem;
+
+  .good-info {
+    height: .75rem;
   }
-  .good-info>img{
-    float:left;
+
+  .good-info > img {
+    float: left;
   }
-  .good-info>p{
-    float:left;
-    margin-left:.08rem;
+
+  .good-info > p {
+    float: left;
+    margin-left: .08rem;
   }
-  .good-price{
-    float:right
+
+  .good-price {
+    float: right
   }
-  .good-price>p{
+
+  .good-price > p {
     text-align: right;
-    margin-bottom:.02rem;
+    margin-bottom: .02rem;
   }
-  .good-pay{
+
+  .good-pay {
     text-align: right;
-    color:#666;
+    color: #666;
   }
-  .good-pay>span{
-    color:#999;
+
+  .good-pay > span {
+    color: #999;
   }
-  div.good-btn{
+
+  div.good-btn {
     text-align: right;
-    padding:.08rem 0 !important;
-    border-bottom:none !important;
+    padding: .08rem 0 !important;
+    border-bottom: none !important;
   }
-  .good-btn>button{
-    width:.9rem;
-    height:.3rem;
-    border:none;
+
+  .good-btn > button {
+    width: .9rem;
+    height: .3rem;
+    border: none;
     outline: none;
-    color:#fff;
-    border-radius:.03rem;
-    font-size:.14rem;
+    color: #fff;
+    border-radius: .03rem;
+    font-size: .14rem;
   }
-  .orderList{
-    margin-bottom:.8rem;
+
+  .orderList {
+    /*margin-bottom:.8rem;*/
   }
-  .look-logi{
-    width:.9rem !important;
-    margin-right:.05rem;
+
+  .look-logi {
+    width: .9rem !important;
+    margin-right: .05rem;
   }
+
   /*.delete-order{*/
   /*background:#ddd;*/
   /*color:#777 !important;*/
   /*width:.9rem !important;*/
   /*margin-right:.05rem;*/
   /*}*/
-  .cancel-order{
-    background:#ddd;
-    color:#777 !important;
-    width:.9rem !important;
-    margin-right:.05rem;
+  .cancel-order {
+    background: #ddd;
+    color: #777 !important;
+    width: .9rem !important;
+    margin-right: .05rem;
   }
-  .back-money{
-    width:.9rem !important;
+
+  .back-money {
+    width: .9rem !important;
   }
-  .charge-order1{
-    background:#ddd;
-    color:#777 !important;
-    margin-right:.05rem;
+
+  .charge-order1 {
+    background: #ddd;
+    color: #777 !important;
+    margin-right: .05rem;
   }
-  .mint-loadmore-bottom{
-    margin-bottom:-.5rem;
+
+  .mint-loadmore-bottom {
+    margin-bottom: -.5rem;
   }
+
   .mint-loadmore-bottom span {
     display: inline-block;
     transition: .2s linear;
     vertical-align: middle;
   }
-  #content-list{
-    padding-top:.43rem;
+
+  #content-list {
+    /* margin-top: .43rem; */
+    height: 5.25rem;
+    overflow: hidden;
+    overflow-y: scroll;
+    /* height: 4.75rem; */
+    position: absolute;
+    top: .88rem;
+    width: 100%;
   }
+
   /*#will-pay{*/
-    /*margin-top:.2rem;*/
+  /*margin-top:.2rem;*/
   /*}*/
+
+  .list-content {
+    /*height:5.25rem;*/
+    overflow: auto;
+    overflow-y: scroll;
+  }
 </style>

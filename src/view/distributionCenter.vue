@@ -2,12 +2,12 @@
   <div class="main">
     <mt-header fixed title="个人信息">
       <router-link to="/vipCenter" slot="left">
-        <mt-button icon="back"></mt-button>
+        <!--<mt-button icon="back"></mt-button>-->
       </router-link>
     </mt-header>
     <router-link class="avatar" tag="section" :to="{name:'userinfo'}">
       <div class="icon">
-        <img :src="memberInfo.avatar" alt="头像">
+        <img :src="memberInfo.avatar"  alt="">
       </div>
       <div class="message">
         <div>
@@ -214,7 +214,8 @@
           leveldetail : {
               levelname : '默认等级',
           }
-        }
+        },
+        defaultAvatar:''
       }
     },
     components: {
@@ -357,6 +358,8 @@
   .icon>img{
     width: .70rem;
     height: .70rem;
+    background: url('../assets/images/userinfo-02.png') no-repeat 100% 100%;
+    background-size:100% 100%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;

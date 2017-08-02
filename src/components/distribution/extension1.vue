@@ -151,6 +151,8 @@
   }
   .logo {
     flex: 1;
+    width:.57rem;
+    height:.57rem;
     padding: 0.1rem 0;
   }
   .info {
@@ -171,7 +173,8 @@
     color: #666;
   }
   .logo img {
-    width: 100%;
+    width: 80%;
+    height: 80%;
     border-radius: 50%;
     vertical-align: middle;
     display: block;

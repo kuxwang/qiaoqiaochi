@@ -83,7 +83,7 @@
           </div>
         </li>
       </ul>
-      <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded == false">
+      <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded == false" v-if="">
         <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">继续滚动，可加载更多</span>
         <span v-show="bottomStatus === 'loading'"><mt-spinner type="snake"></mt-spinner></span>
       </div>
@@ -130,14 +130,14 @@
       selecttab(idx, page){
         let _this = this;
         this.selected = idx;
-        if(page === 1){
+        if(idx==5){
+          this.orderlist = [];
+          this.allLoaded = true;
+        }else if(page===1) {
           this.orderlist = [];
           this.allLoaded = false;
           this.myCurNo = 1;
         }
-
-        console.log(this.allLoaded);
-
         switch (idx) {
           case 1:
             let params = {
@@ -231,17 +231,14 @@
                 data: {
                   ordersn: this.find
                 }
-              }
+              };
+              _this.allLoaded = true
               orders(params, (res) => {
                 if (res.statusCode === 1) {
                   let obji = [];
                   obji.push(res.data.order);
                   this.orderlist = obji;
-//                  this.allLoaded = true;
-//                  this.$refs.loadmore.onBottomLoaded();
-                  console.log(this.orderlist)
-                  console.log(res)
-
+                  this.allLoaded = true;
                 } else {
                   console.log('请求失败');
                   this.searched = false
@@ -255,12 +252,12 @@
               };
               orders(params, (res) => {
                 if (res.statusCode === 1) {
-                  console.log(res)
+//                  console.log(res)
                   let obji = [];
                   obji.push(res.data.order);
                   this.orderlist = obji;
 
-                  console.log(this.orderlist);
+//                  console.log(this.orderlist);
                   /* if (!this.orderlist || this.orderlist < 1) {
                    this.searched = false
                    }*/
@@ -533,7 +530,10 @@
 
   .logo {
     flex: 1;
-    padding: 0.1rem 0;
+    width:.43rem;
+    height:.43rem;
+    margin-top: .1rem;
+    /*padding: 0.1rem 0;*/
   }
 
   .info {
@@ -558,6 +558,7 @@
 
   .logo img {
     width: 100%;
+    height:100%;
     border-radius: 50%;
     vertical-align: middle;
     display: block;

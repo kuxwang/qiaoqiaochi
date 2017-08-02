@@ -35,7 +35,7 @@
         <span class="iconfont">&#xe6ce;</span>
         {{shopname}}
       </div>
-      <router-link class="good-info" to="/" tag="div">
+      <router-link class="good-info" :to="{path:'details',query:{goodsId:goodsid}}" tag="div">
         <img :src=detailurl class="order-small">
         <p>{{title}}</p>
         <div class="good-price">
@@ -128,7 +128,8 @@
         canrefund:'',
         goodsId:'',
         refundid:'',
-        myid:''
+        myid:'',
+        goodsid : '',
       }
     },
     methods:{
@@ -246,6 +247,7 @@
           that.expsn=res.data.expresssn;
           that.refundid=res.data.rufundid;
           that.canrefund=res.data.canrefund;
+          that.goodsid = res.data.goods.id;
           //订单详情存入vuex（orderdetails）
           that.setorderdetails(res.data)
         }else {
