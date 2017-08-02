@@ -41,7 +41,7 @@
       <!--</div>-->
     </section>
     <section class="content">
-      <div class="mfriend">
+      <div class="mfriend zero-top">
         <span class="mint-cell-text">我的伙伴</span>
       </div>
       <ul>
@@ -560,5 +560,9 @@
     font-size: 0.16rem;
     border: none;
     outline: none;
+  }
+
+  .zero-top{
+    margin-top:0 !important;
   }
 </style>

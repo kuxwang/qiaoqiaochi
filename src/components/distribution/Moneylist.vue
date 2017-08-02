@@ -150,7 +150,7 @@
     text-align: center;
     font-size: .14rem;
     color: #666;
-    margin-top: 2.8rem;
+    margin-top: 2rem;
 
   }
 

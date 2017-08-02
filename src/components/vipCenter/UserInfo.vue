@@ -95,7 +95,7 @@
 	import {Toast, Picker, Popup, DatetimePicker} from 'mint-ui';
 	import {address} from '../../assets/js/address';
   	import {memberInfo,PUT_USERINFO,PUT_USERAVATARS,USERPHOTO} from '../../api/api';
-  	import {_webapp} from '../../config/_webapp.js';
+  	import {_webapp} from '../../config/webapp.js';
 	export default{
 		data(){
 			return{
