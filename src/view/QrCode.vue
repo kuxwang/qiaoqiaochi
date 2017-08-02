@@ -7,8 +7,8 @@
     </mt-header>
     <div class="container">
       <div class="imgbox" @click="clickhavib()">
-        <!-- <img :src="qrimg"/> -->
-        <img v-lazy="qrimg">
+        <img :src="qrimg"/>
+        <!-- <img v-lazy="qrimg"> -->
       </div>
     </div>
     <v-tabbar></v-tabbar>
@@ -56,6 +56,7 @@
     top: 0;
     margin: 0 auto;
     position: relative;
+    overflow: hidden;
   }
 
   .imgbox img {

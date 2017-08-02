@@ -2,11 +2,12 @@
   <div class="content">
       <ul class="goodsList">
         <li class="goodsList-itme1">
-          <!-- <img src="../assets/images/home-01.jpg"> -->
-          <img v-lazy="img1">
+          <img src="../assets/images/home-01.jpg">
+          <!-- <img v-lazy="img1"> -->
         </li>
         <router-link class="goodsList-itme2" :to="{path:'/details',query:{goodsId:4}}" tag="li">
-           <img v-lazy="img2">
+          <img src="../assets/images/home-02.jpg">
+          <!-- <img v-lazy="img2"> -->
         </router-link>
       </ul>
       <v-tabbar></v-tabbar>

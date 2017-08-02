@@ -411,7 +411,7 @@ export const PUT_USERINFO = function (params, callback) {
     callback(res)
   })
 };
-const USERAVATARS = {url: `${base}/avatars`, method: 'PUT', header, dataType}
+const USERAVATARS = {url: `${base}/uploads`, method: 'PUT', header, dataType}
 export const PUT_USERAVATARS = function (params, callback) {
   _webapp.requestx(Object.assign(params, USERAVATARS), function (res) {
     callback(res)
