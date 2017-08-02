@@ -22,7 +22,7 @@
         物品信息
       </div>
       <!--<router-link class="good-info" to="/details" tag="div">-->
-        <router-link class="good-info" to="/" tag="div">
+        <router-link class="good-info" :to="{path:'details',query:{goodsId:goodsid}}" tag="div">
           <img :src="thumb" alt="" class="order-small">
           <p>{{title}}</p>
           <div class="good-price">
@@ -39,7 +39,7 @@
         物流跟踪
       </div>
       <ul v-for="(v,i) in arr" v-if="!isShow">
-        <li>
+        <li :class="{fcolor : i ==0}">
           <b></b>
           <p class="first">{{v.context}}</p>
           <p>{{v.time}}</p>
@@ -80,6 +80,7 @@
         expsn:'',
         isShow:false,
         goods:'',
+        goodsid : '',
         price:'',
         thumb:'',
         title:'',
@@ -125,6 +126,7 @@
       }
       orderDetail(param,function (res) {
         that.price=res.data.goods.price;
+        that.goodsid=res.data.goods.id;
         that.title=res.data.goods.title;
         that.thumb=res.data.goods.thumb
         that.total=res.data.goods.total
@@ -239,10 +241,10 @@
     font-size:.13rem;
     position:relative;
   }
-  .logistics-info>ul>li:first-child{
+  .logistics-info>ul>li.fcolor{
     color:#F5751D;
   }
-  .logistics-info>ul>li:first-child>b{
+  .logistics-info>ul>li.fcolor>b{
     background:#F5751D ;
   }
   .logistics-info>ul>li>b{

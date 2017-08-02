@@ -58,6 +58,7 @@
         </li>
       </ul>
       <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded == false">
+      <!--<div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded">-->
         <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">继续滚动，可加载更多</span>
         <span v-show="bottomStatus === 'loading'"><mt-spinner type="snake"></mt-spinner></span>
       </div>
@@ -141,11 +142,13 @@
               if (res.statusCode == 1) {
                 this.personlist = this.personlist.concat(res.data.lists);
                 if (res.data.next === true) {
+                  _this.allLoaded = false;
+                }else{
                   _this.allLoaded = true;
                 }
               } else {
                 _this.allLoaded = true;
-                console.log('请求失败`${res.statusCode} , ${res.data}` ')
+                console.log(`请求失败${res.statusCode} , ${res.data}`)
               }
             })
             break;
@@ -161,6 +164,8 @@
               if (res.statusCode == 1) {
                 _this.personlist = _this.personlist.concat(res.data.lists);
                 if (res.data.next === true) {
+                  _this.allLoaded = false;
+                }else{
                   _this.allLoaded = true;
                 }
               } else {
@@ -178,9 +183,12 @@
               }
             }
             teamsLists(params, (res) => {
+                console.log(res)
               if (res.statusCode == 1) {
                 _this.personlist = _this.personlist.concat(res.data.lists);
                 if (res.data.next === true) {
+                  _this.allLoaded = false;
+                }else{
                   _this.allLoaded = true;
                 }
               } else {
@@ -214,11 +222,12 @@
                 this.personlist = res.data;
                 if (!this.personlist || this.personlist.length <= 1) {
                   this.searched = false
+
                 } else {
                   let obji = []
                   obji.push(res.data)
                   this.personlist = obji
-                  console.log(this.personlist)
+//                  console.log(this.personlist)
                 }
               } else {
                 Toast({
@@ -244,7 +253,7 @@
         teams(params, (res) => {
           if (res.statusCode == 1) {
             this.teamsinfo = res.data;
-            console.log(this.teamsinfo)
+//            console.log(this.teamsinfo)
             this.popupVisible = true
           }
         });
@@ -260,7 +269,7 @@
         this.$refs.loadmore.onBottomLoaded();
       },
       handleBottomChange(status) {
-        console.log(status);
+//        console.log(status);
         this.bottomStatus = status
       },
 
@@ -304,7 +313,7 @@
       let params = {}
       teamsStatistics(params, (res) => {
         if (res.statusCode == 1) {
-          console.log(res);
+//          console.log(res);
           this.personnum = res.data
         }
       })
@@ -575,11 +584,6 @@
     color: #666;
   }
 
-  .logo img {
-    width: 100%;
-    border-radius: 50%;
-  }
-
   .mint-navbar .mint-tab-item.is-selected {
     color: #F5751D;
     border-bottom: none;
@@ -729,7 +733,7 @@
   /*修改样式哦*/
   .p-list {
     display: block;
-    margin-bottom: .5rem;
+    /*margin-bottom: .5rem;*/
     height: 4.68rem;
     overflow: hidden;
     overflow-y: scroll;
@@ -769,6 +773,7 @@
 
   .logo img {
     width: 80%;
+    height:80%;
     border-radius: 50%;
     display: block;
     margin: 10% auto;
