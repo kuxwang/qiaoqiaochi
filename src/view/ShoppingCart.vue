@@ -325,7 +325,7 @@
 				}
 			}
 		},
-		activated(){
+		mounted(){
 			this.mycartsInt();
 		}
 	}

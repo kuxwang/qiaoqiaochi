@@ -20,7 +20,7 @@
         </div>
         <div>
           <span>会员等级:</span>
-          <span>{{memberInfo.level}}</span>
+          <span>{{memberInfo.leveldetail.levelname}}</span>
         </div>
       </div>
       <i class="iconfont right">&#xe649;</i>
@@ -210,7 +210,10 @@
           nickname: '',//昵称
           id: '',//会员id
           level: '',//会员等级
-          avatar: ''
+          avatar: '',
+          leveldetail : {
+              levelname : '默认等级',
+          }
         }
       }
     },
@@ -263,6 +266,7 @@
                         _this.memberInfo.nickname = res.data.nickname
                         _this.memberInfo.id = res.data.id
                         _this.memberInfo.level = res.data.level
+                        _this.memberInfo.leveldetail = res.data.leveldetail
                         _this.memberInfo.avatar = res.data.avatar
                       }
                     })

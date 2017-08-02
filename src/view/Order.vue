@@ -7,9 +7,9 @@
     </mt-header>
     <div class="page-navbar" >
       <mt-navbar class="page-part" v-model="selected" fixed>
-        <mt-tab-item id="all" @click="all">全部</mt-tab-item>
-        <mt-tab-item id="will-pay">待付款</mt-tab-item>
-        <mt-tab-item id="will-send">待发货</mt-tab-item>
+        <mt-tab-item id="all" @click="all($event)" :a='1'>全部</mt-tab-item>
+        <mt-tab-item id="will-pay" :a='2'>待付款</mt-tab-item>
+        <mt-tab-item id="will-send" :a='3'>待发货</mt-tab-item>
         <mt-tab-item id="will-reserve">待收货</mt-tab-item>
         <mt-tab-item id="done">已完成</mt-tab-item>
       </mt-navbar>
@@ -312,8 +312,8 @@
       }
     },
     methods:{
-      all:function () {
-        console.log(1)
+      all:function (e) {
+        
       },
       refund:function(refundid){
         this.$router.push({ name:'drawbackInfo', query: { refundid: refundid}});

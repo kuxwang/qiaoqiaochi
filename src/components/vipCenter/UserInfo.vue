@@ -13,7 +13,6 @@
 	            头像
 	          </span>
 	          <span class="fr">
-	            <img id="img_upload" :src="delImg"  v-show="!myImg" />
 	            <img id="img_upload" :src="myImg"  v-show="myImg" />
 	          </span>
 	          <!-- <input id="file_head" type="file" @change="getMyImg($event)"/> -->
@@ -215,25 +214,6 @@
 	          this.myDate=`${y}年${m}月${d}日`;
 		    },
         	getMyImg(e){
-
-     //    		USERPHOTO(function(res){
-     //    			Toast({
-					//   message: `${res.data}`,
-					//   position: 'middle',
-					//   duration: 2000
-					// });
-     //    			that.myImg=res.data
-     //    		})
-     // 			function(res){
-     // 				USERPHOTO(
-     //    			Toast({
-					//   message: `${res.data}`,
-					//   position: 'middle',
-					//   duration: 2000
-					// });
-     //    			that.myImg=res.data
-     //    		}
-
 	        	let that=this;
 	          	_webapp.uploadImg((res)=>{
 	     			this.myImg=res.data

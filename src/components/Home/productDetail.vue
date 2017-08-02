@@ -9,8 +9,8 @@
       <div v-show="isShow">
         <div class="box">
           <div class="img-box">
-            <!-- <img :src="bandimg" class="content"/> -->
-            <img v-lazy="bandimg" class="content"/>
+            <img :src="bandimg" class="content"/>
+            <!-- <img v-lazy="bandimg" class="content"/> -->
           </div>
         </div>
         <div class="intro">
@@ -42,12 +42,16 @@
             <i class="carNum" v-if="delGoodsNum>0">{{goodNums}}</i>
           </div>
         </router-link>
+      <!--   <a class="icon-box icon-box-car" @click="goShopCart">
+          <div class="icon-b">
+            <div class="iconfont tabIcon icon-car">&#xe607;</div>
+            购物车
+            <i class="carNum" v-if="delGoodsNum>0">{{goodNums}}</i>
+          </div>
+        </a> -->
         <button class="icon-btn icon-btn-car ocolor" @click="handleClick">
           加入购物车
         </button>
-       <!--  <router-link class="icon-btn icon-btn-con" to="/payselect"  tag="button">
-          立即购买
-        </router-link> -->
          <button class="icon-btn icon-btn-con" @click="goPay">
           立即购买
         </button>
@@ -205,16 +209,16 @@
         this.myStata=2;
         this.popupVisible = true;
       },
+      goShopCart(){
+        console.log(888)
+      },
       ...mapMutations({
         getMyorders:'GET_MYORDERS'
       })
     },
     mounted(){
       this.getInfo();
-
-      // this.getNum();
-    },
-    components: {}
+    }
   }
 </script>
 <style scoped>

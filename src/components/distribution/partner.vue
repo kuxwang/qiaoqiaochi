@@ -12,28 +12,28 @@
 
     <ul class="nav-tab">
       <!--<router-link to="/partner1" tag="li">-->
-        <li :class="{tabActive: selected==1 }" @click="selecttab(1,1)">
+      <li :class="{tabActive: selected==1 }" @click="selecttab(1,1)">
         <div class="title">所有伙伴</div>
         <div class="iconfont listicon">&#xe646;</div>
         <div>
           <span class="num">{{personnum.all}}</span><span class="yuan"> 人</span>
         </div>
 
-        </li>
-        <li :class="{tabActive: selected==2}" @click="selecttab(2,1)">
+      </li>
+      <li :class="{tabActive: selected==2}" @click="selecttab(2,1)">
         <div class="title">已购买伙伴</div>
         <div class="iconfont listicon">&#xe600;</div>
         <div>
           <span class="num">{{personnum.purchased}}</span><span class="yuan"> 人</span>
         </div>
-        </li>
+      </li>
       <li :class="{tabActive: selected==3 }" @click="selecttab(3,1)">
         <div class="title">未购买伙伴</div>
         <div class="iconfont listicon">&#xe60d;</div>
         <div>
           <span class="num">{{personnum.no_purchased}}</span><span class="yuan"> 人</span>
         </div>
-      <!--</router-link>-->
+        <!--</router-link>-->
       </li>
     </ul>
     <div class="search">
@@ -41,32 +41,27 @@
       <div @click="search">搜索</div>
     </div>
 
-    <!--<transition name="slide">-->
-      <!--<router-view></router-view>-->
-    <!--</transition>-->
-    <mt-loadmore :top-method="loadTop"    :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
-    <ul class="p-list" v-if="personlist.length">
-      <li class="p-cell" v-for="(i,index) in personlist" @click="popshow(index)">
-      <!--<li class="p-cell" >-->
-        <div class="logo">
-          <img :src="i.avatar"/>
-        </div>
-        <div class="info">
-          <h5>{{i.nickname}}</h5>
-          <span>{{i.id}}</span>
-          <span class="usertime">{{i.createtime}}关注</span>
-        </div>
-      </li>
-    </ul>
-      <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center">
-        <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
-        <span v-show="bottomStatus === 'loading'">
-	              	<mt-spinner type="snake"></mt-spinner>
-	            	</span>
+    <mt-loadmore :bottom-method="loadBottom" class="list-content" @bottom-status-change="handleBottomChange"
+                 :autoFill="isTrue"
+                 :bottom-all-loaded="allLoaded" ref="loadmore">
+      <ul class="p-list" v-if="personlist.length">
+        <li class="p-cell" v-for="(i,index) in personlist" @click="popshow(index)">
+          <!--<li class="p-cell" >-->
+          <div class="logo">
+            <img :src="i.avatar"/>
+          </div>
+          <div class="info">
+            <h5>{{i.nickname}}</h5>
+            <span>{{i.id}}</span>
+            <span class="usertime">{{i.createtime}}关注</span>
+          </div>
+        </li>
+      </ul>
+      <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded == false">
+        <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">继续滚动，可加载更多</span>
+        <span v-show="bottomStatus === 'loading'"><mt-spinner type="snake"></mt-spinner></span>
       </div>
     </mt-loadmore>
-
-    <!--</mt-loadmore>-->
     <mt-popup
       v-model="popupVisible"
       popup-transition="popup-fade" v-if="popupVisible">
@@ -80,7 +75,8 @@
           <li><span class="pop-left">粉丝：</span><span class="pop-right">{{teamsinfo.agentid}}</span></li>
           <li><span class="pop-left">关注方式：</span><span class="pop-right">{{teamsinfo.agentid}}</span></li>
           <li><span class="pop-left">等级：</span><span class="pop-right">{{teamsinfo.level.levelname}}</span></li>
-          <li><span class="pop-left">消费金额：</span><span class="pop-right">{{teamsinfo.recordStatistics.c_money_sum}}</span></li>
+          <li><span class="pop-left">消费金额：</span><span
+            class="pop-right">{{teamsinfo.recordStatistics.c_money_sum}}</span></li>
           <li><span class="pop-left">手机号：</span><span class="pop-right">{{teamsinfo.mobile}}</span></li>
           <!--<li><span class="pop-left">创建时间： </span><span class="pop-right">{{teamsinfo.createtime}}</span></li>-->
         </ul>
@@ -94,198 +90,142 @@
 
 </template>
 <script>
-  import {Popup, Picker} from 'mint-ui';
+  import {Popup, Picker, Toast} from 'mint-ui';
+
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
-  import {teamsStatistics,teamsLists,teams} from '../../api/api.js'
+  import {teamsStatistics, teamsLists, teams} from '../../api/api.js'
   import {mapMutations, mapGetters} from 'vuex';
   export default{
     data () {
       return {
-        active:'tab-container1',
+        active: 'tab-container1',
         selected: 1,
-        find:'',
-        popupVisible:false,
-        personnum:{},
-        personlist:{},
-        allLoaded: false,
-        bottomStatus: '',
+        find: '',
+        popupVisible: false,
+        personnum: {},
+        personlist: [],
         myCurNo: 1,
-        bottomAllLoaded:false,
+        bottomAllLoaded: false,
+        psizes: 10,
+        bottomStatus: '',
+        allLoaded: false,
+        isTrue: true,
+        onePage: false
       }
     },
     components: {
-      'mt-popup':Popup
+      'mt-popup': Popup
     },
     methods: {
-        open(){
-            this.popupVisible=true
-        },
-      selecttab(idx,page){
-        this.selected = idx;
-        switch (idx) {
-          case 1:
-            let params={
-              data: {
-                type:'all',
-                page:page,
-                psize:10
-              }
-            }
-            teamsLists(params,(res)=>{
-              if(res.statusCode==1){
-                this.personlist=res.data.lists;
-                console.log(res)
-                console.log(this.personlist)
-              }else {
-                console.log('请求失败')
-              }
-            })
-            break;
-          case 2:
-             params={
-              data: {
-                type:'agent',
-                page:page,
-                psize:10
-              }
-            }
-            teamsLists(params,(res)=>{
-              if(res.statusCode===1){
-                this.personlist=res.data.lists;
-              }else {
-                console.log('请求失败')
-              }
-            })
-            break;
-          case 3:
-             params={
-              data: {
-                type:'fans',
-                page:page,
-                psize:10
-              }
-            }
-            teamsLists(params,(res)=>{
-              if(res.statusCode===1){
-                this.personlist=res.data.lists;
-              }else {
-                console.log('请求失败')
-              }
-            })
-            break;
-          case 4:
-            if(this.find.length===11){
-              var obj={
-                mobile:this.find
-              }
-            }else if(this.find.length===7) {
-              var obj={
-                id:this.find
-              }
-            }
-             params={
-              data: obj
-            };
-            teams(params,(res)=>{
-              if(res.statusCode === 1){
-                this.personlist=res.data;
-                if(!this.personlist ||this.personlist.length<=1){
-                  this.searched=false
-                }else  {
-                  let obji=[]
-                  obji.push(res.data)
-                  this.personlist=obji
-                  console.log(this.personlist)
-                }
-              }else {
-                console.log('请求失败');
-              }
-            })
-            break;
-          default:
-            console.log('hehhe')
-
-        }
-
+      open(){
+        this.popupVisible = true
       },
-      addlist(){
+      selecttab(idx, page){
+        let _this = this;
         this.selected = idx;
+        if (page === 1) {
+          this.personlist = [];
+          this.allLoaded = false;
+        }
+
         switch (idx) {
           case 1:
-            let params={
+            let params = {
               data: {
-                type:'all',
-                page:page,
-                psize:10
+                type: 'all',
+                page: page,
+                psize: this.psizes
               }
             }
-            teamsLists(params,(res)=>{
-              if(res.statusCode==1){
-                this.personlist=this.personlist.concat(res.data.lists);
-
-              }else {
-                console.log('请求失败')
+            teamsLists(params, (res) => {
+              if (res.statusCode == 1) {
+                this.personlist = this.personlist.concat(res.data.lists);
+                if (res.data.next === true) {
+                  _this.allLoaded = true;
+                }
+              } else {
+                _this.allLoaded = true;
+                console.log('请求失败`${res.statusCode} , ${res.data}` ')
               }
             })
             break;
           case 2:
-            params={
+            params = {
               data: {
-                type:'agent',
-                page:page,
-                psize:10
+                type: 'agent',
+                page: page,
+                psize: this.psizes
               }
             }
-            teamsLists(params,(res)=>{
-              if(res.statusCode===1){
-                this.personlist=this.personlist.concat(res.data.lists);
-              }else {
-                console.log('请求失败')
+            teamsLists(params, (res) => {
+              if (res.statusCode == 1) {
+                _this.personlist = _this.personlist.concat(res.data.lists);
+                if (res.data.next === true) {
+                  _this.allLoaded = true;
+                }
+              } else {
+                _this.allLoaded = true;
+                console.log('请求失败`${res.statusCode} , ${res.data}` ')
               }
             })
             break;
           case 3:
-            params={
+            params = {
               data: {
-                type:'fans',
-                page:page,
-                psize:10
+                type: 'fans',
+                page: page,
+                psize: this.psizes
               }
             }
-            teamsLists(params,(res)=>{
-              if(res.statusCode===1){
-                this.personlist=this.personlist.concat(res.data.lists);
-              }else {
-                console.log('请求失败')
+            teamsLists(params, (res) => {
+              if (res.statusCode == 1) {
+                _this.personlist = _this.personlist.concat(res.data.lists);
+                if (res.data.next === true) {
+                  _this.allLoaded = true;
+                }
+              } else {
+                _this.allLoaded = true;
+                console.log('请求失败`${res.statusCode} , ${res.data}` ')
               }
             })
             break;
           case 4:
-            if(this.find.length===11){
-              var obj={
-                mobile:this.find
+            if (this.find.length === 11) {
+              var obj = {
+                mobile: this.find
               }
-            }else if(this.find.length===7) {
-              var obj={
-                id:this.find
+            } else if (Number(this.find)) {
+              var obj = {
+                id: this.find
               }
+            }else{
+              Toast({
+                message: '请属于正确的会员ID或会员手机号。',
+                position: 'middle',
+                duration: 2000
+              });
             }
-            params={
+            params = {
               data: obj
             };
-            teams(params,(res)=>{
-              if(res.statusCode === 1){
-                this.personlist=res.data;
-                if(!this.personlist ||this.personlist.length<=1){
-                  this.searched=false
-                }else  {
-                  let obji=[]
+
+            teams(params, (res) => {
+              if (res.statusCode === 1) {
+                this.personlist = res.data;
+                if (!this.personlist || this.personlist.length <= 1) {
+                  this.searched = false
+                } else {
+                  let obji = []
                   obji.push(res.data)
-                  this.personlist=this.personlist.concat(obji);
+                  this.personlist = obji
                   console.log(this.personlist)
                 }
-              }else {
-                console.log('请求失败');
+              } else {
+                Toast({
+                  message: res.data,
+                  position: 'middle',
+                  duration: 2000
+                });
               }
             })
             break;
@@ -293,83 +233,83 @@
             console.log('hehhe')
 
         }
+
       },
       popshow(index){
-        let params={
+        let params = {
           data: {
-            openid:this.personlist[index].openid,
+            openid: this.personlist[index].openid,
           }
         }
-        teams(params,(res)=>{
-          if(res.statusCode==1){
-            this.teamsinfo=res.data;
+        teams(params, (res) => {
+          if (res.statusCode == 1) {
+            this.teamsinfo = res.data;
             console.log(this.teamsinfo)
-            this.popupVisible=true
+            this.popupVisible = true
           }
         });
 
       },
       loadTop (){
-        this.selecttab(this.selected,1)
-        this.$refs.loadmore.onBottomLoaded();
-
+//        this.selecttab(this.selected,1)
+//        this.$refs.loadmore.onBottomLoaded();
       },
       loadBottom() {
         this.myCurNo += 1;
-        setTimeout(()=>{
-          this.addlist(this.selected,this.myCurNo);
-          this.$refs.loadmore.onBottomLoaded();
-        },1000)
-
+        this.selecttab(this.selected, this.myCurNo);
+        this.$refs.loadmore.onBottomLoaded();
       },
-      allLoaded(){
-
+      handleBottomChange(status) {
+        console.log(status);
+        this.bottomStatus = status
       },
+
       search(){
-          let mobilereg=/^1[3|4|5|7|8][0-9]{9}$/;
-          let idreg=/^[0-9]*$/;
-          if(mobilereg.test(!this.find) || idreg.test(this.find)){
-//            this.searchnum(this.find);
-//            console.log(Number(this.find))
-//            this.$router.push({name: `partnerlist4`}),
-              this.selected=4
-            this.selecttab(4)
 
-          }else {
+        let mobilereg = /^1[3|4|5|7|8][0-9]{9}$/;
+        let idreg = /^[0-9]*$/;
 
-          }
+        if (mobilereg.test(!this.find) || idreg.test(this.find)) {
+            this.searchnum(this.find);
+            // console.log(Number(this.find))
+            this.$router.push({name: `partnerlist4`}),
+          this.selected = 4
+          this.selecttab(4)
+
+        } else {
+          Toast({
+            message: '请属于正确的会员ID或会员手机号。',
+            position: 'middle',
+            duration: 2000
+          });
+        }
 
       },
       ...mapMutations({
-        'searchnum' : 'SEARCHNUM',
-
+        'searchnum': 'SEARCHNUM',
       }),
 
     },
-    computed:{
-    ...mapGetters([
+    created(){
+      this.selected = this.tabselect;
+      this.selecttab(this.tabselect, 1)
+    },
+    computed: {
+      ...mapGetters([
         'tabselect',
       ])
     },
-    created(){
-      this.selected = this.tabselect;
-      console.log(this.selected)
-      this.selecttab(this.tabselect,1)
-    },
-    mounted() {
-        let params={
 
+    mounted() {
+      let params = {}
+      teamsStatistics(params, (res) => {
+        if (res.statusCode == 1) {
+          console.log(res);
+          this.personnum = res.data
         }
-      teamsStatistics(params,(res)=>{
-          if(res.statusCode==1){
-              console.log(res);
-              this.personnum=res.data
-          }
       })
 
     }
-
-
 
 
   }
@@ -383,7 +323,7 @@
     font-size: .16rem;
   }
 
-  .main,.main1 {
+  .main, .main1 {
     position: fixed;
     top: 0;
     left: 0;
@@ -393,6 +333,7 @@
     overflow: auto;
     z-index: 3;
   }
+
   .mint-header {
     border-bottom: 0;
     color: #fff;
@@ -456,7 +397,7 @@
   .top {
     height: 0rem;
     /*background: #fff;*/
-    margin-top:.4rem;
+    margin-top: .4rem;
     background: rgb(244, 127, 47);
     -webkit-box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
     -moz-box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
@@ -581,6 +522,7 @@
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
     /*border-top: 1px solid rgba(0, 0, 0, .3)*/
   }
+
   .list-type {
     height: 0.4rem;
     border-bottom: 1px solid #e2e2e2;
@@ -589,76 +531,91 @@
     line-height: 0.3rem;
 
   }
+
   .list-type .num-right {
     float: right;
   }
+
   .p-list {
     display: block;
     background-color: #ececec;
   }
+
   .p-cell {
     display: flex;
     height: 0.78rem;
     padding: 0.1rem 0.2rem;
     background-color: #fff;
-    border-top:1px solid #e2e2e2;
-    border-bottom:1px solid #e2e2e2;
+    border-top: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
   }
+
   .logo {
 
     width: 0.58rem;
     height: 0.58rem;
   }
+
   .info {
     flex: 1;
     text-align: left;
     margin-left: 0.2rem;
     position: relative;
   }
+
   .info h5 {
     margin-top: 0.1rem;
     color: #27272f;
     font-size: 0.14rem;
 
   }
+
   .info span {
     font-size: 0.14rem;
     color: #666;
   }
+
   .logo img {
     width: 100%;
     border-radius: 50%;
   }
+
   .mint-navbar .mint-tab-item.is-selected {
     color: #F5751D;
     border-bottom: none;
   }
+
   .mint-tab-container-item {
     overflow: hidden;
     overflow-y: scroll;
     height: 4.2rem;
   }
+
   .iconfont {
     display: inline-block;
     margin-right: 0.05rem;
     font-size: 0.2rem;
   }
+
   .usertime {
     position: absolute;
     right: 0;
-    bottom:0.05rem;
+    bottom: 0.05rem;
     font-size: 0.12rem;
   }
+
   .partner-type {
     background: #fff;
     color: #666;
     margin-top: 0.5rem;
   }
+
   .mint-navbar .mint-tab-item {
     padding: 0.1rem 0;
     font-size: 0.2rem;
     border-right: 1px solid #e2e2e2;
   }
+
   .mint-navbar {
     margin: 0.05rem 0;
   }
@@ -671,10 +628,9 @@
     display: flex;
     position: fixed;
     width: 100%;
-    top:.45rem;
+    top: .45rem;
     z-index: 1;
   }
-
 
   .nav-tab li {
     position: relative;
@@ -687,7 +643,7 @@
     flex: 1;
   }
 
-  .nav-tab .li1:after, .nav-tab .li2:after,.nav-tab .li4:after, .nav-tab .li5:after {
+  .nav-tab .li1:after, .nav-tab .li2:after, .nav-tab .li4:after, .nav-tab .li5:after {
     content: '';
     position: absolute;
     right: 0;
@@ -728,7 +684,7 @@
     position: fixed;
     z-index: 2;
     background-color: #eee;
-    top:1.3rem;
+    top: 1.3rem;
     padding: 0 2%;
 
   }
@@ -742,6 +698,7 @@
     background: #fff;
     margin-top: .15rem;
   }
+
   .search div {
     background-color: #F5751D;
     display: block;
@@ -751,24 +708,23 @@
     line-height: .3rem;
     margin-top: .15rem;
   }
+
   .mint-header {
     color: #252525 !important;
   }
-  .nav-tab .tabActive{
+
+  .nav-tab .tabActive {
     background-color: #f5751d;
     color: #fff;
   }
+
   .nav-tab .tabActive .title {
     color: #fff;
   }
-  .tabActive .num,.tabActive .yuan {
+
+  .tabActive .num, .tabActive .yuan {
     color: #fff;
   }
-
-
-
-
-
 
   /*修改样式哦*/
   .p-list {
@@ -779,32 +735,38 @@
     overflow-y: scroll;
 
   }
+
   .p-cell {
     display: flex;
     height: 0.78rem;
     padding: 0.1rem 0.2rem;
-    border-top:1px solid #e2e2e2;
+    border-top: 1px solid #e2e2e2;
     background-color: #fff;
     margin-top: 0.05rem;
   }
+
   .logo {
     flex: 1;
   }
+
   .info {
     flex: 5;
     text-align: left;
     margin-left: 0.1rem;
     position: relative;
   }
+
   .info h5 {
     margin-top: 0.1rem;
     color: #27272f;
     font-size: 0.14rem;
   }
+
   .info span {
     font-size: 0.14rem;
     color: #666;
   }
+
   .logo img {
     width: 80%;
     border-radius: 50%;
@@ -815,19 +777,23 @@
   .usertime {
     position: absolute;
     right: 0;
-    bottom:0.05rem;
+    bottom: 0.05rem;
     font-size: 0.12rem;
   }
+
   .mint-popup {
     width: 2rem;
     padding: 0.1rem;
   }
-  .pop-up img{
+
+  .pop-up img {
     width: 60%;
   }
+
   .pop-up h5 {
     font-size: 0.16rem;
   }
+
   .pop-up span {
     font-size: 0.12rem;
   }
@@ -836,19 +802,19 @@
     width: 100%;
     font-size: 0.1rem;
     color: #333;
-    font-weight: 300;
-  ;
+    font-weight: 300;;
   }
+
   .pop-down li {
     display: block;
     text-align: left;
     padding-left: 0.1rem;
   }
 
-
   .pop-left {
     /*flex: 1;*/
   }
+
   .pop-right {
     /*flex: 3;*/
     text-align: right;
@@ -856,8 +822,9 @@
 
   .mint-loadmore {
     position: absolute;
-    top:1.9rem;
+    top: 1.9rem;
   }
+
   .mint-loadmore {
     overflow-y: scroll;
     width: 100%;
