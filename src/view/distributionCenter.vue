@@ -1,10 +1,12 @@
 <template>
   <div class="main">
+
     <mt-header fixed title="个人信息">
       <router-link to="/vipCenter" slot="left">
         <!--<mt-button icon="back"></mt-button>-->
       </router-link>
     </mt-header>
+    <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :top-distance="85" ref="loadmore">
     <router-link class="avatar" tag="section" :to="{name:'userinfo'}">
       <div class="icon">
         <img :src="memberInfo.avatar" alt="">
@@ -170,6 +172,7 @@
         </li>
       </ul>
       <button class="outLogin" @click="outLogin">退出登录</button>
+
     </section>
     <!--  <transition name="slide">
        <router-view></router-view>
@@ -178,6 +181,7 @@
     <transition name="slide">
       <router-view></router-view>
     </transition>
+    </mt-loadmore>
   </div>
 </template>
 <script>
@@ -191,6 +195,7 @@
   export default{
     data () {
       return {
+        topStatus:'',
         recordStatistics_get: {
           cg_money_sum: '',//销售总额
           c_money_sum: '', //佣金总额
@@ -304,6 +309,7 @@
 //                    console.log('订单统计接口数据异常')
 //                  }
 //                });
+                        _this.$refs.loadmore.onTopLoaded();
                       } else {
                         console.log('获取团队数量统计接口数据异常')
                       }
@@ -338,6 +344,13 @@
 
           }
         })
+      },
+      handleTopChange(status) {
+        this.topStatus = status;
+      },
+      loadTop(){
+          this.init()
+
       },
       ...mapMutations({
         tabselect: 'TABSELECT',
@@ -629,6 +642,8 @@
     top: 0;
     right: 0;
   }
-
+  .mint-header.is-fixed {
+    top:0rem;
+  }
 
 </style>
