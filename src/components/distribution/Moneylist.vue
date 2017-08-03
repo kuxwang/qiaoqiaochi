@@ -17,9 +17,9 @@
           <div class="money">{{i.commission}}元</div>
         </div>
         <div class="right">
-          <span class="type" v-if="i.status==3">审核通过</span>
-          <span class="type" v-if="i.status==2">审核通过</span>
-          <span class="type" v-if="i.status==1">审核通过</span>
+          <span class="type" >{{i.type}}</span>
+          <!--<span class="type" v-if="i.status==2">审核通过</span>
+          <span class="type" v-if="i.status==1">审核通过</span>-->
         </div>
       </li>
     </ul>
