@@ -1,7 +1,7 @@
 <template>
-  <mt-tab-container v-model="selected" class="orderList" id="content-list">
-    <ul class="order-list">
-      <li v-for="(v,i) in statusResult.all">
+  <ul class="order-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+    <void-list>
+      <li v-for="(v,i) in statusResult">
         <div>订单号：{{v.ordersn}}</div>
         <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status,num:v.goods[0].total}}"
                      tag="div">
@@ -49,51 +49,123 @@
           </router-link>
         </div>
       </li>
-    </ul>
-    <div class="share-page" v-show="statusShow.all">
-      <div class="iconfont">
-        &#xe60f;
-      </div>
-      <p>您还没有相关订单</p>
-      <p>赶快去购物吧</p>
-      <router-link tag="button" to="/">再逛逛</router-link>
-    </div>
-  </mt-tab-container>
+    </void-list>
+  </ul>
 </template>
 <script>
   import {MessageBox, Loadmore, Toast, InfiniteScroll} from 'mint-ui';
   import {mapMutations, mapGetters, mapState} from 'vuex'
   import {orderList, orderManu} from '../../api/api.js'
+  import voidList from './voidlist'
   export default {
     data(){
       return {
         statusResult: [],
-        page: 1
+        statusType: '',
+        page: 1,
+        loading: false,
+        canReason: '其他原因'
       }
     },
-    props: [],
-    methods: {},
+    methods: {
+      init (statusType) {
+        this.page = 1
+        this.statusType = statusType
+        let params = {
+          data: {
+            page: this.page,
+            status: statusType
+          }
+        };
+        orderList(params, res => {
+          console.log(res)
+          if (res.statusCode == 1) {
+            this.statusResult = res.data
+//            console.log(res)
+          }
+        });
+      },
+      loadMore () {
+        this.loading = true;
+//        console.log(123)
+        let params = {
+          data: {
+            page: ++this.page,
+            status: this.statusType
+          }
+        };
+        setTimeout(() => {
+          orderList(params, res => {
+            if (res.statusCode == 1) {
+              this.statusResult = this.statusResult.concat(res.data);
+              this.loading = false;
+            } else {
+              this.loading = false;
+            }
+          });
+
+          this.loading = false;
+        }, 2500);
+      },
+      cancel: function (orderid) {
+        MessageBox({title: '确定取消订单吗?', message: '点击确认取消', showCancelButton: true}).then(action => {
+          if (action == 'confirm') {//表示点击了确定
+            this.isSelect = !this.isSelect;
+            let that = this;
+            let params = {
+              data: {
+                orderid: orderid,
+                type: 'canl',
+                reason: that.canReason
+              }
+            }
+            orderManu(params, function (res) {
+              console.log(res)
+              if (res.statusCode == 1) {
+                for (let i = 0; i < that.statusResult.length; i++) {
+                  if (that.statusResult[i].id === orderid) {
+                    that.statusResult.splice(i, 1);
+                    break;
+                  }
+                }
+              } else {
+                Toast({
+                  message: res.data,
+                  position: 'middle',
+                  duration: 1000
+                });
+                that.init(that.statusType);
+              }
+            })
+          } else if (action == 'cancel') {//表示点击了取消
+          }
+        })
+      },
+      pay(x){
+//        this.orderinfo(x);
+        this.$router.push({path: 'payselect', query: {orderid: x}});
+      }
+    },
     computed: {},
+    components: {
+      voidList
+    },
     created(){
-      let params = {
-        data: {
-          page: this.page,
-          status: this.statusType
-        }
-      };
-      orderList(params, function (res) {
-        console.log(res)
-      });
+      this.init(this.statusType)
     }
   }
 </script>
 <style scoped>
   .order-list {
     background: #efefef;
-    padding-top: .01rem
+    padding-top: .01rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: .8rem;
+
   }
 
-  .order-list > li {
+  .order-list li {
     margin-top: .09rem;
     background: #fff;
     text-align: left;
@@ -106,7 +178,7 @@
     border: 1px solid #ddd;
   }
 
-  .order-list > li > div {
+  .order-list li > div {
     padding: .12rem 0;
     border-bottom: 1px solid #ddd;
   }
@@ -163,12 +235,6 @@
     margin-right: .05rem;
   }
 
-  /*.delete-order{*/
-  /*background:#ddd;*/
-  /*color:#777 !important;*/
-  /*width:.9rem !important;*/
-  /*margin-right:.05rem;*/
-  /*}*/
   .cancel-order {
     background: #ddd;
     color: #777 !important;
