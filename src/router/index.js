@@ -27,6 +27,7 @@ const partnerlist1 = r => require.ensure([], () => r(require('../components/dist
 const partnerlist2 = r => require.ensure([], () => r(require('../components/distribution/partnerlist2.vue')), 'vipCvnenter')
 const partnerlist3 = r => require.ensure([], () => r(require('../components/distribution/partnerlist3.vue')), 'vipCvnenter')
 const partnerlist4 = r => require.ensure([], () => r(require('../components/distribution/partnerlist4.vue')), 'vipCvnenter')
+const partnerInfo = r => require.ensure([], () => r(require('../components/distribution/partnerInfo.vue')), 'vipCvnenter')
 const orderinfo = r => require.ensure([], () => r(require('../components/distribution/orderinfo.vue')), 'vipCvnenter')
 const UserInfo= r => require.ensure([], () => r(require('../components/VipCenter/UserInfo.vue')), 'distribution')
 const extension1 = r => require.ensure([], () => r(require('../components/distribution/extension1.vue')), 'vipCvnenter')
@@ -172,6 +173,11 @@ export default new Router({
                   path: '/partnerlist',
                   name: 'partnerlist',
                   component: partnerlist
+                },
+                {
+                  path:'/partnerInfo',
+                  name:'partnerInfo',
+                  component:partnerInfo
                 },
                 {
                   path: '/partner1',

@@ -63,24 +63,33 @@
         <span v-show="bottomStatus === 'loading'"><mt-spinner type="snake"></mt-spinner></span>
       </div>
     </mt-loadmore>
+    <router-view></router-view>
     <mt-popup
       v-model="popupVisible"
       popup-transition="popup-fade" v-if="popupVisible">
-      <div class="pop-up">
-        <img class="sharelogo" :src="teamsinfo.avatar"/>
-        <h5>{{teamsinfo.nickname}}</h5>
-        <span>ID:{{teamsinfo.id}}</span>
-      </div>
-      <div class="pop-down">
-        <ul>
-          <li><span class="pop-left">粉丝：</span><span class="pop-right">{{teamsinfo.agentid}}</span></li>
-          <li><span class="pop-left">关注方式：</span><span class="pop-right">{{teamsinfo.agentid}}</span></li>
-          <li><span class="pop-left">等级：</span><span class="pop-right">{{teamsinfo.level.levelname}}</span></li>
-          <li><span class="pop-left">消费金额：</span><span
-            class="pop-right">{{teamsinfo.recordStatistics.c_money_sum}}</span></li>
-          <li><span class="pop-left">手机号：</span><span class="pop-right">{{teamsinfo.mobile}}</span></li>
-          <!--<li><span class="pop-left">创建时间： </span><span class="pop-right">{{teamsinfo.createtime}}</span></li>-->
-        </ul>
+      <!--<div class="pop-up">-->
+        <!--<img class="sharelogo" :src="teamsinfo.avatar"/>-->
+        <!--<h5>{{teamsinfo.nickname}}</h5>-->
+        <!--<span>ID:{{teamsinfo.id}}</span>-->
+      <!--</div>-->
+      <!--<div class="pop-down">-->
+        <!--<ul>-->
+          <!--<li><span class="pop-left">粉丝：</span><span class="pop-right">{{teamsinfo.agentid}}</span></li>-->
+          <!--<li><span class="pop-left">关注方式：</span><span class="pop-right">{{teamsinfo.agentid}}</span></li>-->
+          <!--<li><span class="pop-left">等级：</span><span class="pop-right">{{teamsinfo.level.levelname}}</span></li>-->
+          <!--<li><span class="pop-left">消费金额：</span><span-->
+            <!--class="pop-right">{{teamsinfo.recordStatistics.c_money_sum}}</span></li>-->
+          <!--<li><span class="pop-left">手机号：</span><span class="pop-right">{{teamsinfo.mobile}}</span></li>-->
+          <!--&lt;!&ndash;<li><span class="pop-left">创建时间： </span><span class="pop-right">{{teamsinfo.createtime}}</span></li>&ndash;&gt;-->
+        <!--</ul>-->
+      <!--</div>-->
+      <div class="pop-info">
+        <div class="img"><img :src="teamsinfo.avatar" alt=""></div>
+        <h3>{{teamsinfo.nickname}}</h3>
+        <div class="id-phone">
+          <span class="left-id">ID:{{teamsinfo.id}}</span>
+          <span>手机号：{{teamsinfo.mobile}}</span>
+        </div>
       </div>
     </mt-popup>
     <div v-else class="tips">
@@ -245,18 +254,8 @@
 
       },
       popshow(index){
-        let params = {
-          data: {
-            openid: this.personlist[index].openid,
-          }
-        }
-        teams(params, (res) => {
-          if (res.statusCode == 1) {
-            this.teamsinfo = res.data;
-//            console.log(this.teamsinfo)
-            this.popupVisible = true
-          }
-        });
+        this.$router.push({name:'partnerInfo',query:{openid:this.personlist[index].openid}})
+
 
       },
       loadTop (){
@@ -787,13 +786,13 @@
   }
 
   .mint-popup {
-    width: 2rem;
+    width: 3rem;
     padding: 0.1rem;
   }
 
-  .pop-up img {
-    width: 60%;
-  }
+  /*.pop-up img {*/
+    /*width: 60%;*/
+  /*}*/
 
   .pop-up h5 {
     font-size: 0.16rem;
@@ -835,6 +834,13 @@
     width: 100%;
     overflow: hidden;
   }
-
+  .pop-info{
+    text-align:center;
+  }
+  .pop-info div.img img{
+    width:0.9rem;
+    height:.9rem;
+    border-radius:50%;
+  }
 
 </style>
