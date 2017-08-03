@@ -344,7 +344,9 @@
         setImgUrl: 'IMGURL'
       })
     },
-
+//    activated () {
+//      this.init();
+//    },
     mounted(){
       this.init();
     }
@@ -627,5 +629,6 @@
     top: 0;
     right: 0;
   }
+
 
 </style>

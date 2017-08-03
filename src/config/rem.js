@@ -7,7 +7,6 @@
       if (!clientWidth) return
       docEl.style.fontSize = 100 * (clientWidth / 375) + 'px'
       docbody.style.height = (win.screen.height / (100 * (clientWidth / 375))) + 'rem'
-      console.log(win.screen.height)
       setTimeout(function () {
         // document.getElementById('app').style.display = 'block'
       }, 1)

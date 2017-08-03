@@ -325,6 +325,9 @@
 				}
 			}
 		},
+    activated () {
+      this.mycartsInt();
+    },
 		mounted(){
 			this.mycartsInt();
 		}

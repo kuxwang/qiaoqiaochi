@@ -171,9 +171,9 @@
                     申请退款
                   </router-link>
                   <!--<router-link class="charge-order ocolor"-->
-                  <!--:to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button"-->
-                  <!--v-if="v.canrefund&&v.refundid!=0">-->
-                  <!--退款申请中-->
+                               <!--:to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button"-->
+                               <!--v-if="v.canrefund&&v.refundid!=0">-->
+                    <!--退款申请中-->
                   <!--</router-link>-->
                   <button class="charge-order ocolor" v-if="v.canrefund&&v.refundid!=0" @click="refund(v.refundid)">
                     退款申请中
@@ -384,18 +384,9 @@
     },
     watch: {
       selected(val){
-//          <mt-tab-item id="all">全部</mt-tab-item>
-//          <mt-tab-item id="will-pay">待付款</mt-tab-item>
-//          <mt-tab-item id="will-send">待发货</mt-tab-item>
-//          <mt-tab-item id="will-reserve">待收货</mt-tab-item>
-//          <mt-tab-item id="done">已完成</mt-tab-item>
-//          console.log('watch run.');
-//          console.log(val);
-
         switch (val) {
           case 'all' :
             this.statusType = '';
-//            this.selectedTypeChange(this.statusPage.all);
             this.statusPage.all = 0;
             this.statusResult.all = [];
             this.selectedTypeChange(this.statusPage.all);
@@ -433,9 +424,6 @@
     },
     methods: {
       selectedTypeChange(page){
-//        if (page > 0) {
-//          return
-//        }
         this.getOrderList(page);
       },
       changeTypePage(_this){
@@ -616,7 +604,6 @@
               }
             })
           } else if (action == 'cancel') {//表示点击了取消
-            // console.log('点击了取消')
           }
         })
       },
@@ -641,10 +628,6 @@
         }
       },
       loadBottom() {
-
-//          console.log('load more.');
-//          console.log(this.statusType);
-
         switch (this.statusType) {
           case '0' :
             this.getOrderList(this.statusPage.will_pay);
@@ -671,62 +654,7 @@
         console.log(orderid);
 
         let that = this;
-        this.$router.push({path: '/orderd', query: {oid: orderid, sta: 2}});
-//        MessageBox({
-//          title: '提示',
-//          message: '请确定已收货 否则钱财两空哦',
-//          showCancelButton: true
-//        }).then(action => {
-//          if (action == 'confirm') {
-//            console.log(orderid)
-//
-//            let params = {
-//              data: {
-//                orderid: orderid,
-//                type: 'comf'
-//              }
-//            };
-////            this.$router.push({path: '/orderd', oid: orderid});
-//            orderManu(params, function (res) {
-//
-//              that.selected = 'done';
-//
-//              if (res.statusCode == 1) {
-//                for (let i = 0; i < that.statusResult.will_reserve.length; i++) {
-//                  if (that.statusResult.will_reserve[i].id === orderid) {
-//                    that.statusResult.will_reserve.splice(i, 1);
-//                    break;
-//                  }
-//                }
-////                ;
-////                let params = {
-////                  data: {
-////                    page: 1,
-////                    status: 3
-////                  }
-////                };
-////                console.log()
-////                orderList(params, function (res) {
-////                  /*_this.changeTypePage(_this);
-////                   _this.saveTypeResult(_this, res);*/
-////                  that.statusResult.donex = res.data;
-////                  console.log(that.statusResult.donex.length)
-////
-////
-////                });
-//
-//
-//              }
-//              else {
-//                MessageBox.alert('操作成功').then(action => {
-//
-//                });
-//              }
-//            })
-//          } else if (action == 'cancel') {
-//
-//          }
-//        });
+        this.$router.push({path: '/orderd', query:{oid: orderid,sta:2}});
       },
       getOrderList: function (page) {
         let _this = this;
@@ -734,18 +662,13 @@
         let params = {
           data: {
             page: ++page,
-//            page:++page,
             status: this.statusType
           }
         };
         console.log()
         orderList(params, function (res) {
-//            console.log(res)
           _this.changeTypePage(_this);
           _this.saveTypeResult(_this, res);
-
-//          console.log(_this.statusResult);
-
         });
       },
       ...mapMutations({
@@ -753,7 +676,7 @@
       }),
       pay(x){
         this.orderinfo(x)
-        this.$router.push({path: 'payselect', query: {orderid: x}});
+        this.$router.push({path:'payselect',query:{orderid:x}});
       },
       fun2: function (obj) {
         let a = obj.status
