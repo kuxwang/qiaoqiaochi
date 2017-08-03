@@ -30,10 +30,10 @@
               <input type="checkbox" :checked="true" class="mint-checkbox-input" >
               <span class="mint-checkbox-core"></span>
             </span>
-          <!--  <span class="mint-checkbox" v-if="!wechat_app.switch">
-              <input type="checkbox" class="mint-checkbox-input" value="值A">
+            <span class="mint-checkbox" v-if="!wechat_app.switch">
+              <input type="checkbox" class="mint-checkbox-input" value="值A" disabled>
               <span class="mint-checkbox-core"></span>
-            </span>-->
+            </span>
           </label>
         </div>
       </li>
@@ -49,7 +49,7 @@
               <span class="mint-checkbox-core"></span>
             </span>
             <span class="mint-checkbox" v-if="!alipay_app.switch">
-              <input type="checkbox" class="mint-checkbox-input" value="值A">
+              <input type="checkbox" class="mint-checkbox-input" value="值A" checked>
               <span class="mint-checkbox-core"></span>
             </span>
             <input type="checkbox" disabled="disabled" class="mint-checkbox-input" value="值A">

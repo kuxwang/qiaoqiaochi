@@ -22,6 +22,10 @@
           <span>会员等级:</span>
           <span>{{memberInfo.leveldetail.levelname}}</span>
         </div>
+        <div>
+          <span>推荐人:</span>
+          <span>{{memberInfo.leveldetail.levelname}}</span>
+        </div>
       </div>
       <i class="iconfont right">&#xe649;</i>
       <!-- <router-link class="iconfont right" :to="{name:'userinfo'}" tag="i">&#xe649;</router-link> -->
@@ -400,7 +404,8 @@
 
   .message div {
     width: 100%;
-    height: 33%;
+    /*height: 33%;*/
+    height: 25%;
   }
 
   .message > div > span {
