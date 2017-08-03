@@ -3,7 +3,7 @@
     <section>
       <mt-header title="提现">
         <router-link to="/takemoney" slot="left">
-          <mt-button icon="back">返回</mt-button>
+          <mt-button icon="back"></mt-button>
         </router-link>
       </mt-header>
     </section>
@@ -30,10 +30,10 @@
               <input type="checkbox" :checked="true" class="mint-checkbox-input" >
               <span class="mint-checkbox-core"></span>
             </span>
-          <!--  <span class="mint-checkbox" v-if="!wechat_app.switch">
-              <input type="checkbox" class="mint-checkbox-input" value="值A">
+            <span class="mint-checkbox" v-if="!wechat_app.switch">
+              <input type="checkbox" class="mint-checkbox-input" value="值A" disabled>
               <span class="mint-checkbox-core"></span>
-            </span>-->
+            </span>
           </label>
         </div>
       </li>

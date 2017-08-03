@@ -1,10 +1,12 @@
 <template>
   <div class="main">
+
     <mt-header fixed title="个人信息">
       <router-link to="/vipCenter" slot="left">
         <!--<mt-button icon="back"></mt-button>-->
       </router-link>
     </mt-header>
+    <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :top-distance="85" ref="loadmore">
     <router-link class="avatar" tag="section" :to="{name:'userinfo'}">
       <div class="icon">
         <img :src="memberInfo.avatar" alt="">
@@ -21,6 +23,10 @@
         <div>
           <span>会员等级:</span>
           <span>{{memberInfo.leveldetail.levelname}}</span>
+        </div>
+        <div>
+          <span>推荐人:</span>
+          <span>{{memberInfo.from}}</span>
         </div>
       </div>
       <i class="iconfont right">&#xe649;</i>
@@ -166,6 +172,7 @@
         </li>
       </ul>
       <button class="outLogin" @click="outLogin">退出登录</button>
+
     </section>
     <!--  <transition name="slide">
        <router-view></router-view>
@@ -174,6 +181,7 @@
     <transition name="slide">
       <router-view></router-view>
     </transition>
+    </mt-loadmore>
   </div>
 </template>
 <script>
@@ -187,6 +195,7 @@
   export default{
     data () {
       return {
+        topStatus:'',
         recordStatistics_get: {
           cg_money_sum: '',//销售总额
           c_money_sum: '', //佣金总额
@@ -215,7 +224,8 @@
           avatar: '',
           leveldetail: {
             levelname: '默认等级',
-          }
+          },
+          from:''  //推荐人
         },
         defaultAvatar: ''
       }
@@ -244,11 +254,13 @@
 //                      console.log('memberInfo');
 //                      console.log(res);
           if (res.statusCode == 1) {
+              console.log(res)
             _this.memberInfo.nickname = res.data.nickname
             _this.memberInfo.id = res.data.id
             _this.memberInfo.level = res.data.level
             _this.memberInfo.leveldetail = res.data.leveldetail
             _this.memberInfo.avatar = res.data.avatar
+            _this.memberInfo.from = res.data.parent_name
             _this.setImgUrl(_this.memberInfo.avatar)
             recordStatistics_get({data: {type: ''}}, function (res) {
               if (res.statusCode == 1) {
@@ -297,6 +309,7 @@
 //                    console.log('订单统计接口数据异常')
 //                  }
 //                });
+                        _this.$refs.loadmore.onTopLoaded();
                       } else {
                         console.log('获取团队数量统计接口数据异常')
                       }
@@ -332,12 +345,21 @@
           }
         })
       },
+      handleTopChange(status) {
+        this.topStatus = status;
+      },
+      loadTop(){
+          this.init()
+
+      },
       ...mapMutations({
         tabselect: 'TABSELECT',
         setImgUrl: 'IMGURL'
       })
     },
-
+//    activated () {
+//      this.init();
+//    },
     mounted(){
       this.init();
     }
@@ -400,7 +422,8 @@
 
   .message div {
     width: 100%;
-    height: 33%;
+    /*height: 33%;*/
+    height: 25%;
   }
 
   .message > div > span {
@@ -618,6 +641,9 @@
     height: 100%;
     top: 0;
     right: 0;
+  }
+  .mint-header.is-fixed {
+    top:0rem;
   }
 
 </style>

@@ -16,7 +16,6 @@
         <span class="span1">￥{{order.price}}</span>
         <span class="span2">{{shopSet.name}}-{{order.ordersn}}</span>
       </div>
-
     </ul>
     <ul class="pay">
       <li class="num" @click="checkStatus(1,wechat_app.switch)">

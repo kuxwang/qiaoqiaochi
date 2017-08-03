@@ -11,6 +11,7 @@ const app = r => require.ensure([], () => r(require('../App.vue')), 'app')
 //Home
 import Home from '../view/Home.vue'
 const Order = r => require.ensure([], () => r(require('../view/Order.vue')), 'Order')
+const MyOrder = r => require.ensure([], () => r(require('../view/MyOrder.vue')), 'Order')
 const ShoppingCart = r => require.ensure([], () => r(require('../view/ShoppingCart.vue')), 'ShoppingCart')
 const VipCenter = r => require.ensure([], () => r(require('../view/distributionCenter.vue')), 'VipCenter')
 const QrCode = r => require.ensure([], () => r(require('../view/QrCode.vue')), 'QrCode')
@@ -86,7 +87,7 @@ export default new Router({
         {
           path: '/order',
           name: 'order',
-          component: Order,
+          component: MyOrder,
           children:[
             {
               path: '/orderd',
