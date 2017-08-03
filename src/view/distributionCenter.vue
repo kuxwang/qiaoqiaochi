@@ -337,7 +337,9 @@
         setImgUrl: 'IMGURL'
       })
     },
-
+    activated () {
+      this.init();
+    },
     mounted(){
       this.init();
     }
