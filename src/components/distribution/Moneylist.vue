@@ -20,7 +20,7 @@
           <div class="money">{{i.commission}}元</div>
         </div>
         <div class="right">
-          <span class="type" >{{i.type}}</span>
+          <span class="type" >{{i.statusstr}}</span>
         </div>
       </li>
     </ul>

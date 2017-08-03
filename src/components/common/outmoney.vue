@@ -3,7 +3,7 @@
     <section>
       <mt-header title="提现">
         <router-link to="/takemoney" slot="left">
-          <mt-button icon="back">返回</mt-button>
+          <mt-button icon="back"></mt-button>
         </router-link>
       </mt-header>
     </section>
@@ -49,7 +49,7 @@
               <span class="mint-checkbox-core"></span>
             </span>
             <span class="mint-checkbox" v-if="!alipay_app.switch">
-              <input type="checkbox" class="mint-checkbox-input" value="值A" checked>
+              <input type="checkbox" class="mint-checkbox-input" value="值A">
               <span class="mint-checkbox-core"></span>
             </span>
             <input type="checkbox" disabled="disabled" class="mint-checkbox-input" value="值A">
