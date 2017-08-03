@@ -55,41 +55,32 @@
       <li v-show="false">交易完成时间：<p>{{endtime}}</p></li>
     </ul>
     <div class="bottom-box">
-      <!--<router-link to="/drawbackInfo" class="back-money-ing" tag="button" v-if="ing==true">-->
-      <!--退款申请中-->
-      <!--</router-link>-->
-      <button class="cancel-order" @click="cancel(oid)" v-if="status==0">
+      <button class="cancel-order" @click="cancel(oid)" v-if="orderStatus==0">
         取消订单
       </button>
-      <button class="charge-order ocolor" @click="pay(ordersin)" v-if="status==0">
+      <button class="charge-order ocolor" @click="pay(ordersin)" v-if="orderStatus==0">
         付款
       </button>
       <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:proprice,orderid:oid}}" tag="button"
-                   v-if="status==1 && obj.canrefund&&obj.refundid==0">
+                   v-if="obj.canrefund&&obj.refundid==0">
         申请退款
       </router-link>
-      <!--<router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:proprice,orderid:oid}}" tag="button" v-if="status==1 && obj.canrefund&&obj.refundid!=0">-->
-      <!--退款申请中-->
-      <!--</router-link>-->
-      <button class="charge-order1" v-if="status==2" @click="fn1(oid)">
+      <button class="charge-order1" v-if="orderStatus==2&&obj.refundid==0" @click="fn1(oid)">
         确认收货
       </button>
       <router-link class="look-logi ocolor" :to="{path:'logistics',query:{id:oid,exp:exp,expsn:expsn}}" tag="button"
-                   v-if="status==2">
+                   v-if="orderStatus==2">
         查看物流
       </router-link>
       <router-link class="charge-order1 " :to="{path:'drawback',query:{money:proprice,orderid:oid}}" tag="button"
-                   v-if="status==3 && obj.canrefund&&obj.refundid==0">
+                   v-if="orderStatus==3 && obj.canrefund&&obj.refundid==0">
         申请退款
       </router-link>
-      <!-- <router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:proprice,orderid:oid}}" tag="button" v-if="obj.canrefund&&obj.refundid!=0">
-        退款申请中
-      </router-link> -->
-      <button class="charge-order ocolor" v-if="obj.canrefund&&obj.refundid!=0" @click="refund(refundid)">
+      <button class="charge-order ocolor" v-if="obj.canrefund&&refundid!=0&&orderStatus!=0" @click="refund(refundid)">
         退款申请中
       </button>
       <router-link class="look-logi ocolor" :to="{path:'logistics',query:{id:oid,exp:exp,expsn:expsn}}" tag="button"
-                   v-if="status==3">
+                   v-if="orderStatus==3">
         查看物流
       </router-link>
     </div>

@@ -22,14 +22,10 @@
           <button class="charge-order ocolor" @click="pay(v.ordersn)" v-if="v.status==0">
             付款
           </button>
-          <!--<router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}" tag="button"   v-if="v.status==1" v-show="v.canrefund||v.refundid==0"> -->
           <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}"
                        tag="button" v-if="v.canrefund&&v.refundid==0">
             申请退款
           </router-link>
-          <!--<router-link class="charge-order ocolor" :to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button" v-if="v.canrefund&&v.refundid!=0">-->
-          <!--退款申请中-->
-          <!--</router-link>-->
           <button class="charge-order1" v-if="v.status==2 && v.refundid==0" @click="fn1(v.id)">
             确认收货
           </button>
@@ -144,7 +140,13 @@
       pay(x){
 //        this.orderinfo(x);
         this.$router.push({path: 'payselect', query: {orderid: x}});
-      }
+      },
+      refund: function (refundid) {
+        this.$router.push({name: 'drawbackInfo', query: {refundid: refundid}});
+      },
+      fn1: function (orderid) {
+        this.$router.push({path: '/orderd', query:{oid: orderid,sta:2}});
+      },
     },
     computed: {},
     components: {

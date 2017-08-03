@@ -40,6 +40,7 @@
       <order-lists ref="mylist"></order-lists>
     </div>
     <v-tabbar></v-tabbar>
+    <router-view></router-view>
   </div>
 </template>
 <script>
