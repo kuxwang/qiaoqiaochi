@@ -39,11 +39,11 @@
         </div>
         <div class="right" :class="{'color': comparefun(ordercom,index)}">
           <div class="money">
-            <p>昵称：<em>{{i.nickname}}</em></p>
+            <p class="dec-left">昵称：<em>{{i.nickname}}</em></p>
             <p class="yong">佣金金额：{{i.c_money}}</p>
           </div>
           <div class="dec">
-            <p>用户编号：{{i.id}}</p>
+            <p class="dec-left">用户编号：{{i.id}}</p>
             <p class="yong">佣金比列：{{i.c_rate}}</p>
           </div>
         </div>
@@ -211,6 +211,7 @@
     font-size: .14rem;
     margin-bottom: .01rem;
     justify-content: space-between;
+    white-spacing:nowrap
   }
 
   ul.order-list .money em {
@@ -221,13 +222,28 @@
   ul.order-list .dec {
     font-size: .14rem;
     display: flex;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
+    white-spacing:nowrap
+
+  }
+
+  .dec .dec-left {
+    flex: 1.5;
+    max-width: 1.72rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
   }
 
   ul.order-list .yong {
     width: 1.1rem;
     text-align: left;
     font-size: .12rem;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .icon {
@@ -262,4 +278,21 @@
 ul.order-list p.yong{
   font-size: 0.14rem;
 }
+
+  .money .dec-left {
+    flex: 1.5;
+    max-width: 1.72rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+  }
+  .money .young {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: right;
+
+  }
 </style>
