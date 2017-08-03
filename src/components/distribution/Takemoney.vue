@@ -194,6 +194,8 @@
   .mint-header {
     z-index: 3;
   }
-
+  .mint-header .mint-button {
+    line-height: .41rem;
+  }
 
 </style>

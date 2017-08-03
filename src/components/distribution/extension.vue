@@ -291,12 +291,10 @@
         this.myCurNo += 1;
         this.$refs.loadmore.onBottomLoaded();
         this.selecttab(this.selected, this.myCurNo);
-//        console.log(this.selected)
+
       },
 
-//      allLoaded(){
-//        console.log('allLoaded.');
-//      },
+
     },
 
     created(){
