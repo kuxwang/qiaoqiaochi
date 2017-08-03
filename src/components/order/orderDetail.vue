@@ -2,7 +2,7 @@
   <!--<transition name="slide">-->
   <div class="main ">
     <mt-header title="订单详情">
-      <a @click="goBack" slot="left">
+      <a @click="goBack" slot="left" class="router-link-active">
         <mt-button icon="back"></mt-button>
       </a>
     </mt-header>

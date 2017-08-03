@@ -1,0 +1,274 @@
+<template>
+  <div class="mainInfo">
+    <!--<mt-header fixed title="详情" style="z-index: 4">-->
+      <!--<mt-header title="订单详情">-->
+        <!--&lt;!&ndash;<a @click="goBack" slot="left">&ndash;&gt;-->
+          <!--&lt;!&ndash;<mt-button icon="back"></mt-button>&ndash;&gt;-->
+        <!--&lt;!&ndash;</a>&ndash;&gt;-->
+      <!--</mt-header>-->
+    <!--</mt-header>-->
+    <mt-header title="用户详情" style="z-index: 4" fixed>
+      <router-link to="/partner" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+      <mt-button slot="right"></mt-button>
+    </mt-header>
+    <div class="header-img">
+      <img :src="teamsinfo.avatar" alt="">
+      <h4>{{teamsinfo.nickname}}</h4>
+      <div>ID <p>{{teamsinfo.id}}</p></div>
+      <div>手机号 <p>{{teamsinfo.mobile}}</p></div>
+      <!--<div class="id-phone">-->
+        <!--<span class="left-id">ID:{{teamsinfo.id}}</span>-->
+        <!--<span>手机号：{{teamsinfo.mobile}}</span>-->
+      <!--</div>-->
+      <div>会员等级<p>{{teamsinfo.level.levelname}}</p></div>
+      <div>分销等级<p>{{teamsinfo.agentlevel.levelname}}</p></div>
+    </div>
+    <div class="height"></div>
+    <!--<div class="vip">-->
+      <!--<div class="vip-left">会员等级：{{teamsinfo.level.levelname}}</div>-->
+      <!--<div>分销等级：{{teamsinfo.agentlevel.levelname}}</div>-->
+    <!--</div>-->
+    <div class="money">
+      <div class="money-left">
+
+        <p>{{teamsinfo.recordStatistics.cg_money_sum}}</p>
+        营业额
+      </div>
+      <div>
+
+        <p>{{teamsinfo.recordStatistics.c_money_sum}}</p>
+        推广费
+      </div>
+    </div>
+    <div class="height"></div>
+    <div class="order">
+      <!--<div class="first">-->
+        <!--未付款-->
+        <!--<p>{{teamsinfo.orderStatistics.o_status_0_price}}</p>-->
+      <!--</div>-->
+      <div>
+
+        <p>{{teamsinfo.orderStatistics.o_status_1_price}}</p>
+        已付款
+      </div>
+      <div>
+
+        <p>{{teamsinfo.orderStatistics.o_status_2_price}}</p>
+        已发货
+      </div>
+      <div>
+
+        <p>{{teamsinfo.orderStatistics.o_status_3_price}}</p>
+        已完成
+      </div>
+      <div class="last">
+
+        <p>{{teamsinfo.orderStatistics.o_status_r1_price}}</p>
+        退货
+      </div>
+    </div>
+    <!--<div class="height"></div>-->
+  </div>
+</template>
+<script>
+  import {Header} from 'mint-ui'
+  import { teams} from '../../api/api.js';
+  export default{
+    data(){
+      return{
+        teamsinfo:'',
+        levelname:''
+      }
+    },
+    methods:{
+      goBack: function () {
+        this.$router.go(-1)
+      },
+    },
+    created:function () {
+      let params = {
+        data: {
+          openid: this.$route.query.openid,
+        }
+      }
+      teams(params, (res) => {
+      if (res.statusCode == 1) {
+        console.log(res)
+        this.teamsinfo = res.data;
+//        console.log(this.teamsinfo)
+    }else{
+        console.log('会员信息请求出错')
+      }
+  });
+    }
+  }
+</script>
+<style scoped>
+  .mainInfo{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    overflow: auto;
+    z-index: 3;
+  }
+  .mt-header{
+    border-bottom:1px solid #ddd;
+  }
+  .header-img{
+    background: #fff;
+    margin-top:.45rem;
+    padding-top:.3rem;
+    padding-bottom:.05rem;
+  }
+  .header-img>img{
+    width:.9rem;
+    height:.9rem;
+    border-radius:50%;
+    margin-bottom:.1rem;
+  }
+  .header-img>h4{
+    margin-bottom:.3rem;
+  }
+  .header-img>div{
+    padding: 0 .1rem;
+    text-align:left;
+    margin-bottom:.1rem;
+    font-size:.14rem;
+  }
+  .header-img>div>p{
+    float:right;
+    color:#999;
+  }
+  .money{
+  /*width:94%;*/
+  height:.6rem;
+    background:#fff;
+  border-top:1px solid #ebdfde;
+  border-bottom:1px solid #ebdfde;
+  /*margin-left:3%;*/
+  }
+  .money>div{
+    height:.58rem;
+  float:left;
+  width:50%;
+  text-align:center;
+  font-size:.15rem;
+    padding-top:.1rem;
+  }
+  .money>div>p{
+    margin-bottom:.02rem;
+  }
+  .money>.money-left{
+  border-right:1px solid #ebdfde;
+  }
+  .order{
+  height:.6rem;
+  border-top:1px solid #ebdfde;
+  /*border-bottom:1px solid #ebdfde;*/
+    background: #fff;
+  }
+  .order>div{
+  float:left;
+  padding-top:.1rem;
+  height:.59rem;
+  width:50%;
+  font-size:.14rem;
+    background: #fff;
+    border-right: 1px solid #ebdfde;
+    border-bottom:1px solid #ebdfde
+  }
+  /*.order>div.last{*/
+  /*border-right:none;*/
+  /*}*/
+  .order>div>p{
+  margin-bottom:.02rem;
+  }
+.height{
+  height:.1rem;
+  background: #ececec;
+}
+
+
+
+
+
+
+  /*.pop-info>h4{*/
+    /*font-weight:bold;*/
+  /*}*/
+  /*div.id-phone{*/
+    /*margin-top:.06rem;*/
+  /*}*/
+  /*div.id-phone>span{*/
+    /*font-size:.13rem;*/
+    /*display:block;*/
+  /*}*/
+  /*div.id-phone>span.left-id{*/
+    /*margin-bottom:.06rem;*/
+  /*}*/
+  /*.vip{*/
+    /*width:94%;*/
+    /*height:.5rem;*/
+    /*border-top:1px solid #ebdfde;*/
+    /*border-bottom:1px solid #ebdfde;*/
+    /*margin-left:3%;*/
+    /*margin-top:.1rem;*/
+  /*}*/
+/*.vip>div{*/
+  /*float:left;*/
+  /*line-height:.5rem;*/
+  /*width:50%;*/
+  /*text-align:center;*/
+  /*font-size:.15rem;*/
+/*}*/
+  /*.vip>div.vip-left{*/
+    /*border-right:1px solid #ebdfde;*/
+  /*}*/
+  /*.money{*/
+    /*margin-top:.3rem;*/
+    /*width:80%;*/
+    /*height:.6rem;*/
+    /*border:1px solid #ebdfde;*/
+    /*margin-left:10%;*/
+    /*background: #fff;*/
+    /*box-shadow:5px 5px 6px #888 ;*/
+  /*}*/
+  /*.money>div{*/
+    /*float:left;*/
+    /*width:50%;*/
+    /*height:.58rem;*/
+    /*padding-top:.1rem;*/
+  /*}*/
+  /*.money>div.money-left{*/
+    /*border-right:1px solid #ebdfde;*/
+  /*}*/
+  /*.order{*/
+    /*width:94%;*/
+    /*height:.6rem;*/
+    /*border-top:1px solid #ebdfde;*/
+    /*border-bottom:1px solid #ebdfde;*/
+    /*margin-left:3%;*/
+    /*margin-top:.3rem;*/
+  /*}*/
+  /*.order>div{*/
+    /*float:left;*/
+    /*padding-top:.1rem;*/
+    /*height:.58rem;*/
+    /*width:18.5%;*/
+    /*font-size:.14rem;*/
+    /*border-right:1px solid #ebdfde*/
+  /*}*/
+  /*.order>div.first{*/
+    /*width:26%;*/
+  /*}*/
+  /*.order>div.last{*/
+    /*border-right:none;*/
+  /*}*/
+  /*.order>div>p{*/
+    /*margin-top:.06rem;*/
+  /*}*/
+</style>

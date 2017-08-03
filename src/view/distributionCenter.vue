@@ -35,7 +35,7 @@
       <!--</div>-->
       <!--<div>-->
       <router-link :to="{name: 'takemoney'}" tag="div">
-        <span class="title">佣金</span>
+        <span class="title">推广费</span>
         <span class="num">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>
       </router-link>
       <!--</div>-->
