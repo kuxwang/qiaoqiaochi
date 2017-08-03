@@ -65,8 +65,9 @@
     },
     methods: {
       init (statusType) {
-        this.page = 1
-        this.statusType = statusType
+        this.page = 1;
+        this.statusType = statusType;
+        this.loading = true;
         let params = {
           data: {
             page: this.page,
@@ -74,7 +75,6 @@
           }
         };
         orderList(params, res => {
-          console.log(res)
           if (res.statusCode == 1) {
             this.statusResult = res.data
 //            console.log(res)
@@ -82,7 +82,7 @@
         });
       },
       loadMore () {
-        this.loading = true;
+        this.loading = false;
 //        console.log(123)
         let params = {
           data: {
@@ -96,7 +96,12 @@
               this.statusResult = this.statusResult.concat(res.data);
               this.loading = false;
             } else {
-              this.loading = false;
+              this.loading = true;
+              Toast({
+                message: res.data,
+                position: 'middle',
+                duration: 1000
+              });
             }
           });
 
@@ -116,7 +121,6 @@
               }
             }
             orderManu(params, function (res) {
-              console.log(res)
               if (res.statusCode == 1) {
                 for (let i = 0; i < that.statusResult.length; i++) {
                   if (that.statusResult[i].id === orderid) {
@@ -130,6 +134,7 @@
                   position: 'middle',
                   duration: 1000
                 });
+
                 that.init(that.statusType);
               }
             })
