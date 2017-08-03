@@ -19,7 +19,7 @@
 
     </ul>
     <ul class="pay">
-      <li class="num">
+      <li class="num" @click="checkStatus(1,wechat_app.switch)">
         <div class="order-num">
           <span class="iconfont w">&#xe605;</span>
           <label for="one">微信</label>
@@ -27,7 +27,8 @@
         <div>
           <label class="mint-checklist-label fl">
             <span class="mint-checkbox" v-if="wechat_app.switch">
-              <input type="checkbox" :checked="isChecked==1" class="mint-checkbox-input" @click="isChecked=1">
+              <!--<input type="checkbox" :checked="isChecked==1" class="mint-checkbox-input" @click="isChecked=1">-->
+              <input type="checkbox" :checked="isChecked==1" class="mint-checkbox-input">
               <span class="mint-checkbox-core"></span>
             </span>
             <span class="mint-checkbox" v-if="!wechat_app.switch">
@@ -37,7 +38,7 @@
           </label>
         </div>
       </li>
-      <li class="num">
+      <li class="num" @click="checkStatus(2,alipay_app.switch)">
         <div class="order-num">
           <span class="iconfont a">&#xe65b;</span>
           <label for="one">支付宝</label>
@@ -45,7 +46,8 @@
         <div>
           <label class="mint-checklist-label fl">
             <span class="mint-checkbox" v-if="alipay_app.switch">
-              <input type="checkbox" :checked="isChecked==2" class="mint-checkbox-input" @click="isChecked=2">
+              <!--<input type="checkbox" :checked="isChecked==2" class="mint-checkbox-input" @click="isChecked=2">-->
+              <input type="checkbox" :checked="isChecked==2" class="mint-checkbox-input">
               <span class="mint-checkbox-core"></span>
             </span>
             <span class="mint-checkbox" v-if="!alipay_app.switch">
@@ -56,7 +58,8 @@
         </div>
       </li>
     </ul>
-
+    <!--<div>1234567</div>-->
+    <!--{{data}}-->
     <button class="commit ocolor" @click="pay">
       支付订单
     </button>
@@ -64,23 +67,66 @@
 </template>
 
 <script>
-  import {Checklist, Toast} from 'mint-ui';
+  import {Checklist, Toast, Indicator} from 'mint-ui';
   import {mapState} from 'Vuex';
   import {payment_post, payment_get, paymentFun} from '../../api/api';
   export default {
     data () {
       return {
-        isChecked: '',
+        isChecked: 2,
         goods: [],
         shopSet: [],
         order: [],
         payment: [],
         wechat_app: [],
         alipay_app: [],
-        payStstus: 0
+        payStstus: 0,
+//        loadingStatus: 0,
+//        post: {},
+//        data:[]
       }
     },
+    beforeRouteEnter (to, from, next) {
+      console.log(to.query.orderid)
+//      Indicator.open(
+//        {
+//          text: '加载中...',
+//          spinnerType: 'fading-circle'
+//        }
+//      );
+      let params = {
+        data: {
+          ordersn: to.query.orderid
+        }
+      }
+      payment_get(params, res => {
+//        Indicator.close()
+        to.meta.post = res
+//        console.log(res)
+        next()
+      })
+    },
+    watch: {
+//      '$route' (from, to) {
+////        console.log('1111111')
+//
+//      },
+//      isChecked (newValue) {
+//        console.log(newValue)
+//      }
+    },
     methods: {
+      checkStatus (idx, isTrue) {
+        this.isChecked = idx;
+        if (!isTrue) {
+          Toast({
+            message: '暂未开通',
+            position: 'bottom',
+            duration: 1000
+          })
+        }
+
+      },
       pay () {
         if (this.isChecked) {
           let _this = this
@@ -92,36 +138,37 @@
             }
           }
           payment_post(params, res => {
-             Toast({
-                message: `${typeof res.statusCode}|${res.statusCode}`,
+            this.loadingStatus = 0
+            Toast({
+              message: `${typeof res.statusCode}|${res.statusCode}`,
+              position: 'middle',
+              duration: 2000
+            });
+            if (res.statusCode == 1) {
+              _this.payStstus = 1
+              Toast({
+                message: '支付成功，自动返回至首页',
                 position: 'middle',
                 duration: 2000
               });
-            if (res.statusCode == 1) {
-                  _this.payStstus = 1
-                  Toast({
-                    message: '支付成功，自动返回至首页',
-                    position: 'middle',
-                    duration: 2000
-                  });
-                  setTimeout(() => {
-                    this.$router.push('/')
-                  }, 2000)
-            }else{
-                  Toast({
-                    message: `支付异常：${res.data}`,
-                    position: 'middle',
-                    duration: 2000
-                  });
+              setTimeout(() => {
+                this.$router.push('/')
+              }, 2000)
+            } else {
+              Toast({
+                message: `支付异常：${res.data}`,
+                position: 'middle',
+                duration: 2000
+              });
             }
 
             /*if (res.statusCode == 1) {
-              paymentFun(type, res.data, data => {
-                
-              })
-            } else {
-              console.log('支付失败')
-            }*/
+             paymentFun(type, res.data, data => {
+
+             })
+             } else {
+             console.log('支付失败')
+             }*/
           })
         } else {
           Toast({
@@ -138,25 +185,37 @@
         'orderInfo'
       ])
     },
-    created () {
-      const params = {
-        data: {
-          ordersn: this.orderInfo
-        }
+    mounted () {
+//        console.log(this.post)
+      let res = this.$route.meta.post
+      console.log(res)
+      if (res.statusCode == 1) {
+//        this.loadingStatus = 1
+        this.goods = res.data.order.goods[0]
+        this.shopSet = res.data.shopSet
+        this.order = res.data.order
+        this.payment = res.data.payment
+        this.wechat_app = res.data.payment.wechat_app
+        this.alipay_app = res.data.payment.alipay_app
+      } else {
+        console.log('支付订单获取接口异常')
       }
-      console.log(params)
-      payment_get(params, res => {
-        if (res.statusCode == 1) {
-          this.goods = res.data.order.goods[0]
-          this.shopSet = res.data.shopSet
-          this.order = res.data.order
-          this.payment = res.data.payment
-          this.wechat_app = res.data.payment.wechat_app
-          this.alipay_app = res.data.payment.alipay_app
-        } else {
-          console.log('支付订单获取接口异常')
-        }
-      })
+    },
+    created () {
+//      let res = this.$route.meta.post
+//      console.log(res)
+//      if (res.statusCode == 1) {
+////        this.loadingStatus = 1
+//        this.goods = res.data.order.goods[0]
+//        this.shopSet = res.data.shopSet
+//        this.order = res.data.order
+//        this.payment = res.data.payment
+//        this.wechat_app = res.data.payment.wechat_app
+//        this.alipay_app = res.data.payment.alipay_app
+//      } else {
+//        console.log('支付订单获取接口异常')
+//      }
+//      })
     }
   }
 
