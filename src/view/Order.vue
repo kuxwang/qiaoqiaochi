@@ -171,9 +171,9 @@
                     申请退款
                   </router-link>
                   <!--<router-link class="charge-order ocolor"-->
-                               <!--:to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button"-->
-                               <!--v-if="v.canrefund&&v.refundid!=0">-->
-                    <!--退款申请中-->
+                  <!--:to="{path:'drawbackInfo',query:{money:v.price,orderid:v.id}}" tag="button"-->
+                  <!--v-if="v.canrefund&&v.refundid!=0">-->
+                  <!--退款申请中-->
                   <!--</router-link>-->
                   <button class="charge-order ocolor" v-if="v.canrefund&&v.refundid!=0" @click="refund(v.refundid)">
                     退款申请中
@@ -671,7 +671,7 @@
         console.log(orderid);
 
         let that = this;
-        this.$router.push({path: '/orderd', query:{oid: orderid,sta:2}});
+        this.$router.push({path: '/orderd', query: {oid: orderid, sta: 2}});
 //        MessageBox({
 //          title: '提示',
 //          message: '请确定已收货 否则钱财两空哦',
@@ -753,7 +753,7 @@
       }),
       pay(x){
         this.orderinfo(x)
-        this.$router.push('payselect');
+        this.$router.push({path: 'payselect', query: {orderid: x}});
       },
       fun2: function (obj) {
         let a = obj.status

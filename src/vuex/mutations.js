@@ -22,11 +22,11 @@ import {
   from
     './mutation-types.js'
 
-import { setStore, getStore } from '../config/myUtils'
+import {setStore, getStore} from '../config/myUtils'
 
 export default {
   //用户收货地址
-  [GET_USERADDRESS](state,data) {
+  [GET_USERADDRESS](state, data) {
     state.userAddress = {
       mobile: data.mobile,
       realname: data.realname,
@@ -71,14 +71,15 @@ export default {
     console.log(orderInfo)
     state.orderInfo = orderInfo
   },
-  [DRAWBACKOBJ] (state,drawbackobj) {
+  [DRAWBACKOBJ] (state, drawbackobj) {
     state.drawbackobj = drawbackobj;
   },
-  [ORDERDETAILS] (state,orderdetails) {
+  [ORDERDETAILS] (state, orderdetails) {
     state.orderdetails = orderdetails;
   },
-  [IMGURL] (state,imgurl) {
-    state.imgurl = imgurl;
+  [IMGURL] (state, imgUrl) {
+    // console.log(imgurl)
+    state.imgUrl = imgUrl;
   },
 
 

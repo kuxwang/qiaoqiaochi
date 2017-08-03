@@ -7,7 +7,7 @@
     </mt-header>
     <router-link class="avatar" tag="section" :to="{name:'userinfo'}">
       <div class="icon">
-        <img :src="memberInfo.avatar"  alt="">
+        <img :src="memberInfo.avatar" alt="">
       </div>
       <div class="message">
         <div>
@@ -28,7 +28,7 @@
     </router-link>
     <section class="top">
       <!--<div class="top_1">-->
-      <router-link :to="{name: 'takemoney'}" tag="div">
+      <router-link class="topdiv-first" :to="{name: 'takemoney'}" tag="div">
         <span class="title">营业额</span>
         <span class="num">{{recordStatistics_get.cg_money_sum}}</span><span class="yuan"> 元</span>
       </router-link>
@@ -118,6 +118,8 @@
 
       <div class="mfriend">
         <span class="mint-cell-text">推广费</span>
+        <span class="mint-cell-text-right">去提现</span>
+        <router-link class="text-right" tag="div" to="/takemoney"></router-link>
       </div>
       <ul class="tuiguang">
         <li class="li1">
@@ -215,7 +217,7 @@
             levelname: '默认等级',
           }
         },
-        defaultAvatar:''
+        defaultAvatar: ''
       }
     },
     components: {
@@ -238,59 +240,75 @@
         let _this = this;
 //        let params = {};
         //佣金统计
-        recordStatistics_get({data: {type: ''}}, function (res) {
+        memberInfo({}, function (res) {
+//                      console.log('memberInfo');
+//                      console.log(res);
           if (res.statusCode == 1) {
-            let data = res.data
-            console.log('recordStatistics');
-
-            _this.recordStatistics_get.cg_money_sum = res.data.total.cg_money_sum;
-            _this.recordStatistics_get.c_money_sum = res.data.total.c_money_sum;
-            _this.recordStatistics_get.o_status_3 = res.data.o_status_3.cg_money_sum;
-            _this.recordStatistics_get.pay = res.data.pay.cg_money_sum;
-            _this.recordStatistics_get.check = res.data.check.cg_money_sum;
-            _this.recordStatistics_get.invalid = res.data.invalid.cg_money_sum;
-            _this.recordStatistics_get.apply = res.data.apply.cg_money_sum;
-            _this.recordStatistics_get.o_status_0 = res.data.o_status_0.cg_money_sum;
-
-            teamsStatistics({}, function (res) {
-              console.log('teamsStatistics');
-              console.log(res);
+            _this.memberInfo.nickname = res.data.nickname
+            _this.memberInfo.id = res.data.id
+            _this.memberInfo.level = res.data.level
+            _this.memberInfo.leveldetail = res.data.leveldetail
+            _this.memberInfo.avatar = res.data.avatar
+            _this.setImgUrl(_this.memberInfo.avatar)
+            recordStatistics_get({data: {type: ''}}, function (res) {
               if (res.statusCode == 1) {
-                _this.teamsStatistics.all = res.data.all;
-                _this.teamsStatistics.purchased = res.data.purchased;
-                _this.teamsStatistics.no_purchased = res.data.no_purchased;
+                let data = res.data
+//                console.log('recordStatistics');
 
+                _this.recordStatistics_get.cg_money_sum = res.data.total.cg_money_sum;
+                _this.recordStatistics_get.c_money_sum = res.data.total.c_money_sum;
+                _this.recordStatistics_get.o_status_3 = res.data.o_status_3.cg_money_sum;
+                _this.recordStatistics_get.pay = res.data.pay.cg_money_sum;
+                _this.recordStatistics_get.check = res.data.check.cg_money_sum;
+                _this.recordStatistics_get.invalid = res.data.invalid.cg_money_sum;
+                _this.recordStatistics_get.apply = res.data.apply.cg_money_sum;
+                _this.recordStatistics_get.o_status_0 = res.data.o_status_0.cg_money_sum;
 
-                orderStatistics({}, function (res) {
-                  console.log('orderStatistics');
+                teamsStatistics({}, function (res) {
+                  console.log('teamsStatistics');
                   console.log(res);
                   if (res.statusCode == 1) {
-                    _this.orderStatistics.total = res.data.total.order_count
-                    _this.orderStatistics.lock = res.data.lock.order_count
-                    _this.orderStatistics.refund = res.data.refund.order_count
-                    _this.orderStatistics.ok = res.data.ok.order_count
+                    _this.teamsStatistics.all = res.data.all;
+                    _this.teamsStatistics.purchased = res.data.purchased;
+                    _this.teamsStatistics.no_purchased = res.data.no_purchased;
 
-                    memberInfo({}, function (res) {
-                      console.log('memberInfo');
+
+                    orderStatistics({}, function (res) {
+                      console.log('orderStatistics');
                       console.log(res);
                       if (res.statusCode == 1) {
-                        _this.memberInfo.nickname = res.data.nickname
-                        _this.memberInfo.id = res.data.id
-                        _this.memberInfo.level = res.data.level
-                        _this.memberInfo.leveldetail = res.data.leveldetail
-                        _this.memberInfo.avatar = res.data.avatar
+                        _this.orderStatistics.total = res.data.total.order_count
+                        _this.orderStatistics.lock = res.data.lock.order_count
+                        _this.orderStatistics.refund = res.data.refund.order_count
+                        _this.orderStatistics.ok = res.data.ok.order_count
+
+//                    memberInfo({}, function (res) {
+////                      console.log('memberInfo');
+////                      console.log(res);
+//                      if (res.statusCode == 1) {
+//                        _this.memberInfo.nickname = res.data.nickname
+//                        _this.memberInfo.id = res.data.id
+//                        _this.memberInfo.level = res.data.level
+//                        _this.memberInfo.leveldetail = res.data.leveldetail
+//                        _this.memberInfo.avatar = res.data.avatar
+//                      }
+//                    })
+//                  } else {
+//                    console.log('订单统计接口数据异常')
+//                  }
+//                });
+                      } else {
+                        console.log('获取团队数量统计接口数据异常')
                       }
                     })
                   } else {
-                    console.log('订单统计接口数据异常')
+                    console.log('佣金统计接口数据异常')
                   }
                 });
-              } else {
-                console.log('获取团队数量统计接口数据异常')
               }
             })
           } else {
-            console.log('佣金统计接口数据异常')
+            console.log('订单统计接口数据异常')
           }
         });
       },
@@ -316,6 +334,7 @@
       },
       ...mapMutations({
         tabselect: 'TABSELECT',
+        setImgUrl: 'IMGURL'
       })
     },
 
@@ -367,7 +386,7 @@
     width: .70rem;
     height: .70rem;
     background: url('../assets/images/userinfo-02.png') no-repeat 100% 100%;
-    background-size:100% 100%;
+    background-size: 100% 100%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
@@ -408,7 +427,7 @@
   }
 
   .top {
-    height: .64rem;
+    height: .55rem;
     /*background: #fff;*/
     background: rgb(244, 127, 47);
     -webkit-box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
@@ -463,6 +482,7 @@
   }
 
   .content .mfriend {
+    position: relative;
     margin-top: .05rem;
     text-align: left;
     color: rgba(0, 0, 0, .7);
@@ -561,4 +581,43 @@
     border: none;
     outline: none;
   }
+
+  .topdiv-first:after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: .40rem;
+    top: .09rem;
+    right: 0;
+    background: rgba(255, 255, 255, .1);
+
+  }
+
+  .mint-cell-text-right {
+    position: absolute;
+    right: .4rem;
+    top: .1rem;
+    font-size: 0.14rem;
+    /*font-weight: 700;*/
+    color: rgba(0, 0, 0, .3);
+
+  }
+
+  .mint-cell-text-right:after {
+    content: '>';
+    position: absolute;
+    top: -.01rem;
+    width: .1rem;
+    right: -.2rem;
+    color: rgba(0, 0, 0, .3);
+  }
+
+  .text-right {
+    position: absolute;
+    width: 30%;
+    height: 100%;
+    top: 0;
+    right: 0;
+  }
+
 </style>

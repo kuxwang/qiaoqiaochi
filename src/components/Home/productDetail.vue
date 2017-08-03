@@ -354,7 +354,7 @@
   }
   .icon-btn{
     margin:0;
-    width:34.4%;
+    width:35%;
     height:48px;
     outline: none;
     color:#fff;

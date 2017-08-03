@@ -110,7 +110,7 @@
         psizes: 10,
         bottomStatus: '',
         allLoaded: false,
-        isTrue: true,
+        isTrue: false,
         onePage: false
       }
     },

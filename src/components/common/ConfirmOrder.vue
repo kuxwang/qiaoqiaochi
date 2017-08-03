@@ -5,7 +5,7 @@
         <mt-button icon="back"></mt-button>
       </a>
     </mt-header>
-    <router-link class="deliveryAddress" tag="div" :to="{name:'deliveryaddress'}" v-if="defaultAddress" >
+    <router-link class="deliveryAddress" tag="div" :to="{name:'deliveryaddress'}" v-if="defaultAddress">
       <ul class="fl deliveryAddress-lr">
         <li class="delivery-people clearfix">
           <span class="fl"><i>收货人：</i>{{defaultAddress.realname}}</span>
@@ -143,7 +143,7 @@
         dispatches: '',
         remark: '',
         shopSet: '',
-        payed : false
+        payed: false
       }
     },
     methods: {
@@ -172,66 +172,66 @@
         this.$router.push('home');
       },
       goPay () {
-        let  payed = this.payed;
+        let payed = this.payed;
 
-        if(payed === false){
+        if (payed === false) {
           this.payed = true;
-        let addressid = this.defaultAddress.id || ''
-        let goods = ''
-        let dispatchid = this.dispatch.id
-        let cartids = this.myOrders.cartids
-        let remark = this.remark || '123'
-        if (this.orderGoods) {
-          for (let i = 0, j = this.orderGoods.length; i < j; i++) {
-            console.log(this.orderGoods)
-            if (i != j - 1) {
-              goods = this.orderGoods[i].goodsid + ',' + '0' + ',' + this.orderGoods[i].total + '|'
-            } else {
-              goods = this.orderGoods[i].goodsid + ',' + '0' + ',' + this.orderGoods[i].total
+          let addressid = this.defaultAddress.id || ''
+          let goods = ''
+          let dispatchid = this.dispatch.id
+          let cartids = this.myOrders.cartids
+          let remark = this.remark || '123'
+          if (this.orderGoods) {
+            for (let i = 0, j = this.orderGoods.length; i < j; i++) {
+              console.log(this.orderGoods)
+              if (i != j - 1) {
+                goods = this.orderGoods[i].goodsid + ',' + '0' + ',' + this.orderGoods[i].total + '|'
+              } else {
+                goods = this.orderGoods[i].goodsid + ',' + '0' + ',' + this.orderGoods[i].total
+              }
             }
           }
-        }
-        let params = {
-          data: {
-            goods,
-            dispatchid,
-            addressid,
-            cartids,
-            remark,
+          let params = {
+            data: {
+              goods,
+              dispatchid,
+              addressid,
+              cartids,
+              remark,
+            }
           }
-        }
-        confirm_post(params, res => {
-          if (res.statusCode == 1) {
-            let ordersn = res.data.ordersn
-            // document.getElementById('commitForm').setAttribute('disabled', 'disabled')
-            /*Toast({
-              message: '订单提交成功',
-              position: 'middle',
-              duration: 2000
-            });*/
-            this.ORDERINFO(ordersn);
-            // setTimeout(() => {
+          confirm_post(params, res => {
+            if (res.statusCode == 1) {
+              let ordersn = res.data.ordersn
+              // document.getElementById('commitForm').setAttribute('disabled', 'disabled')
+              /*Toast({
+               message: '订单提交成功',
+               position: 'middle',
+               duration: 2000
+               });*/
+              this.ORDERINFO(ordersn);
+              // setTimeout(() => {
               // document.getElementById('commitForm').removeAttribute('disabled')
-              this.$router.replace({name: 'payselect'})
-            // }, 2000)
-          } else {
-            Toast({
-              message: `${res.data.data}`,
-              position: 'middle',
-              duration: 2000
-            });
-            this.payed = false;
-          }
-        })
+              this.$router.replace({name: 'payselect', query: {orderid: ordersn}})
+              // }, 2000)
+            } else {
+              Toast({
+                message: `${res.data.data}`,
+                position: 'middle',
+                duration: 2000
+              });
+              this.payed = false;
+            }
+          })
 
-        
+
         }
 
-        
+
       },
       goProducts(v){
-        let goodsId=v.goodsid;
-        this.$router.push({ name:'details', query: { goodsId: goodsId}})
+        let goodsId = v.goodsid;
+        this.$router.push({name: 'details', query: {goodsId: goodsId}})
       },
       ...mapMutations([
         'ADDRESS', 'ORDERINFO'
@@ -311,7 +311,7 @@
 
   .deliveryAddress {
     padding: 0.15rem;
- /*   height: 1rem;*/
+    /*   height: 1rem;*/
     margin-top: 0.54rem;
     background: #fff;
     position: relative;
@@ -321,10 +321,12 @@
   .delivery-people {
     overflow: hidden
   }
-  .delivery-people  span i{
+
+  .delivery-people span i {
     color: #333;
     font-size: 0.15rem;
   }
+
   .deliveryAddress:after {
     content: '';
     position: absolute;

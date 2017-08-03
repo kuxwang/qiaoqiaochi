@@ -7,7 +7,7 @@
         </router-link>
       </mt-header>
     </section>
-    <ul class="moneylists" v-if="moneylist">
+    <ul class="moneylists" v-if="moneylist.length">
       <li class="moneycell" v-for="(i,index) in moneylist" :class="{'colorbor': comparefun(moneylist,index)}">
         <div class="left">
           <div class="time">{{i.applytime.substr(0,10)}}</div>
@@ -52,13 +52,14 @@
       }
       withdrawals_get(params, (res) => {
         this.moneylist = res.data.all
-        console.log(this.moneylist)
+//        this.moneylist = []
+//        console.log(this.moneylist)
       })
     },
     methods: {
       comparefun(obj,i){
-        console.log(obj.length)
-        console.log(i)
+//        console.log(obj.length)
+//        console.log(i)
         if( i == obj.length-1){
           return true
         }else {
