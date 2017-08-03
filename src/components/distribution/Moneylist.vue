@@ -7,8 +7,11 @@
         </router-link>
       </mt-header>
     </section>
+   <!-- <mt-loadmore :bottom-method="loadBottom" class="list-content" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
+                 :bottom-all-loaded="allLoaded" ref="loadmore">-->
+
     <ul class="moneylists" v-if="moneylist.length">
-      <li class="moneycell" v-for="(i,index) in moneylist" :class="{'colorbor': comparefun(moneylist,index)}">
+      <li class="moneycell" v-for="(i ,index) in moneylist" :class="{'colorbor': comparefun(moneylist,index),'nomargin': index==0}">
         <div class="left">
           <div class="time">{{i.applytime.substr(0,10)}}</div>
         </div>
@@ -18,11 +21,14 @@
         </div>
         <div class="right">
           <span class="type" >{{i.type}}</span>
-          <!--<span class="type" v-if="i.status==2">审核通过</span>
-          <span class="type" v-if="i.status==1">审核通过</span>-->
         </div>
       </li>
     </ul>
+      <!--<div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded == false" v-if="">
+        <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">继续滚动，可加载更多</span>
+        <span v-show="bottomStatus === 'loading'"><mt-spinner type="snake"></mt-spinner></span>
+      </div>
+    </mt-loadmore>-->
     <div v-if="!moneylist.length" class="tips">
       <span class="iconfont">&#xe66f;</span>
       没有提现记录<br>
@@ -32,11 +38,18 @@
 
 <script>
   import {withdrawals_get, withdrawals_post} from '../../api/api.js';
+  import { Loadmore } from 'mint-ui';
 
   export default{
     data(){
       return {
-        moneylist: []
+        moneylist: [],
+        myCurNo: 1,
+        psizes: 10,
+        bottomStatus: '',
+        allLoaded: false,
+        isTrue: false,
+        onePage: false
       }
     },
     created(){
@@ -52,8 +65,6 @@
       }
       withdrawals_get(params, (res) => {
         this.moneylist = res.data.all
-//        this.moneylist = []
-//        console.log(this.moneylist)
       })
     },
     methods: {
@@ -66,8 +77,32 @@
           return false
         }
 //        return true
+      },
+      getList(){
+        let params = {
+          data: {
+            type: 'all',
+            page: this.myCurNo,
+            psize: 10
+          }
+        }
+        withdrawals_get(params, (res) => {
+          this.moneylist = this.moneylist.concat(res.data.all)
+        })
       }
-    }
+    },
+    loadBottom(){
+      this.myCurNo += 1;
+      this.$refs.loadmore.onBottomLoaded();
+      this.getList()
+    },
+    handleBottomChange(status) {
+      console.log(status);
+      this.bottomStatus = status
+    },
+
+
+
 
   }
 
@@ -159,6 +194,19 @@
     display: block;
     font-size: .8rem;
   }
+  .nomargin {
+    margin-top: 0;
+  }
+  .list-content {
+    overflow: hidden;
+    /*overflow-y: scroll;*/
+    /*height: 4.75rem;*/
+    /*position: absolute;*/
+    /*top: 1.9rem;*/
+    width: 100%;
+  }
+
+
 
 </style>
 

@@ -24,7 +24,7 @@
         </div>
         <div>
           <span>推荐人:</span>
-          <span>{{memberInfo.leveldetail.levelname}}</span>
+          <span>{{memberInfo.from}}</span>
         </div>
       </div>
       <i class="iconfont right">&#xe649;</i>
@@ -219,7 +219,8 @@
           avatar: '',
           leveldetail: {
             levelname: '默认等级',
-          }
+          },
+          from:''  //推荐人
         },
         defaultAvatar: ''
       }
@@ -248,11 +249,13 @@
 //                      console.log('memberInfo');
 //                      console.log(res);
           if (res.statusCode == 1) {
+              console.log(res)
             _this.memberInfo.nickname = res.data.nickname
             _this.memberInfo.id = res.data.id
             _this.memberInfo.level = res.data.level
             _this.memberInfo.leveldetail = res.data.leveldetail
             _this.memberInfo.avatar = res.data.avatar
+            _this.memberInfo.from = res.data.parent_name
             _this.setImgUrl(_this.memberInfo.avatar)
             recordStatistics_get({data: {type: ''}}, function (res) {
               if (res.statusCode == 1) {
