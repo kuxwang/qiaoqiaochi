@@ -177,11 +177,12 @@
     <!--  <transition name="slide">
        <router-view></router-view>
      </transition> -->
+
+    </mt-loadmore>
     <v-tabbar></v-tabbar>
     <transition name="slide">
       <router-view></router-view>
     </transition>
-    </mt-loadmore>
   </div>
 </template>
 <script>
