@@ -43,8 +43,8 @@
 
     <mt-loadmore :bottom-method="loadBottom" class="list-content" @bottom-status-change="handleBottomChange"
                  :autoFill="isTrue"
-                 :bottom-all-loaded="allLoaded" ref="loadmore">
-      <ul class="p-list" v-if="personlist.length">
+                 :bottom-all-loaded="allLoaded" ref="loadmore"  v-if="personlist.length">
+      <ul class="p-list">
         <li class="p-cell" v-for="(i,index) in personlist" @click="popshow(index)">
           <!--<li class="p-cell" >-->
           <div class="logo">
@@ -848,6 +848,19 @@
     width:0.9rem;
     height:.9rem;
     border-radius:50%;
+  }
+
+  .tips {
+    text-align: center;
+    font-size: .14rem;
+    color: #666;
+    margin-top: 2.8rem;
+
+  }
+
+  .tips .iconfont {
+    display: block;
+    font-size: .8rem;
   }
 
 </style>
