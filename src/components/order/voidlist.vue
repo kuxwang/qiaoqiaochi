@@ -27,7 +27,7 @@
 </script>
 <style scoped>
   .share-page {
-    margin-top: 1.6rem;
+    margin-top: .4rem;
     padding: .5rem 1rem;
     color: #999;
 

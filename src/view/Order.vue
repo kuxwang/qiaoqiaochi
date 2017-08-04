@@ -1,6 +1,6 @@
 <template>
   <div class="main order-header">
-    <mt-header title="我的订单" fixed>
+    <mt-header title="我的订单" fixed class="header">
       <router-link to="/" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>

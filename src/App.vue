@@ -38,6 +38,11 @@
     position: relative;
     background-color: #efeff4 !important;
     overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .header {
+    -webkit-transform: translateZ(0);
   }
 
   /*公共头部*/
@@ -112,6 +117,7 @@
   .mint-header .mint-button {
     width: .4rem;
   }
+
 
 </style>
 

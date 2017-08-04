@@ -1,6 +1,6 @@
 <template>
 	<div class="content">
-		<mt-header title="购物车" class="is-fixed">
+		<mt-header title="购物车" class="is-fixed header">
 		  <a slot="left" @click="goBack">
 		    <mt-button icon="back"></mt-button>
 		   </a>
@@ -279,6 +279,8 @@
 		    	GET_MYCARTS(params, function (res) {
 		        	if(res.statusCode===1){
 		        		if(res.data.list&&res.data.list.length>=1){
+		        		    _this.isShow = true
+//                    _this.isTrue = false
 			        		_this.getShCartData=res.data.list;
 			        		for(let a in _this.getShCartData){
 			        			_this.getShCartData[a].isChecked=false

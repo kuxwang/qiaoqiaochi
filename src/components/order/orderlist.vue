@@ -1,5 +1,5 @@
 <template>
-  <ul class="order-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
+  <ul class="order-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50">
     <void-list>
       <li v-for="(v,i) in statusResult">
         <div>订单号：{{v.ordersn}}</div>
@@ -45,6 +45,25 @@
           </router-link>
         </div>
       </li>
+      <p class="page-infinite-loading" v-if="loading&&isloading">
+        <span>
+          <div class="mint-spinner-fading-circle circle-color-112" style="width: 28px; height: 28px;">
+            <div class="mint-spinner-fading-circle-circle is-circle2"></div>
+            <div class="mint-spinner-fading-circle-circle is-circle3"></div>
+            <div class="mint-spinner-fading-circle-circle is-circle4"></div>
+            <div class="mint-spinner-fading-circle-circle is-circle5"></div>
+            <div class="mint-spinner-fading-circle-circle is-circle6"></div>
+            <div class="mint-spinner-fading-circle-circle is-circle7"></div>
+            <div class="mint-spinner-fading-circle-circle is-circle8"></div>
+            <div class="mint-spinner-fading-circle-circle is-circle9"></div>
+            <div class="mint-spinner-fading-circle-circle is-circle10"></div>
+            <div class="mint-spinner-fading-circle-circle is-circle11"></div>
+            <div class="mint-spinner-fading-circle-circle is-circle12"></div>
+            <div class="mint-spinner-fading-circle-circle is-circle13"></div>
+          </div>
+        </span>
+        加载中...
+      </p>
     </void-list>
   </ul>
 </template>
@@ -60,13 +79,15 @@
         statusType: '',
         page: 1,
         loading: false,
-        canReason: '其他原因'
+        canReason: '其他原因',
+        isloading: true
       }
     },
     methods: {
       init (statusType) {
-        this.page = 1
-        this.statusType = statusType
+        this.page = 1;
+        this.statusType = statusType;
+        this.loading = false;
         let params = {
           data: {
             page: this.page,
@@ -74,7 +95,6 @@
           }
         };
         orderList(params, res => {
-          console.log(res)
           if (res.statusCode == 1) {
             this.statusResult = res.data
 //            console.log(res)
@@ -82,8 +102,9 @@
         });
       },
       loadMore () {
+        console.log(123)
+        console.log(this.loading)
         this.loading = true;
-//        console.log(123)
         let params = {
           data: {
             page: ++this.page,
@@ -94,14 +115,22 @@
           orderList(params, res => {
             if (res.statusCode == 1) {
               this.statusResult = this.statusResult.concat(res.data);
-              this.loading = false;
+              setTimeout(() => {
+                this.loading = false;
+              }, 1000)
+
             } else {
-              this.loading = false;
+              this.isloading = false
+              this.loading = true;
+              Toast({
+                message: res.data,
+                position: 'middle',
+                duration: 1000
+              });
             }
           });
-
-          this.loading = false;
         }, 2500);
+//        }
       },
       cancel: function (orderid) {
         MessageBox({title: '确定取消订单吗?', message: '点击确认取消', showCancelButton: true}).then(action => {
@@ -116,7 +145,6 @@
               }
             }
             orderManu(params, function (res) {
-              console.log(res)
               if (res.statusCode == 1) {
                 for (let i = 0; i < that.statusResult.length; i++) {
                   if (that.statusResult[i].id === orderid) {
@@ -130,6 +158,7 @@
                   position: 'middle',
                   duration: 1000
                 });
+
                 that.init(that.statusType);
               }
             })
@@ -145,7 +174,7 @@
         this.$router.push({name: 'drawbackInfo', query: {refundid: refundid}});
       },
       fn1: function (orderid) {
-        this.$router.push({path: '/orderd', query:{oid: orderid,sta:2}});
+        this.$router.push({path: '/orderd', query: {oid: orderid, sta: 2}});
       },
     },
     computed: {},
@@ -163,8 +192,7 @@
     padding-top: .01rem;
     margin-left: auto;
     margin-right: auto;
-    margin-top: .8rem;
-
+    /*overflow: scroll;*/
   }
 
   .order-list li {
@@ -254,4 +282,139 @@
     margin-right: .05rem;
   }
 
+  /*加载*/
+  .page-infinite-loading {
+    margin-top: .01rem;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    background: #fff;
+  }
+
+  .page-infinite-loading div {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+
+  .mint-spinner-fading-circle-circle.is-circle2:before {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+  }
+
+  .mint-spinner-fading-circle-circle.is-circle3:before {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+  }
+
+  .mint-spinner-fading-circle-circle.is-circle4:before {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+  }
+
+  .mint-spinner-fading-circle-circle.is-circle5:before {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+  }
+
+  .mint-spinner-fading-circle-circle.is-circle6:before {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+  }
+
+  .mint-spinner-fading-circle-circle.is-circle7:before {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+  }
+
+  .mint-spinner-fading-circle-circle.is-circle8:before {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+  }
+
+  .mint-spinner-fading-circle-circle.is-circle9:before {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+  }
+
+  .mint-spinner-fading-circle-circle.is-circle10:before {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+  }
+
+  .mint-spinner-fading-circle-circle.is-circle11:before {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+  }
+
+  .mint-spinner-fading-circle-circle.is-circle12:before {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+  }
+
+  .mint-spinner-fading-circle-circle.is-circle13:before {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+  }
+
+  /*.mint-spinner-fading-circle-circle.is-circle2 {*/
+  /*-webkit-transform: rotate(30deg);*/
+  /*transform: rotate(30deg);*/
+  /*}*/
+
+  /*.mint-spinner-fading-circle-circle.is-circle3 {*/
+  /*-webkit-transform: rotate(60deg);*/
+  /*transform: rotate(60deg)*/
+  /*}*/
+
+  /*.mint-spinner-fading-circle-circle.is-circle4 {*/
+  /*-webkit-transform: rotate(90deg);*/
+  /*transform: rotate(90deg);*/
+  /*}*/
+
+  /*.mint-spinner-fading-circle-circle.is-circle5 {*/
+  /*-webkit-transform: rotate(120deg);*/
+  /*transform: rotate(120deg);*/
+  /*}*/
+
+  /*.mint-spinner-fading-circle-circle.is-circle6 {*/
+  /*-webkit-transform: rotate(150deg);*/
+  /*transform: rotate(150deg);*/
+  /*}*/
+
+  /*.mint-spinner-fading-circle-circle.is-circle7 {*/
+  /*-webkit-transform: rotate(180deg);*/
+  /*transform: rotate(180deg);*/
+  /*}*/
+
+  /*.mint-spinner-fading-circle-circle.is-circle8 {*/
+  /*-webkit-transform: rotate(210deg);*/
+  /*transform: rotate(210deg);*/
+  /*}*/
+
+  /*.mint-spinner-fading-circle-circle.is-circle9 {*/
+  /*-webkit-transform: rotate(240deg);*/
+  /*transform: rotate(240deg);*/
+  /*}*/
+
+  /*.mint-spinner-fading-circle-circle.is-circle10 {*/
+  /*-webkit-transform: rotate(270deg);*/
+  /*transform: rotate(270deg);*/
+  /*}*/
+
+  /*.mint-spinner-fading-circle-circle.is-circle11 {*/
+  /*-webkit-transform: rotate(300deg);*/
+  /*transform: rotate(300deg);*/
+  /*}*/
+
+  /*.mint-spinner-fading-circle-circle.is-circle12 {*/
+  /*-webkit-transform: rotate(330deg);*/
+  /*transform: rotate(330deg);*/
+  /*}*/
+
+  /*.page-infinite-loading div {*/
+  /*display: inline-block;*/
+  /*vertical-align: middle;*/
+  /*margin-right: 5px;*/
+  /*}*/
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <mt-header fixed title="二维码">
+    <mt-header fixed title="二维码" class="header">
       <!--<router-link to="/vipCenter" slot="left">-->
       <!--<mt-button icon="back" ></mt-button>-->
       <!--</router-link>-->
@@ -27,7 +27,7 @@
       vTabbar
     },
     methods: {
-      clickhavib () { 
+      clickhavib () {
         let _this=this;
         QrimgSave(_this.qrimg, (res) => {
           if (res.statusCode == 1) {

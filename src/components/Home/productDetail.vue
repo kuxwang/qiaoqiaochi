@@ -225,7 +225,9 @@
   @import '../../assets/css/fonts/iconfont.css';
   @import '../../assets/css/reset/reset.css';
   .main {
+    /*-webkit-transform: translateZ(0)；*/
     position: fixed;
+    /*-webkit-transform: translateZ(0);*/
     left: 0;
     top: 0;
     width: 100%;
@@ -312,6 +314,7 @@
     position: fixed;
     bottom: 0;
     left: 0;
+    -webkit-transform: translateZ(0);
     /*border-top: 1px solid #DDDDDD;*/
   }
   .icon-box{
