@@ -38,7 +38,7 @@
     </ul>
     <div class="search">
       <input type="text" results="1" v-model="find" placeholder="输入手机号、粉丝ID"/>
-      <div @click="search">搜索</div>
+      <div @click="selecttab(4,1)">搜索</div>
     </div>
 
     <mt-loadmore :bottom-method="loadBottom" class="list-content" @bottom-status-change="handleBottomChange"
