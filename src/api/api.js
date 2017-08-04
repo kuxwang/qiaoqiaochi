@@ -1,8 +1,8 @@
 /**
  * Created by Crete on 17/7/24.
  */
-import {_webapp} from '../config/webapp.js'
-// import {_webapp} from '../config/_webapp.js'
+// import {_webapp} from '../config/webapp.js'
+import {_webapp} from '../config/_webapp.js'
 const base = 'https://api.duoyunjiav2.wshoto.com';
 const header = 'application/json';
 const dataType = 'json';
@@ -329,7 +329,7 @@ export const orderDetail = function (params, callback) {
 };
 /**
  * 快递
-  */
+ */
 export const expressInfo = function (params, callback) {
   _webapp.requestx(Object.assign(params, express.exp), function (res) {
     callback(res)
@@ -417,8 +417,8 @@ export const PUT_USERAVATARS = function (params, callback) {
     callback(res)
   })
 };
-export const USERPHOTO=function(){
-  _webapp.uploadImg((res)=>{
+export const USERPHOTO = function () {
+  _webapp.uploadImg((res) => {
     callback(res)
   })
 }
@@ -426,7 +426,7 @@ export const USERPHOTO=function(){
 /**
  * 购物车数量 yellowStar
  */
-const CARTNUMS= {url: `${base}/carts/cartNums`, method: 'GET', header, dataType}
+const CARTNUMS = {url: `${base}/carts/cartNums`, method: 'GET', header, dataType}
 export const GET_CARTNUMS = function (params, callback) {
   _webapp.requestx(Object.assign(params, CARTNUMS), function (res) {
     callback(res)
@@ -436,8 +436,8 @@ export const GET_CARTNUMS = function (params, callback) {
 /**
  * 退出登录 yellowStar
  */
-export const LOGINOUT=function(){
-  _webapp.logOut((res)=>{
+export const LOGINOUT = function () {
+  _webapp.logOut((res) => {
 
   })
 }
