@@ -300,7 +300,9 @@
     },
     watch:{
       find(a,b){
-        this.selecttab(5)
+        if(this.selected === 5){
+          this.selecttab(5)
+        }
       }
     },
     created(){
