@@ -296,6 +296,11 @@
 
 
     },
+    watch:{
+      find(a,b){
+        this.selecttab(5)
+      }
+    },
 
     created(){
       this.selected = this.tabselect;
