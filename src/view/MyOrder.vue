@@ -1,11 +1,11 @@
 <template>
   <div class="main order-header">
-    <mt-header title="我的订单" fixed>
+    <mt-header id="topheader" title="我的订单" fixed>
       <router-link to="/" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-    <div class="mint-navbar page-part">
+    <div class="mint-navbar page-part" id="nav">
       <a class="mint-tab-item" :class="{'is-selected': isselect==1}" @click="isselect=1">
         <div class="mint-tab-item-icon"></div>
         <div class="mint-tab-item-label">全部</div>
@@ -27,19 +27,10 @@
         <div class="mint-tab-item-label">已完成</div>
       </a>
     </div>
-    <div class="page-navbar">
-      <!--<mt-navbar class="page-part" v-model="selected" fixed>-->
-      <!--<mt-tab-item id="all">全部</mt-tab-item>-->
-      <!--<mt-tab-item id="will-pay">待付款</mt-tab-item>-->
-      <!--<mt-tab-item id="will-send">待发货</mt-tab-item>-->
-      <!--<mt-tab-item id="will-reserve">待收货</mt-tab-item>-->
-      <!--<mt-tab-item id="done">已完成</mt-tab-item>-->
-      <!--</mt-navbar>-->
-
-
+    <div id="page-navbar" class="page-navbar">
       <order-lists ref="mylist"></order-lists>
     </div>
-    <v-tabbar></v-tabbar>
+    <v-tabbar id="tabbar"></v-tabbar>
     <router-view></router-view>
   </div>
 </template>
@@ -85,11 +76,22 @@
         }
       }
     },
-    methods: {},
+
+    methods: {
+      setHeight () {
+        let contentDiv = document.getElementById('page-navbar');
+        let topDiv = document.getElementById('topheader');
+        let navDiv = document.getElementById('nav');
+        let tabbarDiv = document.getElementsByClassName('tabbar');
+        let diffHeght = (document.body.clientHeight - topDiv.clientHeight - navDiv.clientHeight - 50) / 100 + 'rem';
+        contentDiv.style.height = diffHeght
+      }
+    },
     created(){
-      console.log(this.$refs)
-//      this.$refs.mylist.statusType = ''
-//      this.getOrderList(this.statusPage);
+
+    },
+    mounted () {
+      this.setHeight()
     },
     computed: {},
     components: {
@@ -185,9 +187,10 @@
   }
 
   .page-navbar {
-    overflow: scroll;
-    margin-top: -1px;
-    height: 6.22rem;
+    overflow-y: scroll;
+    margin-top: .8rem;
+    /*height: 6.22rem;*/
+    -webkit-overflow-scrolling: touch
   }
 
   * {

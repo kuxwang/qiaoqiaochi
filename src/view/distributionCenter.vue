@@ -1,7 +1,6 @@
 <template>
   <div class="main">
-
-    <mt-header fixed title="个人信息">
+    <mt-header fixed title="个人信息" class="header">
       <router-link to="/vipCenter" slot="left">
         <!--<mt-button icon="back"></mt-button>-->
       </router-link>
@@ -248,13 +247,9 @@
     methods: {
       init () {
         let _this = this;
-//        let params = {};
         //佣金统计
         memberInfo({}, function (res) {
-//                      console.log('memberInfo');
-//                      console.log(res);
           if (res.statusCode == 1) {
-            console.log(res)
             _this.memberInfo.nickname = res.data.nickname
             _this.memberInfo.id = res.data.id
             _this.memberInfo.level = res.data.level
@@ -263,52 +258,29 @@
             _this.memberInfo.from = res.data.parent_name
             _this.setImgUrl(_this.memberInfo.avatar)
             recordStatistics_get({data: {type: ''}}, function (res) {
+                console.log(res)
               if (res.statusCode == 1) {
                 let data = res.data
-//                console.log('recordStatistics');
-
-                _this.recordStatistics_get.cg_money_sum = res.data.total.cg_money_sum;
-                _this.recordStatistics_get.c_money_sum = res.data.total.c_money_sum;
-                _this.recordStatistics_get.o_status_3 = res.data.o_status_3.cg_money_sum;
-                _this.recordStatistics_get.pay = res.data.pay.cg_money_sum;
-                _this.recordStatistics_get.check = res.data.check.cg_money_sum;
-                _this.recordStatistics_get.invalid = res.data.invalid.cg_money_sum;
+                _this.recordStatistics_get.cg_money_sum = res.data.total.cg_money_sum || 0;
+                _this.recordStatistics_get.c_money_sum = res.data.total.c_money_sum || 0;
+                _this.recordStatistics_get.o_status_3 = res.data.o_status_3.cg_money_sum || 0;
+                _this.recordStatistics_get.pay = res.data.pay.cg_money_sum || 0;
+                _this.recordStatistics_get.check = res.data.check.cg_money_sum || 0;
+                _this.recordStatistics_get.invalid = res.data.invalid.cg_money_sum || 0;
                 _this.recordStatistics_get.apply = res.data.apply.cg_money_sum;
-                _this.recordStatistics_get.o_status_0 = res.data.o_status_0.cg_money_sum;
-
+                _this.recordStatistics_get.o_status_0 = res.data.o_status_0.cg_money_sum || 0;
                 teamsStatistics({}, function (res) {
-                  console.log('teamsStatistics');
-                  console.log(res);
                   if (res.statusCode == 1) {
-                    _this.teamsStatistics.all = res.data.all;
-                    _this.teamsStatistics.purchased = res.data.purchased;
-                    _this.teamsStatistics.no_purchased = res.data.no_purchased;
-
-
+                    _this.teamsStatistics.all = res.data.all  || 0;
+                    _this.teamsStatistics.purchased = res.data.purchased  || 0;
+                    _this.teamsStatistics.no_purchased = res.data.no_purchased  || 0;
                     orderStatistics({}, function (res) {
                       console.log('orderStatistics');
-                      console.log(res);
                       if (res.statusCode == 1) {
-                        _this.orderStatistics.total = res.data.total.order_count
-                        _this.orderStatistics.lock = res.data.lock.order_count
-                        _this.orderStatistics.refund = res.data.refund.order_count
-                        _this.orderStatistics.ok = res.data.ok.order_count
-
-//                    memberInfo({}, function (res) {
-////                      console.log('memberInfo');
-////                      console.log(res);
-//                      if (res.statusCode == 1) {
-//                        _this.memberInfo.nickname = res.data.nickname
-//                        _this.memberInfo.id = res.data.id
-//                        _this.memberInfo.level = res.data.level
-//                        _this.memberInfo.leveldetail = res.data.leveldetail
-//                        _this.memberInfo.avatar = res.data.avatar
-//                      }
-//                    })
-//                  } else {
-//                    console.log('订单统计接口数据异常')
-//                  }
-//                });
+                        _this.orderStatistics.total = res.data.total.order_count  || 0
+                        _this.orderStatistics.lock = res.data.lock.order_count  || 0
+                        _this.orderStatistics.refund = res.data.refund.order_count  || 0
+                        _this.orderStatistics.ok = res.data.ok.order_count  || 0
                         _this.$refs.loadmore.onTopLoaded();
                       } else {
                         console.log('获取团队数量统计接口数据异常')
@@ -321,7 +293,7 @@
               }
             })
           } else {
-            console.log('订单统计接口数据异常')
+            console.log('会员接口数据异常')
           }
         });
       },
@@ -350,16 +322,17 @@
       },
       loadTop(){
         this.init()
-
       },
       ...mapMutations({
         tabselect: 'TABSELECT',
         setImgUrl: 'IMGURL'
       })
     },
-//    activated () {
-//      this.init();
-//    },
+    filter: {
+      setdefault (value) {
+        return value || 0
+      }
+    },
     mounted(){
       this.init();
     }

@@ -255,8 +255,6 @@
       },
       popshow(index){
         this.$router.push({name:'partnerInfo',query:{openid:this.personlist[index].openid}})
-
-
       },
       loadTop (){
 //        this.selecttab(this.selected,1)

@@ -60,14 +60,14 @@
         statusType: '',
         page: 1,
         loading: false,
-        canReason: '其他原因'
+        canReason: '其他原因',
       }
     },
     methods: {
       init (statusType) {
         this.page = 1;
         this.statusType = statusType;
-        this.loading = true;
+        this.loading = false;
         let params = {
           data: {
             page: this.page,
@@ -82,31 +82,33 @@
         });
       },
       loadMore () {
-        this.loading = false;
-//        console.log(123)
-        let params = {
-          data: {
-            page: ++this.page,
-            status: this.statusType
-          }
-        };
-        setTimeout(() => {
-          orderList(params, res => {
-            if (res.statusCode == 1) {
-              this.statusResult = this.statusResult.concat(res.data);
-              this.loading = false;
-            } else {
-              this.loading = true;
-              Toast({
-                message: res.data,
-                position: 'middle',
-                duration: 1000
-              });
+        if (!this.loading) {
+            console.log(this.loading+'/')
+          this.loading = true;
+          let params = {
+            data: {
+              page: ++this.page,
+              status: this.statusType
             }
-          });
+          };
+          setTimeout(() => {
+            orderList(params, res => {
+              if (res.statusCode == 1) {
+                this.statusResult = this.statusResult.concat(res.data);
+                this.loading = false;
+              } else {
+                this.loading = true;
+                Toast({
+                  message: res.data,
+                  position: 'middle',
+                  duration: 1000
+                });
+              }
+            });
 
-          this.loading = false;
-        }, 2500);
+            this.loading = false;
+          }, 2500);
+        }
       },
       cancel: function (orderid) {
         MessageBox({title: '确定取消订单吗?', message: '点击确认取消', showCancelButton: true}).then(action => {
@@ -150,7 +152,7 @@
         this.$router.push({name: 'drawbackInfo', query: {refundid: refundid}});
       },
       fn1: function (orderid) {
-        this.$router.push({path: '/orderd', query:{oid: orderid,sta:2}});
+        this.$router.push({path: '/orderd', query: {oid: orderid, sta: 2}});
       },
     },
     computed: {},
@@ -168,7 +170,6 @@
     padding-top: .01rem;
     margin-left: auto;
     margin-right: auto;
-    margin-top: .8rem;
 
   }
 

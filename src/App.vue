@@ -38,6 +38,11 @@
     position: relative;
     background-color: #efeff4 !important;
     overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .header {
+    -webkit-transform: translateZ(0);
   }
 
   /*公共头部*/
@@ -109,6 +114,7 @@
     /*height: 6.2rem;*/
     overflow: hidden;
   }
+
 
 </style>
 
