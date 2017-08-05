@@ -122,10 +122,6 @@
         onePage: false
       }
     },
-    created: function () {
-      console.log('a is: ' + this.a)
-    },
-    components: {},
     methods: {
       selecttab(idx, page){
         let _this = this;

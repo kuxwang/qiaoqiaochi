@@ -123,9 +123,6 @@
         onePage: false
       }
     },
-    components: {
-      'mt-popup': Popup
-    },
     methods: {
       open(){
         this.popupVisible = true
