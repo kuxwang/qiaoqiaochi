@@ -22,8 +22,8 @@
         <!--<span class="left-id">ID:{{teamsinfo.id}}</span>-->
         <!--<span>手机号：{{teamsinfo.mobile}}</span>-->
       <!--</div>-->
-      <div>会员等级<p>{{teamsinfo.level.levelname}}</p></div>
-      <div>分销等级<p>{{teamsinfo.agentlevel.levelname}}</p></div>
+      <div>会员等级<p>{{levelname}}</p></div>
+      <div>分销等级<p>{{agentlevel}}</p></div>
     </div>
     <div class="height"></div>
     <!--<div class="vip">-->
@@ -33,12 +33,12 @@
     <div class="money">
       <div class="money-left">
 
-        <p>{{teamsinfo.recordStatistics.cg_money_sum}}</p>
+        <p>{{cg_money_sum}}</p>
         营业额
       </div>
       <div>
 
-        <p>{{teamsinfo.recordStatistics.c_money_sum}}</p>
+        <p>{{c_money_sum}}</p>
         推广费
       </div>
     </div>
@@ -50,22 +50,22 @@
       <!--</div>-->
       <div>
 
-        <p>{{teamsinfo.orderStatistics.o_status_1_price}}</p>
+        <p>{{o_status_1_price}}</p>
         已付款
       </div>
       <div>
 
-        <p>{{teamsinfo.orderStatistics.o_status_2_price}}</p>
+        <p>{{o_status_2_price}}</p>
         已发货
       </div>
       <div>
 
-        <p>{{teamsinfo.orderStatistics.o_status_3_price}}</p>
+        <p>{{o_status_3_price}}</p>
         已完成
       </div>
       <div class="last">
 
-        <p>{{teamsinfo.orderStatistics.o_status_r1_price}}</p>
+        <p>{{o_status_r1_price}}</p>
         退货
       </div>
     </div>
@@ -79,7 +79,14 @@
     data(){
       return{
         teamsinfo:'',
-        levelname:''
+        levelname:'',
+        agentlevel:'',
+        c_money_sum:'',
+        cg_money_sum:'',
+        o_status_1_price:'',
+        o_status_2_price:'',
+        o_status_3_price:'',
+        o_status_r1_price:''
       }
     },
     methods:{
@@ -97,6 +104,14 @@
       if (res.statusCode == 1) {
         console.log(res)
         this.teamsinfo = res.data;
+        this.levelname=res.data.level.levelname;
+        this. agentlevel=res.data. agentlevel.levelname;
+        this.cg_money_sum=res.data.recordStatistics.cg_money_sum;
+        this.c_money_sum=res.data.recordStatistics.c_money_sum;
+        this.o_status_1_price=res.data.orderStatistics.o_status_1_price;
+        this.o_status_2_price=res.data.orderStatistics.o_status_2_price;
+        this.o_status_3_price=res.data.orderStatistics.o_status_3_price;
+        this.o_status_r1_price=res.data.orderStatistics.o_status_r1_price;
 //        console.log(this.teamsinfo)
     }else{
         console.log('会员信息请求出错')
