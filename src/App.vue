@@ -114,6 +114,12 @@
     /*height: 6.2rem;*/
     overflow: hidden;
   }
+  .mint-header .mint-button {
+    width: .4rem;
+  }
+  .mint-header-button > a {
+    display: block;
+  }
 
 
 </style>

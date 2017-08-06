@@ -12,7 +12,7 @@
 
     <ul class="nav-tab">
       <!--<router-link to="/partner1" tag="li">-->
-      <li :class="{tabActive: selected==1 }" @click="selecttab(1,1)">
+      <li :class="{tabActive: selected==1 }" @click="tabnav('all',1)">
         <div class="title">所有伙伴</div>
         <div class="iconfont listicon">&#xe646;</div>
         <div>
@@ -20,14 +20,14 @@
         </div>
 
       </li>
-      <li :class="{tabActive: selected==2}" @click="selecttab(2,1)">
+      <li :class="{tabActive: selected==2}" @click="tabnav('agent',2)">
         <div class="title">已购买伙伴</div>
         <div class="iconfont listicon">&#xe600;</div>
         <div>
           <span class="num">{{personnum.purchased}}</span><span class="yuan"> 人</span>
         </div>
       </li>
-      <li :class="{tabActive: selected==3 }" @click="selecttab(3,1)">
+      <li :class="{tabActive: selected==3 }"@click="tabnav('fans',3)">
         <div class="title">未购买伙伴</div>
         <div class="iconfont listicon">&#xe60d;</div>
         <div>
@@ -38,13 +38,10 @@
     </ul>
     <div class="search">
       <input type="text" results="1" v-model="find" placeholder="输入手机号、粉丝ID"/>
-      <div @click="search">搜索</div>
+      <div @click="searchlist">搜索</div>
     </div>
 
-    <mt-loadmore :bottom-method="loadBottom" class="list-content" @bottom-status-change="handleBottomChange"
-                 :autoFill="isTrue"
-                 :bottom-all-loaded="allLoaded" ref="loadmore">
-      <ul class="p-list" v-if="personlist.length">
+      <ul class="p-list"  v-if="personlist.length"  v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="10">
         <li class="p-cell" v-for="(i,index) in personlist" @click="popshow(index)">
           <!--<li class="p-cell" >-->
           <div class="logo">
@@ -57,16 +54,20 @@
           </div>
         </li>
       </ul>
-      <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded == false">
-      <!--<div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded">-->
+    <div v-else class="tips">
+      <span class="iconfont">&#xe612;</span>
+      未找到伙伴<br>
+    </div>
+   <!--   <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-if="allLoaded == false">
+      &lt;!&ndash;<div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded">&ndash;&gt;
         <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">继续滚动，可加载更多</span>
         <span v-show="bottomStatus === 'loading'"><mt-spinner type="snake"></mt-spinner></span>
-      </div>
-    </mt-loadmore>
+      </div>-->
+    <!--</mt-loadmore>-->
     <router-view></router-view>
-    <mt-popup
+ <!--   <mt-popup
       v-model="popupVisible"
-      popup-transition="popup-fade" v-if="popupVisible">
+      popup-transition="popup-fade" v-if="popupVisible">-->
       <!--<div class="pop-up">-->
         <!--<img class="sharelogo" :src="teamsinfo.avatar"/>-->
         <!--<h5>{{teamsinfo.nickname}}</h5>-->
@@ -83,7 +84,7 @@
           <!--&lt;!&ndash;<li><span class="pop-left">创建时间： </span><span class="pop-right">{{teamsinfo.createtime}}</span></li>&ndash;&gt;-->
         <!--</ul>-->
       <!--</div>-->
-      <div class="pop-info">
+     <!-- <div class="pop-info" v-else="">
         <div class="img"><img :src="teamsinfo.avatar" alt=""></div>
         <h3>{{teamsinfo.nickname}}</h3>
         <div class="id-phone">
@@ -91,11 +92,8 @@
           <span>手机号：{{teamsinfo.mobile}}</span>
         </div>
       </div>
-    </mt-popup>
-    <div v-else class="tips">
-      <span class="iconfont">&#xe612;</span>
-      未找到伙伴<br>
-    </div>
+    </mt-popup>-->
+
   </div>
 
 </template>
@@ -123,9 +121,6 @@
         onePage: false
       }
     },
-    components: {
-      'mt-popup': Popup
-    },
     methods: {
       open(){
         this.popupVisible = true
@@ -134,8 +129,8 @@
         let _this = this;
         this.selected = idx;
         if (page === 1) {
-          this.personlist = [];
-          this.allLoaded = false;
+          _this.personlist = [];
+          _this.allLoaded = false;
         }
 
         switch (idx) {
@@ -149,7 +144,7 @@
             }
             teamsLists(params, (res) => {
               if (res.statusCode == 1) {
-                this.personlist = this.personlist.concat(res.data.lists);
+                _this.personlist = _this.personlist.concat(res.data.lists);
                 if (res.data.next === true) {
                   _this.allLoaded = false;
                 }else{
@@ -225,7 +220,6 @@
             params = {
               data: obj
             };
-
             teams(params, (res) => {
               if (res.statusCode === 1) {
                 this.personlist = res.data;
@@ -269,26 +263,83 @@
 //        console.log(status);
         this.bottomStatus = status
       },
+      tabnav(type,index){
+        let _this=this;
+        this.myCurNo=1;
+        _this.selected=index;
+        _this.personlist=[];
+        let params = {
+          data: {
+            type: type,
+            page: 1,
+            psize: this.psizes
+          }
+        }
+        teamsLists(params, (res) => {
 
-      search(){
+          if (res.statusCode == 1) {
+            _this.personlist = _this.personlist.concat(res.data.lists);
+            console.log(res)
 
-        let mobilereg = /^1[3|4|5|7|8][0-9]{9}$/;
-        let idreg = /^[0-9]*$/;
+            if (res.data.length < _this.psizes) {
+              _this.allLoaded = true;
+            }
+            console.log(_this.personlist.length);
+            console.log(_this.selected);
+            console.log(_this.myCurNo);
+          }else{
+            _this.allLoaded = true;
+            console.log('请求失败`${res.statusCode} , ${res.data}` ')
+          }
 
-        if (mobilereg.test(!this.find) || idreg.test(this.find)) {
-            this.searchnum(this.find);
-            // console.log(Number(this.find))
-            this.$router.push({name: `partnerlist4`}),
-          this.selected = 4
-          this.selecttab(4)
+        });
+      },
+      loadMore(){
+        this.myCurNo=this.myCurNo+1;
+        this.selecttab(this.selected, this.myCurNo)
+      },
 
-        } else {
+      searchlist(){
+        this.personlist=[];
+        this.selected = 4;
+        if (this.find.length === 11) {
+          var obj = {
+            mobile: this.find
+          }
+        } else if (Number(this.find)) {
+          var obj = {
+            id: this.find
+          }
+        }else{
           Toast({
             message: '请属于正确的会员ID或会员手机号。',
             position: 'middle',
             duration: 2000
           });
         }
+        let params = {
+          data: obj
+        };
+        teams(params, (res) => {
+          if (res.statusCode === 1) {
+            this.personlist = res.data;
+            if (!this.personlist || this.personlist.length <= 1) {
+              this.searched = false
+
+            } else {
+              let obji = []
+              obji.push(res.data)
+              this.personlist = obji
+//                  console.log(this.personlist)
+            }
+          } else {
+            Toast({
+              message: res.data,
+              position: 'middle',
+              duration: 2000
+            });
+          }
+        })
 
       },
       ...mapMutations({
@@ -298,7 +349,9 @@
     },
     watch:{
       find(a,b){
-        this.selecttab(5)
+        if(this.selected === 4){
+          this.searchlist()
+        }
       }
     },
     created(){
@@ -550,6 +603,7 @@
   .p-list {
     display: block;
     background-color: #ececec;
+    margin-top: 1.95rem;
   }
 
   .p-cell {
@@ -844,6 +898,19 @@
     width:0.9rem;
     height:.9rem;
     border-radius:50%;
+  }
+
+  .tips {
+    text-align: center;
+    font-size: .14rem;
+    color: #666;
+    margin-top: 2.8rem;
+
+  }
+
+  .tips .iconfont {
+    display: block;
+    font-size: .8rem;
   }
 
 </style>

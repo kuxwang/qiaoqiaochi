@@ -13,7 +13,7 @@
         <router-view></router-view>
       </transition>
       <ul class="nav-tab">
-        <li :class="{tabActive: selected==1 }" @click="selecttab(1,1)">
+        <li :class="{tabActive: selected==1 }" @click="tabnav('total',1)">
           <!--<router-link @click="selecttab(1)" to="/extension1" tag="li" :class="{tabActive: selected==1 }"  >-->
           <div class="title">全部</div>
           <div class="iconfont listicon">&#xe624;</div>
@@ -22,7 +22,7 @@
           </div>
           <!--</router-link>-->
         </li>
-        <li :class="{tabActive: selected==2 }" @click="selecttab(2,1)">
+        <li :class="{tabActive: selected==2 }" @click="tabnav('lock',2)">
           <!--<router-link @click="selecttab(2)" to="/extension2" tag="li" :class="{tabActive: selected==2 }" >-->
           <div class="title">未结算</div>
           <div class="iconfont listicon">&#xe624;</div>
@@ -33,7 +33,7 @@
           <!--</li>-->
           <!--<router-link  @click="selecttab(3)" to="/extension3" tag="li" :class="{tabActive: selected==3 }">-->
         </li>
-        <li :class="{tabActive: selected==3 }" @click="selecttab(3,1)">
+        <li :class="{tabActive: selected==3 }" @click="tabnav('refund',3)">
           <!--<li class="li2">-->
           <div class="title">已退款</div>
           <div class="iconfont listicon">&#xe8b5;</div>
@@ -44,7 +44,7 @@
         </li>
         <!--</router-link>-->
 
-        <li :class="{tabActive: selected==4 }" @click="selecttab(4,1)">
+        <li :class="{tabActive: selected==4 }" @click="tabnav('ok',4)">
           <div class="title">已结算</div>
           <div class="iconfont listicon">&#xe619;</div>
           <div>
@@ -55,14 +55,11 @@
 
       <div class="search">
         <input type="text" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
-        <div @click="selecttab(5)">搜索</div>
+        <div @click="searchlist">搜索</div>
       </div>
     </div>
 
-    <mt-loadmore :bottom-method="loadBottom" class="list-content" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
-                 :bottom-all-loaded="allLoaded" ref="loadmore">
-
-      <ul class="p-list" v-if="orderlist.length">
+      <ul class="p-list" v-if="orderlist.length"  v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="10">
         <li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">
           <div class="up">
             <span class="ordernum">订单编号{{i.ordersn}}</span>
@@ -83,11 +80,10 @@
           </div>
         </li>
       </ul>
-      <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded == false" v-if="">
+    <!--  <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded == false" v-if="">
         <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">继续滚动，可加载更多</span>
         <span v-show="bottomStatus === 'loading'"><mt-spinner type="snake"></mt-spinner></span>
-      </div>
-    </mt-loadmore>
+      </div>-->
     <div v-if="!orderlist.length" class="tips">
       <span class="iconfont">&#xe66f;</span>
       没有相关订单<br>
@@ -98,7 +94,7 @@
 <script>
   import MtCell from "../../../node_modules/mint-ui/packages/cell/src/cell";
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
-  import {Search, Loadmore, InfiniteScroll} from 'mint-ui';
+  import {Search, Loadmore, InfiniteScroll,Toast} from 'mint-ui';
   import {mapMutations, mapGetters} from 'vuex';
   import {orderStatistics, orderLists, orders} from '../../api/api'
   export default{
@@ -119,24 +115,28 @@
         bottomStatus: '',
         allLoaded: false,
         isTrue: false,
-        onePage: false
+        onePage: false,
+        loding:true
       }
     },
-    created: function () {
-      console.log('a is: ' + this.a)
-    },
-    components: {},
     methods: {
+      orderinfo(index){
+        this.ordersn(this.orderlist[index].ordersn);
+        this.$router.push({name: `orderinfo`})
+      },
       selecttab(idx, page){
         let _this = this;
-        this.selected = idx;
-        if(idx==5){
+//        this.selected = idx;
+        /*if(idx==5){
           this.orderlist = [];
           this.allLoaded = true;
         }else if(page===1) {
           this.orderlist = [];
           this.allLoaded = false;
           this.myCurNo = 1;
+        }*/
+        if(page==1){
+          _this.orderlist=[]
         }
         switch (idx) {
           case 1:
@@ -155,6 +155,7 @@
                   if (res.data.length < _this.psizes) {
                     _this.allLoaded = true;
                   }
+                console.log(this.orderlist.length)
               }else{
                 _this.allLoaded = true;
                 console.log('请求失败`${res.statusCode} , ${res.data}` ')
@@ -181,6 +182,7 @@
                 _this.allLoaded = true;
                 console.log('请求失败`${res.statusCode} , ${res.data}` ')
               }
+              console.log(this.orderlist.length)
             });
             break;
           case 3:
@@ -202,6 +204,7 @@
                 _this.allLoaded = true;
                 console.log('请求失败`${res.statusCode} , ${res.data}` ')
               }
+              console.log(this.orderlist.length)
             })
             break;
           case 4:
@@ -223,9 +226,11 @@
                 _this.allLoaded = true;
                 console.log('请求失败`${res.statusCode} , ${res.data}` ')
               }
+              console.log(this.orderlist.length)
+
             })
             break;
-          case 5  :
+          /*case 5  :
             if (this.find.length === 20) {
               let params = {
                 data: {
@@ -258,24 +263,50 @@
                   this.orderlist = obji;
 
 //                  console.log(this.orderlist);
-                  /* if (!this.orderlist || this.orderlist < 1) {
+                  /!* if (!this.orderlist || this.orderlist < 1) {
                    this.searched = false
-                   }*/
+                   }*!/
                 } else {
                   console.log('请求失败');
 //                  this.searched = false
                 }
               })
             }
-            break;
+            break;*/
           default:
             console.log('hehhe')
 
         }
       },
-      orderinfo(index){
-        this.ordersn(this.orderlist[index].ordersn);
-        this.$router.push({name: `orderinfo`})
+      tabnav(type,index){
+        let _this=this;
+        this.myCurNo=1;
+        _this.selected=index;
+        _this.orderlist=[];
+        let params = {
+          data: {
+            type: type,
+            page: 1,
+            psize: this.psizes
+          }
+        }
+        orderLists(params, (res) => {
+
+          if (res.statusCode == 1) {
+            _this.orderlist = _this.orderlist.concat(res.data);
+
+            if (res.data.length < _this.psizes) {
+              _this.allLoaded = true;
+            }
+            console.log(_this.orderlist.length);
+            console.log(_this.selected);
+            console.log(_this.myCurNo);
+          }else{
+            _this.allLoaded = true;
+            console.log('请求失败`${res.statusCode} , ${res.data}` ')
+          }
+
+        });
       },
       ...mapMutations({
         searchnum: 'SEARCHNUM',
@@ -289,16 +320,75 @@
          console.log('xx1');
 //         return ;
         this.myCurNo += 1;
-        this.$refs.loadmore.onBottomLoaded();
+//        this.$refs.loadmore.onBottomLoaded();
         this.selecttab(this.selected, this.myCurNo);
 
       },
+      loadMore(){
+        this.myCurNo=this.myCurNo+1;
+        this.selecttab(this.selected, this.myCurNo)
+      },
+      searchlist(){
+        this.orderlist=[];
+        this.selected=5
+        this.allLoaded = true;
+        let _this=this;
+        if (this.find.length === 20) {
+          let params = {
+            data: {
+              ordersn: this.find
+            }
+          };
+          _this.allLoaded = true
+          orders(params, (res) => {
+            if (res.statusCode === 1) {
+              let obji = [];
+              obji.push(res.data.order);
+              this.orderlist = obji;
+              this.allLoaded = true;
+            } else {
+              console.log('请求失败');
+              this.searched = false
+            }
+          })
+        } else {
+          let params = {
+            data: {
+              mid: this.find
+            }
+          };
+          orders(params, (res) => {
+            if (res.statusCode === 1) {
+//                  console.log(res)
+              if(res.data.order.ordersn){
+                let obji = [];
+                obji.push(res.data.order);
+                console.log(res.data.order.ordersn)
+                this.orderlist = obji;
+              }else {
+                Toast({
+                  message: '未找到订单，请重新搜索。',
+                  position: 'middle',
+                  duration: 2000
+                });
+              }
+            } else {
+              console.log('请求失败');
+//                  this.searched = false
+            }
+          })
+        }
+
+      }
+
 
 
     },
     watch:{
       find(a,b){
-        this.selecttab(5)
+          if(this.selected === 5){
+            this.searchlist()
+          }
       }
     },
 
@@ -478,6 +568,7 @@
     /*   height: 4.5rem;
        overflow: hidden;*/
     /*overflow-y: scroll;*/
+  margin-top: 1.95rem;
 
   }
 

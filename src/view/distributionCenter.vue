@@ -34,14 +34,17 @@
       <section class="top">
         <!--<div class="top_1">-->
         <router-link class="topdiv-first" :to="{name: 'takemoney'}" tag="div">
-          <span class="title">营业额</span>
-          <span class="num">{{recordStatistics_get.cg_money_sum}}</span><span class="yuan"> 元</span>
+          <!--<span class="title">推广？、费</span>-->
+          <!--<span class="num">{{recordStatistics_get.cg_money_sum}}</span><span class="yuan"> 元</span>-->
+          推广费
         </router-link>
         <!--</div>-->
         <!--<div>-->
         <router-link :to="{name: 'takemoney'}" tag="div">
-          <span class="title">佣金</span>
-          <span class="num">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>
+          <!--<span class="title">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>-->
+          {{recordStatistics_get.c_money_sum}} 元
+          <!--<span class="title">佣金</span>-->
+          <!--<span class="num">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>-->
         </router-link>
         <!--</div>-->
       </section>
@@ -84,7 +87,7 @@
         </div>
         <ul class="order-list">
           <li class="li1" @click="ordertab(1)">
-            <!--<router-link to="/extension1" tag="li">-->
+            <!--<router-link class="li1" :to="{path:'extension',query:{stab:1}}" tag="li">-->
             <div class="title">全部</div>
             <div class="iconfont listicon">&#xe624;</div>
             <div>
@@ -92,7 +95,7 @@
             </div>
             <!--</router-link>-->
           </li>
-          <!--<router-link to="/extension2" tag="li">-->
+          <!--<router-link class="li1" :to="{path:'extension',query:{stab:2}}" tag="li">-->
           <li @click="ordertab(2)" class="li1">
             <div class="title">未结算</div>
             <div class="iconfont listicon">&#xe624;</div>
@@ -101,7 +104,7 @@
             </div>
             <!--</router-link>-->
           </li>
-          <!--<router-link to="/extension3" tag="li">-->
+          <!--<router-link class="li1" :to="{path:'extension',query:{stab:3}}" tag="li">-->
           <li class="li2" @click="ordertab(3)">
             <div class="title">已退款</div>
             <div class="iconfont listicon">&#xe8b5;</div>
@@ -110,7 +113,7 @@
             </div>
           </li>
           <!--</router-link>-->
-          <!--<router-link to="/extension4" tag="li">-->
+          <!--<router-link class="li1" :to="{path:'extension',query:{stab:4}}" tag="li">-->
           <li class="li3" @click="ordertab(4)">
             <div class="title">已结算</div>
             <div class="iconfont listicon">&#xe619;</div>
@@ -438,6 +441,9 @@
     height: 100%;
     background: rgba(0, 0, 0, .2);
     float: left;
+    line-height: .5484rem;
+    color: #fff;
+    font-size: .25rem;
   }
 
   .top > div > span {

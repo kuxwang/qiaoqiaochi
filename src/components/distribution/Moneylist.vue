@@ -10,7 +10,7 @@
    <!-- <mt-loadmore :bottom-method="loadBottom" class="list-content" @bottom-status-change="handleBottomChange" :autoFill="isTrue"
                  :bottom-all-loaded="allLoaded" ref="loadmore">-->
 
-    <ul class="moneylists" v-if="moneylist.length">
+    <ul class="moneylists" v-if="moneylist.length"  v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="10">
       <li class="moneycell" v-for="(i ,index) in moneylist" :class="{'colorbor': comparefun(moneylist,index),'nomargin': index==0}">
         <div class="left">
           <div class="time">{{i.applytime.substr(0,10)}}</div>
@@ -64,13 +64,12 @@
         }
       }
       withdrawals_get(params, (res) => {
-        this.moneylist = res.data.all
+        this.moneylist = res.data.all;
+
       })
     },
     methods: {
       comparefun(obj,i){
-//        console.log(obj.length)
-//        console.log(i)
         if( i == obj.length-1){
           return true
         }else {
@@ -79,26 +78,27 @@
 //        return true
       },
       getList(){
+        let _this=this;
         let params = {
           data: {
             type: 'all',
-            page: this.myCurNo,
-            psize: 10
+            page: _this.myCurNo,
+            psize: _this.psize
           }
         }
         withdrawals_get(params, (res) => {
-          this.moneylist = this.moneylist.concat(res.data.all)
+          _this.moneylist = _this.moneylist.concat(res.data.all);
+          if(res.data.all.length<_this.psize){
+            _this.allLoaded = true;
+            console.log('已经到底了')
+          }
         })
-      }
-    },
-    loadBottom(){
-      this.myCurNo += 1;
-      this.$refs.loadmore.onBottomLoaded();
-      this.getList()
-    },
-    handleBottomChange(status) {
-      console.log(status);
-      this.bottomStatus = status
+      },
+      loadMore(){
+        this.myCurNo=this.myCurNo+1;
+        this.getList();
+      },
+
     },
 
 
