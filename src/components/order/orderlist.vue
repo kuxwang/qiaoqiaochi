@@ -98,6 +98,8 @@
           if (res.statusCode == 1) {
             this.statusResult = res.data
 //            console.log(res)
+          }else {
+            this.statusResult = []
           }
         });
       },

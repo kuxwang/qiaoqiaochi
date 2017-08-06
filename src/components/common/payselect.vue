@@ -87,12 +87,6 @@
     },
     beforeRouteEnter (to, from, next) {
       console.log(to.query.orderid)
-//      Indicator.open(
-//        {
-//          text: '加载中...',
-//          spinnerType: 'fading-circle'
-//        }
-//      );
       let params = {
         data: {
           ordersn: to.query.orderid
