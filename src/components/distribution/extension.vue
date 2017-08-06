@@ -287,7 +287,7 @@
           data: {
             type: type,
             page: 1,
-            psize: this.psizes
+            psize: _this.psizes
           }
         }
         orderLists(params, (res) => {
@@ -333,10 +333,10 @@
         this.selected=5
         this.allLoaded = true;
         let _this=this;
-        if (this.find.length === 20) {
+        if (_this.find.length === 20) {
           let params = {
             data: {
-              ordersn: this.find
+              ordersn: _this.find
             }
           };
           _this.allLoaded = true
@@ -344,17 +344,17 @@
             if (res.statusCode === 1) {
               let obji = [];
               obji.push(res.data.order);
-              this.orderlist = obji;
-              this.allLoaded = true;
+              _this.orderlist = obji;
+              _this.allLoaded = true;
             } else {
               console.log('请求失败');
-              this.searched = false
+              _this.searched = false
             }
           })
         } else {
           let params = {
             data: {
-              mid: this.find
+              mid: _this.find
             }
           };
           orders(params, (res) => {
@@ -364,7 +364,7 @@
                 let obji = [];
                 obji.push(res.data.order);
                 console.log(res.data.order.ordersn)
-                this.orderlist = obji;
+                _this.orderlist = obji;
               }else {
                 Toast({
                   message: '未找到订单，请重新搜索。',
@@ -393,11 +393,14 @@
     },
 
     created(){
-      this.selected = this.tabselect;
-      this.selecttab(this.tabselect, 1)
+      /*console.log(this.$route.query.stab)
+      this.selected = this.$route.query.stab;
+      this.selecttab(this.tabselect, 1);*/
 
     },
     mounted(){
+      this.selected = this.$route.query.stab;
+      this.selecttab(this.selected, 1);
       let params = {}
       orderStatistics(params, (res) => {
         if (res.statusCode == 1) {
@@ -563,20 +566,17 @@
   .p-list {
     display: block;
     background-color: #ececec;
-    /*height: 4.75rem;*/
     width: 100%;
-    /*   height: 4.5rem;
-       overflow: hidden;*/
-    /*overflow-y: scroll;*/
-  margin-top: 1.95rem;
+
+    height: 4.68rem;
+    overflow: hidden;
+    overflow-y: scroll;
+    background-color: #ececec;
+    margin-top: 1.85rem;
+
 
   }
 
-  /*  .mint-loadmore {
-      height: 0.5rem;
-      overflow: hidden;
-      overflow-y: scroll;
-    }*/
   .mint-loadmore {
     /*overflow-y: scroll;*/
     width: 100%;

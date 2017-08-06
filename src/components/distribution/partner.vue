@@ -139,7 +139,7 @@
               data: {
                 type: 'all',
                 page: page,
-                psize: this.psizes
+                psize: _this.psizes
               }
             }
             teamsLists(params, (res) => {
@@ -161,7 +161,7 @@
               data: {
                 type: 'agent',
                 page: page,
-                psize: this.psizes
+                psize: _this.psizes
               }
             }
             teamsLists(params, (res) => {
@@ -183,7 +183,7 @@
               data: {
                 type: 'fans',
                 page: page,
-                psize: this.psizes
+                psize: _this.psizes
               }
             }
             teamsLists(params, (res) => {
@@ -202,13 +202,13 @@
             })
             break;
           case 4:
-            if (this.find.length === 11) {
+            if (_this.find.length === 11) {
               var obj = {
-                mobile: this.find
+                mobile: _this.find
               }
-            } else if (Number(this.find)) {
+            } else if (Number(_this.find)) {
               var obj = {
-                id: this.find
+                id: _this.find
               }
             }else{
               Toast({
@@ -222,14 +222,14 @@
             };
             teams(params, (res) => {
               if (res.statusCode === 1) {
-                this.personlist = res.data;
-                if (!this.personlist || this.personlist.length <= 1) {
-                  this.searched = false
+                _this.personlist = res.data;
+                if (!_this.personlist || _this.personlist.length <= 1) {
+                  _this.searched = false
 
                 } else {
                   let obji = []
                   obji.push(res.data)
-                  this.personlist = obji
+                  _this.personlist = obji
 //                  console.log(this.personlist)
                 }
               } else {
@@ -355,16 +355,17 @@
       }
     },
     created(){
-      this.selected = this.tabselect;
-      this.selecttab(this.tabselect, 1)
-    },
-    computed: {
-      ...mapGetters([
-        'tabselect',
-      ])
+//      this.selected = this.tabselect;
+     /* console.log(this.$route.query.stab)
+      this.selected = this.$route.query.stab;
+      this.selecttab(this.tabselect, 1)*/
     },
 
+
     mounted() {
+      console.log(this.$route.query.stab)
+      this.selected = this.$route.query.stab;
+      this.selecttab(this.selected, 1)
       let params = {}
       teamsStatistics(params, (res) => {
         if (res.statusCode == 1) {
@@ -373,7 +374,12 @@
         }
       })
 
-    }
+    },
+    computed: {
+      ...mapGetters([
+        'tabselect',
+      ])
+    },
 
 
   }
