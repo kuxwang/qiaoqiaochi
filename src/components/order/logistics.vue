@@ -94,10 +94,16 @@
       }
       expressInfo(params,function (res) {
         console.log(res)
-        that.arr=res.data
-        if(res.data.errno){
-          that.isShow=true;
+        if(res.statusCode==1){
+          that.arr=res.data
         }
+        else{
+          that.isShow=true;
+          console.log('请求失败`${res.statusCode} , ${res.data}` ')
+        }
+//        if(res.data.errno){
+//          that.isShow=true;
+//        }
       });
       let param={
         data:{
