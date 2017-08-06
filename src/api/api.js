@@ -36,7 +36,7 @@ const commissions = {
    * 获取团队指定用户
    */
   teams: {url: `${base}/commissions/teams`, method: 'GET', header, dataType},
-  /**
+  /**p
    * 获取团队数量统计
    */
   teamsStatistics: {url: `${base}/commissions/teamsStatistics`, method: 'GET', header, dataType},

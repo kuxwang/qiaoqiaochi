@@ -603,7 +603,7 @@
   .p-list {
     display: block;
     background-color: #ececec;
-    margin-top: 1.95rem;
+    margin-top: 1.85rem;
   }
 
   .p-cell {
