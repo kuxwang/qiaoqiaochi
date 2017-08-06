@@ -127,8 +127,8 @@
     left: 0;
     width: 100%;
     background: #fff;
-    overflow: auto;
-    z-index: 3;
+    overflow: hidden;
+    z-index: 5;
   }
   .mt-header{
     border-bottom:1px solid #ddd;
