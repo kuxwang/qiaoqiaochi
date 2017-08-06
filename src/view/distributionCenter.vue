@@ -59,74 +59,75 @@
         </div>
         <ul>
           <!--<router-link to="/partner" tag="li">-->
-          <li class="li1" @click="partnertab(1)">
+          <router-link class="li1" :to="{path:'partner',query:{stab:1}}" tag="li">
+          <!--<li class="li1" @click="partnertab(1)">-->
             <div class="title">所有伙伴</div>
             <div class="iconfont listicon">&#xe646;</div>
             <div>
               <span class="num">{{teamsStatistics.all}}</span><span class="yuan"> 人</span>
             </div>
-          </li>
-          <!--</router-link>-->
-          <!--<router-link to="/partner2" tag="li">-->
-          <li class="li2" @click="partnertab(2)">
+          <!--</li>-->
+          </router-link>
+          <router-link class="li1" :to="{path:'partner',query:{stab:2}}" tag="li">
+          <!--<li class="li2" @click="partnertab(2)">-->
             <div class="title">已购买伙伴</div>
             <div class="iconfont listicon">&#xe600;</div>
             <div>
               <span class="num">{{teamsStatistics.purchased}}</span><span class="yuan"> 人</span>
             </div>
-          </li>
-          <!--</router-link>-->
-          <!--<router-link to="/partner3" tag="li">-->
-          <li class="li3" @click="partnertab(3)">
+          <!--</li>-->
+          </router-link>
+          <router-link class="li1" :to="{path:'partner',query:{stab:3}}" tag="li">
+          <!--<li class="li3" @click="partnertab(3)">-->
             <div class="title">未购买伙伴</div>
             <div class="iconfont listicon">&#xe60d;</div>
             <div>
               <span class="num">{{teamsStatistics.no_purchased}}</span><span class="yuan"> 人</span>
             </div>
-          </li>
-          <!--</router-link>-->
+          <!--</li>-->
+          </router-link>
         </ul>
 
         <div class="mfriend">
           <span class="mint-cell-text">推广订单</span>
         </div>
         <ul class="order-list">
-          <li class="li1" @click="ordertab(1)">
-            <!--<router-link class="li1" :to="{path:'extension',query:{stab:1}}" tag="li">-->
+          <!--<li class="li1" @click="ordertab(1)">-->
+            <router-link class="li1" :to="{path:'extension',query:{stab:1}}" tag="li">
             <div class="title">全部</div>
             <div class="iconfont listicon">&#xe624;</div>
             <div>
               <span class="num">{{orderStatistics.total}}</span><span class="yuan"> 单</span>
             </div>
-            <!--</router-link>-->
-          </li>
-          <!--<router-link class="li1" :to="{path:'extension',query:{stab:2}}" tag="li">-->
-          <li @click="ordertab(2)" class="li1">
+            </router-link>
+          <!--</li>-->
+          <router-link class="li1" :to="{path:'extension',query:{stab:2}}" tag="li">
+          <!--<li @click="ordertab(2)" class="li1">-->
             <div class="title">未结算</div>
             <div class="iconfont listicon">&#xe624;</div>
             <div>
               <span class="num">{{orderStatistics.lock}}</span><span class="yuan"> 单</span>
             </div>
-            <!--</router-link>-->
-          </li>
-          <!--<router-link class="li1" :to="{path:'extension',query:{stab:3}}" tag="li">-->
-          <li class="li2" @click="ordertab(3)">
+            </router-link>
+          <!--</li>-->
+          <router-link class="li1" :to="{path:'extension',query:{stab:3}}" tag="li">
+          <!--<li class="li2" @click="ordertab(3)">-->
             <div class="title">已退款</div>
             <div class="iconfont listicon">&#xe8b5;</div>
             <div>
               <span class="num">{{orderStatistics.refund}}</span><span class="yuan"> 单</span>
             </div>
-          </li>
-          <!--</router-link>-->
-          <!--<router-link class="li1" :to="{path:'extension',query:{stab:4}}" tag="li">-->
-          <li class="li3" @click="ordertab(4)">
+          <!--</li>-->
+          </router-link>
+          <router-link class="li1" :to="{path:'extension',query:{stab:4}}" tag="li">
+          <!--<li class="li3" @click="ordertab(4)">-->
             <div class="title">已结算</div>
             <div class="iconfont listicon">&#xe619;</div>
             <div>
               <span class="num">{{orderStatistics.ok}}</span><span class="yuan"> 单</span>
             </div>
-          </li>
-          <!--</router-link>-->
+          <!--</li>-->
+          </router-link>
         </ul>
 
         <div class="mfriend">
@@ -270,14 +271,16 @@
                 console.log(res)
               if (res.statusCode == 1) {
                 let data = res.data
-                _this.recordStatistics_get.cg_money_sum = res.data.total.cg_money_sum || 0;
+                console.log(res.data)
+                _this.recordStatistics_get.cg_money_sum = res.data.total.c_money_sum || 0;
                 _this.recordStatistics_get.c_money_sum = res.data.total.c_money_sum || 0;
-                _this.recordStatistics_get.o_status_3 = res.data.o_status_3.cg_money_sum || 0;
-                _this.recordStatistics_get.pay = res.data.pay.cg_money_sum || 0;
-                _this.recordStatistics_get.check = res.data.check.cg_money_sum || 0;
+                _this.recordStatistics_get.o_status_3 = res.data.o_status_3.c_money_sum || 0;
+                _this.recordStatistics_get.pay = res.data.pay.c_money_sum || 0;
+//                _this.recordStatistics_get.check = res.data.check.c_money_sum || 0;
+                _this.recordStatistics_get.check = res.data.ok.c_money_sum || 0;
                 _this.recordStatistics_get.invalid = res.data.invalid.cg_money_sum || 0;
-                _this.recordStatistics_get.apply = res.data.apply.cg_money_sum;
-                _this.recordStatistics_get.o_status_0 = res.data.o_status_0.cg_money_sum || 0;
+                _this.recordStatistics_get.apply = res.data.apply.c_money_sum;
+                _this.recordStatistics_get.o_status_0 = res.data.o_status_0.c_money_sum || 0;
                 teamsStatistics({}, function (res) {
                   if (res.statusCode == 1) {
                     _this.teamsStatistics.all = res.data.all  || 0;
