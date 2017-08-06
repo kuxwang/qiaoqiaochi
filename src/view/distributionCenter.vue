@@ -33,20 +33,25 @@
       </router-link>
       <section class="top">
         <!--<div class="top_1">-->
-        <router-link class="topdiv-first" :to="{name: 'takemoney'}" tag="div">
-          <!--<span class="title">推广？、费</span>-->
-          <!--<span class="num">{{recordStatistics_get.cg_money_sum}}</span><span class="yuan"> 元</span>-->
+     <!--   <router-link class="topdiv-first" :to="{name: 'takemoney'}" tag="div">
+          &lt;!&ndash;<span class="title">推广？、费</span>&ndash;&gt;
+          &lt;!&ndash;<span class="num">{{recordStatistics_get.cg_money_sum}}</span><span class="yuan"> 元</span>&ndash;&gt;
           推广费
         </router-link>
-        <!--</div>-->
-        <!--<div>-->
+        &lt;!&ndash;</div>&ndash;&gt;
+        &lt;!&ndash;<div>&ndash;&gt;
         <router-link :to="{name: 'takemoney'}" tag="div">
-          <!--<span class="title">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>-->
+          &lt;!&ndash;<span class="title">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>&ndash;&gt;
           {{recordStatistics_get.c_money_sum}} 元
-          <!--<span class="title">佣金</span>-->
-          <!--<span class="num">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>-->
-        </router-link>
+          &lt;!&ndash;<span class="title">佣金</span>&ndash;&gt;
+          &lt;!&ndash;<span class="num">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>&ndash;&gt;
+        </router-link>-->
+
         <!--</div>-->
+
+        <router-link class="money-top" :to="{name: 'takemoney'}" tag="div">
+          推广费:{{recordStatistics_get.c_money_sum}} 元
+        </router-link>
       </section>
       <section class="content">
         <div class="mfriend">
@@ -253,6 +258,7 @@
         //佣金统计
         memberInfo({}, function (res) {
           if (res.statusCode == 1) {
+              console.log(res)
             _this.memberInfo.nickname = res.data.nickname
             _this.memberInfo.id = res.data.id
             _this.memberInfo.level = res.data.level
@@ -427,7 +433,8 @@
   }
 
   .top {
-    height: .55rem;
+    /*height: .55rem;*/
+    height: .35rem;
     /*background: #fff;*/
     background: rgb(244, 127, 47);
     -webkit-box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
@@ -625,6 +632,11 @@
 
   .mint-header.is-fixed {
     top: 0rem;
+  }
+  .top>.money-top {
+    width: 100% ;
+    font-size: .16rem;
+    line-height: .35rem;
   }
 
 </style>
