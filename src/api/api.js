@@ -89,7 +89,9 @@ const members = {
  */
 const addresses = {
   addresses_post: {url: `${base}/addresses`, method: 'POST', header, dataType},
-  addresses_get: {url: `${base}/addresses`, method: 'GET', header, dataType}
+  addresses_get: {url: `${base}/addresses`, method: 'GET', header, dataType},
+  addresses_delete: {url: `${base}/addresses`, method: 'DELETE', header, dataType},
+  addresses_put: {url: `${base}/addresses`, method: 'PUT', header, dataType}
 }
 
 /**
@@ -291,6 +293,19 @@ export const addresses_get = function (params, callback) {
  */
 export const addresses_post = function (params, callback) {
   _webapp.requestx(Object.assign(params, addresses.addresses_post), function (res) {
+    callback(res)
+  })
+};
+/**
+ * 删除地址
+ */
+export const addresses_delete = function (params, callback) {
+  _webapp.requestx(Object.assign(params, addresses.addresses_delete), function (res) {
+    callback(res)
+  })
+};
+export const addresses_put = function (params, callback) {
+  _webapp.requestx(Object.assign(params, addresses.addresses_put), function (res) {
     callback(res)
   })
 };

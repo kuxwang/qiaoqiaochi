@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <mt-header fixed title="新增收货地址">
+    <mt-header fixed title="修改收货地址">
       <a slot="left" @click="goBack">
         <mt-button icon="back"></mt-button>
       </a>
@@ -45,7 +45,7 @@
   import {Toast, Picker, Popup, DatetimePicker, Checklist} from 'mint-ui';
   import {address, slots} from '../../assets/js/address';
   import {mapState, mapMutations} from 'Vuex';
-  import {addresses_post} from '../../api/api';
+  import {addresses_post,addresses_put} from '../../api/api';
   export default{
     data(){
       return {
@@ -63,13 +63,14 @@
     },
     computed: {
       ...mapState([
-          'addressListNum'
+        'addressListNum',
+        'seteditAddress'
       ])
     },
     methods: {
       ...mapMutations({
         'getUserAddress': 'GET_USERADDRESS',
-        'getOnActive': 'GET_ONACTIVE'
+        'getOnActive': 'GET_ONACTIVE',
       }),
       goBack(){
         this.$router.go(-1);
@@ -79,7 +80,7 @@
       },
       cityConfirm(){//城市确认
         this.mypopup1 = false;
-        console.log(this.temp_addr)
+//        console.log(this.temp_addr)
       },
       cityCancel(){//城市取消
         this.mypopup1 = false;
@@ -158,8 +159,10 @@
           }
         }
 
-        addresses_post(params, res => {
+        addresses_put(params, res => {
+            console.log(res)
           if (res.statusCode == 1) {
+
             let info = {
               realname: this.name,
               mobile: this.tel,
@@ -187,6 +190,11 @@
       this.initAddress()
     },
     created () {
+        this.name = this.seteditAddress.realname
+        this.getAddress = this.seteditAddress.address
+//        this.getAddress = this.seteditAddress.province + this.seteditAddress.city + this.seteditAddress.area
+        this.tel = this.seteditAddress.mobile
+        this.zipcode = this.seteditAddress.zipCode
     }
   }
 </script>

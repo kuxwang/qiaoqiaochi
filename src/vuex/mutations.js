@@ -17,7 +17,8 @@ import {
   BACKPRICE,
   DRAWBACKOBJ,
   ORDERDETAILS,
-  IMGURL
+  IMGURL,
+  SETEDITADDRESS
 }
   from
     './mutation-types.js'
@@ -78,8 +79,10 @@ export default {
     state.orderdetails = orderdetails;
   },
   [IMGURL] (state, imgUrl) {
-    // console.log(imgurl)
     state.imgUrl = imgUrl;
+  },
+  [SETEDITADDRESS] (state, seteditAddress) {
+    state.seteditAddress = seteditAddress;
   },
 
 

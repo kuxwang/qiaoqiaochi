@@ -29,7 +29,8 @@ const state = {
   // refundid:'',
   drawbackobj: '', //退款信息
   orderdetails: '',
-  imgUrl: ''
+  imgUrl: '',
+  seteditAddress: ''
 }
 
 export default new Vuex.Store({
