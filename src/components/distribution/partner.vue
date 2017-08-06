@@ -121,6 +121,36 @@
         onePage: false
       }
     },
+    beforeRouteEnter (to, from, next) {
+      let _this=this;
+
+      let params = {
+        data: {
+          type: 'all',
+          page: 1,
+          psize: 10
+        }
+
+      };
+      teamsLists(params, (res) => {
+
+        if (res.statusCode == 1) {
+          console.log(res.data)
+          to.meta.post = res.data
+          next()
+
+        }else{
+//          _this.allLoaded = true;
+          console.log('请求失败`${res.statusCode} , ${res.data}` ')
+        }
+
+      });
+
+    },
+
+
+
+
     methods: {
       open(){
         this.popupVisible = true
@@ -355,22 +385,28 @@
       }
     },
     created(){
-//      this.selected = this.tabselect;
-     /* console.log(this.$route.query.stab)
-      this.selected = this.$route.query.stab;
-      this.selecttab(this.tabselect, 1)*/
+      let res = this.$route.meta.post;
+      console.log(res)
+      this.personlist=res.lists;
+      console.log(this.personlist)
     },
 
 
     mounted() {
-      console.log(this.$route.query.stab)
+//      console.log(this.$route.query.stab)
+//      alert(this.$route.query.stab)
       this.selected = this.$route.query.stab;
-      this.selecttab(this.selected, 1)
+//      this.selecttab(this.$route.query.stab, 1)
+//      this.tabnav(this.$route.query.type,this.$route.query.stab)
+//      let res = this.$route.meta.post;
+//      console.log(res)
+//      this.personlist=res;
       let params = {}
+      let _this=this
       teamsStatistics(params, (res) => {
         if (res.statusCode == 1) {
-//          console.log(res);
-          this.personnum = res.data
+          _this.personnum = res.data
+          console.log(_this.personnum);
         }
       })
 

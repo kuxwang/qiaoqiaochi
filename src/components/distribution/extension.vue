@@ -119,6 +119,32 @@
         loding:true
       }
     },
+    beforeRouteEnter (to, from, next) {
+      let _this=this;
+      let params = {
+        data: {
+          type: 'total',
+          page: 1,
+          psize: 10
+        }
+
+      }
+
+      orderLists(params, (res) => {
+
+        if (res.statusCode == 1) {
+
+          to.meta.post = res.data
+          next()
+
+        }else{
+//          _this.allLoaded = true;
+          console.log('请求失败`${res.statusCode} , ${res.data}` ')
+        }
+
+      });
+
+    },
     methods: {
       orderinfo(index){
         this.ordersn(this.orderlist[index].ordersn);
@@ -400,7 +426,13 @@
     },
     mounted(){
       this.selected = this.$route.query.stab;
-      this.selecttab(this.selected, 1);
+//      alert(this.$route.query.stab)
+//      this.selecttab(this.$route.query.stab, 1);
+      let res = this.$route.meta.post;
+//      this.tabnav(this.$route.query.type,this.$route.query.stab)
+      this.orderlist=res
+
+
       let params = {}
       orderStatistics(params, (res) => {
         if (res.statusCode == 1) {
