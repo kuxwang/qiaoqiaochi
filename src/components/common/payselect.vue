@@ -3,7 +3,7 @@
     <section>
       <mt-header title="支付">
         <router-link to="/home" slot="left">
-          <mt-button icon="back">返回</mt-button>
+          <mt-button icon="back"></mt-button>
         </router-link>
       </mt-header>
     </section>
