@@ -27,10 +27,9 @@
 </script>
 <style scoped>
   .share-page {
-    margin-top: .4rem;
-    padding: .5rem 1rem;
+    padding: .9rem 1rem;
     color: #999;
-
+    background: #ececec;
   }
 
   .share-page > div.iconfont {

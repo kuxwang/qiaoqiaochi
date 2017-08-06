@@ -44,26 +44,6 @@
           <p class="first">{{v.context}}</p>
           <p>{{v.time}}</p>
         </li>
-        <!--<li>-->
-          <!--<b></b>-->
-          <!--<p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>-->
-          <!--<p>2017-07-22 22:12:22</p>-->
-        <!--</li>-->
-        <!--<li>-->
-          <!--<b></b>-->
-          <!--<p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>-->
-          <!--<p>2017-07-22 22:12:22</p>-->
-        <!--</li>-->
-        <!--<li>-->
-          <!--<b></b>-->
-          <!--<p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>-->
-          <!--<p>2017-07-22 22:12:22</p>-->
-        <!--</li>-->
-        <!--<li>-->
-          <!--<b></b>-->
-          <!--<p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>-->
-          <!--<p>2017-07-22 22:12:22</p>-->
-        <!--</li>-->
       </ul>
       <div v-show="isShow" class="none-tran">很抱歉！未查到相关物流信息</div>
     </div>
@@ -114,10 +94,16 @@
       }
       expressInfo(params,function (res) {
         console.log(res)
-        that.arr=res.data
-        if(res.data.errno){
-          that.isShow=true;
+        if(res.statusCode==1){
+          that.arr=res.data
         }
+        else{
+          that.isShow=true;
+          console.log('请求失败`${res.statusCode} , ${res.data}` ')
+        }
+//        if(res.data.errno){
+//          that.isShow=true;
+//        }
       });
       let param={
         data:{
