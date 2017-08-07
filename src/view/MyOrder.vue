@@ -128,7 +128,7 @@
 
   .page-part {
     top: .45rem;
-    height: .4rem;
+    height: .45rem;
     position: fixed;
     width: 100%;
 

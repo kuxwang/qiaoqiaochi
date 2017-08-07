@@ -83,7 +83,7 @@
 //      }
     },
     created:function () {
-      var that=this;
+      let that=this;
       this.exp=this.$route.query.exp;
       this.expsn=this.$route.query.expsn;
       let params={
