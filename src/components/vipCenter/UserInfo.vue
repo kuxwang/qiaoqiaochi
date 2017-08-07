@@ -13,7 +13,7 @@
 	            头像
 	          </span>
         <span class="fr">
-	            <img id="img_upload" :src="myImg" v-show="myImg"/>
+	            <img id="img_upload" :src="myImg" />
 	          </span>
         <!-- <input id="file_head" type="file" @change="getMyImg($event)"/> -->
         <input id="file_head" type="button" @click="getMyImg()"/>
@@ -253,6 +253,7 @@
             _this.myName=res.data.realname;
             _this.myWx = res.data.weixin;
             _this.myZfb = res.data.alipay_account;
+            _this.myImg=res.data.avatar;
             _this.myZfbName = res.data.alipay_name;
             _this.myPlace = `${res.data.province} ${res.data.city} ${res.data.area}`;
             if (res.data.birthyear != '' && res.data.birthmonth != '' && res.data.birthday != '') {
@@ -319,6 +320,7 @@
       }
     },
     mounted() {
+
       this.getUserInfo();
     }
 
