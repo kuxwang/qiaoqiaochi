@@ -135,7 +135,9 @@
         if (res.statusCode == 1) {
 
           to.meta.post = res.data
-          next()
+          next(vm=> {
+
+          })
 
         }else{
 //          _this.allLoaded = true;
@@ -422,15 +424,18 @@
       /*console.log(this.$route.query.stab)
       this.selected = this.$route.query.stab;
       this.selecttab(this.tabselect, 1);*/
+      this.selected = this.$route.query.stab;
+      let res = this.$route.meta.post;
+      this.orderlist=res
 
     },
     mounted(){
-      this.selected = this.$route.query.stab;
+//      this.selected = this.$route.query.stab;
 //      alert(this.$route.query.stab)
 //      this.selecttab(this.$route.query.stab, 1);
-      let res = this.$route.meta.post;
-//      this.tabnav(this.$route.query.type,this.$route.query.stab)
-      this.orderlist=res
+//      let res = this.$route.meta.post;
+      this.tabnav(this.$route.query.type,this.$route.query.stab)
+
 
 
       let params = {}

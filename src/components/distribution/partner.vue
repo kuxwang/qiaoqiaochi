@@ -397,7 +397,7 @@
 //      alert(this.$route.query.stab)
       this.selected = this.$route.query.stab;
 //      this.selecttab(this.$route.query.stab, 1)
-//      this.tabnav(this.$route.query.type,this.$route.query.stab)
+      this.tabnav(this.$route.query.type,this.$route.query.stab)
 //      let res = this.$route.meta.post;
 //      console.log(res)
 //      this.personlist=res;
