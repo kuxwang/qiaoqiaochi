@@ -420,6 +420,11 @@
         'tabselect',
       ])
     },
+    beforeRouteUpdate(to, from, next){
+      this.allLoaded=!this.allLoaded;
+      console.log(this.allLoaded+'的结果')
+      next()
+    },
 
 
   }
