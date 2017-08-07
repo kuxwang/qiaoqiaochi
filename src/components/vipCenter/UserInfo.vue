@@ -245,6 +245,7 @@
         let params = {}
         let _this = this
         memberInfo(params, function (res) {
+            console.log(res.data)
           if (res.statusCode === 1) {
             _this.initAddress();
             _this.delImg = res.data.avatar;
@@ -312,7 +313,6 @@
               position: 'middle',
               duration: 1000
             });
-//            that.$router.push({name:''})
           } else {
             console.log('请求失败')
           }
@@ -320,7 +320,6 @@
       }
     },
     mounted() {
-
       this.getUserInfo();
     }
 
