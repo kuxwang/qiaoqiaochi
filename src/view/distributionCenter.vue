@@ -5,6 +5,7 @@
         <!--<mt-button icon="back"></mt-button>-->
       </router-link>
     </mt-header>
+    <div class="container">
     <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :top-distance="85" ref="loadmore">
       <router-link class="avatar" tag="section" :to="{name:'userinfo'}">
         <div class="icon">
@@ -186,6 +187,7 @@
          <router-view></router-view>
        </transition> -->
     </mt-loadmore>
+    </div>
     <v-tabbar></v-tabbar>
     <transition name="slide">
       <router-view></router-view>
@@ -365,8 +367,8 @@
     width: 100%;
     height: 100%;
     background: #ececec;
-    overflow: auto;
-    /*overflow: hidden;*/
+    /*overflow: auto;*/
+    overflow: hidden;
   }
 
   .avatar {
@@ -646,5 +648,15 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .container {
+    position: absolute;
+    top:0;
+    width: 100%;
+    overflow: auto;
+    /*overflow-y: scroll;*/
+    -webkit-overflow-scrolling: touch;
+    height: 6.2rem;
+    /*overflow-y: scroll;*/
 
+  }
 </style>
