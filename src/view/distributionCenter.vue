@@ -59,29 +59,29 @@
         </div>
         <ul>
           <!--<router-link to="/partner" tag="li">-->
-          <router-link class="li1" :to="{path:'partner',query:{stab:1}}" tag="li">
+          <router-link class="li1" :to="{path:'partner',query:{stab:1,type:'all'}}" tag="li">
           <!--<li class="li1" @click="partnertab(1)">-->
             <div class="title">所有伙伴</div>
             <div class="iconfont listicon">&#xe646;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{teamsStatistics.all}}</span><span class="yuan"> 人</span>
             </div>
           <!--</li>-->
           </router-link>
-          <router-link class="li1" :to="{path:'partner',query:{stab:2}}" tag="li">
+          <router-link class="li1" :to="{path:'partner',query:{stab:2,type:'agent'}}" tag="li">
           <!--<li class="li2" @click="partnertab(2)">-->
             <div class="title">已购买伙伴</div>
             <div class="iconfont listicon">&#xe600;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{teamsStatistics.purchased}}</span><span class="yuan"> 人</span>
             </div>
           <!--</li>-->
           </router-link>
-          <router-link class="li1" :to="{path:'partner',query:{stab:3}}" tag="li">
+          <router-link class="li1" :to="{path:'partner',query:{stab:3,type:'fans'}}" tag="li">
           <!--<li class="li3" @click="partnertab(3)">-->
             <div class="title">未购买伙伴</div>
             <div class="iconfont listicon">&#xe60d;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{teamsStatistics.no_purchased}}</span><span class="yuan"> 人</span>
             </div>
           <!--</li>-->
@@ -93,37 +93,37 @@
         </div>
         <ul class="order-list">
           <!--<li class="li1" @click="ordertab(1)">-->
-            <router-link class="li1" :to="{path:'extension',query:{stab:1}}" tag="li">
+            <router-link class="li1" :to="{path:'extension',query:{stab:1,type:'total'}}" tag="li">
             <div class="title">全部</div>
             <div class="iconfont listicon">&#xe624;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{orderStatistics.total}}</span><span class="yuan"> 单</span>
             </div>
             </router-link>
           <!--</li>-->
-          <router-link class="li1" :to="{path:'extension',query:{stab:2}}" tag="li">
+          <router-link class="li1" :to="{path:'extension',query:{stab:2,type:'lock'}}" tag="li">
           <!--<li @click="ordertab(2)" class="li1">-->
             <div class="title">未结算</div>
             <div class="iconfont listicon">&#xe624;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{orderStatistics.lock}}</span><span class="yuan"> 单</span>
             </div>
             </router-link>
           <!--</li>-->
-          <router-link class="li1" :to="{path:'extension',query:{stab:3}}" tag="li">
+          <router-link class="li1" :to="{path:'extension',query:{stab:3,type:'refund'}}" tag="li">
           <!--<li class="li2" @click="ordertab(3)">-->
             <div class="title">已退款</div>
             <div class="iconfont listicon">&#xe8b5;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{orderStatistics.refund}}</span><span class="yuan"> 单</span>
             </div>
           <!--</li>-->
           </router-link>
-          <router-link class="li1" :to="{path:'extension',query:{stab:4}}" tag="li">
+          <router-link class="li1" :to="{path:'extension',query:{stab:4,type:'ok'}}" tag="li">
           <!--<li class="li3" @click="ordertab(4)">-->
             <div class="title">已结算</div>
             <div class="iconfont listicon">&#xe619;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{orderStatistics.ok}}</span><span class="yuan"> 单</span>
             </div>
           <!--</li>-->
@@ -139,42 +139,42 @@
           <li class="li1">
             <div class="title">已收货业绩</div>
             <div class="iconfont listicon">&#xe61e;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{recordStatistics_get.o_status_3}}</span><span class="yuan"> 元</span>
             </div>
           </li>
           <li class="li2">
             <div class="title">已提现业绩</div>
             <div class="iconfont listicon">&#xe630;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{recordStatistics_get.pay}}</span><span class="yuan"> 元</span>
             </div>
           </li>
           <li class="li3">
             <div class="title">可提现业绩</div>
             <div class="iconfont listicon">&#xe608;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{recordStatistics_get.check}}</span><span class="yuan"> 元</span>
             </div>
           </li>
           <li class="li4">
             <div class="title">被驳回业绩</div>
             <div class="iconfont listicon">&#xe620;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{recordStatistics_get.invalid}}</span><span class="yuan"> 元</span>
             </div>
           </li>
           <li class="li5">
             <div class="title">申请中业绩</div>
             <div class="iconfont listicon">&#xe602;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{recordStatistics_get.apply}}</span><span class="yuan"> 元</span>
             </div>
           </li>
           <li class="li6">
             <div class="title">待打款业绩</div>
             <div class="iconfont listicon">&#xe625;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{recordStatistics_get.o_status_0}}</span><span class="yuan"> 元</span>
             </div>
           </li>
@@ -640,6 +640,11 @@
     width: 100% ;
     font-size: .16rem;
     line-height: .35rem;
+  }
+  .nummoney {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
 </style>

@@ -121,6 +121,37 @@
         onePage: false
       }
     },
+    beforeRouteEnter (to, from, next) {
+      let _this=this;
+
+      let params = {
+        data: {
+          type: to.query.type,
+          page: 1,
+          psize: 10
+        }
+
+      };
+      console.log(to.query.type)
+      teamsLists(params, (res) => {
+
+        if (res.statusCode == 1) {
+          console.log(res.data)
+          to.meta.post = res.data
+          next()
+
+        }else{
+//          _this.allLoaded = true;
+          console.log('请求失败`${res.statusCode} , ${res.data}` ')
+        }
+
+      });
+
+    },
+
+
+
+
     methods: {
       open(){
         this.popupVisible = true
@@ -355,22 +386,31 @@
       }
     },
     created(){
-//      this.selected = this.tabselect;
-     /* console.log(this.$route.query.stab)
       this.selected = this.$route.query.stab;
-      this.selecttab(this.tabselect, 1)*/
+      let res = this.$route.meta.post;
+//      console.log(res)
+      this.personlist=res.lists;
+      console.log(this.selected)
+//      console.log(this.personlist)
     },
 
 
     mounted() {
-      console.log(this.$route.query.stab)
-      this.selected = this.$route.query.stab;
-      this.selecttab(this.selected, 1)
+//      console.log(this.$route.query.stab)
+//      alert(this.$route.query.stab)
+
+//      this.selected = 1;
+//      this.selecttab(this.$route.query.stab, 1)
+//      this.tabnav(this.$route.query.type,this.$route.query.stab)
+//      let res = this.$route.meta.post;
+//      console.log(res)
+//      this.personlist=res;
       let params = {}
+      let _this=this
       teamsStatistics(params, (res) => {
-        if (res.statusCode == 1) {
-//          console.log(res);
-          this.personnum = res.data
+        if (res.statusCode === 1) {
+          _this.personnum = res.data;
+          console.log(_this.personnum);
         }
       })
 
@@ -379,6 +419,11 @@
       ...mapGetters([
         'tabselect',
       ])
+    },
+    beforeRouteUpdate(to, from, next){
+      this.allLoaded=!this.allLoaded;
+      console.log(this.allLoaded+'的结果')
+      next()
     },
 
 

@@ -103,7 +103,7 @@
     height:100%;
     background: #fff;
     overflow: hidden;
-    z-index: 300;
+    z-index: 99999;
   }
   .mt-header{
     border-bottom:1px solid #ddd;

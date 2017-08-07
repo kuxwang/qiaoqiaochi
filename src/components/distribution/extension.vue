@@ -119,10 +119,38 @@
         loding:true
       }
     },
+    beforeRouteEnter (to, from, next) {
+      let _this=this;
+      let params = {
+        data: {
+//          type: 'total',
+          type: to.query.type,
+          page: 1,
+          psize: 10
+        }
+
+      }
+      console.log(to.query.type);
+      orderLists(params, (res) => {
+
+        if (res.statusCode == 1) {
+          to.meta.post = res.data
+          next(vm => {
+              console.log(vm.allLoaded)
+              console.log('okokok')
+          })
+        }else{
+          console.log('请求失败`${res.statusCode} , ${res.data}` ')
+        }
+
+      });
+
+    },
     methods: {
       orderinfo(index){
         this.ordersn(this.orderlist[index].ordersn);
-        this.$router.push({name: `orderinfo`})
+        this.$router.push({name: `orderinfo`});
+        this.allLoaded = true;
       },
       selecttab(idx, page){
         let _this = this;
@@ -312,7 +340,7 @@
         searchnum: 'SEARCHNUM',
         ordersn: 'ORDERSN',
       }),
-      handleBottomChange(status) {
+/*      handleBottomChange(status) {
         console.log(status);
         this.bottomStatus = status
       },
@@ -323,7 +351,7 @@
 //        this.$refs.loadmore.onBottomLoaded();
         this.selecttab(this.selected, this.myCurNo);
 
-      },
+      },*/
       loadMore(){
         this.myCurNo=this.myCurNo+1;
         this.selecttab(this.selected, this.myCurNo)
@@ -359,7 +387,6 @@
           };
           orders(params, (res) => {
             if (res.statusCode === 1) {
-//                  console.log(res)
               if(res.data.order.ordersn){
                 let obji = [];
                 obji.push(res.data.order);
@@ -374,7 +401,6 @@
               }
             } else {
               console.log('请求失败');
-//                  this.searched = false
             }
           })
         }
@@ -393,27 +419,35 @@
     },
 
     created(){
-      /*console.log(this.$route.query.stab)
+      let _this=this;
       this.selected = this.$route.query.stab;
-      this.selecttab(this.tabselect, 1);*/
+      console.log(this.$route.query.stab);
+      let res = this.$route.meta.post;
+      this.orderlist=res
 
-    },
-    mounted(){
-      this.selected = this.$route.query.stab;
-      this.selecttab(this.selected, 1);
-      let params = {}
-      orderStatistics(params, (res) => {
+      let params1 = {}
+      orderStatistics(params1, (res) => {
         if (res.statusCode == 1) {
-          this.ordernum = res.data
+          _this.ordernum = res.data;
           console.log(this.ordernum)
-          this.ordertotal = res.data.total.order_count
-          this.orderrefund = res.data.refund.order_count
-          this.orderlock = res.data.lock.order_count
-          this.orderok = res.data.ok.order_count
+          _this.ordertotal = res.data.total.order_count
+          _this.orderrefund = res.data.refund.order_count
+          _this.orderlock = res.data.lock.order_count
+          _this.orderok = res.data.ok.order_count
         }
 
       })
     },
+
+    mounted(){
+
+    },
+    beforeRouteUpdate(to, from, next){
+        this.allLoaded=!this.allLoaded;
+      console.log(this.allLoaded+'的结果')
+      next()
+    },
+
     computed: {
       ...mapGetters([
         'tabselect',

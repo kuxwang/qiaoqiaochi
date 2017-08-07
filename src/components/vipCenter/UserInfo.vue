@@ -52,6 +52,13 @@
         <input type="search" name="" class="userinfo-list-lr fl" placeholder="请输入支付宝真实姓名" v-model="myZfbName"
                @blur="testZfbName(myZfbName)" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')">
       </li>
+      <li>
+            <span class="userinfo-list-lf fl">
+              真实姓名
+            </span>
+        <input type="search" name="" class="userinfo-list-lr fl" placeholder="请输入真实姓名" v-model="myName"
+               @blur="testName(myName)" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')">
+      </li>
       <li @click="setCity">
 	          <span class="userinfo-list-lf fl">
 	            所在城市
@@ -102,6 +109,7 @@
   import {memberInfo, PUT_USERINFO, PUT_USERAVATARS, USERPHOTO} from '../../api/api';
   import {_webapp} from '../../config/webapp.js';
 //  import {_webapp} from '../../config/webapp.js';
+
   export default{
     data(){
       return {
@@ -112,12 +120,13 @@
         myWx: '',
         myZfb: '',
         myZfbName: '',
+         myName:'',
         myPlace: '',
         myProvince: '',
         myCity: '',
         myRegion: '',
         myDate: '',
-        myDate2: '',
+        // myDate2: '',
         imgurl: '',
         mypopup1: false,
         mypopup2: false,
@@ -162,6 +171,9 @@
 
       },
       testZfbName(val){//支支付宝真实姓名
+      },
+      testName(val){
+
       },
       setCity(){//所在城市显示
         this.mypopup1 = true;
@@ -219,7 +231,7 @@
         let m = new Date(value).getMonth() + 1;
         m = m < 10 ? ('0' + m) : m;
         d = d < 10 ? ('0' + d) : d;
-        this.myDate2 = `${y}-${m}-${d}`;
+        // this.myDate2 = `${y}-${m}-${d}`;
         this.myDate = `${y}年${m}月${d}日`;
       },
       getMyImg(e){
@@ -237,7 +249,8 @@
             _this.initAddress();
             _this.delImg = res.data.avatar;
             _this.myPhone = res.data.mobile;
-            _this.myNc = res.data.realname;
+             _this.myNc = res.data.nickname;
+            _this.myName=res.data.realname;
             _this.myWx = res.data.weixin;
             _this.myZfb = res.data.alipay_account;
             _this.myZfbName = res.data.alipay_name;
@@ -258,15 +271,17 @@
         });
       },
       postUserInfo(){
+        let newDates=`${(this.myDate.match(/\d+/g))[0]}-${(this.myDate.match(/\d+/g))[1]}-${(this.myDate.match(/\d+/g))[2]}`;
         let params = {
           'data': {
-            realname: this.myNc,
+            nickname:this.myNc,
+            realname: this.myName,
             province: this.myProvince,
             city: this.myCity,
             alipay_name: this.myZfbName,
             alipay_account: this.myZfb,
             weixin: this.myWx,
-            birth: this.myDate2,
+            birth:newDates,
             area: this.myRegion,
             avatar: this.myImg
           }
