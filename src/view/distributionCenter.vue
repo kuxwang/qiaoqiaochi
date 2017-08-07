@@ -13,19 +13,19 @@
         </div>
         <div class="message">
           <div>
-            <span>昵称:</span>
+            <span class="nametype">昵称:</span>
             <span>{{memberInfo.nickname}}</span>
           </div>
           <div>
-            <span>会员ID:</span>
+            <span class="nametype">会员ID:</span>
             <span>{{memberInfo.id}}</span>
           </div>
           <div>
-            <span>会员等级:</span>
-            <span>{{memberInfo.leveldetail.levelname}}</span>
+            <span class="nametype">等级:</span>
+            <span>{{memberInfo.level}}</span>
           </div>
           <div>
-            <span>推荐人:</span>
+            <span class="nametype">推荐人:</span>
             <span>{{memberInfo.from}}</span>
           </div>
         </div>
@@ -155,7 +155,7 @@
             <div class="title">可提现业绩</div>
             <div class="iconfont listicon">&#xe608;</div>
             <div class="nummoney">
-              <span class="num">{{recordStatistics_get.check}}</span><span class="yuan"> 元</span>
+              <span class="num">{{recordStatistics_get.ok}}</span><span class="yuan"> 元</span>
             </div>
           </li>
           <li class="li4">
@@ -176,7 +176,7 @@
             <div class="title">待打款业绩</div>
             <div class="iconfont listicon">&#xe625;</div>
             <div class="nummoney">
-              <span class="num">{{recordStatistics_get.o_status_0}}</span><span class="yuan"> 元</span>
+              <span class="num">{{recordStatistics_get.check}}</span><span class="yuan"> 元</span>
             </div>
           </li>
         </ul>
@@ -214,7 +214,9 @@
           check: '', //可提现
           invalid: '', //被驳回的业绩
           apply: '', //申请中
-          o_status_0: '' //待打款
+          o_status_0: '', //待打款
+          ok:''
+
         },
         teamsStatistics: {
           all: '',  //总人数
@@ -245,7 +247,7 @@
     },
     watch: {
       $route (from) {
-        if (from.name == 'vipCenter') {
+        if (from.name === 'vipCenter') {
           this.memberInfo.avatar = this.imgUrl
         }
       }
@@ -268,6 +270,7 @@
             _this.memberInfo.leveldetail = res.data.leveldetail
             _this.memberInfo.avatar = res.data.avatar
             _this.memberInfo.from = res.data.parent_name
+            _this.memberInfo.level = res.data.agentleveldetail.levelname
             _this.setImgUrl(_this.memberInfo.avatar)
             recordStatistics_get({data: {type: ''}}, function (res) {
                 console.log(res)
@@ -279,7 +282,8 @@
                 _this.recordStatistics_get.o_status_3 = res.data.o_status_3.c_money_sum || 0;
                 _this.recordStatistics_get.pay = res.data.pay.c_money_sum || 0;
 //                _this.recordStatistics_get.check = res.data.check.c_money_sum || 0;
-                _this.recordStatistics_get.check = res.data.ok.c_money_sum || 0;
+                _this.recordStatistics_get.check = res.data.check.c_money_sum || 0;
+                _this.recordStatistics_get.ok = res.data.ok.c_money_sum || 0;
                 _this.recordStatistics_get.invalid = res.data.invalid.cg_money_sum || 0;
                 _this.recordStatistics_get.apply = res.data.apply.c_money_sum;
                 _this.recordStatistics_get.o_status_0 = res.data.o_status_0.c_money_sum || 0;
@@ -658,5 +662,10 @@
     height: 6.2rem;
     /*overflow-y: scroll;*/
 
+  }
+  .nametype {
+    display: inline-block;
+    width: .6rem;
+    text-align: right;
   }
 </style>
