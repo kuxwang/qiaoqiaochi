@@ -45,7 +45,7 @@
           <p>{{v.time}}</p>
         </li>
       </ul>
-      <div v-show="isShow" class="none-tran">很抱歉！未查到相关物流信息</div>
+      <div v-if="isShow" class="none-tran">很抱歉！未查到相关物流信息</div>
     </div>
   </div>
 </template>
@@ -83,7 +83,7 @@
 //      }
     },
     created:function () {
-      var that=this;
+      let that=this;
       this.exp=this.$route.query.exp;
       this.expsn=this.$route.query.expsn;
       let params={
@@ -133,6 +133,7 @@
     color:#666;
   }
   .none-tran{
+    height:.6rem;
     padding:.2rem;
     font-size:.15rem;
   }

@@ -101,7 +101,6 @@
         goodsId:'',
         optionId:0,
         cartids:'',
-        total:'',
         delGoodsNum:'',
         goodsid:4,
         isShow:false
