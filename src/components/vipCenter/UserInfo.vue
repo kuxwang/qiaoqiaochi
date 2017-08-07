@@ -245,6 +245,7 @@
         let params = {}
         let _this = this
         memberInfo(params, function (res) {
+          console.log(res.data)
           if (res.statusCode === 1) {
             _this.initAddress();
             _this.delImg = res.data.avatar;
