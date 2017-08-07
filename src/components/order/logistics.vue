@@ -82,29 +82,41 @@
 //        this.$router.push({path:'details',query:{goodsid:orderdetails.goods.id}})
 //      }
     },
-    created:function () {
+    beforeRouteEnter (to, from, next) {
       let that=this;
-      this.exp=this.$route.query.exp;
-      this.expsn=this.$route.query.expsn;
-      let params={
+      console.log(to.query.expsn)
+//      this.exp=to.query.exp;
+//      this.expsn=to.query.expsn;
+      let params = {
         data:{
-          express:that.exp,
-          expresssn:that.expsn
+          express:to.query.exp,
+          expresssn:to.query.expsn
         }
       }
+      console.log(to.query.expsn);
       expressInfo(params,function (res) {
-        console.log(res)
         if(res.statusCode==1){
-          that.arr=res.data
+          to.meta.post = res.data
+          next(vm => {
+            vm.expsn=to.query.expsn;
+            vm.exp=to.query.exp;
+          })
         }
         else{
-          that.isShow=true;
+          next(vm => {
+            vm.isShow=true;
+          })
           console.log('请求失败`${res.statusCode} , ${res.data}` ')
         }
 //        if(res.data.errno){
 //          that.isShow=true;
 //        }
       });
+    },
+    created:function () {
+      let res = this.$route.meta.post;
+      this.arr=res;
+      let that=this;
       let param={
         data:{
           orderid:this.$route.query.id

@@ -378,13 +378,13 @@
       }),
 
     },
-    watch:{
-      find(a,b){
-        if(this.selected === 4){
-          this.searchlist()
-        }
-      }
-    },
+//    watch:{
+//      find(a,b){
+//        if(this.selected === 4){
+//          this.searchlist()
+//        }
+//      }
+//    },
     created(){
       this.selected = this.$route.query.stab;
       let res = this.$route.meta.post;

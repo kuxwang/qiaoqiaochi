@@ -410,13 +410,13 @@
 
 
     },
-    watch:{
-      find(a,b){
-          if(this.selected === 5){
-            this.searchlist()
-          }
-      }
-    },
+//    watch:{
+//      find(a,b){
+//          if(this.selected === 5){
+//            this.searchlist()
+//          }
+//      }
+//    },
 
     created(){
       let _this=this;
