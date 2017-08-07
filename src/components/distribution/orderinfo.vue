@@ -5,6 +5,7 @@
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
+    <div class="container">
     <div class="title">
       <h3>{{ordernum.goodsprice}}</h3>
       <span>{{ordernum.status}}</span>
@@ -50,7 +51,7 @@
       </li>
 
     </ul>
-
+    </div>
   </div>
 
 </template>
@@ -134,7 +135,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
+    overflow: hidden;
     z-index: 99999;
   }
 
@@ -294,6 +295,17 @@ ul.order-list p.yong{
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: right;
+
+  }
+  .container {
+    position: absolute;
+    top:0;
+    width: 100%;
+    overflow: auto;
+    /*overflow-y: scroll;*/
+    -webkit-overflow-scrolling: touch;
+    height: 6.67rem;
+    /*overflow-y: scroll;*/
 
   }
 </style>

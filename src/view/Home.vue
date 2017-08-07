@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    <div class="container">
       <ul class="goodsList">
         <li class="goodsList-itme1">
           <img src="../assets/images/home-01.jpg">
@@ -10,6 +11,7 @@
           <!-- <img v-lazy="img2"> -->
         </router-link>
       </ul>
+    </div>
       <v-tabbar></v-tabbar>
       <router-view></router-view>
   </div>
@@ -41,8 +43,10 @@
     width: 100%;
     height: 100%;
     background: #efeff4;
-    overflow: auto;
-    z-index: 50
+    /*overflow: auto;*/
+    overflow: hidden;
+    z-index: 50;
+    -webkit-overflow-scrolling: auto;
   }
   .goodsList{
     padding-bottom:0.5rem;
@@ -73,5 +77,17 @@
     /*width: 100%;*/
     /*height: 6.2rem;*/
     overflow: hidden;
+  }
+
+  .container {
+    position: absolute;
+    top:0;
+    width: 100%;
+    overflow: auto;
+    /*overflow-y: scroll;*/
+    -webkit-overflow-scrolling: touch;
+    height: 6.7rem;
+    /*overflow-y: scroll;*/
+
   }
 </style>

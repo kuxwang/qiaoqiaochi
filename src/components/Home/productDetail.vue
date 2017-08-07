@@ -6,6 +6,7 @@
           <mt-button icon="back"></mt-button>
         </router-link>
       </mt-header>
+      <div class="container">
       <div v-show="isShow">
         <div class="box">
           <div class="img-box">
@@ -27,6 +28,7 @@
         </div>
         <div id="intro">
         </div>
+      </div>
       </div>
       <div class="bottom-navbar">
         <!-- <router-link class="icon-box" :to="{name:''}"  tag="a">
@@ -233,7 +235,8 @@
     height: 100%;
     background:#ececec;
     font-size:.15rem;
-    overflow:auto;
+    /*overflow:auto;*/
+    overflow:hidden;
     z-index:20;
   }
   .mint-header {
@@ -467,5 +470,16 @@
   }
   button{
     outline: none;
+  }
+  .container {
+    position: absolute;
+    top:0;
+    width: 100%;
+    overflow: auto;
+    /*overflow-y: scroll;*/
+    -webkit-overflow-scrolling: touch;
+    height: 6.2rem;
+    /*overflow-y: scroll;*/
+
   }
 </style>

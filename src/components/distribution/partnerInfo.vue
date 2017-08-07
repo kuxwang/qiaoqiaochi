@@ -6,6 +6,7 @@
       </router-link>
       <mt-button slot="right"></mt-button>
     </mt-header>
+    <div container>
     <div class="header-img">
       <img :src="teamsinfo.avatar" alt="">
       <h4>{{teamsinfo.nickname}}</h4>
@@ -43,6 +44,7 @@
         <p>{{o_status_r1_price}}</p>
         退货
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -104,6 +106,7 @@
     background: #fff;
     overflow: hidden;
     z-index: 99999;
+
   }
   .mt-header{
     border-bottom:1px solid #ddd;
@@ -261,4 +264,15 @@
   /*.order>div>p{*/
     /*margin-top:.06rem;*/
   /*}*/
+  .container {
+    position: absolute;
+    top:0;
+    width: 100%;
+    overflow: auto;
+    /*overflow-y: scroll;*/
+    -webkit-overflow-scrolling: touch;
+    height: 6.67rem;
+    /*overflow-y: scroll;*/
+
+  }
 </style>
