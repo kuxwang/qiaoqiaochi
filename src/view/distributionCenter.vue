@@ -353,7 +353,18 @@
     },
     mounted(){
       this.init();
-    }
+    },
+    beforeRouteUpdate(to, from, next){
+//      console.log(to)
+/*      console.log(from)
+      console.log('的结果')*/
+      if(from.name ==='userinfo'){
+        this.init();
+        console.log('从用户反悔')
+      }
+
+      next()
+    },
   }
 </script>
 <style scoped>
