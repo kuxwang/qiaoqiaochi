@@ -126,12 +126,13 @@
 
       let params = {
         data: {
-          type: 'all',
+          type: to.query.type,
           page: 1,
           psize: 10
         }
 
       };
+      console.log(to.query.type)
       teamsLists(params, (res) => {
 
         if (res.statusCode == 1) {
@@ -385,27 +386,30 @@
       }
     },
     created(){
+      this.selected = this.$route.query.stab;
       let res = this.$route.meta.post;
-      console.log(res)
+//      console.log(res)
       this.personlist=res.lists;
-      console.log(this.personlist)
+      console.log(this.selected)
+//      console.log(this.personlist)
     },
 
 
     mounted() {
 //      console.log(this.$route.query.stab)
 //      alert(this.$route.query.stab)
-      this.selected = this.$route.query.stab;
+
+//      this.selected = 1;
 //      this.selecttab(this.$route.query.stab, 1)
-      this.tabnav(this.$route.query.type,this.$route.query.stab)
+//      this.tabnav(this.$route.query.type,this.$route.query.stab)
 //      let res = this.$route.meta.post;
 //      console.log(res)
 //      this.personlist=res;
       let params = {}
       let _this=this
       teamsStatistics(params, (res) => {
-        if (res.statusCode == 1) {
-          _this.personnum = res.data
+        if (res.statusCode === 1) {
+          _this.personnum = res.data;
           console.log(_this.personnum);
         }
       })

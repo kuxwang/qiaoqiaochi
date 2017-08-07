@@ -134,7 +134,7 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    z-index: 200;
+    z-index: 99999;
   }
 
   h3 {

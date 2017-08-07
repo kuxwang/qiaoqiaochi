@@ -123,24 +123,20 @@
       let _this=this;
       let params = {
         data: {
-          type: 'total',
+//          type: 'total',
+          type: to.query.type,
           page: 1,
           psize: 10
         }
 
       }
-
+      console.log(to.query.type);
       orderLists(params, (res) => {
 
         if (res.statusCode == 1) {
-
           to.meta.post = res.data
-          next(vm=> {
-
-          })
-
+          next()
         }else{
-//          _this.allLoaded = true;
           console.log('请求失败`${res.statusCode} , ${res.data}` ')
         }
 
@@ -424,32 +420,37 @@
       /*console.log(this.$route.query.stab)
       this.selected = this.$route.query.stab;
       this.selecttab(this.tabselect, 1);*/
+      let _this=this;
       this.selected = this.$route.query.stab;
+      console.log(this.$route.query.stab)
       let res = this.$route.meta.post;
       this.orderlist=res
 
+      let params1 = {}
+      orderStatistics(params1, (res) => {
+        if (res.statusCode == 1) {
+          _this.ordernum = res.data;
+          console.log(this.ordernum)
+          _this.ordertotal = res.data.total.order_count
+          _this.orderrefund = res.data.refund.order_count
+          _this.orderlock = res.data.lock.order_count
+          _this.orderok = res.data.ok.order_count
+        }
+
+      })
     },
     mounted(){
 //      this.selected = this.$route.query.stab;
 //      alert(this.$route.query.stab)
 //      this.selecttab(this.$route.query.stab, 1);
 //      let res = this.$route.meta.post;
-      this.tabnav(this.$route.query.type,this.$route.query.stab)
+//      this.tabnav(this.$route.query.type,this.$route.query.stab)
+
+//      this.selected = this.$route.query.stab;
 
 
 
-      let params = {}
-      orderStatistics(params, (res) => {
-        if (res.statusCode == 1) {
-          this.ordernum = res.data
-          console.log(this.ordernum)
-          this.ordertotal = res.data.total.order_count
-          this.orderrefund = res.data.refund.order_count
-          this.orderlock = res.data.lock.order_count
-          this.orderok = res.data.ok.order_count
-        }
 
-      })
     },
     computed: {
       ...mapGetters([
