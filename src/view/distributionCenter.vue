@@ -353,7 +353,12 @@
     },
     mounted(){
       this.init();
-    }
+    },
+    beforeRouteUpdate(to, from, next){
+      this.init();
+      console.log('的结果')
+      next()
+    },
   }
 </script>
 <style scoped>

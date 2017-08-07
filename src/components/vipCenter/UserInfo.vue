@@ -311,6 +311,7 @@
               position: 'middle',
               duration: 1000
             });
+//            that.$router.push({name:''})
           } else {
             console.log('请求失败')
           }
