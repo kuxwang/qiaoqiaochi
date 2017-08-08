@@ -51,14 +51,14 @@
 	            支付宝-名
 	          </span>
         <input type="search" name="" class="userinfo-list-lr fl" placeholder="请输入支付宝真实姓名" v-model="myZfbName"
-               @blur="testZfbName(myZfbName)" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')">
+               @blur="testZfbName(myZfbName)" >
       </li>
       <li>
             <span class="userinfo-list-lf fl">
               真实姓名
             </span>
         <input type="search" name="" class="userinfo-list-lr fl" placeholder="请输入真实姓名" v-model="myName"
-               @blur="testName(myName)" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')">
+               @blur="testName(myName)" >
       </li>
       <li @click="setCity">
 	          <span class="userinfo-list-lf fl">

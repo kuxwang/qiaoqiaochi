@@ -228,6 +228,7 @@
 
     background: #fff;
     /*background-color: #efeff4*/
+
   }
 
   ul.order {

@@ -10,6 +10,8 @@ const app = r => require.ensure([], () => r(require('../App.vue')), 'app')
 // const  = r => require.ensure([], () => r(require('../components/index/alertLogin.vue')), 'alertLogin')
 //Home
 import Home from '../view/Home.vue'
+
+const Home2 = r => require.ensure([], () => r(require('../view/Home2.vue')), 'Order')
 const Order = r => require.ensure([], () => r(require('../view/Order.vue')), 'Order')
 const MyOrder = r => require.ensure([], () => r(require('../view/MyOrder.vue')), 'Order')
 const ShoppingCart = r => require.ensure([], () => r(require('../view/ShoppingCart.vue')), 'ShoppingCart')
@@ -71,10 +73,7 @@ const DrawbackInfo = r => require.ensure([], () => r(require('../components/orde
 export default new Router({
   routes: [
     {
-      // path: '/',
-      // component: app,//顶级路由
-      // children: [
-      //   {
+
       path: '',
       name: 'home',
       component: Home,
@@ -83,6 +82,11 @@ export default new Router({
           path: '/details',
           name: 'details',
           component: goodsDetails,
+        },
+        {
+          path:'/home2',
+          name:'home2',
+          component:Home2
         }
       ]
     },
