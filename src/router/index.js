@@ -11,7 +11,6 @@ const app = r => require.ensure([], () => r(require('../App.vue')), 'app')
 //Home
 import Home from '../view/Home.vue'
 
-const Home2 = r => require.ensure([], () => r(require('../view/Home2.vue')), 'Order')
 const Order = r => require.ensure([], () => r(require('../view/Order.vue')), 'Order')
 const MyOrder = r => require.ensure([], () => r(require('../view/MyOrder.vue')), 'Order')
 const ShoppingCart = r => require.ensure([], () => r(require('../view/ShoppingCart.vue')), 'ShoppingCart')
@@ -83,11 +82,6 @@ export default new Router({
           name: 'details',
           component: goodsDetails,
         },
-        {
-          path:'/home2',
-          name:'home2',
-          component:Home2
-        }
       ]
     },
     {
@@ -281,20 +275,7 @@ export default new Router({
       name: 'payselect',
       component: payselect
     },
-    // ]
-    // },
-    // {
-    //   path: '/test',
-    //   name: 'test',
-    //   component: test,
-    //   children: [
-    //     {
-    //       path: '/distribution',
-    //       name: 'distribution',
-    //       component: distribution
-    //     }
-    //   ]
-    // },
+
     {
       path: '*',
       redirect: '/'

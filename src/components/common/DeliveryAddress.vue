@@ -42,50 +42,7 @@
     data(){
       return {
         onActives: '',
-        addressLists: [
-          {
-            "id": "111",
-            "uniacid": "2",
-            "openid": "ombk8wiE8F5XPNFtBEga5s2voS_E",
-            "realname": "2号",
-            "mobile": "18912393729",
-            "province": "西藏区",
-            "city": "拉萨市",
-            "area": "城关区",
-            "address": "巴尔库路天海大酒店(测试)",
-            "isdefault": "1",
-            "zipcode": "",
-            "deleted": "0"
-          },
-          {
-            "id": "222",
-            "uniacid": "2",
-            "openid": "ombk8wiE8F5XPNFtBEga5s2voS_E",
-            "realname": "2号",
-            "mobile": "18912393729",
-            "province": "西藏区",
-            "city": "拉萨市",
-            "area": "城关区",
-            "address": "巴尔库路天海大酒店(测试)",
-            "isdefault": "1",
-            "zipcode": "",
-            "deleted": "0"
-          },
-          {
-            "id": "333",
-            "uniacid": "2",
-            "openid": "ombk8wiE8F5XPNFtBEga5s2voS_E",
-            "realname": "2号",
-            "mobile": "18912393729",
-            "province": "西藏区",
-            "city": "拉萨市",
-            "area": "城关区",
-            "address": "巴尔库路天海大酒店(测试)",
-            "isdefault": "1",
-            "zipcode": "",
-            "deleted": "0"
-          }
-        ]
+        addressLists: []
       }
     },
     methods: {

@@ -7,7 +7,7 @@
     </mt-header>
     <div class="container">
     <div class="title">
-      <h3>{{ordernum.goodsprice}}</h3>
+      <h3>{{ordernum.price}}</h3>
       <span>{{ordernum.status}}</span>
     </div>
     <ul class="orderinfo">

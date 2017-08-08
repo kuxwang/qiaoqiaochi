@@ -60,7 +60,7 @@
     </div>
 
       <ul class="p-list" v-if="orderlist.length"  v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="10">
-        <li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">
+        <li class="p-cell" v-if="i.ordersn" v-for="(i,index) in orderlist" @click="orderinfo(index)">
           <div class="up">
             <span class="ordernum">订单编号{{i.ordersn}}</span>
             <span class="time">{{i.createtime}}</span>
@@ -123,20 +123,19 @@
       let _this=this;
       let params = {
         data: {
-//          type: 'total',
           type: to.query.type,
           page: 1,
           psize: 10
         }
 
       }
-      console.log(to.query.type);
+//      console.log(to.query.type);
       orderLists(params, (res) => {
-
         if (res.statusCode == 1) {
           to.meta.post = res.data
+          console.log(res.data)
           next(vm => {
-              console.log(vm.allLoaded)
+              console.log(vm.orderlist)
               console.log('okokok')
           })
         }else{
@@ -258,49 +257,6 @@
 
             })
             break;
-          /*case 5  :
-            if (this.find.length === 20) {
-              let params = {
-                data: {
-                  ordersn: this.find
-                }
-              };
-              _this.allLoaded = true
-              orders(params, (res) => {
-                if (res.statusCode === 1) {
-                  let obji = [];
-                  obji.push(res.data.order);
-                  this.orderlist = obji;
-                  this.allLoaded = true;
-                } else {
-                  console.log('请求失败');
-                  this.searched = false
-                }
-              })
-            } else {
-              let params = {
-                data: {
-                  mid: this.find
-                }
-              };
-              orders(params, (res) => {
-                if (res.statusCode === 1) {
-//                  console.log(res)
-                  let obji = [];
-                  obji.push(res.data.order);
-                  this.orderlist = obji;
-
-//                  console.log(this.orderlist);
-                  /!* if (!this.orderlist || this.orderlist < 1) {
-                   this.searched = false
-                   }*!/
-                } else {
-                  console.log('请求失败');
-//                  this.searched = false
-                }
-              })
-            }
-            break;*/
           default:
             console.log('hehhe')
 
@@ -374,12 +330,20 @@
               obji.push(res.data.order);
               _this.orderlist = obji;
               _this.allLoaded = true;
+              console.log(res.data)
             } else {
               console.log('请求失败');
               _this.searched = false
             }
           })
-        } else {
+        }else if(!_this.find){
+          Toast({
+            message: '请输入订单号或者用户ID。',
+            position: 'middle',
+            duration: 2000
+          });
+        }
+        else {
           let params = {
             data: {
               mid: _this.find
@@ -387,18 +351,10 @@
           };
           orders(params, (res) => {
             if (res.statusCode === 1) {
-              if(res.data.order.ordersn){
-                let obji = [];
-                obji.push(res.data.order);
-                console.log(res.data.order.ordersn)
-                _this.orderlist = obji;
-              }else {
-                Toast({
-                  message: '未找到订单，请重新搜索。',
-                  position: 'middle',
-                  duration: 2000
-                });
-              }
+                console.log(res)
+                _this.orderlist = res.data;
+                console.log(_this.orderlist)
+
             } else {
               console.log('请求失败');
             }

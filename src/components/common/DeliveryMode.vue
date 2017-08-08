@@ -2,7 +2,7 @@
   <div class="main">
     <mt-header fixed title="配送方式">
       <a slot="left" @click="goBack">
-        <mt-button icon="back">返回</mt-button>
+        <mt-button icon="back"></mt-button>
       </a>
     </mt-header>
     <ul class="deliverymode-list">
