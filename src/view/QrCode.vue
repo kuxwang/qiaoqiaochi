@@ -34,17 +34,21 @@
             console.log('ok')
           }
         })
+      },
+      init(){
+        let _this=this;
+        Qrimg({}, res => {
+          console.log(1)
+          if (res.statusCode == 1) {
+            _this.qrimg = res.data
+          }
+        })
       }
     },
     created () {
-      let _this=this;
-      Qrimg({}, res => {
-        console.log(1)
-        if (res.statusCode == 1) {
-          _this.qrimg = res.data
-        }
-      })
-    }
+        this.init()
+    },
+
   }
 </script>
 

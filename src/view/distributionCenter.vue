@@ -324,11 +324,13 @@
         this.$router.push({name: `extension`})
       },
       outLogin(){
+
         MessageBox({title: '确认退出当前账号?', message: '点击确认退出', showCancelButton: true}).then(action => {
           if (action == 'confirm') {//表示点击了确定
             // _webapp.logOut((res)=>{})
+            console.log('试试')
             LOGINOUT(function (res) {
-
+              console.log('推出成功')
             })
           } else if (action == 'cancel') {//表示点击了取消
 

@@ -7,6 +7,7 @@
         </router-link>
       </mt-header>
     </section>
+
     <ul class="userinfo-list">
       <li class="userinfo-header">
 	          <span class="fl">
@@ -346,6 +347,7 @@
     height: 0.44rem;
   }
 
+
   .userinfo-list {
     margin-top: 0.54rem;
     overflow: hidden;
@@ -418,6 +420,7 @@
     width: 80%;
     padding-left: 0.1rem;
     color: #727272;
+    font-size: 0.12rem;
   }
 
   .postUserInfo {
