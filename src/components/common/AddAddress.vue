@@ -161,16 +161,18 @@
         addresses_post(params, res => {
           if (res.statusCode == 1) {
             let info = {
-              realname: this.name,
-              mobile: this.tel,
-              province: this.area.province,
-              city: this.area.city,
-              area: this.area.area,
-              address: this.getAddress,
+              realname: _this.name,
+              mobile: _this.tel,
+              province: _this.area.province,
+              city: _this.area.city,
+              area: _this.area.area,
+              address: _this.getAddress,
               id: res.addressid
-            }
+            };
+            console.log(info)
             this.getUserAddress(info);
-            this.getOnActive(this.addressListNum)
+            this.getOnActive(this.addressListNum);
+//          this.getUserAddress(v);
             Toast({
               message: '地址保存成功',
               position: 'middle',
