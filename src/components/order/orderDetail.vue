@@ -12,11 +12,13 @@
           &#xe66f;
         </div>
         <ul class="order-state">
-          <li v-if="status==3">交易完成</li>
-          <li v-if="status==0">等待付款</li>
-          <li v-if="status==1">等待发货</li>
-          <li v-if="status==2">运输中</li>
-          <li>订单金额(含运费)：￥{{price}}</li>
+          <li v-if="orderStatus==3 && refundid==0">交易完成</li>
+          <li v-if="orderStatus==0">等待付款</li>
+          <li v-if="orderStatus==1&&refundid==0">等待发货</li>
+          <!--<li v-if="orderStatus==1&&refundid!=0">退款申请中</li>-->
+          <li v-if="orderStatus==3&&refundid!=0">退款申请中</li>
+          <li v-if="orderStatus==2">运输中</li>
+          <li>订单金额(含运费)：￥{{proprice}}</li>
           <li>运费：￥{{tranprice}}</li>
         </ul>
       </div>
@@ -50,7 +52,7 @@
         <li>实付费(含运费)：<p>￥{{proprice}}</p></li>
       </ul>
     </div>
-    <ul class="trace-info" v-if="status==3">
+    <ul class="trace-info" v-if="orderStatus==3">
       <li>订单号：<p>{{ordersin}}</p></li>
       <li v-show="false">交易完成时间：<p>{{endtime}}</p></li>
     </ul>
@@ -97,7 +99,6 @@
     components: {PageNavbar},
     data(){
       return {
-        status: '',
         price: '0.00',
         tranprice: '0.00',
         relname: '',
@@ -207,53 +208,60 @@
         setorderdetails: 'ORDERDETAILS'
       }),
     },
-    created: function () {
-      var that = this;
-      this.status = that.orderStatus;
-//      this.oid=this.$route.query.oid;
-      this.oid = this.$route.query.oid;
+    beforeRouteEnter (to, from, next) {
+      let that=this;
+      console.log(to.query.oid)
       let params = {
-        data: {
-          orderid: this.oid
+        data:{
+          orderid:to.query.oid
         }
       }
       orderDetail(params, function (res) {
-        console.log(res)
-        if (res.statusCode == 1) {
-          that.myid = res.data.refundid;
-          that.obj = res.data
-          that.price = res.data.order.goodsprice;
-          that.tranprice = res.data.dispatchprice;
-          that.relname = res.data.address.realname;
-          that.province = res.data.address.province;
-          that.city = res.data.address.city;
-          that.area = res.data.address.area;
-          that.address = res.data.address.address;
-          that.shopname = res.data.set.name;
-          that.detailurl = res.data.goods.thumb;
-          that.discount = res.data.discountprice;
-          that.proprice = res.data.price;
-          that.realprice = res.data.price;
-          that.ordersin = res.data.ordersn;
-          that.goodsId = res.data.goods.id;
-          that.endtime = res.data.finishtime;
-          that.mprice = res.data.goods.price;
-          that.title = res.data.goods.title;
-          that.num = res.data.goods.total;
-          that.exp = res.data.express;
-          that.expsn = res.data.expresssn;
-          that.refundid = res.data.rufundid;
-          that.canrefund = res.data.canrefund;
-          that.goodsid = res.data.goods.id;
-          that.orderStatus = res.data.status;
-          //订单详情存入vuex（orderdetails）
-          that.setorderdetails(res.data)
-        } else {
-          console.log('订单详情接口异常')
+        if(res.statusCode==1){
+          to.meta.post = res.data
+          next(vm => {
+            vm.myid = res.data.refundid;
+            vm.obj = res.data
+            vm.price = res.data.order.goodsprice;
+            vm.tranprice = res.data.dispatchprice;
+            vm.relname = res.data.address.realname;
+            vm.province = res.data.address.province;
+            vm.city = res.data.address.city;
+            vm.area = res.data.address.area;
+            vm.address = res.data.address.address;
+            vm.shopname = res.data.set.name;
+            vm.detailurl = res.data.goods.thumb;
+            vm.discount = res.data.discountprice;
+            vm.proprice = res.data.price;
+            vm.realprice = res.data.price;
+            vm.ordersin = res.data.ordersn;
+            vm.goodsId = res.data.goods.id;
+            vm.endtime = res.data.finishtime;
+            vm.mprice = res.data.goods.price;
+            vm.title = res.data.goods.title;
+            vm.num = res.data.goods.total;
+            vm.exp = res.data.express;
+            vm.expsn = res.data.expresssn;
+            vm.refundid = res.data.refundid;
+            console.log(vm.refundid)
+            vm.canrefund = res.data.canrefund;
+            vm.goodsid = res.data.goods.id;
+            vm.orderStatus = res.data.status;
+            //订单详情存入vuex（orderdetails）
+            vm.setorderdetails(res.data)
+          })
         }
-
-      })
-    }
+        else{
+          next(vm => {
+            vm.isShow=true;
+          })
+          console.log('请求失败`${res.statusCode} , ${res.data}` ')
+        }
+//        if(res.data.errno){
+//          that.isShow=true;
+//        }
+      });
+    },
   }
 </script>
 <style scoped>
