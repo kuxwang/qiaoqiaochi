@@ -217,6 +217,10 @@
         getMyorders:'GET_MYORDERS'
       })
     },
+    beforeRouteLeave (to, from, next) {
+      this.popupVisible = false;
+      next()
+    },
     mounted(){
       this.getInfo();
     }

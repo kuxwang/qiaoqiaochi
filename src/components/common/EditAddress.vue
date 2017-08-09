@@ -44,7 +44,7 @@
 <script>
   import {Toast, Picker, Popup, DatetimePicker, Checklist} from 'mint-ui';
   import {address, slots} from '../../assets/js/address';
-  import {mapState, mapMutations} from 'Vuex';
+  import {mapState, mapMutations,mapGetters} from 'Vuex';
   import {addresses_post,addresses_put} from '../../api/api';
   export default{
     data(){
@@ -65,7 +65,10 @@
       ...mapState([
         'addressListNum',
         'seteditAddress'
-      ])
+      ]),
+      ...mapGetters([
+        'oldaddress'
+      ]),
     },
     methods: {
       ...mapMutations({
@@ -90,7 +93,19 @@
           if (item.apid === 0) {
             return item;
           }
+          /*if(item.aname == this.prov){
+            return item;
+          }*/
         });
+        /*this.slots[0].values[0].aname='ceshi';
+        this.slots[1].values[0].aname='ceshi';
+        this.slots[2].values[0].aname='ceshi'*/
+        console.log(this.slots[0])
+        console.log(this.slots[1])
+       /* console.log(this.slots[1])
+        console.log(this.slots[2])*/
+//        this.slots[0].values.push({aname:})
+//        console.log(this.slots[0].values.length)
       },
       cityValuesChange(picker, values) {
         // 防止没有省份时报错
@@ -113,6 +128,8 @@
         if (values[2]) {
           // 这里可以指定地址符，此处以空格进行连接
           this.temp_addr = values[0].aname + ' ' + values[1].aname + ' ' + values[2].aname;
+          console.log(this.temp_addr)
+          console.log(values)
           this.area = {
             province: values[0].aname,
             city: values[1].aname,
@@ -184,7 +201,10 @@
             }, 2000)
           }
         })
-      }
+      },
+      setValues(values){
+
+      },
     },
     mounted () {
       this.initAddress()
@@ -195,6 +215,13 @@
 //        this.getAddress = this.seteditAddress.province + this.seteditAddress.city + this.seteditAddress.area
         this.tel = this.seteditAddress.mobile
         this.zipcode = this.seteditAddress.zipCode
+      console.log(this.zipcode)
+      setTimeout(()=>{
+        this.temp_addr = this.oldaddress
+      },100)
+
+
+
     }
   }
 </script>

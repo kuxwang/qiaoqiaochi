@@ -18,7 +18,8 @@ import {
   DRAWBACKOBJ,
   ORDERDETAILS,
   IMGURL,
-  SETEDITADDRESS
+  SETEDITADDRESS,
+  OLDADDRESS
 }
   from
     './mutation-types.js'
@@ -83,6 +84,9 @@ export default {
   },
   [SETEDITADDRESS] (state, seteditAddress) {
     state.seteditAddress = seteditAddress;
+  },
+  [OLDADDRESS] (state, oldaddress) {
+    state.oldaddress = oldaddress;
   },
 
 

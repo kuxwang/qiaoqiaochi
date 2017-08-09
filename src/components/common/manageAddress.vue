@@ -79,6 +79,7 @@
       },
       edit (value) {
         this.seteditAddresses(value)
+        this.oldaddress(value.province+' '+value.city+' '+value.area)
         this.$router.push({path: '/editAddress'})
       },
       deleteAddress (value) {
@@ -114,7 +115,8 @@
         'getUserAddress': 'GET_USERADDRESS',
         'getOnActive': 'GET_ONACTIVE',
         'getaddressnum': 'ADDRESSLISTNUM',
-        'seteditAddresses': 'SETEDITADDRESS'
+        'seteditAddresses': 'SETEDITADDRESS',
+        'oldaddress': 'OLDADDRESS'
 
       })
     },
