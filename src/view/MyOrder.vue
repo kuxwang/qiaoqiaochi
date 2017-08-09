@@ -206,7 +206,7 @@
     overflow: auto;
     /*overflow-y: scroll;*/
     -webkit-overflow-scrolling: touch;
-    height: 6.67rem;
+    height: 6.67rem !important;
     /*overflow-y: scroll;*/
 
   }

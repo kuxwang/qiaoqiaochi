@@ -20,6 +20,7 @@
 <script>
   import vTabbar from '../components/common/Tabbar';
   import {Qrimg, QrimgSave} from '../api/api';
+  import {Toast} from 'mint-ui'
   export default{
     data(){
       return {
@@ -42,8 +43,19 @@
         let _this=this;
         Qrimg({}, res => {
           console.log(1)
-          if (res.statusCode == 1) {
-            _this.qrimg = res.data
+          if (res.statusCode === 1) {
+
+              _this.qrimg = res.data
+
+
+          }else if(res.statusCode === -2) {
+            _this.qrimg=''
+          } else {
+            Toast({
+              message: '网络异常，请重试',
+              position: 'middle',
+              duration: 2000
+            });
           }
         })
       }

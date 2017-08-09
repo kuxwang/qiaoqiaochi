@@ -201,6 +201,15 @@
               remark,
             }
           }
+          if(addressid==''){
+            Toast({
+              message: `请选择收货地址`,
+              position: 'middle',
+              duration: 2000
+            });
+            this.payed = false;
+          }
+
           confirm_post(params, res => {
             if (res.statusCode == 1) {
               let ordersn = res.data.ordersn
@@ -215,9 +224,9 @@
               // document.getElementById('commitForm').removeAttribute('disabled')
               _this.$router.replace({name: 'payselect', query: {orderid: ordersn}})
               // }, 2000)
-            } else {
+            } else if(res.statusCode == -1) {
               Toast({
-                message: `请选择收货地址`,
+                message: `操作频繁请稍候`,
                 position: 'middle',
                 duration: 2000
               });
@@ -246,6 +255,11 @@
         let dispatch = this.dispatches || this.delivery
         return dispatch || '商家配送'
       }
+    },
+    beforeRouteUpdate(to, from, next){
+      this.payed=false;
+      console.log(this.payed)
+      next()
     },
     filters: {
       calculatePrice1 (value) {
