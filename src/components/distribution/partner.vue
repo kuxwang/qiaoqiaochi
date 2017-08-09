@@ -16,7 +16,7 @@
         <div class="title">所有伙伴</div>
         <div class="iconfont listicon">&#xe646;</div>
         <div>
-          <span class="num">{{personnum.all}}</span><span class="yuan"> 人</span>
+          <span class="num">{{personnumall}}</span><span class="yuan"> 人</span>
         </div>
 
       </li>
@@ -24,14 +24,14 @@
         <div class="title">已购买伙伴</div>
         <div class="iconfont listicon">&#xe600;</div>
         <div>
-          <span class="num">{{personnum.purchased}}</span><span class="yuan"> 人</span>
+          <span class="num">{{personp}}</span><span class="yuan"> 人</span>
         </div>
       </li>
       <li :class="{tabActive: selected==3 }"@click="tabnav('fans',3)">
         <div class="title">未购买伙伴</div>
         <div class="iconfont listicon">&#xe60d;</div>
         <div>
-          <span class="num">{{personnum.no_purchased}}</span><span class="yuan"> 人</span>
+          <span class="num">{{personnp}}</span><span class="yuan"> 人</span>
         </div>
         <!--</router-link>-->
       </li>
@@ -58,42 +58,8 @@
       <span class="iconfont">&#xe612;</span>
       未找到伙伴<br>
     </div>
-   <!--   <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-if="allLoaded == false">
-      &lt;!&ndash;<div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded">&ndash;&gt;
-        <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">继续滚动，可加载更多</span>
-        <span v-show="bottomStatus === 'loading'"><mt-spinner type="snake"></mt-spinner></span>
-      </div>-->
-    <!--</mt-loadmore>-->
-    <router-view></router-view>
- <!--   <mt-popup
-      v-model="popupVisible"
-      popup-transition="popup-fade" v-if="popupVisible">-->
-      <!--<div class="pop-up">-->
-        <!--<img class="sharelogo" :src="teamsinfo.avatar"/>-->
-        <!--<h5>{{teamsinfo.nickname}}</h5>-->
-        <!--<span>ID:{{teamsinfo.id}}</span>-->
-      <!--</div>-->
-      <!--<div class="pop-down">-->
-        <!--<ul>-->
-          <!--<li><span class="pop-left">粉丝：</span><span class="pop-right">{{teamsinfo.agentid}}</span></li>-->
-          <!--<li><span class="pop-left">关注方式：</span><span class="pop-right">{{teamsinfo.agentid}}</span></li>-->
-          <!--<li><span class="pop-left">等级：</span><span class="pop-right">{{teamsinfo.level.levelname}}</span></li>-->
-          <!--<li><span class="pop-left">消费金额：</span><span-->
-            <!--class="pop-right">{{teamsinfo.recordStatistics.c_money_sum}}</span></li>-->
-          <!--<li><span class="pop-left">手机号：</span><span class="pop-right">{{teamsinfo.mobile}}</span></li>-->
-          <!--&lt;!&ndash;<li><span class="pop-left">创建时间： </span><span class="pop-right">{{teamsinfo.createtime}}</span></li>&ndash;&gt;-->
-        <!--</ul>-->
-      <!--</div>-->
-     <!-- <div class="pop-info" v-else="">
-        <div class="img"><img :src="teamsinfo.avatar" alt=""></div>
-        <h3>{{teamsinfo.nickname}}</h3>
-        <div class="id-phone">
-          <span class="left-id">ID:{{teamsinfo.id}}</span>
-          <span>手机号：{{teamsinfo.mobile}}</span>
-        </div>
-      </div>
-    </mt-popup>-->
 
+    <router-view></router-view>
   </div>
 
 </template>
@@ -118,7 +84,12 @@
         bottomStatus: '',
         allLoaded: false,
         isTrue: false,
-        onePage: false
+        onePage: false,
+        personnumall:0,
+        personp:0,
+        personnp:0,
+
+
       }
     },
     beforeRouteEnter (to, from, next) {
@@ -388,7 +359,7 @@
     created(){
       this.selected = this.$route.query.stab;
       let res = this.$route.meta.post;
-//      console.log(res)
+
       this.personlist=res.lists;
       console.log(this.selected)
 //      console.log(this.personlist)
@@ -396,23 +367,20 @@
 
 
     mounted() {
-//      console.log(this.$route.query.stab)
-//      alert(this.$route.query.stab)
-
-//      this.selected = 1;
-//      this.selecttab(this.$route.query.stab, 1)
-//      this.tabnav(this.$route.query.type,this.$route.query.stab)
-//      let res = this.$route.meta.post;
-//      console.log(res)
-//      this.personlist=res;
-      let params = {}
+//      let params = {}
       let _this=this
-      teamsStatistics(params, (res) => {
+    /*  teamsStatistics(params, (res) => {
         if (res.statusCode === 1) {
           _this.personnum = res.data;
           console.log(_this.personnum);
         }
-      })
+      })*/
+
+      _this.personnumall=_this.$route.query.all;
+      _this.personp=_this.$route.query.agent;
+      _this.personnp=_this.$route.query.fans;
+
+
 
     },
     computed: {

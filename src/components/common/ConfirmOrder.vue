@@ -172,6 +172,7 @@
         this.$router.push('home');
       },
       goPay () {
+        let _this=this
         let payed = this.payed;
 
         if (payed === false) {
@@ -209,14 +210,14 @@
                position: 'middle',
                duration: 2000
                });*/
-              this.ORDERINFO(ordersn);
+              _this.ORDERINFO(ordersn);
               // setTimeout(() => {
               // document.getElementById('commitForm').removeAttribute('disabled')
-              this.$router.replace({name: 'payselect', query: {orderid: ordersn}})
+              _this.$router.replace({name: 'payselect', query: {orderid: ordersn}})
               // }, 2000)
             } else {
               Toast({
-                message: `${res.data.data}`,
+                message: `请选择收货地址`,
                 position: 'middle',
                 duration: 2000
               });
