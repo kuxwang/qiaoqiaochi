@@ -764,12 +764,14 @@
   }*/
 
   div.page-navbar {
+    /*margin-top: .45rem;*/
     margin-top: .45rem;
   }
 
   .order-list {
     background: #efefef;
-    padding-top: .01rem
+    padding-top: .01rem;
+    margin-top: .2rem;
   }
 
   .order-list > li {

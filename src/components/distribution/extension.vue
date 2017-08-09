@@ -626,6 +626,11 @@
     margin-top: 0.1rem;
     color: #27272f;
     font-size: 0.14rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 1.72rem;
+
   }
 
   .info span {
@@ -647,6 +652,10 @@
     flex: 3;
     padding: 0.05rem 0;
     color: #666;
+    max-width: 1.29rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .ordertype span {
