@@ -6,7 +6,7 @@
       </router-link>
     </mt-header>
     <div class="container">
-    <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :top-distance="85" ref="loadmore">
+    <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :top-distance="40" ref="loadmore">
       <router-link class="avatar" tag="section" :to="{name:'userinfo'}">
         <div class="icon">
           <img :src="memberInfo.avatar" alt="">
@@ -207,27 +207,27 @@
       return {
         topStatus: '',
         recordStatistics_get: {
-          cg_money_sum: '',//销售总额
-          c_money_sum: '', //佣金总额
-          o_status_3: '', //已收货
-          pay: '', //已提现
-          check: '', //可提现
-          invalid: '', //被驳回的业绩
-          apply: '', //申请中
-          o_status_0: '', //待打款
-          ok:''
+          cg_money_sum: '0',//销售总额
+          c_money_sum: '0', //佣金总额
+          o_status_3: '0', //已收货
+          pay: '0', //已提现
+          check: '0', //可提现
+          invalid: '0', //被驳回的业绩
+          apply: '0', //申请中
+          o_status_0: '0', //待打款
+          ok:'0'
 
         },
         teamsStatistics: {
-          all: '',  //总人数
-          purchased: '',  //已购买人数
-          no_purchased: ''  //未购买人数
+          all: '0',  //总人数
+          purchased: '0',  //已购买人数
+          no_purchased: '0'  //未购买人数
         },
         orderStatistics: {
-          total: '',//全部
-          lock: '',//未结算
-          refund: '',//已退款
-          ok: '', //已结算
+          total: '0',//全部
+          lock: '0',//未结算
+          refund: '0',//已退款
+          ok: '0', //已结算
         },
         memberInfo: {
           nickname: '',//昵称
