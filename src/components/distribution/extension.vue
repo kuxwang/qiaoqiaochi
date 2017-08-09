@@ -104,10 +104,10 @@
         selected: 1,
         find: '',
         ordernum: {},
-        ordertotal: '',
-        orderlock: '',
-        orderrefund: '',
-        orderok: '',
+        ordertotal: '0',
+        orderlock: '0',
+        orderrefund: '0',
+        orderok: '0',
         orderlist: [],
         searched: true,
         myCurNo: 1,
@@ -352,7 +352,7 @@
           orders(params, (res) => {
             if (res.statusCode === 1) {
                 console.log(res)
-                _this.orderlist = res.data;
+                _this.orderlist = res.data.order;
                 console.log(_this.orderlist)
 
             } else {
@@ -379,20 +379,11 @@
       this.selected = this.$route.query.stab;
       console.log(this.$route.query.stab);
       let res = this.$route.meta.post;
-      this.orderlist=res
-
-      let params1 = {}
-      orderStatistics(params1, (res) => {
-        if (res.statusCode == 1) {
-          _this.ordernum = res.data;
-          console.log(this.ordernum)
-          _this.ordertotal = res.data.total.order_count
-          _this.orderrefund = res.data.refund.order_count
-          _this.orderlock = res.data.lock.order_count
-          _this.orderok = res.data.ok.order_count
-        }
-
-      })
+      _this.orderlist=res
+      _this.ordertotal=_this.$route.query.total;
+      _this.orderrefund=_this.$route.query.refund;
+      _this.orderlock=_this.$route.query.lock;
+      _this.orderok=_this.$route.query.ok;
     },
 
     mounted(){

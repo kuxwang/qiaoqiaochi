@@ -315,7 +315,11 @@
               duration: 1000
             });
           } else {
-            console.log('请求失败')
+            Toast({
+              message: '个人信息提交失败',
+              position: 'middle',
+              duration: 2000
+            });
           }
         })
       }

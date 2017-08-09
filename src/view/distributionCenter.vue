@@ -60,7 +60,7 @@
         </div>
         <ul>
           <!--<router-link to="/partner" tag="li">-->
-          <router-link class="li1" :to="{path:'partner',query:{stab:1,type:'all'}}" tag="li">
+          <router-link class="li1" :to="{path:'partner',query:{stab:1,type:'all',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}" tag="li">
           <!--<li class="li1" @click="partnertab(1)">-->
             <div class="title">所有伙伴</div>
             <div class="iconfont listicon">&#xe646;</div>
@@ -69,7 +69,7 @@
             </div>
           <!--</li>-->
           </router-link>
-          <router-link class="li1" :to="{path:'partner',query:{stab:2,type:'agent'}}" tag="li">
+          <router-link class="li1" :to="{path:'partner',query:{stab:2,type:'agent',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}" tag="li">
           <!--<li class="li2" @click="partnertab(2)">-->
             <div class="title">已购买伙伴</div>
             <div class="iconfont listicon">&#xe600;</div>
@@ -78,7 +78,7 @@
             </div>
           <!--</li>-->
           </router-link>
-          <router-link class="li1" :to="{path:'partner',query:{stab:3,type:'fans'}}" tag="li">
+          <router-link class="li1" :to="{path:'partner',query:{stab:3,type:'fans',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}" tag="li">
           <!--<li class="li3" @click="partnertab(3)">-->
             <div class="title">未购买伙伴</div>
             <div class="iconfont listicon">&#xe60d;</div>
@@ -94,7 +94,7 @@
         </div>
         <ul class="order-list">
           <!--<li class="li1" @click="ordertab(1)">-->
-            <router-link class="li1" :to="{path:'extension',query:{stab:1,type:'total'}}" tag="li">
+            <router-link class="li1" :to="{path:'extension',query:{stab:1,type:'total',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}" tag="li">
             <div class="title">全部</div>
             <div class="iconfont listicon">&#xe624;</div>
             <div class="nummoney">
@@ -102,7 +102,7 @@
             </div>
             </router-link>
           <!--</li>-->
-          <router-link class="li1" :to="{path:'extension',query:{stab:2,type:'lock'}}" tag="li">
+          <router-link class="li1" :to="{path:'extension',query:{stab:2,type:'lock',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}" tag="li">
           <!--<li @click="ordertab(2)" class="li1">-->
             <div class="title">未结算</div>
             <div class="iconfont listicon">&#xe624;</div>
@@ -111,7 +111,7 @@
             </div>
             </router-link>
           <!--</li>-->
-          <router-link class="li1" :to="{path:'extension',query:{stab:3,type:'refund'}}" tag="li">
+          <router-link class="li1" :to="{path:'extension',query:{stab:3,type:'refund',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}" tag="li">
           <!--<li class="li2" @click="ordertab(3)">-->
             <div class="title">已退款</div>
             <div class="iconfont listicon">&#xe8b5;</div>
@@ -120,7 +120,7 @@
             </div>
           <!--</li>-->
           </router-link>
-          <router-link class="li1" :to="{path:'extension',query:{stab:4,type:'ok'}}" tag="li">
+          <router-link class="li1" :to="{path:'extension',query:{stab:4,type:'ok',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}" tag="li">
           <!--<li class="li3" @click="ordertab(4)">-->
             <div class="title">已结算</div>
             <div class="iconfont listicon">&#xe619;</div>

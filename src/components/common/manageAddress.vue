@@ -28,9 +28,9 @@
         <!--<i class="iconfont mySelected" >&#xe67f;</i>-->
         <label class="mint-checklist-label fl">
             <span class="mint-checkbox">
-              <input type="checkbox" :checked="v.isdefault==1" class="mint-checkbox-input">
-              <span class="mint-checkbox-core"></span>
-              <span class="defaultcheck">设置为默认</span>
+              <!--<input type="checkbox" :checked="v.isdefault==1" class="mint-checkbox-input">-->
+              <!--<span class="mint-checkbox-core"></span>-->
+              <!--<span class="defaultcheck">设置为默认</span>-->
             </span>
 
         </label>
@@ -281,8 +281,9 @@
   .edit {
     position: absolute;
     font-size: .16rem;
-    right: .5rem;
+    /*right: .5rem;*/
     color: #666;
+    left:.1rem;
     padding: 0 .05rem;
     line-height: .5rem;
   }
