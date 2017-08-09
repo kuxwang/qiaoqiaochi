@@ -10,7 +10,7 @@
         <ul>
           <li>
             <span>退款原因</span>
-            <select v-model="reason" @change="fn3" id="">
+            <select v-model="reason" @change="fn3" class="padding">
               <option >卖家缺货</option>
               <option >拍错了/订单信息错误</option>
               <option >不想买了</option>
@@ -69,7 +69,7 @@
               if(res.statusCode==1){
 //                this.backtime(res.data.createtime)
                 that.setdrawbackobj(res.data)
-                
+
 //                console.log(2)
                 that.$router.push({path:'orderd',query:{oid:that.orderid}})
               }else{
@@ -124,6 +124,9 @@
     width:100%;
     background: #fff;
   }
+  .padding{
+
+  }
   .drawback-box>ul>li{
     text-align: left;
     height:.48rem;
@@ -149,6 +152,7 @@
     width:3rem;
     line-height:.38rem;
     padding-left:.1rem;
+    background: #fff;
   }
   /*清除ie的默认选择框样式清除，隐藏下拉箭头*/
   select::-ms-expand { display: none; }
