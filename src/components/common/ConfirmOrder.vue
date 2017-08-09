@@ -201,6 +201,7 @@
               remark,
             }
           }
+          console.log(params);
           if(addressid==''){
             Toast({
               message: `请选择收货地址`,
