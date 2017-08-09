@@ -1,75 +1,51 @@
 <template>
   <div class="mainInfo">
-    <!--<mt-header fixed title="详情" style="z-index: 4">-->
-      <!--<mt-header title="订单详情">-->
-        <!--&lt;!&ndash;<a @click="goBack" slot="left">&ndash;&gt;-->
-          <!--&lt;!&ndash;<mt-button icon="back"></mt-button>&ndash;&gt;-->
-        <!--&lt;!&ndash;</a>&ndash;&gt;-->
-      <!--</mt-header>-->
-    <!--</mt-header>-->
     <mt-header title="用户详情" style="z-index: 4" fixed>
       <router-link to="/partner" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
       <mt-button slot="right"></mt-button>
     </mt-header>
+    <div container>
     <div class="header-img">
       <img :src="teamsinfo.avatar" alt="">
       <h4>{{teamsinfo.nickname}}</h4>
       <div>ID <p>{{teamsinfo.id}}</p></div>
       <div>手机号 <p>{{teamsinfo.mobile}}</p></div>
-      <!--<div class="id-phone">-->
-        <!--<span class="left-id">ID:{{teamsinfo.id}}</span>-->
-        <!--<span>手机号：{{teamsinfo.mobile}}</span>-->
-      <!--</div>-->
       <div>会员等级<p>{{levelname}}</p></div>
       <div>分销等级<p>{{agentlevel}}</p></div>
     </div>
     <div class="height"></div>
-    <!--<div class="vip">-->
-      <!--<div class="vip-left">会员等级：{{teamsinfo.level.levelname}}</div>-->
-      <!--<div>分销等级：{{teamsinfo.agentlevel.levelname}}</div>-->
-    <!--</div>-->
     <div class="money">
       <div class="money-left">
-
         <p>{{cg_money_sum}}</p>
         营业额
       </div>
       <div>
-
         <p>{{c_money_sum}}</p>
         推广费
       </div>
     </div>
     <div class="height"></div>
     <div class="order">
-      <!--<div class="first">-->
-        <!--未付款-->
-        <!--<p>{{teamsinfo.orderStatistics.o_status_0_price}}</p>-->
-      <!--</div>-->
       <div>
-
         <p>{{o_status_1_price}}</p>
         已付款
       </div>
       <div>
-
         <p>{{o_status_2_price}}</p>
         已发货
       </div>
       <div>
-
         <p>{{o_status_3_price}}</p>
         已完成
       </div>
       <div class="last">
-
         <p>{{o_status_r1_price}}</p>
         退货
       </div>
     </div>
-    <!--<div class="height"></div>-->
+    </div>
   </div>
 </template>
 <script>
@@ -126,9 +102,11 @@
     top: 0;
     left: 0;
     width: 100%;
+    height:100%;
     background: #fff;
-    overflow: auto;
-    z-index: 3;
+    overflow: hidden;
+    z-index: 99999;
+
   }
   .mt-header{
     border-bottom:1px solid #ddd;
@@ -286,4 +264,15 @@
   /*.order>div>p{*/
     /*margin-top:.06rem;*/
   /*}*/
+  .container {
+    position: absolute;
+    top:0;
+    width: 100%;
+    overflow: auto;
+    /*overflow-y: scroll;*/
+    -webkit-overflow-scrolling: touch;
+    height: 6.67rem;
+    /*overflow-y: scroll;*/
+
+  }
 </style>

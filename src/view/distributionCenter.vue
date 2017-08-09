@@ -5,26 +5,27 @@
         <!--<mt-button icon="back"></mt-button>-->
       </router-link>
     </mt-header>
-    <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :top-distance="85" ref="loadmore">
+    <div class="container">
+    <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :top-distance="40" ref="loadmore">
       <router-link class="avatar" tag="section" :to="{name:'userinfo'}">
         <div class="icon">
           <img :src="memberInfo.avatar" alt="">
         </div>
         <div class="message">
           <div>
-            <span>昵称:</span>
+            <span class="nametype">昵称:</span>
             <span>{{memberInfo.nickname}}</span>
           </div>
           <div>
-            <span>会员ID:</span>
+            <span class="nametype">会员ID:</span>
             <span>{{memberInfo.id}}</span>
           </div>
           <div>
-            <span>会员等级:</span>
-            <span>{{memberInfo.leveldetail.levelname}}</span>
+            <span class="nametype">等级:</span>
+            <span>{{memberInfo.level}}</span>
           </div>
           <div>
-            <span>推荐人:</span>
+            <span class="nametype">推荐人:</span>
             <span>{{memberInfo.from}}</span>
           </div>
         </div>
@@ -33,20 +34,25 @@
       </router-link>
       <section class="top">
         <!--<div class="top_1">-->
-        <router-link class="topdiv-first" :to="{name: 'takemoney'}" tag="div">
-          <!--<span class="title">推广？、费</span>-->
-          <!--<span class="num">{{recordStatistics_get.cg_money_sum}}</span><span class="yuan"> 元</span>-->
+     <!--   <router-link class="topdiv-first" :to="{name: 'takemoney'}" tag="div">
+          &lt;!&ndash;<span class="title">推广？、费</span>&ndash;&gt;
+          &lt;!&ndash;<span class="num">{{recordStatistics_get.cg_money_sum}}</span><span class="yuan"> 元</span>&ndash;&gt;
           推广费
         </router-link>
-        <!--</div>-->
-        <!--<div>-->
+        &lt;!&ndash;</div>&ndash;&gt;
+        &lt;!&ndash;<div>&ndash;&gt;
         <router-link :to="{name: 'takemoney'}" tag="div">
-          <!--<span class="title">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>-->
+          &lt;!&ndash;<span class="title">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>&ndash;&gt;
           {{recordStatistics_get.c_money_sum}} 元
-          <!--<span class="title">佣金</span>-->
-          <!--<span class="num">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>-->
-        </router-link>
+          &lt;!&ndash;<span class="title">佣金</span>&ndash;&gt;
+          &lt;!&ndash;<span class="num">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>&ndash;&gt;
+        </router-link>-->
+
         <!--</div>-->
+
+        <router-link class="money-top" :to="{name: 'takemoney'}" tag="div">
+          推广费:{{recordStatistics_get.c_money_sum}} 元
+        </router-link>
       </section>
       <section class="content">
         <div class="mfriend">
@@ -54,74 +60,75 @@
         </div>
         <ul>
           <!--<router-link to="/partner" tag="li">-->
-          <li class="li1" @click="partnertab(1)">
+          <router-link class="li1" :to="{path:'partner',query:{stab:1,type:'all',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}" tag="li">
+          <!--<li class="li1" @click="partnertab(1)">-->
             <div class="title">所有伙伴</div>
             <div class="iconfont listicon">&#xe646;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{teamsStatistics.all}}</span><span class="yuan"> 人</span>
             </div>
-          </li>
-          <!--</router-link>-->
-          <!--<router-link to="/partner2" tag="li">-->
-          <li class="li2" @click="partnertab(2)">
+          <!--</li>-->
+          </router-link>
+          <router-link class="li1" :to="{path:'partner',query:{stab:2,type:'agent',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}" tag="li">
+          <!--<li class="li2" @click="partnertab(2)">-->
             <div class="title">已购买伙伴</div>
             <div class="iconfont listicon">&#xe600;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{teamsStatistics.purchased}}</span><span class="yuan"> 人</span>
             </div>
-          </li>
-          <!--</router-link>-->
-          <!--<router-link to="/partner3" tag="li">-->
-          <li class="li3" @click="partnertab(3)">
+          <!--</li>-->
+          </router-link>
+          <router-link class="li1" :to="{path:'partner',query:{stab:3,type:'fans',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}" tag="li">
+          <!--<li class="li3" @click="partnertab(3)">-->
             <div class="title">未购买伙伴</div>
             <div class="iconfont listicon">&#xe60d;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{teamsStatistics.no_purchased}}</span><span class="yuan"> 人</span>
             </div>
-          </li>
-          <!--</router-link>-->
+          <!--</li>-->
+          </router-link>
         </ul>
 
         <div class="mfriend">
           <span class="mint-cell-text">推广订单</span>
         </div>
         <ul class="order-list">
-          <li class="li1" @click="ordertab(1)">
-            <!--<router-link class="li1" :to="{path:'extension',query:{stab:1}}" tag="li">-->
+          <!--<li class="li1" @click="ordertab(1)">-->
+            <router-link class="li1" :to="{path:'extension',query:{stab:1,type:'total',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}" tag="li">
             <div class="title">全部</div>
             <div class="iconfont listicon">&#xe624;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{orderStatistics.total}}</span><span class="yuan"> 单</span>
             </div>
-            <!--</router-link>-->
-          </li>
-          <!--<router-link class="li1" :to="{path:'extension',query:{stab:2}}" tag="li">-->
-          <li @click="ordertab(2)" class="li1">
+            </router-link>
+          <!--</li>-->
+          <router-link class="li1" :to="{path:'extension',query:{stab:2,type:'lock',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}" tag="li">
+          <!--<li @click="ordertab(2)" class="li1">-->
             <div class="title">未结算</div>
             <div class="iconfont listicon">&#xe624;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{orderStatistics.lock}}</span><span class="yuan"> 单</span>
             </div>
-            <!--</router-link>-->
-          </li>
-          <!--<router-link class="li1" :to="{path:'extension',query:{stab:3}}" tag="li">-->
-          <li class="li2" @click="ordertab(3)">
+            </router-link>
+          <!--</li>-->
+          <router-link class="li1" :to="{path:'extension',query:{stab:3,type:'refund',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}" tag="li">
+          <!--<li class="li2" @click="ordertab(3)">-->
             <div class="title">已退款</div>
             <div class="iconfont listicon">&#xe8b5;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{orderStatistics.refund}}</span><span class="yuan"> 单</span>
             </div>
-          </li>
-          <!--</router-link>-->
-          <!--<router-link class="li1" :to="{path:'extension',query:{stab:4}}" tag="li">-->
-          <li class="li3" @click="ordertab(4)">
+          <!--</li>-->
+          </router-link>
+          <router-link class="li1" :to="{path:'extension',query:{stab:4,type:'ok',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}" tag="li">
+          <!--<li class="li3" @click="ordertab(4)">-->
             <div class="title">已结算</div>
             <div class="iconfont listicon">&#xe619;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{orderStatistics.ok}}</span><span class="yuan"> 单</span>
             </div>
-          </li>
-          <!--</router-link>-->
+          <!--</li>-->
+          </router-link>
         </ul>
 
         <div class="mfriend">
@@ -133,43 +140,43 @@
           <li class="li1">
             <div class="title">已收货业绩</div>
             <div class="iconfont listicon">&#xe61e;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{recordStatistics_get.o_status_3}}</span><span class="yuan"> 元</span>
             </div>
           </li>
           <li class="li2">
             <div class="title">已提现业绩</div>
             <div class="iconfont listicon">&#xe630;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{recordStatistics_get.pay}}</span><span class="yuan"> 元</span>
             </div>
           </li>
           <li class="li3">
             <div class="title">可提现业绩</div>
             <div class="iconfont listicon">&#xe608;</div>
-            <div>
-              <span class="num">{{recordStatistics_get.check}}</span><span class="yuan"> 元</span>
+            <div class="nummoney">
+              <span class="num">{{recordStatistics_get.ok}}</span><span class="yuan"> 元</span>
             </div>
           </li>
           <li class="li4">
             <div class="title">被驳回业绩</div>
             <div class="iconfont listicon">&#xe620;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{recordStatistics_get.invalid}}</span><span class="yuan"> 元</span>
             </div>
           </li>
           <li class="li5">
             <div class="title">申请中业绩</div>
             <div class="iconfont listicon">&#xe602;</div>
-            <div>
+            <div class="nummoney">
               <span class="num">{{recordStatistics_get.apply}}</span><span class="yuan"> 元</span>
             </div>
           </li>
           <li class="li6">
             <div class="title">待打款业绩</div>
             <div class="iconfont listicon">&#xe625;</div>
-            <div>
-              <span class="num">{{recordStatistics_get.o_status_0}}</span><span class="yuan"> 元</span>
+            <div class="nummoney">
+              <span class="num">{{recordStatistics_get.check}}</span><span class="yuan"> 元</span>
             </div>
           </li>
         </ul>
@@ -180,6 +187,7 @@
          <router-view></router-view>
        </transition> -->
     </mt-loadmore>
+    </div>
     <v-tabbar></v-tabbar>
     <transition name="slide">
       <router-view></router-view>
@@ -199,25 +207,27 @@
       return {
         topStatus: '',
         recordStatistics_get: {
-          cg_money_sum: '',//销售总额
-          c_money_sum: '', //佣金总额
-          o_status_3: '', //已收货
-          pay: '', //已提现
-          check: '', //可提现
-          invalid: '', //被驳回的业绩
-          apply: '', //申请中
-          o_status_0: '' //待打款
+          cg_money_sum: '0',//销售总额
+          c_money_sum: '0', //佣金总额
+          o_status_3: '0', //已收货
+          pay: '0', //已提现
+          check: '0', //可提现
+          invalid: '0', //被驳回的业绩
+          apply: '0', //申请中
+          o_status_0: '0', //待打款
+          ok:'0'
+
         },
         teamsStatistics: {
-          all: '',  //总人数
-          purchased: '',  //已购买人数
-          no_purchased: ''  //未购买人数
+          all: '0',  //总人数
+          purchased: '0',  //已购买人数
+          no_purchased: '0'  //未购买人数
         },
         orderStatistics: {
-          total: '',//全部
-          lock: '',//未结算
-          refund: '',//已退款
-          ok: '', //已结算
+          total: '0',//全部
+          lock: '0',//未结算
+          refund: '0',//已退款
+          ok: '0', //已结算
         },
         memberInfo: {
           nickname: '',//昵称
@@ -237,7 +247,7 @@
     },
     watch: {
       $route (from) {
-        if (from.name == 'vipCenter') {
+        if (from.name === 'vipCenter') {
           this.memberInfo.avatar = this.imgUrl
         }
       }
@@ -253,25 +263,30 @@
         //佣金统计
         memberInfo({}, function (res) {
           if (res.statusCode == 1) {
+              console.log(res)
             _this.memberInfo.nickname = res.data.nickname
             _this.memberInfo.id = res.data.id
             _this.memberInfo.level = res.data.level
             _this.memberInfo.leveldetail = res.data.leveldetail
             _this.memberInfo.avatar = res.data.avatar
             _this.memberInfo.from = res.data.parent_name
+            _this.memberInfo.level = res.data.agentleveldetail.levelname
             _this.setImgUrl(_this.memberInfo.avatar)
             recordStatistics_get({data: {type: ''}}, function (res) {
                 console.log(res)
               if (res.statusCode == 1) {
                 let data = res.data
-                _this.recordStatistics_get.cg_money_sum = res.data.total.cg_money_sum || 0;
+                console.log(res.data)
+                _this.recordStatistics_get.cg_money_sum = res.data.total.c_money_sum || 0;
                 _this.recordStatistics_get.c_money_sum = res.data.total.c_money_sum || 0;
-                _this.recordStatistics_get.o_status_3 = res.data.o_status_3.cg_money_sum || 0;
-                _this.recordStatistics_get.pay = res.data.pay.cg_money_sum || 0;
-                _this.recordStatistics_get.check = res.data.check.cg_money_sum || 0;
+                _this.recordStatistics_get.o_status_3 = res.data.o_status_3.c_money_sum || 0;
+                _this.recordStatistics_get.pay = res.data.pay.c_money_sum || 0;
+//                _this.recordStatistics_get.check = res.data.check.c_money_sum || 0;
+                _this.recordStatistics_get.check = res.data.check.c_money_sum || 0;
+                _this.recordStatistics_get.ok = res.data.ok.c_money_sum || 0;
                 _this.recordStatistics_get.invalid = res.data.invalid.cg_money_sum || 0;
-                _this.recordStatistics_get.apply = res.data.apply.cg_money_sum;
-                _this.recordStatistics_get.o_status_0 = res.data.o_status_0.cg_money_sum || 0;
+                _this.recordStatistics_get.apply = res.data.apply.c_money_sum;
+                _this.recordStatistics_get.o_status_0 = res.data.o_status_0.c_money_sum || 0;
                 teamsStatistics({}, function (res) {
                   if (res.statusCode == 1) {
                     _this.teamsStatistics.all = res.data.all  || 0;
@@ -309,11 +324,13 @@
         this.$router.push({name: `extension`})
       },
       outLogin(){
+
         MessageBox({title: '确认退出当前账号?', message: '点击确认退出', showCancelButton: true}).then(action => {
           if (action == 'confirm') {//表示点击了确定
             // _webapp.logOut((res)=>{})
+            console.log('试试')
             LOGINOUT(function (res) {
-
+              console.log('推出成功')
             })
           } else if (action == 'cancel') {//表示点击了取消
 
@@ -338,7 +355,18 @@
     },
     mounted(){
       this.init();
-    }
+    },
+    beforeRouteUpdate(to, from, next){
+//      console.log(to)
+/*      console.log(from)
+      console.log('的结果')*/
+      if(from.name ==='userinfo'){
+        this.init();
+        console.log('从用户反悔')
+      }
+
+      next()
+    },
   }
 </script>
 <style scoped>
@@ -356,8 +384,8 @@
     width: 100%;
     height: 100%;
     background: #ececec;
-    overflow: auto;
-    /*overflow: hidden;*/
+    /*overflow: auto;*/
+    overflow: hidden;
   }
 
   .avatar {
@@ -427,7 +455,8 @@
   }
 
   .top {
-    height: .55rem;
+    /*height: .55rem;*/
+    height: .35rem;
     /*background: #fff;*/
     background: rgb(244, 127, 47);
     -webkit-box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
@@ -626,5 +655,30 @@
   .mint-header.is-fixed {
     top: 0rem;
   }
+  .top>.money-top {
+    width: 100% ;
+    font-size: .16rem;
+    line-height: .35rem;
+  }
+  .nummoney {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .container {
+    position: absolute;
+    top:0;
+    width: 100%;
+    overflow: auto;
+    /*overflow-y: scroll;*/
+    -webkit-overflow-scrolling: touch;
+    height: 6.2rem;
+    /*overflow-y: scroll;*/
 
+  }
+  .nametype {
+    display: inline-block;
+    width: .6rem;
+    text-align: right;
+  }
 </style>

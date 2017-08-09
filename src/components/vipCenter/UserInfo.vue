@@ -7,13 +7,14 @@
         </router-link>
       </mt-header>
     </section>
+
     <ul class="userinfo-list">
       <li class="userinfo-header">
 	          <span class="fl">
 	            头像
 	          </span>
         <span class="fr">
-	            <img id="img_upload" :src="myImg" v-show="myImg"/>
+	            <img id="img_upload" :src="myImg" />
 	          </span>
         <!-- <input id="file_head" type="file" @change="getMyImg($event)"/> -->
         <input id="file_head" type="button" @click="getMyImg()"/>
@@ -50,7 +51,14 @@
 	            支付宝-名
 	          </span>
         <input type="search" name="" class="userinfo-list-lr fl" placeholder="请输入支付宝真实姓名" v-model="myZfbName"
-               @blur="testZfbName(myZfbName)" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')">
+               @blur="testZfbName(myZfbName)" >
+      </li>
+      <li>
+            <span class="userinfo-list-lf fl">
+              真实姓名
+            </span>
+        <input type="search" name="" class="userinfo-list-lr fl" placeholder="请输入真实姓名" v-model="myName"
+               @blur="testName(myName)" >
       </li>
       <li @click="setCity">
 	          <span class="userinfo-list-lf fl">
@@ -101,7 +109,8 @@
   import {mapMutations} from 'Vuex';
   import {memberInfo, PUT_USERINFO, PUT_USERAVATARS, USERPHOTO} from '../../api/api';
   import {_webapp} from '../../config/webapp.js';
-//  import {webapp} from '../../config/webapp.js';
+//  import {_webapp} from '../../config/webapp.js';
+
   export default{
     data(){
       return {
@@ -112,12 +121,13 @@
         myWx: '',
         myZfb: '',
         myZfbName: '',
+         myName:'',
         myPlace: '',
         myProvince: '',
         myCity: '',
         myRegion: '',
         myDate: '',
-        myDate2: '',
+        // myDate2: '',
         imgurl: '',
         mypopup1: false,
         mypopup2: false,
@@ -162,6 +172,9 @@
 
       },
       testZfbName(val){//支支付宝真实姓名
+      },
+      testName(val){
+
       },
       setCity(){//所在城市显示
         this.mypopup1 = true;
@@ -219,7 +232,7 @@
         let m = new Date(value).getMonth() + 1;
         m = m < 10 ? ('0' + m) : m;
         d = d < 10 ? ('0' + d) : d;
-        this.myDate2 = `${y}-${m}-${d}`;
+        // this.myDate2 = `${y}-${m}-${d}`;
         this.myDate = `${y}年${m}月${d}日`;
       },
       getMyImg(e){
@@ -233,13 +246,16 @@
         let params = {}
         let _this = this
         memberInfo(params, function (res) {
+          console.log(res.data)
           if (res.statusCode === 1) {
             _this.initAddress();
             _this.delImg = res.data.avatar;
             _this.myPhone = res.data.mobile;
-            _this.myNc = res.data.realname;
+             _this.myNc = res.data.nickname;
+            _this.myName=res.data.realname;
             _this.myWx = res.data.weixin;
             _this.myZfb = res.data.alipay_account;
+            _this.myImg=res.data.avatar;
             _this.myZfbName = res.data.alipay_name;
             _this.myPlace = `${res.data.province} ${res.data.city} ${res.data.area}`;
             if (res.data.birthyear != '' && res.data.birthmonth != '' && res.data.birthday != '') {
@@ -258,15 +274,17 @@
         });
       },
       postUserInfo(){
+        let newDates=`${(this.myDate.match(/\d+/g))[0]}-${(this.myDate.match(/\d+/g))[1]}-${(this.myDate.match(/\d+/g))[2]}`;
         let params = {
           'data': {
-            realname: this.myNc,
+            nickname:this.myNc,
+            realname: this.myName,
             province: this.myProvince,
             city: this.myCity,
             alipay_name: this.myZfbName,
             alipay_account: this.myZfb,
             weixin: this.myWx,
-            birth: this.myDate2,
+            birth:newDates,
             area: this.myRegion,
             avatar: this.myImg
           }
@@ -297,12 +315,17 @@
               duration: 1000
             });
           } else {
-            console.log('请求失败')
+            Toast({
+              message: '个人信息提交失败',
+              position: 'middle',
+              duration: 2000
+            });
           }
         })
       }
     },
     mounted() {
+
       this.getUserInfo();
     }
 
@@ -327,6 +350,7 @@
     font-size: 0.16rem;
     height: 0.44rem;
   }
+
 
   .userinfo-list {
     margin-top: 0.54rem;
@@ -400,6 +424,7 @@
     width: 80%;
     padding-left: 0.1rem;
     color: #727272;
+    font-size: 0.12rem;
   }
 
   .postUserInfo {

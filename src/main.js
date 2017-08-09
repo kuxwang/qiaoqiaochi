@@ -15,7 +15,7 @@ import VueLazyload from 'vue-lazyload'
 Vue.use(VueLazyload, {
   loading: require('./assets/images/default.gif')
 })
-fastclick.attach(document.body)
+// fastclick.attach(document.body)
 Vue.use(Vuex)
 Vue.use(MintUI)
 Vue.config.productionTip = false

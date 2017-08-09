@@ -30,7 +30,8 @@ const state = {
   drawbackobj: '', //退款信息
   orderdetails: '',
   imgUrl: '',
-  seteditAddress: ''
+  seteditAddress: '',
+  oldaddress: '', //原来的地址
 }
 
 export default new Vuex.Store({

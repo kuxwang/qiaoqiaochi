@@ -187,6 +187,9 @@
       this.initAddress()
     },
     created () {
+      setTimeout(()=>{
+        this.temp_addr='';
+      },100)
     }
   }
 </script>

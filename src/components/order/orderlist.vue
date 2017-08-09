@@ -95,9 +95,10 @@
           }
         };
         orderList(params, res => {
+          console.log(res)
           if (res.statusCode == 1) {
             this.statusResult = res.data
-//            console.log(res)
+
           }else {
             this.statusResult = []
           }
@@ -124,14 +125,14 @@
             } else {
               this.isloading = false
               this.loading = true;
-              Toast({
-                message: res.data,
-                position: 'middle',
-                duration: 1000
-              });
+//              Toast({
+//                message: res.data,
+//                position: 'middle',
+//                duration: 1000
+//              });
             }
           });
-        }, 2500);
+        }, 500);
 //        }
       },
       cancel: function (orderid) {

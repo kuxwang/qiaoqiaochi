@@ -16,7 +16,7 @@
         <div class="title">所有伙伴</div>
         <div class="iconfont listicon">&#xe646;</div>
         <div>
-          <span class="num">{{personnum.all}}</span><span class="yuan"> 人</span>
+          <span class="num">{{personnumall}}</span><span class="yuan"> 人</span>
         </div>
 
       </li>
@@ -24,14 +24,14 @@
         <div class="title">已购买伙伴</div>
         <div class="iconfont listicon">&#xe600;</div>
         <div>
-          <span class="num">{{personnum.purchased}}</span><span class="yuan"> 人</span>
+          <span class="num">{{personp}}</span><span class="yuan"> 人</span>
         </div>
       </li>
       <li :class="{tabActive: selected==3 }"@click="tabnav('fans',3)">
         <div class="title">未购买伙伴</div>
         <div class="iconfont listicon">&#xe60d;</div>
         <div>
-          <span class="num">{{personnum.no_purchased}}</span><span class="yuan"> 人</span>
+          <span class="num">{{personnp}}</span><span class="yuan"> 人</span>
         </div>
         <!--</router-link>-->
       </li>
@@ -58,42 +58,8 @@
       <span class="iconfont">&#xe612;</span>
       未找到伙伴<br>
     </div>
-   <!--   <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-if="allLoaded == false">
-      &lt;!&ndash;<div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded">&ndash;&gt;
-        <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">继续滚动，可加载更多</span>
-        <span v-show="bottomStatus === 'loading'"><mt-spinner type="snake"></mt-spinner></span>
-      </div>-->
-    <!--</mt-loadmore>-->
-    <router-view></router-view>
- <!--   <mt-popup
-      v-model="popupVisible"
-      popup-transition="popup-fade" v-if="popupVisible">-->
-      <!--<div class="pop-up">-->
-        <!--<img class="sharelogo" :src="teamsinfo.avatar"/>-->
-        <!--<h5>{{teamsinfo.nickname}}</h5>-->
-        <!--<span>ID:{{teamsinfo.id}}</span>-->
-      <!--</div>-->
-      <!--<div class="pop-down">-->
-        <!--<ul>-->
-          <!--<li><span class="pop-left">粉丝：</span><span class="pop-right">{{teamsinfo.agentid}}</span></li>-->
-          <!--<li><span class="pop-left">关注方式：</span><span class="pop-right">{{teamsinfo.agentid}}</span></li>-->
-          <!--<li><span class="pop-left">等级：</span><span class="pop-right">{{teamsinfo.level.levelname}}</span></li>-->
-          <!--<li><span class="pop-left">消费金额：</span><span-->
-            <!--class="pop-right">{{teamsinfo.recordStatistics.c_money_sum}}</span></li>-->
-          <!--<li><span class="pop-left">手机号：</span><span class="pop-right">{{teamsinfo.mobile}}</span></li>-->
-          <!--&lt;!&ndash;<li><span class="pop-left">创建时间： </span><span class="pop-right">{{teamsinfo.createtime}}</span></li>&ndash;&gt;-->
-        <!--</ul>-->
-      <!--</div>-->
-     <!-- <div class="pop-info" v-else="">
-        <div class="img"><img :src="teamsinfo.avatar" alt=""></div>
-        <h3>{{teamsinfo.nickname}}</h3>
-        <div class="id-phone">
-          <span class="left-id">ID:{{teamsinfo.id}}</span>
-          <span>手机号：{{teamsinfo.mobile}}</span>
-        </div>
-      </div>
-    </mt-popup>-->
 
+    <router-view></router-view>
   </div>
 
 </template>
@@ -118,9 +84,45 @@
         bottomStatus: '',
         allLoaded: false,
         isTrue: false,
-        onePage: false
+        onePage: false,
+        personnumall:0,
+        personp:0,
+        personnp:0,
+
+
       }
     },
+    beforeRouteEnter (to, from, next) {
+      let _this=this;
+
+      let params = {
+        data: {
+          type: to.query.type,
+          page: 1,
+          psize: 10
+        }
+
+      };
+      console.log(to.query.type)
+      teamsLists(params, (res) => {
+
+        if (res.statusCode == 1) {
+          console.log(res.data)
+          to.meta.post = res.data
+          next()
+
+        }else{
+//          _this.allLoaded = true;
+          console.log('请求失败`${res.statusCode} , ${res.data}` ')
+        }
+
+      });
+
+    },
+
+
+
+
     methods: {
       open(){
         this.popupVisible = true
@@ -139,7 +141,7 @@
               data: {
                 type: 'all',
                 page: page,
-                psize: this.psizes
+                psize: _this.psizes
               }
             }
             teamsLists(params, (res) => {
@@ -161,7 +163,7 @@
               data: {
                 type: 'agent',
                 page: page,
-                psize: this.psizes
+                psize: _this.psizes
               }
             }
             teamsLists(params, (res) => {
@@ -183,7 +185,7 @@
               data: {
                 type: 'fans',
                 page: page,
-                psize: this.psizes
+                psize: _this.psizes
               }
             }
             teamsLists(params, (res) => {
@@ -202,13 +204,13 @@
             })
             break;
           case 4:
-            if (this.find.length === 11) {
+            if (_this.find.length === 11) {
               var obj = {
-                mobile: this.find
+                mobile: _this.find
               }
-            } else if (Number(this.find)) {
+            } else if (Number(_this.find)) {
               var obj = {
-                id: this.find
+                id: _this.find
               }
             }else{
               Toast({
@@ -222,14 +224,14 @@
             };
             teams(params, (res) => {
               if (res.statusCode === 1) {
-                this.personlist = res.data;
-                if (!this.personlist || this.personlist.length <= 1) {
-                  this.searched = false
+                _this.personlist = res.data;
+                if (!_this.personlist || _this.personlist.length <= 1) {
+                  _this.searched = false
 
                 } else {
                   let obji = []
                   obji.push(res.data)
-                  this.personlist = obji
+                  _this.personlist = obji
 //                  console.log(this.personlist)
                 }
               } else {
@@ -347,33 +349,50 @@
       }),
 
     },
-    watch:{
-      find(a,b){
-        if(this.selected === 4){
-          this.searchlist()
-        }
-      }
-    },
+//    watch:{
+//      find(a,b){
+//        if(this.selected === 4){
+//          this.searchlist()
+//        }
+//      }
+//    },
     created(){
-      this.selected = this.tabselect;
-      this.selecttab(this.tabselect, 1)
+      this.selected = this.$route.query.stab;
+      let res = this.$route.meta.post;
+
+      this.personlist=res.lists;
+      console.log(this.selected)
+//      console.log(this.personlist)
+    },
+
+
+    mounted() {
+//      let params = {}
+      let _this=this
+    /*  teamsStatistics(params, (res) => {
+        if (res.statusCode === 1) {
+          _this.personnum = res.data;
+          console.log(_this.personnum);
+        }
+      })*/
+
+      _this.personnumall=_this.$route.query.all;
+      _this.personp=_this.$route.query.agent;
+      _this.personnp=_this.$route.query.fans;
+
+
+
     },
     computed: {
       ...mapGetters([
         'tabselect',
       ])
     },
-
-    mounted() {
-      let params = {}
-      teamsStatistics(params, (res) => {
-        if (res.statusCode == 1) {
-//          console.log(res);
-          this.personnum = res.data
-        }
-      })
-
-    }
+    beforeRouteUpdate(to, from, next){
+      this.allLoaded=!this.allLoaded;
+      console.log(this.allLoaded+'的结果')
+      next()
+    },
 
 
   }
@@ -603,7 +622,7 @@
   .p-list {
     display: block;
     background-color: #ececec;
-    margin-top: 1.95rem;
+    margin-top: 1.85rem;
   }
 
   .p-cell {

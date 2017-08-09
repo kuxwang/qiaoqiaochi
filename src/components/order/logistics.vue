@@ -44,28 +44,8 @@
           <p class="first">{{v.context}}</p>
           <p>{{v.time}}</p>
         </li>
-        <!--<li>-->
-          <!--<b></b>-->
-          <!--<p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>-->
-          <!--<p>2017-07-22 22:12:22</p>-->
-        <!--</li>-->
-        <!--<li>-->
-          <!--<b></b>-->
-          <!--<p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>-->
-          <!--<p>2017-07-22 22:12:22</p>-->
-        <!--</li>-->
-        <!--<li>-->
-          <!--<b></b>-->
-          <!--<p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>-->
-          <!--<p>2017-07-22 22:12:22</p>-->
-        <!--</li>-->
-        <!--<li>-->
-          <!--<b></b>-->
-          <!--<p class="first">【北京中南海初始站已经打包发货】下一站【无锡市委】</p>-->
-          <!--<p>2017-07-22 22:12:22</p>-->
-        <!--</li>-->
       </ul>
-      <div v-show="isShow" class="none-tran">很抱歉！未查到相关物流信息</div>
+      <div v-if="isShow" class="none-tran">很抱歉！未查到相关物流信息</div>
     </div>
   </div>
 </template>
@@ -102,23 +82,41 @@
 //        this.$router.push({path:'details',query:{goodsid:orderdetails.goods.id}})
 //      }
     },
-    created:function () {
-      var that=this;
-      this.exp=this.$route.query.exp;
-      this.expsn=this.$route.query.expsn;
-      let params={
+    beforeRouteEnter (to, from, next) {
+      let that=this;
+      console.log(to.query.expsn)
+//      this.exp=to.query.exp;
+//      this.expsn=to.query.expsn;
+      let params = {
         data:{
-          express:that.exp,
-          expresssn:that.expsn
+          express:to.query.exp,
+          expresssn:to.query.expsn
         }
       }
+      console.log(to.query.expsn);
       expressInfo(params,function (res) {
-        console.log(res)
-        that.arr=res.data
-        if(res.data.errno){
-          that.isShow=true;
+        if(res.statusCode==1){
+          to.meta.post = res.data
+          next(vm => {
+            vm.expsn=to.query.expsn;
+            vm.exp=to.query.exp;
+          })
         }
+        else{
+          next(vm => {
+            vm.isShow=true;
+          })
+          console.log('请求失败`${res.statusCode} , ${res.data}` ')
+        }
+//        if(res.data.errno){
+//          that.isShow=true;
+//        }
       });
+    },
+    created:function () {
+      let res = this.$route.meta.post;
+      this.arr=res;
+      let that=this;
       let param={
         data:{
           orderid:this.$route.query.id
@@ -147,6 +145,7 @@
     color:#666;
   }
   .none-tran{
+    height:.6rem;
     padding:.2rem;
     font-size:.15rem;
   }

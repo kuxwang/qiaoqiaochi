@@ -285,10 +285,11 @@
 			        		for(let a in _this.getShCartData){
 			        			_this.getShCartData[a].isChecked=false
 			        		}
-			        		_this.allCheckBox();
+                  _this.defState();
+//			        		_this.allCheckBox();
 		        		}else{
 		        			_this.isTrue=false;
-                    		_this.isShow=false;
+                  _this.isShow=false;
 		        		}
 
 		        	}else{
@@ -303,6 +304,21 @@
 			delSelect(){
 				console.log(this.getShCartData)
 			},
+      defState(){
+        this.isTrue=true;
+        var allPrice=0;
+        var allTotal=0;
+        for(var i=0;i<this.getShCartData.length;i++) {
+          this.getShCartData[i].isChecked = true;
+          // console.log(this.getShCartData[i])
+          var myTotal = Number(this.getShCartData[i].total);
+          var myPrice = Number(this.getShCartData[i].marketprice);
+          allPrice += myPrice * myTotal;
+          allTotal += myTotal
+        }
+        this.defPrice=allPrice;
+        this.defTotal=allTotal;
+      },
 			...mapMutations({
 		        getMyorders:'GET_MYORDERS'
 		    })

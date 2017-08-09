@@ -6,9 +6,12 @@
       <!--</router-link>-->
     </mt-header>
     <div class="container">
-      <div class="imgbox" @click="clickhavib()">
+      <div class="imgbox" @click="clickhavib()" v-if="qrimg">
         <img :src="qrimg"/>
-        <!-- <img v-lazy="qrimg"> -->
+      </div>
+      <div class="tip" v-else>
+        <span class="iconfont">&#xe609;</span>
+        您还不是分销商
       </div>
     </div>
     <v-tabbar></v-tabbar>
@@ -20,7 +23,7 @@
   export default{
     data(){
       return {
-        qrimg: '123'
+        qrimg: ''
       }
     },
     components: {
@@ -34,17 +37,22 @@
             console.log('ok')
           }
         })
+      },
+      init(){
+        let _this=this;
+        Qrimg({}, res => {
+          console.log(1)
+          if (res.statusCode == 1) {
+            _this.qrimg = res.data
+          }
+        })
       }
     },
     created () {
-      let _this=this;
-      Qrimg({}, res => {
-        console.log(1)
-        if (res.statusCode == 1) {
-          _this.qrimg = res.data
-        }
-      })
-    }
+        this.init();
+        console.log(this.qrimg)
+    },
+
   }
 </script>
 
@@ -111,5 +119,14 @@
 
   .backg {
     width: 100%;
+  }
+  .tip {
+    font-size: .2rem;
+    position: relative;
+    top: 2rem;
+  }
+  .tip .iconfont {
+    display: block;
+    font-size: 1rem;
   }
 </style>

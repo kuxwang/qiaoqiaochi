@@ -594,11 +594,11 @@
                   }
                 }
               } else {
-                Toast({
-                  message: res.data,
-                  position: 'middle',
-                  duration: 1000
-                });
+//                Toast({
+//                  message: res.data,
+//                  position: 'middle',
+//                  duration: 300
+//                });
 
                 that.reload();
               }

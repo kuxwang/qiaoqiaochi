@@ -60,7 +60,7 @@
     </div>
 
       <ul class="p-list" v-if="orderlist.length"  v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="10">
-        <li class="p-cell" v-for="(i,index) in orderlist" @click="orderinfo(index)">
+        <li class="p-cell" v-if="i.ordersn" v-for="(i,index) in orderlist" @click="orderinfo(index)">
           <div class="up">
             <span class="ordernum">订单编号{{i.ordersn}}</span>
             <span class="time">{{i.createtime}}</span>
@@ -104,10 +104,10 @@
         selected: 1,
         find: '',
         ordernum: {},
-        ordertotal: '',
-        orderlock: '',
-        orderrefund: '',
-        orderok: '',
+        ordertotal: '0',
+        orderlock: '0',
+        orderrefund: '0',
+        orderok: '0',
         orderlist: [],
         searched: true,
         myCurNo: 1,
@@ -119,10 +119,37 @@
         loding:true
       }
     },
+    beforeRouteEnter (to, from, next) {
+      let _this=this;
+      let params = {
+        data: {
+          type: to.query.type,
+          page: 1,
+          psize: 10
+        }
+
+      }
+//      console.log(to.query.type);
+      orderLists(params, (res) => {
+        if (res.statusCode == 1) {
+          to.meta.post = res.data
+          console.log(res.data)
+          next(vm => {
+              console.log(vm.orderlist)
+              console.log('okokok')
+          })
+        }else{
+          console.log('请求失败`${res.statusCode} , ${res.data}` ')
+        }
+
+      });
+
+    },
     methods: {
       orderinfo(index){
         this.ordersn(this.orderlist[index].ordersn);
-        this.$router.push({name: `orderinfo`})
+        this.$router.push({name: `orderinfo`});
+        this.allLoaded = true;
       },
       selecttab(idx, page){
         let _this = this;
@@ -230,49 +257,6 @@
 
             })
             break;
-          /*case 5  :
-            if (this.find.length === 20) {
-              let params = {
-                data: {
-                  ordersn: this.find
-                }
-              };
-              _this.allLoaded = true
-              orders(params, (res) => {
-                if (res.statusCode === 1) {
-                  let obji = [];
-                  obji.push(res.data.order);
-                  this.orderlist = obji;
-                  this.allLoaded = true;
-                } else {
-                  console.log('请求失败');
-                  this.searched = false
-                }
-              })
-            } else {
-              let params = {
-                data: {
-                  mid: this.find
-                }
-              };
-              orders(params, (res) => {
-                if (res.statusCode === 1) {
-//                  console.log(res)
-                  let obji = [];
-                  obji.push(res.data.order);
-                  this.orderlist = obji;
-
-//                  console.log(this.orderlist);
-                  /!* if (!this.orderlist || this.orderlist < 1) {
-                   this.searched = false
-                   }*!/
-                } else {
-                  console.log('请求失败');
-//                  this.searched = false
-                }
-              })
-            }
-            break;*/
           default:
             console.log('hehhe')
 
@@ -287,7 +271,7 @@
           data: {
             type: type,
             page: 1,
-            psize: this.psizes
+            psize: _this.psizes
           }
         }
         orderLists(params, (res) => {
@@ -312,7 +296,7 @@
         searchnum: 'SEARCHNUM',
         ordersn: 'ORDERSN',
       }),
-      handleBottomChange(status) {
+/*      handleBottomChange(status) {
         console.log(status);
         this.bottomStatus = status
       },
@@ -323,7 +307,7 @@
 //        this.$refs.loadmore.onBottomLoaded();
         this.selecttab(this.selected, this.myCurNo);
 
-      },
+      },*/
       loadMore(){
         this.myCurNo=this.myCurNo+1;
         this.selecttab(this.selected, this.myCurNo)
@@ -333,10 +317,10 @@
         this.selected=5
         this.allLoaded = true;
         let _this=this;
-        if (this.find.length === 20) {
+        if (_this.find.length === 20) {
           let params = {
             data: {
-              ordersn: this.find
+              ordersn: _this.find
             }
           };
           _this.allLoaded = true
@@ -344,37 +328,35 @@
             if (res.statusCode === 1) {
               let obji = [];
               obji.push(res.data.order);
-              this.orderlist = obji;
-              this.allLoaded = true;
+              _this.orderlist = obji;
+              _this.allLoaded = true;
+              console.log(res.data)
             } else {
               console.log('请求失败');
-              this.searched = false
+              _this.searched = false
             }
           })
-        } else {
+        }else if(!_this.find){
+          Toast({
+            message: '请输入订单号或者用户ID。',
+            position: 'middle',
+            duration: 2000
+          });
+        }
+        else {
           let params = {
             data: {
-              mid: this.find
+              mid: _this.find
             }
           };
           orders(params, (res) => {
             if (res.statusCode === 1) {
-//                  console.log(res)
-              if(res.data.order.ordersn){
-                let obji = [];
-                obji.push(res.data.order);
-                console.log(res.data.order.ordersn)
-                this.orderlist = obji;
-              }else {
-                Toast({
-                  message: '未找到订单，请重新搜索。',
-                  position: 'middle',
-                  duration: 2000
-                });
-              }
+                console.log(res)
+                _this.orderlist = res.data.order;
+                console.log(_this.orderlist)
+
             } else {
               console.log('请求失败');
-//                  this.searched = false
             }
           })
         }
@@ -384,33 +366,35 @@
 
 
     },
-    watch:{
-      find(a,b){
-          if(this.selected === 5){
-            this.searchlist()
-          }
-      }
-    },
+//    watch:{
+//      find(a,b){
+//          if(this.selected === 5){
+//            this.searchlist()
+//          }
+//      }
+//    },
 
     created(){
-      this.selected = this.tabselect;
-      this.selecttab(this.tabselect, 1)
-
+      let _this=this;
+      this.selected = this.$route.query.stab;
+      console.log(this.$route.query.stab);
+      let res = this.$route.meta.post;
+      _this.orderlist=res
+      _this.ordertotal=_this.$route.query.total;
+      _this.orderrefund=_this.$route.query.refund;
+      _this.orderlock=_this.$route.query.lock;
+      _this.orderok=_this.$route.query.ok;
     },
+
     mounted(){
-      let params = {}
-      orderStatistics(params, (res) => {
-        if (res.statusCode == 1) {
-          this.ordernum = res.data
-          console.log(this.ordernum)
-          this.ordertotal = res.data.total.order_count
-          this.orderrefund = res.data.refund.order_count
-          this.orderlock = res.data.lock.order_count
-          this.orderok = res.data.ok.order_count
-        }
 
-      })
     },
+    beforeRouteUpdate(to, from, next){
+        this.allLoaded=!this.allLoaded;
+      console.log(this.allLoaded+'的结果')
+      next()
+    },
+
     computed: {
       ...mapGetters([
         'tabselect',
@@ -563,20 +547,17 @@
   .p-list {
     display: block;
     background-color: #ececec;
-    /*height: 4.75rem;*/
     width: 100%;
-    /*   height: 4.5rem;
-       overflow: hidden;*/
-    /*overflow-y: scroll;*/
-  margin-top: 1.95rem;
+
+    height: 4.68rem;
+    overflow: hidden;
+    overflow-y: scroll;
+    background-color: #ececec;
+    margin-top: 1.85rem;
+
 
   }
 
-  /*  .mint-loadmore {
-      height: 0.5rem;
-      overflow: hidden;
-      overflow-y: scroll;
-    }*/
   .mint-loadmore {
     /*overflow-y: scroll;*/
     width: 100%;
