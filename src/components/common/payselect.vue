@@ -145,7 +145,9 @@
                 duration: 2000
               });
               setTimeout(() => {
-                this.$router.push('/')
+                _this.$router.push({name:'order'})
+                console.log(this.$router)
+                console.log(_this.$router)
               }, 2000)
             } else {
               Toast({

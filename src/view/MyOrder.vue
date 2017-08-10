@@ -5,7 +5,7 @@
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-    <div class="container">
+    <div id="b" class="container">
     <div class="mint-navbar page-part" id="nav">
       <a class="mint-tab-item" :class="{'is-selected': isselect==1}" @click="isselect=1">
         <div class="mint-tab-item-icon"></div>
@@ -82,12 +82,19 @@
 
     methods: {
       setHeight () {
-        let contentDiv = document.getElementById('page-navbar');
+        /*let contentDiv = document.getElementById('page-navbar');
         let topDiv = document.getElementById('topheader');
         let navDiv = document.getElementById('nav');
         let tabbarDiv = document.getElementsByClassName('tabbar');
-        let diffHeght = (document.body.clientHeight - topDiv.clientHeight - navDiv.clientHeight - 50) / 100 + 'rem';
-        contentDiv.style.height = diffHeght
+        let diffHeght = (document.body.clientHeight - topDiv.clientHeight - navDiv.clientHeight - 50) / 100 + 'rem';*/
+//        contentDiv.style.height = diffHeght;
+        let a = document.getElementById('b');
+        let topDiv = document.getElementById('topheader');
+        let navDiv = document.getElementById('nav');
+        let diffHeght = (document.body.clientHeight - topDiv.clientHeight - navDiv.clientHeight - 10) / 100 + 'rem';
+          a.style.height = diffHeght;
+          console.log(diffHeght)
+
       }
     },
     created(){
@@ -206,7 +213,7 @@
     overflow: auto;
     /*overflow-y: scroll;*/
     -webkit-overflow-scrolling: touch;
-    height: 6.9rem !important;
+    height: 6.7rem !important;
     /*overflow-y: scroll;*/
 
   }

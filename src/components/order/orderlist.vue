@@ -195,6 +195,7 @@
     padding-top: .01rem;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: .8rem;
     /*overflow: scroll;*/
   }
 
