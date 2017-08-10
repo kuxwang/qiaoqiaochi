@@ -80,7 +80,7 @@
       edit (value) {
         this.seteditAddresses(value)
         this.oldaddress(value.province+' '+value.city+' '+value.area)
-        this.$router.push({path: '/editAddress'})
+        this.$router.push({path: '/editAddress',query:{id:value.id}})
       },
       deleteAddress (value) {
         let params = {
@@ -137,6 +137,7 @@
         if (res.statusCode == 1) {
           _this.getaddressnum(res.data.list.length)
           _this.addressLists = res.data.list
+          console.log(res)
         } else {
           console.log('获取收货地址接口异常')
         }
