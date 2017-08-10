@@ -363,7 +363,6 @@
     beforeRouteUpdate(to, from, next){
       if(from.name ==='userinfo'){
         this.init();
-        console.log('从用户反悔')
       }
       console.log(to);
       console.log(from);
