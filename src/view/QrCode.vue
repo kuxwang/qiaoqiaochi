@@ -60,9 +60,11 @@
         })
       }
     },
+    activated () {
+      this.init();
+    },
     created () {
-        this.init();
-        console.log(this.qrimg)
+
     },
 
   }

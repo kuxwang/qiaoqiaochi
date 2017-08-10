@@ -173,6 +173,7 @@
             city: this.area.city,
             area: this.area.area,
             address: this.getAddress,
+            addressid: _this.$route.query.id
           }
         }
 
@@ -181,13 +182,14 @@
           if (res.statusCode == 1) {
 
             let info = {
-              realname: this.name,
-              mobile: this.tel,
-              province: this.area.province,
-              city: this.area.city,
-              area: this.area.area,
-              address: this.getAddress,
-              id: res.addressid
+              realname: _this.name,
+              mobile: _this.tel,
+              province: _this.area.province,
+              city: _this.area.city,
+              area: _this.area.area,
+              address: _this.getAddress,
+              id: res.addressid,
+
             }
             this.getUserAddress(info);
             this.getOnActive(this.addressListNum)

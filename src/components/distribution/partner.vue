@@ -42,7 +42,7 @@
     </div>
 
       <ul class="p-list"  v-if="personlist.length"  v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="10">
-        <li class="p-cell" v-for="(i,index) in personlist" @click="popshow(index)">
+        <li class="p-cell" v-for="(i,index) in personlist" @click.stop="popshow(index)">
           <!--<li class="p-cell" >-->
           <div class="logo">
             <img :src="i.avatar"/>
@@ -119,9 +119,6 @@
       });
 
     },
-
-
-
 
     methods: {
       open(){
@@ -232,7 +229,6 @@
                   let obji = []
                   obji.push(res.data)
                   _this.personlist = obji
-//                  console.log(this.personlist)
                 }
               } else {
                 Toast({
@@ -251,19 +247,6 @@
       },
       popshow(index){
         this.$router.push({name:'partnerInfo',query:{openid:this.personlist[index].openid}})
-      },
-      loadTop (){
-//        this.selecttab(this.selected,1)
-//        this.$refs.loadmore.onBottomLoaded();
-      },
-      loadBottom() {
-        this.myCurNo += 1;
-        this.selecttab(this.selected, this.myCurNo);
-        this.$refs.loadmore.onBottomLoaded();
-      },
-      handleBottomChange(status) {
-//        console.log(status);
-        this.bottomStatus = status
       },
       tabnav(type,index){
         let _this=this;
@@ -349,38 +332,23 @@
       }),
 
     },
-//    watch:{
-//      find(a,b){
-//        if(this.selected === 4){
-//          this.searchlist()
-//        }
-//      }
-//    },
+
     created(){
       this.selected = this.$route.query.stab;
       let res = this.$route.meta.post;
 
       this.personlist=res.lists;
       console.log(this.selected)
-//      console.log(this.personlist)
+
     },
 
 
     mounted() {
-//      let params = {}
-      let _this=this
-    /*  teamsStatistics(params, (res) => {
-        if (res.statusCode === 1) {
-          _this.personnum = res.data;
-          console.log(_this.personnum);
-        }
-      })*/
 
+      let _this=this
       _this.personnumall=_this.$route.query.all;
       _this.personp=_this.$route.query.agent;
       _this.personnp=_this.$route.query.fans;
-
-
 
     },
     computed: {
@@ -414,7 +382,7 @@
     height: 100%;
     background: #ececec;
     overflow: auto;
-    z-index: 3;
+    z-index: 4;
   }
 
   .mint-header {
@@ -812,6 +780,7 @@
     height: 4.68rem;
     overflow: hidden;
     overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
 
   }
 

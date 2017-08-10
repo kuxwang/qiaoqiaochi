@@ -93,7 +93,15 @@
             }
           }
           withdrawals_post(params, (res) => {
-            console.log(res)
+            console.log(res);
+            Toast({
+              message: '提现成功',
+              position: 'middle',
+              duration: 2000
+            });
+            setTimeout(()=>{
+              this.$router.push({name:'takemoney'})
+            },2000)
 
           })
         } else {
@@ -111,12 +119,8 @@
         console.log(newValue)
       }
     },
-    /* computed: {
-     ...mapState([
-     'orderInfo'
-     ])
-     },*/
     created () {
+      let _this=this
       let params={
         data: {
 
@@ -124,10 +128,10 @@
       }
       recordStatistics_get(params,(res)=>{
         if(res.statusCode==1){
-          this.moneylist=res.data
-          console.log(this.moneylist)
+         /* this.moneylist=res.data
+          console.log(this.moneylist)*/
           console.log(res)
-          this.moneytotal=res.data.ok.c_money_sum
+          _this.moneytotal=res.data.ok.c_money_sum
         }else {
           console.log('请求失败')
         }
