@@ -198,9 +198,9 @@
               position: 'middle',
               duration: 2000
             });
-           /* setTimeout(() => {
+            setTimeout(() => {
               _this.$router.push('/confirmorder?type=1')
-            }, 2000)*/
+            }, 2000)
           }
         })
       },
