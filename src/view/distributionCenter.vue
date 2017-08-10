@@ -358,16 +358,12 @@
       console.log('active')
     },
     mounted(){
-      this.init();
+//      this.init();
     },
     beforeRouteUpdate(to, from, next){
-      if(from.name ==='userinfo'){
+      if(from.name ==='userinfo'|| from.name ==='extension' || from.name ==='partner'){
         this.init();
       }
-      console.log(to);
-      console.log(from);
-//      if(to.name === 'partner' || to.name ==='extension' || to.name==)
-
       next()
     },
   }
