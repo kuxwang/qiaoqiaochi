@@ -260,6 +260,7 @@
     padding-bottom: 100%;
     height: 0;
     margin-top: 46px;
+    width: 100%;
   }
 
   .content {
@@ -281,6 +282,7 @@
     text-align: left;
     background: #fff;
     padding:0rem 0.05rem;
+    width: 100%;
   }
   .intro>p{
     font-size: .15rem;

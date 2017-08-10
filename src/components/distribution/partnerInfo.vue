@@ -6,7 +6,7 @@
       </router-link>
       <mt-button slot="right"></mt-button>
     </mt-header>
-    <div container>
+    <div class="containe"r>
     <div class="header-img">
       <img :src="teamsinfo.avatar" alt="">
       <h4>{{teamsinfo.nickname}}</h4>

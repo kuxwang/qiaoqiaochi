@@ -38,11 +38,11 @@
     position: relative;
     background-color: #efeff4 !important;
     overflow: hidden;
-    -webkit-overflow-scrolling: touch;
+    /*-webkit-overflow-scrolling: touch;*/
   }
 
   .header {
-    -webkit-transform: translateZ(0);
+    -webkit-transform: translateZ(0) !important;
   }
 
   /*公共头部*/

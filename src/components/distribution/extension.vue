@@ -546,20 +546,17 @@
 
   .p-list {
     display: block;
-    background-color: #ececec;
     width: 100%;
-
     height: 4.68rem;
     overflow: hidden;
     overflow-y: scroll;
     background-color: #ececec;
     margin-top: 1.85rem;
-
+    -webkit-overflow-scrolling: touch;
 
   }
 
   .mint-loadmore {
-    /*overflow-y: scroll;*/
     width: 100%;
   }
 

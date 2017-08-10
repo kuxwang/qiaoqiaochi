@@ -812,6 +812,7 @@
     height: 4.68rem;
     overflow: hidden;
     overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
 
   }
 
