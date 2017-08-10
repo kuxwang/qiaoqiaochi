@@ -180,7 +180,7 @@
         addresses_put(params, res => {
             console.log(res)
           if (res.statusCode == 1) {
-            console.log(res)
+
             let info = {
               realname: _this.name,
               mobile: _this.tel,
@@ -191,6 +191,7 @@
               id: res.addressid,
 
             }
+            console.log(res)
             console.log(info)
             this.getUserAddress(info);
             this.getOnActive(this.addressListNum)
@@ -199,6 +200,7 @@
               position: 'middle',
               duration: 2000
             });
+
             setTimeout(() => {
 //              _this.$router.push('/confirmorder?type=1')
               _this.$router.push({name:'deliveryaddress'})

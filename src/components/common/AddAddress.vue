@@ -167,7 +167,7 @@
               city: _this.area.city,
               area: _this.area.area,
               address: _this.getAddress,
-              id: res.addressid
+              id: res.data
             };
             console.log(info)
             console.log(res)

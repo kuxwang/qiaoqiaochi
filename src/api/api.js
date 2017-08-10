@@ -1,8 +1,8 @@
 /**
  * Created by Crete on 17/7/24.
  */
-import {_webapp} from '../config/webapp.js'
-// import {_webapp} from '../config/_webapp.js'
+// import {_webapp} from '../config/webapp.js'
+import {_webapp} from '../config/_webapp.js'
 const base = 'https://api.duoyunjiav2.wshoto.com';
 const header = 'application/json';
 const dataType = 'json';
@@ -70,6 +70,7 @@ const express = {exp: {url: `${base}/expresses`, method: 'GET', header, dataType
  * 退款申请中
  */
 const orderRes = {orderR: {url: `${base}/orders/refund`, method: 'GET', header, dataType}};
+const dispatchMoney = {dispatchMoney: {url: `${base}/orders/dispatchMoney`, method: 'GET', header, dataType}};
 
 export const orderLists = function (params, callback) {
   _webapp.requestx(Object.assign(params, commissions.orderLists), function (res) {
@@ -470,3 +471,20 @@ export const orderRe = function (params, callback) {
     callback(res)
   })
 };
+
+export const DispatchMoney = function (params, callback) {
+  _webapp.requestx(Object.assign(params, dispatchMoney.dispatchMoney), function (res) {
+    callback(res)
+  })
+};
+
+
+
+
+
+
+
+
+
+
+

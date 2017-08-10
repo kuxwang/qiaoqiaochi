@@ -5,7 +5,7 @@
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-    <div id="b" class="container">
+
     <div class="mint-navbar page-part" id="nav">
       <a class="mint-tab-item" :class="{'is-selected': isselect==1}" @click="isselect=1">
         <div class="mint-tab-item-icon"></div>
@@ -28,7 +28,7 @@
         <div class="mint-tab-item-label">已完成</div>
       </a>
     </div>
-
+    <div id="b" class="container">
     <div id="page-navbar" class="page-navbar">
       <order-lists ref="mylist"></order-lists>
     </div>
@@ -159,7 +159,7 @@
   }
 
   .page-part {
-    top: .45rem;
+    top: .4rem;
     height: .45rem !important;
     position: fixed;
     width: 100%;
@@ -239,5 +239,9 @@
     /*overflow-y: scroll;*/
 
   }
+  #nav {
+    z-index: 4;
+  }
+
 
 </style>

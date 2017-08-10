@@ -115,7 +115,7 @@
       			</span>
         <span class="mygoods-price">
 					¥
-					<span class="goods-intPrice">{{memberDiscount.realprice | calculatePrice1}}.</span>
+					<span class="goods-intPrice">{{memberDiscount.realprice+dispatches.price | calculatePrice1}}.</span>
 					<span class="goods-folatPrice">{{memberDiscount.realprice | calculatePrice2}}</span>
 				</span>
       </div>
@@ -131,7 +131,7 @@
 </template>
 <script>
   import {Header, MessageBox, Toast} from 'mint-ui';
-  import {GET_MYADDRESS1, GET_ORDER1, confirm_post} from '../../api/api';
+  import {GET_MYADDRESS1, GET_ORDER1, confirm_post,DispatchMoney} from '../../api/api';
   import {mapMutations, mapState} from 'Vuex';
   //  import _ from 'lodash'
   export default{
@@ -158,13 +158,14 @@
           }
         };
         GET_ORDER1(params, res => {
-          if (res.statusCode == 1) {
+          if (res.statusCode === 1) {
             _this.orderGoods = res.data.orderGoods
             _this.defaultAddress = res.data.defaultAddress
             _this.memberDiscount = res.data.memberDiscount
             _this.dispatches = res.data.dispatches[0]
             _this.shopSet = res.data.shopSet
             _this.ADDRESS(res.data.addressLists)
+            console.log(_this.defaultAddress)
           }
         })
       },
@@ -234,8 +235,6 @@
               this.payed = false;
             }
           })
-
-
         }
 
 
@@ -258,16 +257,44 @@
       }
     },
     beforeRouteUpdate(to, from, next){
+      let _this=this
       this.payed=false;
-      console.log(this.payed)
+      console.log(this.payed);
+      if(from.name ==='deliveryaddress'){
+        console.log('hao')
+        let params={
+          data: {
+            optionid: this.myOrders.optionid || '',
+            total: this.myOrders.total || '',
+            goodsid: this.myOrders.goodsid || '',
+            dispatchid:1,
+            addressid: this.defaultAddress.id
+          }
+        }
+        DispatchMoney(params,res=>{
+         if(res.statusCode ===1){
+           console.log(res);
+
+           _this.orderGoods = res.data.orderGoods
+           _this.defaultAddress = res.data.defaultAddress
+           _this.memberDiscount = res.data.memberDiscount
+           _this.dispatches = res.data.dispatches[0]
+           _this.shopSet = res.data.shopSet
+           _this.ADDRESS(res.data.addressLists)
+
+
+         }
+        })
+      }
+
       next()
     },
     filters: {
       calculatePrice1 (value) {
         let num = '';
-        if (typeof value == 'number') {
+        if (typeof value === 'number') {
           num = Math.floor(value) || 0
-        } else if (typeof value == 'string') {
+        } else if (typeof value === 'string') {
           num = Math.floor(Number(value)) || 0
         }
         return num || 0

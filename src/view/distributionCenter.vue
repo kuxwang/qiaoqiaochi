@@ -33,22 +33,6 @@
         <!-- <router-link class="iconfont right" :to="{name:'userinfo'}" tag="i">&#xe649;</router-link> -->
       </router-link>
       <section class="top">
-        <!--<div class="top_1">-->
-     <!--   <router-link class="topdiv-first" :to="{name: 'takemoney'}" tag="div">
-          &lt;!&ndash;<span class="title">推广？、费</span>&ndash;&gt;
-          &lt;!&ndash;<span class="num">{{recordStatistics_get.cg_money_sum}}</span><span class="yuan"> 元</span>&ndash;&gt;
-          推广费
-        </router-link>
-        &lt;!&ndash;</div>&ndash;&gt;
-        &lt;!&ndash;<div>&ndash;&gt;
-        <router-link :to="{name: 'takemoney'}" tag="div">
-          &lt;!&ndash;<span class="title">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>&ndash;&gt;
-          {{recordStatistics_get.c_money_sum}} 元
-          &lt;!&ndash;<span class="title">佣金</span>&ndash;&gt;
-          &lt;!&ndash;<span class="num">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>&ndash;&gt;
-        </router-link>-->
-
-        <!--</div>-->
 
         <router-link class="money-top" :to="{name: 'takemoney'}" tag="div">
           推广费:{{recordStatistics_get.c_money_sum}} 元
@@ -364,12 +348,12 @@
       if(from.name ==='userinfo'){
         this.init();
       }
-      if(from.name ==='extension' && to.name !== 'orderinfo'){
+      /*if(from.name ==='extension' && to.name !== 'orderinfo'){
         this.init();
       }
       if(from.name ==='partner' && to.name !=='partnerInfo'){
         this.init();
-      }
+      }*/
       next()
     },
   }
