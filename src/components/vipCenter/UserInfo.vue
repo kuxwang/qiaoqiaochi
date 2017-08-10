@@ -2,9 +2,9 @@
   <div class="main">
     <section>
       <mt-header fixed title="个人信息">
-        <router-link to="/vipCenter" slot="left">
-          <mt-button icon="back"></mt-button>
-        </router-link>
+        <!--<router-link to="/vipCenter" slot="left">-->
+          <!--<mt-button icon="back"></mt-button>-->
+        <!--</router-link>-->
       </mt-header>
     </section>
 
@@ -73,7 +73,8 @@
         <input type="text" name="" class="userinfo-list-lr fl" placeholder="请选择出生日期" v-model="myDate" disabled>
       </li>
     </ul>
-    <div class="postUserInfo" @click="postUserInfo">
+    <!--<div class="postUserInfo" @click="postUserInfo">-->
+    <div class="postUserInfo">
       <button class="postUserInfo-item">
         提交
       </button>
@@ -290,38 +291,47 @@
           }
         }
         let _this = this;
-        PUT_USERINFO(params, function (res) {
-          if (res.statusCode === 1) {
-            _this.$router.go(-1);
-            let that = _this;
-            // if(that.myImg!=''){
+        console.log(this.myName)
+        if(this.myNc && this.myWx && this.myZfb && this.myZfbName && this.myName && this.myDate && this.myPlace) {
+          Toast({
+            message: '个人信息不能为空！',
+            position: 'middle',
+            duration: 2000
+          });
+        }else {
+          PUT_USERINFO(params, function (res) {
+            if (res.statusCode === 1) {
+              _this.$router.go(-1);
+              let that = _this;
+              // if(that.myImg!=''){
 
-            // let params={
-            // 	'data':{
-            // 		avatar:that.myImg
-            // 	}
-            // }
-            // PUT_USERAVATARS(params, function (res) {
-            // 	if(res.statusCode===1){
-            // 		console.log('上传图片成功')
-            // 	}else{
-            // 		console.log('请求')
-            // 	}
-            // })
-            //
-            Toast({
-              message: '个人信息提交成功!',
-              position: 'middle',
-              duration: 1000
-            });
-          } else {
-            Toast({
-              message: '个人信息提交失败',
-              position: 'middle',
-              duration: 2000
-            });
-          }
-        })
+              // let params={
+              // 	'data':{
+              // 		avatar:that.myImg
+              // 	}
+              // }
+              // PUT_USERAVATARS(params, function (res) {
+              // 	if(res.statusCode===1){
+              // 		console.log('上传图片成功')
+              // 	}else{
+              // 		console.log('请求')
+              // 	}
+              // })
+              //
+              Toast({
+                message: '个人信息提交成功!',
+                position: 'middle',
+                duration: 1000
+              });
+            } else {
+              Toast({
+                message: '个人信息提交失败',
+                position: 'middle',
+                duration: 2000
+              });
+            }
+          })
+        }
       }
     },
     mounted() {

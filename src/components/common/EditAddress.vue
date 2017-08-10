@@ -203,7 +203,8 @@
 
             setTimeout(() => {
 //              _this.$router.push('/confirmorder?type=1')
-              _this.$router.push({name:'deliveryaddress'})
+//              _this.$router.push({name:'deliveryaddress'})
+              _this.$router.push({name:'confirmorder'})
 
             }, 2000)
           }

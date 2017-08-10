@@ -171,8 +171,8 @@
             };
             console.log(info)
             console.log(res)
-            _this.getUserAddress(info);
-            _this.getOnActive(this.addressListNum);
+//            _this.getUserAddress(info);
+//            _this.getOnActive(this.addressListNum);
 //          this.getUserAddress(v);
             Toast({
               message: '地址保存成功',
@@ -180,7 +180,8 @@
               duration: 2000
             });
             setTimeout(() => {
-              _this.$router.push('/confirmorder?type=1')
+//              _this.$router.push('/confirmorder?type=1')
+              _this.$router.push({name:'deliveryaddress'})
             }, 2000)
           }
         })

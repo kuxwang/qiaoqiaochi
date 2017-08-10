@@ -132,22 +132,21 @@
           }
           payment_post(params, res => {
             this.loadingStatus = 0
-            Toast({
-              message: `${typeof res.statusCode}|${res.statusCode}`,
-              position: 'middle',
-              duration: 2000
-            });
+//            Toast({
+//              message: `${typeof res.statusCode}|${res.statusCode}`,
+//              position: 'middle',
+//              duration: 2000
+//            });
             if (res.statusCode == 1) {
               _this.payStstus = 1
               Toast({
-                message: '支付成功，自动返回至首页',
+                message: '支付成功',
                 position: 'middle',
                 duration: 2000
               });
               setTimeout(() => {
                 _this.$router.push({name:'order'})
-                console.log(this.$router)
-                console.log(_this.$router)
+
               }, 2000)
             } else {
               Toast({

@@ -47,9 +47,10 @@
     },
     methods: {
       goBack(){
-        this.$router.go(-1);
+        this.$router.push({name:'confirmorder',query:{}});
       },
       getMyAddress(v, i){
+        this.isnull(false)
         this.onActives = i;
         this.$router.push('/confirmorder?type=1');
         this.getUserAddress(v);
@@ -61,16 +62,61 @@
       ...mapMutations({
         'getUserAddress': 'GET_USERADDRESS',
         'getOnActive': 'GET_ONACTIVE',
-        'getaddressnum': 'ADDRESSLISTNUM'
+        'getaddressnum': 'ADDRESSLISTNUM',
+        'isnull':'ISNULL'
       })
     },
     computed: {
       ...mapGetters([
-        "onActive"
+        "onActive",
+        "isNull"
       ]),
       ...mapState([
         'addressListNum'
       ])
+    },
+    beforeRouteUpdate(to, from, next){
+      if(from.name === 'editaddress'){
+        let _this = this
+        addresses_get({}, res => {
+          console.log(res)
+          if (res.statusCode == 1) {
+            _this.getaddressnum(res.data.list.length)
+            _this.addressLists = res.data.list
+          } else {
+            console.log('获取收货地址接口异常')
+          }
+        })
+      }else if(to.name === 'manageAddress'){
+        next()
+      }else if(from.name === 'addaddress'){
+        let _this = this
+        addresses_get({}, res => {
+          console.log(res)
+          if (res.statusCode == 1) {
+            _this.getaddressnum(res.data.list.length)
+            _this.addressLists = res.data.list
+          } else {
+            console.log('获取收货地址接口异常')
+          }
+        })
+        next()
+      }else if(from.name ==='manageAddress'){
+        let _this = this
+        addresses_get({}, res => {
+          console.log(res)
+          if (res.statusCode == 1) {
+            _this.getaddressnum(res.data.list.length)
+            _this.addressLists = res.data.list
+          } else {
+            console.log('获取收货地址接口异常')
+          }
+        })
+        next()
+      }
+      else{
+        next()
+      }
     },
     mounted(){
       this.onActives = this.onActive

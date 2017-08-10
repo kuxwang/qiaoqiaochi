@@ -20,7 +20,8 @@ import {
   IMGURL,
   SETEDITADDRESS,
   OLDADDRESS,
-  ISCONFIRM
+  ISCONFIRM,
+  ISNULL
 }
   from
     './mutation-types.js'
@@ -38,8 +39,9 @@ export default {
       area: data.area,
       address: data.address,
       id: data.id,
-
+      goodsid:'4'
     }
+    console.log(data)
   },
   [TABSELECT] (state, data) {
     state.tabselect = data
@@ -92,5 +94,9 @@ export default {
   [ISCONFIRM](state, isConfirm) {
     state.isConfirm = isConfirm;
     console.log(isConfirm)
+  },
+  [ISNULL](state, data) {
+    state.isNull=data;
+    console.log(data)
   },
 }

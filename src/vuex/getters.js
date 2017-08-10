@@ -12,6 +12,7 @@ export default {
   refundid:state=>state.refundid,
   backprice:state=>state.backprice,
   oldaddress:state=>state.oldaddress,
-  isConfirm:state=>state.isConfirm
+  isConfirm:state=>state.isConfirm,
+  isNull:state=>state.isNull
 }
 

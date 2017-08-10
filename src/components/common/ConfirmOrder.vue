@@ -56,6 +56,7 @@
           <div class="deliveryMode-lf fl">
             给卖家留言:
           </div>
+          {{isNull}}
           <div class="deliveryMode-lr fl">
             <input type="text" name="" v-model="remark" placeholder="选填:对本次交易的说明)">
           </div>
@@ -115,10 +116,11 @@
       			</span>
         <span class="mygoods-price">
 					¥
-					<span class="goods-intPrice">{{memberDiscount.realprice+dispatches.price | calculatePrice1}}.</span>
+					<span class="goods-intPrice">{{memberDiscount.realprice + dispatches.price | calculatePrice1}}.</span>
 					<span class="goods-folatPrice">{{memberDiscount.realprice | calculatePrice2}}</span>
 				</span>
       </div>
+
       <button id="commitForm" class="settlement-lr fr" @click="goPay">
         提交订单
       </button>
@@ -131,11 +133,11 @@
 </template>
 <script>
   import {Header, MessageBox, Toast} from 'mint-ui';
-  import {GET_MYADDRESS1, GET_ORDER1, confirm_post,DispatchMoney} from '../../api/api';
-  import {mapMutations, mapState} from 'Vuex';
+  import {GET_MYADDRESS1, GET_ORDER1, confirm_post, DispatchMoney} from '../../api/api';
+  import {mapMutations, mapState, mapGetters} from 'Vuex';
   //  import _ from 'lodash'
-  export default{
-    data () {
+  export default {
+    data() {
       return {
         orderGoods: [],
         defaultAddress: '',
@@ -143,11 +145,11 @@
         dispatches: '',
         remark: '',
         shopSet: '',
-        payed: false
+        payed: false,
       }
     },
     methods: {
-      init () {
+      init() {
         let _this = this;
         let params = {
           data: {
@@ -169,11 +171,11 @@
           }
         })
       },
-      goBack () {
+      goBack() {
         this.$router.push('home');
       },
-      goPay () {
-        let _this=this
+      goPay() {
+        let _this = this
         let payed = this.payed;
 
         if (payed === false) {
@@ -203,7 +205,7 @@
             }
           }
           console.log(params);
-          if(addressid==''){
+          if (addressid == '') {
             Toast({
               message: `请选择收货地址`,
               position: 'middle',
@@ -226,7 +228,7 @@
               // document.getElementById('commitForm').removeAttribute('disabled')
               _this.$router.replace({name: 'payselect', query: {orderid: ordersn}})
               // }, 2000)
-            } else if(res.statusCode == -1) {
+            } else if (res.statusCode == -1) {
               Toast({
                 message: `操作频繁请稍候`,
                 position: 'middle',
@@ -239,7 +241,7 @@
 
 
       },
-      goProducts(v){
+      goProducts(v) {
         let goodsId = v.goodsid;
         this.$router.push({name: 'details', query: {goodsId: goodsId}})
       },
@@ -249,48 +251,83 @@
     },
     computed: {
       ...mapState([
-        'userAddress', 'delivery', 'myOrders'
+        'delivery', 'myOrders'
+//        'delivery', 'myOrders'
       ]),
-      dispatch () {
+      ...mapGetters([
+        'userAddress',
+        'isNull'
+      ]),
+      dispatch() {
         let dispatch = this.dispatches || this.delivery
         return dispatch || '商家配送'
       }
     },
-    beforeRouteUpdate(to, from, next){
-      let _this=this
-      this.payed=false;
-      console.log(this.payed);
-      if(from.name ==='deliveryaddress'){
-        console.log('hao')
-        let params={
+    beforeRouteUpdate(to, from, next) {
+      console.log(to)
+
+      let _this = this
+      this.payed = false;
+      var myaddres = '';
+      setTimeout(() => {
+//        if (from.name === 'deliveryaddress' && to.name !== 'manageAddress') {
+        if (from.name === 'deliveryaddress'&&_this.isNull===true){
+          console.log(_this.userAddress)
+          if(!_this.userAddress.city){
+            console.log('jinlail');
+            console.log(_this.userAddress);
+//            myaddres = _this.userAddress.id;
+//          _this.defaultAddress = _this.userAddress;
+            _this.init()
+          }
+        }
+        else if (from.name === 'deliveryaddress'&&this.isNull===false) {
+
+//          if(!_this.userAddress){
+//            myaddres = _this.userAddress.id;
+//            _this.defaultAddress = _this.userAddress;
+//          }
+
+            myaddres = _this.userAddress.id;
+            _this.defaultAddress = _this.userAddress;
+
+
+        } else if (from.name === 'addaddress') {
+          myaddres = this.defaultAddress.id
+        }
+       /* if(to.name === 'manageAddress'){
+          next({  path: '/qrCode'})
+        }*/
+        let params = {
           data: {
             optionid: this.myOrders.optionid || '',
             total: this.myOrders.total || '',
             goodsid: this.myOrders.goodsid || '',
-            dispatchid:1,
-            addressid: this.defaultAddress.id
+            dispatchid: 1,
+            addressid: myaddres
           }
         }
-        DispatchMoney(params,res=>{
-         if(res.statusCode ===1){
-           console.log(res);
+        console.log(this.defaultAddress)
+        DispatchMoney(params, res => {
+          if (res.statusCode === 1) {
+            _this.orderGoods = res.data.orderGoods
+//           _this.defaultAddress = res.data.defaultAddress
+            _this.memberDiscount = res.data.memberDiscount
+            _this.dispatches = res.data.dispatches
+            _this.shopSet = res.data.shopSet
+            _this.ADDRESS(res.data.addressLists)
 
-           _this.orderGoods = res.data.orderGoods
-           _this.defaultAddress = res.data.defaultAddress
-           _this.memberDiscount = res.data.memberDiscount
-           _this.dispatches = res.data.dispatches[0]
-           _this.shopSet = res.data.shopSet
-           _this.ADDRESS(res.data.addressLists)
 
-
-         }
+          }
         })
-      }
+        next()
+      }, 100)
 
-      next()
+
+
     },
     filters: {
-      calculatePrice1 (value) {
+      calculatePrice1(value) {
         let num = '';
         if (typeof value === 'number') {
           num = Math.floor(value) || 0
@@ -299,7 +336,7 @@
         }
         return num || 0
       },
-      calculatePrice2 (value) {
+      calculatePrice2(value) {
         let num = ''
         if (typeof value == 'number') {
           num = value.toFixed(2).toString().split('.')[1]
@@ -311,10 +348,12 @@
       }
     },
     watch: {
-      '$route' (to, from) {
+      '$route'(to, from) {
         if (this.$route.query.type) {
           this.defaultAddress = this.userAddress
+          console.log(this.defaultAddress)
         }
+//        this.defaultAddress = this.userAddress
       },
       remark: function (newValue) {
         if (newValue.length > 0) {
@@ -322,13 +361,16 @@
         }
       }
     },
-    mounted () {
+    mounted() {
     },
-    activated () {
-      this.init()
+    updated(){
+//      this.init();
     },
-    created () {
-      this.init()
+    activated() {
+      this.init();
+    },
+    created() {
+      this.init();
     }
   }
 </script>

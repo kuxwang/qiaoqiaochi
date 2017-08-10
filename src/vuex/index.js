@@ -32,7 +32,8 @@ const state = {
   imgUrl: '',
   seteditAddress: '',
   oldaddress: '', //原来的地址
-  isConfirm:0
+  isConfirm:0,
+  isNull:true
 }
 
 export default new Vuex.Store({
