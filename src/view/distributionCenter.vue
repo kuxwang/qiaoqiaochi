@@ -353,17 +353,21 @@
         return value || 0
       }
     },
+    activated () {
+      this.init();
+      console.log('active')
+    },
     mounted(){
       this.init();
     },
     beforeRouteUpdate(to, from, next){
-//      console.log(to)
-/*      console.log(from)
-      console.log('的结果')*/
       if(from.name ==='userinfo'){
         this.init();
         console.log('从用户反悔')
       }
+      console.log(to);
+      console.log(from);
+//      if(to.name === 'partner' || to.name ==='extension' || to.name==)
 
       next()
     },

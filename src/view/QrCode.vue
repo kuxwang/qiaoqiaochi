@@ -60,6 +60,10 @@
         })
       }
     },
+    activated () {
+      this.init();
+      console.log('active')
+    },
     created () {
         this.init();
         console.log(this.qrimg)
