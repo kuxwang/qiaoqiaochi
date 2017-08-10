@@ -293,7 +293,7 @@
                     _this.teamsStatistics.purchased = res.data.purchased  || 0;
                     _this.teamsStatistics.no_purchased = res.data.no_purchased  || 0;
                     orderStatistics({}, function (res) {
-                      console.log('orderStatistics');
+//                      console.log('orderStatistics');
                       if (res.statusCode == 1) {
                         _this.orderStatistics.total = res.data.total.order_count  || 0
                         _this.orderStatistics.lock = res.data.lock.order_count  || 0
@@ -332,7 +332,7 @@
             LOGINOUT(function (res) {
               console.log('推出成功')
             })
-          } else if (action == 'cancel') {//表示点击了取消
+          } else if (action === 'cancel') {//表示点击了取消
 
           }
         })
@@ -355,13 +355,19 @@
     },
     activated () {
       this.init();
-      console.log('active')
+      console.log('active1')
     },
     mounted(){
 //      this.init();
     },
     beforeRouteUpdate(to, from, next){
-      if(from.name ==='userinfo'|| from.name ==='extension' || from.name ==='partner'){
+      if(from.name ==='userinfo'){
+        this.init();
+      }
+      if(from.name ==='extension' && to.name !== 'orderinfo'){
+        this.init();
+      }
+      if(from.name ==='partner' && to.name !=='partnerInfo'){
         this.init();
       }
       next()

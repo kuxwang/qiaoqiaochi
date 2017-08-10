@@ -70,7 +70,7 @@
         this.$router.go(-1)
       },
     },
-    created:function () {
+    mounted() {
       let params = {
         data: {
           openid: this.$route.query.openid,
@@ -88,7 +88,6 @@
         this.o_status_2_price=res.data.orderStatistics.o_status_2_price;
         this.o_status_3_price=res.data.orderStatistics.o_status_3_price;
         this.o_status_r1_price=res.data.orderStatistics.o_status_r1_price;
-//        console.log(this.teamsinfo)
     }else{
         console.log('会员信息请求出错')
       }
