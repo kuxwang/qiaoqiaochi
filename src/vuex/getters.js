@@ -11,7 +11,7 @@ export default {
   descri:state =>state.descri,
   refundid:state=>state.refundid,
   backprice:state=>state.backprice,
-  oldaddress:state=>state.oldaddress
-
+  oldaddress:state=>state.oldaddress,
+  isConfirm:state=>state.isConfirm
 }
 

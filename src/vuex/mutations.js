@@ -19,7 +19,8 @@ import {
   ORDERDETAILS,
   IMGURL,
   SETEDITADDRESS,
-  OLDADDRESS
+  OLDADDRESS,
+  ISCONFIRM
 }
   from
     './mutation-types.js'
@@ -88,6 +89,8 @@ export default {
   [OLDADDRESS] (state, oldaddress) {
     state.oldaddress = oldaddress;
   },
-
-
+  [ISCONFIRM](state, isConfirm) {
+    state.isConfirm = isConfirm;
+    console.log(isConfirm)
+  },
 }

@@ -61,14 +61,14 @@
             break;
           case 2 :
             this.$refs.mylist.statusType = 0;
-            this.$refs.mylist.init(0)
+            this.$refs.mylist.init(0);
+            console.log(this.isConfirm)
             break;
           case 3 :
             this.$refs.mylist.statusType = 1;
             this.$refs.mylist.init(1)
             break;
           case 4 :
-
             this.$refs.mylist.statusType = 2;
             this.$refs.mylist.init(2)
             break;
@@ -77,10 +77,24 @@
             this.$refs.mylist.init(3)
             break;
         }
+      },
+      $route (to,from) {
+
+        if (from.name === 'orderd'&&this.isConfirm===2) {
+//        this.memberInfo.avatar = this.imgUrl
+          console.log(this.isConfirm)
+          this.isConf(1)
+          this.isselect = 1
+          this.$refs.mylist.statusType = '';
+          this.$refs.mylist.init('')
       }
+    }
     },
 
     methods: {
+      ...mapMutations({
+        isConf:'ISCONFIRM'
+      }),
       setHeight () {
         /*let contentDiv = document.getElementById('page-navbar');
         let topDiv = document.getElementById('topheader');
@@ -94,7 +108,6 @@
         let diffHeght = (document.body.clientHeight - topDiv.clientHeight - navDiv.clientHeight - 10) / 100 + 'rem';
           a.style.height = diffHeght;
           console.log(diffHeght)
-
       }
     },
     created(){
@@ -103,7 +116,16 @@
     mounted () {
       this.setHeight()
     },
-    computed: {},
+    computed: {
+      ...mapGetters([
+        'isConfirm'
+      ])
+    },
+//    activated () {
+//      console.log('1')
+//      this.$refs.mylist.init('')
+//    },
+
     components: {
       vTabbar,
       orderLists

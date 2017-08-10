@@ -2,7 +2,7 @@
   <!--<transition name="slide">-->
   <div class="main ">
     <mt-header title="订单详情">
-      <a @click="goBack" slot="left" class="router-link-active">
+      <a @click=goBack slot="left" class="router-link-active">
         <mt-button icon="back"></mt-button>
       </a>
     </mt-header>
@@ -15,7 +15,7 @@
           <li v-if="orderStatus==3 && refundid==0">交易完成</li>
           <li v-if="orderStatus==0">等待付款</li>
           <li v-if="orderStatus==1&&refundid==0">等待发货</li>
-          <!--<li v-if="orderStatus==1&&refundid!=0">退款申请中</li>-->
+          <li v-if="orderStatus==1&&refundid!=0">退款申请中</li>
           <li v-if="orderStatus==3&&refundid!=0">退款申请中</li>
           <li v-if="orderStatus==2">运输中</li>
           <li>订单金额(含运费)：￥{{proprice}}</li>
@@ -131,13 +131,15 @@
     },
     methods: {
       goBack: function () {
-        this.$router.go(-1)
+//        this.$router.go(-1)
+        this.$router.push({path:'order'})
       },
       refund: function () {
         this.$router.push({name: 'drawbackInfo', query: {refundid: this.myid}})
       },
       fn1: function (orderid) {
         let that = this;
+        console.log(orderid)
         MessageBox({
           title: '提示',
           message: '请确定已收货 否则钱财两空哦',
@@ -146,7 +148,7 @@
           if (action == 'confirm') {
             let params = {
               data: {
-                orderid: that.oid,
+                orderid: orderid,
                 type: 'comf'
               }
             }
@@ -209,6 +211,7 @@
       }),
     },
     beforeRouteEnter (to, from, next) {
+      console.log(to)
       let that=this;
       console.log(to.query.oid)
       let params = {
@@ -262,6 +265,9 @@
 //        }
       });
     },
+    created:function () {
+      this.oid=this.$route.query.oid
+    }
   }
 </script>
 <style scoped>

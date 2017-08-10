@@ -66,6 +66,7 @@
             }
             orderManu(params,function (res) {
               console.log(res)
+              that.isCon(2)
               if(res.statusCode==1){
 //                this.backtime(res.data.createtime)
                 that.setdrawbackobj(res.data)
@@ -93,7 +94,8 @@
         backtime:'BACKTIME',
         descri:'DESCRI',
         backprice:'BACKPRICE',
-        setdrawbackobj:'DRAWBACKOBJ'
+        setdrawbackobj:'DRAWBACKOBJ',
+        isCon:'ISCONFIRM'
       })
     },
     created:function () {
