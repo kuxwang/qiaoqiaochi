@@ -9,8 +9,6 @@
     </section>
     <section class="top">
     </section>
-
-
     <ul class="nav-tab">
       <!--<router-link to="/partner1" tag="li">-->
 
@@ -66,7 +64,7 @@
     <!--未找到伙伴<br>-->
     <!--</div>-->
 
-    <router-view></router-view>
+    <!--<router-view></router-view>-->
   </div>
 
 </template>
@@ -135,6 +133,8 @@
           _this.personlist = [];
           _this.allLoaded = false;
         }
+        _this.$refs.requestStatus.loadingStatus = 0
+
 
         switch (idx) {
           case 1:
@@ -148,7 +148,7 @@
             teamsLists(params, (res) => {
               if (res.statusCode == 1) {
                 _this.personlist = _this.personlist.concat(res.data.lists);
-                _this.$refs.requestStatus.loadingStatus = 0
+                _this.$refs.requestStatus.loadingStatus = 1
                 if (res.data.next === true) {
                   _this.allLoaded = false;
                 } else {
@@ -171,7 +171,7 @@
             teamsLists(params, (res) => {
               if (res.statusCode == 1) {
                 _this.personlist = _this.personlist.concat(res.data.lists);
-                _this.$refs.requestStatus.loadingStatus = 0
+                _this.$refs.requestStatus.loadingStatus = 1
 
                 if (res.data.next === true) {
                   _this.allLoaded = false;
@@ -196,7 +196,7 @@
               console.log(1111111)
               if (res.statusCode == 1) {
                 _this.personlist = _this.personlist.concat(res.data.lists);
-                _this.$refs.requestStatus.loadingStatus = 0
+                _this.$refs.requestStatus.loadingStatus = 1
 
                 if (res.data.next === true) {
                   _this.allLoaded = false;
@@ -249,6 +249,7 @@
             })
             break;
           default:
+            _this.$refs.requestStatus.loadingStatus = 1
             console.log('hehhe')
 
         }
@@ -369,9 +370,6 @@
       let res = this.$route.meta.post;
 //      console.log(res.lists)
       this.personlist = res.lists;
-
-//      console.log(this.selected)
-
     },
 
 
@@ -380,7 +378,9 @@
       _this.personnumall = _this.$route.query.all;
       _this.personp = _this.$route.query.agent;
       _this.personnp = _this.$route.query.fans;
+      console.log(_this.$refs.requestStatus)
       _this.$refs.requestStatus.loadingStatus = 1
+//      console.log(_this.$refs.requestStatus.loadingStatus)
     },
     computed: {
       ...mapGetters([

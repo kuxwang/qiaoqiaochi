@@ -1,13 +1,13 @@
 /**
  * Created by Crete on 17/7/24.
  */
-import {_webapp} from '../config/webapp.js'
-// import {_webapp} from '../config/_webapp.js'
+// import {_webapp} from '../config/webapp.js'
+import {_webapp} from '../config/_webapp.js'
 const base = 'https://api.duoyunjiav2.wshoto.com';
 const header = 'application/json';
 const dataType = 'json';
 
-/**
+/** 2
  * 分销中心
  */
 const commissions = {

@@ -205,7 +205,7 @@
           let params = {
             data: {
               goods,
-              dispatchid,
+              dispatchid:1,
               addressid,
               cartids,
               remark,
