@@ -10,15 +10,16 @@
     <section class="top">
     </section>
 
+
     <ul class="nav-tab">
       <!--<router-link to="/partner1" tag="li">-->
+
       <li :class="{tabActive: selected==1 }" @click="tabnav('all',1)">
         <div class="title">所有伙伴</div>
         <div class="iconfont listicon">&#xe646;</div>
         <div>
           <span class="num">{{personnumall}}</span><span class="yuan"> 人</span>
         </div>
-
       </li>
       <li :class="{tabActive: selected==2}" @click="tabnav('agent',2)">
         <div class="title">已购买伙伴</div>
@@ -27,7 +28,7 @@
           <span class="num">{{personp}}</span><span class="yuan"> 人</span>
         </div>
       </li>
-      <li :class="{tabActive: selected==3 }"@click="tabnav('fans',3)">
+      <li :class="{tabActive: selected==3 }" @click="tabnav('fans',3)">
         <div class="title">未购买伙伴</div>
         <div class="iconfont listicon">&#xe60d;</div>
         <div>
@@ -41,7 +42,12 @@
       <div @click="searchlist">搜索</div>
     </div>
 
-      <ul class="p-list"  v-if="personlist.length"  v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="10">
+    <ul class="p-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded"
+        infinite-scroll-distance="10">
+      <!--<ul class="p-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded"-->
+      <!--infinite-scroll-distance="10">-->
+      <loading-list ref="requestStatus">
+        <!--<li class="p-cell" v-for="(i,index) in []" @click.stop="popshow(index)">-->
         <li class="p-cell" v-for="(i,index) in personlist" @click.stop="popshow(index)">
           <!--<li class="p-cell" >-->
           <div class="logo">
@@ -53,11 +59,12 @@
             <span class="usertime">{{i.createtime}}关注</span>
           </div>
         </li>
-      </ul>
-    <div v-else class="tips">
-      <span class="iconfont">&#xe612;</span>
-      未找到伙伴<br>
-    </div>
+      </loading-list>
+    </ul>
+    <!--<div v-else class="tips">-->
+    <!--<span class="iconfont">&#xe612;</span>-->
+    <!--未找到伙伴<br>-->
+    <!--</div>-->
 
     <router-view></router-view>
   </div>
@@ -69,6 +76,7 @@
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
   import {teamsStatistics, teamsLists, teams} from '../../api/api.js'
   import {mapMutations, mapGetters} from 'vuex';
+  import loadingList from '../common/loadinglist.vue'
   export default{
     data () {
       return {
@@ -85,16 +93,13 @@
         allLoaded: false,
         isTrue: false,
         onePage: false,
-        personnumall:0,
-        personp:0,
-        personnp:0,
-
-
+        personnumall: 0,
+        personp: 0,
+        personnp: 0,
       }
     },
     beforeRouteEnter (to, from, next) {
-      let _this=this;
-
+      let _this = this;
       let params = {
         data: {
           type: to.query.type,
@@ -103,15 +108,13 @@
         }
 
       };
-      console.log(to.query.type)
       teamsLists(params, (res) => {
-
         if (res.statusCode == 1) {
           console.log(res.data)
           to.meta.post = res.data
           next()
 
-        }else{
+        } else {
 //          _this.allLoaded = true;
           console.log('请求失败`${res.statusCode} , ${res.data}` ')
         }
@@ -119,7 +122,9 @@
       });
 
     },
-
+    components: {
+      loadingList
+    },
     methods: {
       open(){
         this.popupVisible = true
@@ -144,9 +149,10 @@
             teamsLists(params, (res) => {
               if (res.statusCode == 1) {
                 _this.personlist = _this.personlist.concat(res.data.lists);
+                _this.$refs.requestStatus.loadingStatus = 0
                 if (res.data.next === true) {
                   _this.allLoaded = false;
-                }else{
+                } else {
                   _this.allLoaded = true;
                 }
               } else {
@@ -166,9 +172,11 @@
             teamsLists(params, (res) => {
               if (res.statusCode == 1) {
                 _this.personlist = _this.personlist.concat(res.data.lists);
+                _this.$refs.requestStatus.loadingStatus = 0
+
                 if (res.data.next === true) {
                   _this.allLoaded = false;
-                }else{
+                } else {
                   _this.allLoaded = true;
                 }
               } else {
@@ -186,12 +194,14 @@
               }
             }
             teamsLists(params, (res) => {
-                console.log(res)
+              console.log(1111111)
               if (res.statusCode == 1) {
                 _this.personlist = _this.personlist.concat(res.data.lists);
+                _this.$refs.requestStatus.loadingStatus = 0
+
                 if (res.data.next === true) {
                   _this.allLoaded = false;
-                }else{
+                } else {
                   _this.allLoaded = true;
                 }
               } else {
@@ -209,7 +219,7 @@
               var obj = {
                 id: _this.find
               }
-            }else{
+            } else {
               Toast({
                 message: '请属于正确的会员ID或会员手机号。',
                 position: 'middle',
@@ -246,13 +256,15 @@
 
       },
       popshow(index){
-        this.$router.push({name:'partnerInfo',query:{openid:this.personlist[index].openid}})
+        this.$router.push({name: 'partnerInfo', query: {openid: this.personlist[index].openid}})
       },
-      tabnav(type,index){
-        let _this=this;
-        this.myCurNo=1;
-        _this.selected=index;
-        _this.personlist=[];
+      tabnav(type, index){
+
+        let _this = this;
+        this.myCurNo = 1;
+        this.$refs.requestStatus.loadingStatus = 0
+        _this.selected = index;
+        _this.personlist = [];
         let params = {
           data: {
             type: type,
@@ -260,32 +272,51 @@
             psize: this.psizes
           }
         }
-        teamsLists(params, (res) => {
-
-          if (res.statusCode == 1) {
-            _this.personlist = _this.personlist.concat(res.data.lists);
-            console.log(res)
-
-            if (res.data.length < _this.psizes) {
+//        setTimeout(function () {
+          teamsLists(params, (res) => {
+            if (res.statusCode == 1) {
+              console.log(_this.$refs)
+              _this.personlist = _this.personlist.concat(res.data.lists);
+              _this.$refs.requestStatus.loadingStatus = _this.personlist ? 1 : 0
+              if (res.data.length < _this.psizes) {
+                _this.allLoaded = true;
+              }
+//              console.log(_this.personlist.length);
+//              console.log(_this.selected);
+//              console.log(_this.myCurNo);
+            } else {
               _this.allLoaded = true;
+              console.log('请求失败`${res.statusCode} , ${res.data}` ')
             }
-            console.log(_this.personlist.length);
-            console.log(_this.selected);
-            console.log(_this.myCurNo);
-          }else{
-            _this.allLoaded = true;
-            console.log('请求失败`${res.statusCode} , ${res.data}` ')
-          }
 
-        });
+          })
+//        }, 10000)
+//        teamsLists(params, (res) => {
+//          if (res.statusCode == 1) {
+//
+//            _this.personlist = _this.personlist.concat(res.data.lists);
+////            console.log(res)
+//            _this.$refs.requestStatus.loadingStatus = 0
+//            if (res.data.length < _this.psizes) {
+//              _this.allLoaded = true;
+//            }
+//            console.log(_this.personlist.length);
+//            console.log(_this.selected);
+//            console.log(_this.myCurNo);
+//          } else {
+//            _this.allLoaded = true;
+//            console.log('请求失败`${res.statusCode} , ${res.data}` ')
+//          }
+//
+//        });
       },
       loadMore(){
-        this.myCurNo=this.myCurNo+1;
+        this.myCurNo = this.myCurNo + 1;
         this.selecttab(this.selected, this.myCurNo)
       },
 
       searchlist(){
-        this.personlist=[];
+        this.personlist = [];
         this.selected = 4;
         if (this.find.length === 11) {
           var obj = {
@@ -295,7 +326,7 @@
           var obj = {
             id: this.find
           }
-        }else{
+        } else {
           Toast({
             message: '请属于正确的会员ID或会员手机号。',
             position: 'middle',
@@ -308,9 +339,9 @@
         teams(params, (res) => {
           if (res.statusCode === 1) {
             this.personlist = res.data;
+            this.$refs.requestStatus.loadingStatus = 0
             if (!this.personlist || this.personlist.length <= 1) {
               this.searched = false
-
             } else {
               let obji = []
               obji.push(res.data)
@@ -336,20 +367,20 @@
     created(){
       this.selected = this.$route.query.stab;
       let res = this.$route.meta.post;
+//      console.log(res.lists)
+      this.personlist = res.lists;
 
-      this.personlist=res.lists;
-      console.log(this.selected)
+//      console.log(this.selected)
 
     },
 
 
     mounted() {
-
-      let _this=this
-      _this.personnumall=_this.$route.query.all;
-      _this.personp=_this.$route.query.agent;
-      _this.personnp=_this.$route.query.fans;
-
+      let _this = this
+      _this.personnumall = _this.$route.query.all;
+      _this.personp = _this.$route.query.agent;
+      _this.personnp = _this.$route.query.fans;
+      _this.$refs.requestStatus.loadingStatus = this.personlist ? 1 : 0
     },
     computed: {
       ...mapGetters([
@@ -357,8 +388,8 @@
       ])
     },
     beforeRouteUpdate(to, from, next){
-      this.allLoaded=!this.allLoaded;
-      console.log(this.allLoaded+'的结果')
+      this.allLoaded = !this.allLoaded;
+      console.log(this.allLoaded + '的结果')
       next()
     },
 
@@ -817,7 +848,7 @@
 
   .logo img {
     width: 80%;
-    height:80%;
+    height: 80%;
     border-radius: 50%;
     display: block;
     margin: 10% auto;
@@ -836,7 +867,7 @@
   }
 
   /*.pop-up img {*/
-    /*width: 60%;*/
+  /*width: 60%;*/
   /*}*/
 
   .pop-up h5 {
@@ -879,13 +910,15 @@
     width: 100%;
     overflow: hidden;
   }
-  .pop-info{
-    text-align:center;
+
+  .pop-info {
+    text-align: center;
   }
-  .pop-info div.img img{
-    width:0.9rem;
-    height:.9rem;
-    border-radius:50%;
+
+  .pop-info div.img img {
+    width: 0.9rem;
+    height: .9rem;
+    border-radius: 50%;
   }
 
   .tips {
