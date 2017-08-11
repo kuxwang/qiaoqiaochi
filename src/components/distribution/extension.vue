@@ -546,20 +546,17 @@
 
   .p-list {
     display: block;
-    background-color: #ececec;
     width: 100%;
-
     height: 4.68rem;
     overflow: hidden;
     overflow-y: scroll;
     background-color: #ececec;
     margin-top: 1.85rem;
-
+    -webkit-overflow-scrolling: touch;
 
   }
 
   .mint-loadmore {
-    /*overflow-y: scroll;*/
     width: 100%;
   }
 
@@ -626,6 +623,11 @@
     margin-top: 0.1rem;
     color: #27272f;
     font-size: 0.14rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 1.72rem;
+
   }
 
   .info span {
@@ -647,6 +649,10 @@
     flex: 3;
     padding: 0.05rem 0;
     color: #666;
+    max-width: 1.29rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .ordertype span {

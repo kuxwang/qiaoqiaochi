@@ -174,6 +174,7 @@
             city: this.area.city,
             area: this.area.area,
             address: this.getAddress,
+            addressid: _this.$route.query.id
           }
         }
 
@@ -181,14 +182,17 @@
             console.log(res)
           if (res.statusCode == 1) {
             let info = {
-              realname: this.name,
-              mobile: this.tel,
-              province: this.area.province,
-              city: this.area.city,
-              area: this.area.area,
-              address: this.getAddress,
-              id: res.addressid
+              realname: _this.name,
+              mobile: _this.tel,
+              province: _this.area.province,
+              city: _this.area.city,
+              area: _this.area.area,
+              address: _this.getAddress,
+              id: res.addressid,
+
             }
+            console.log(res)
+            console.log(info)
             this.getUserAddress(info);
             this.getOnActive(this.addressListNum)
             Toast({
@@ -196,8 +200,12 @@
               position: 'middle',
               duration: 2000
             });
+
             setTimeout(() => {
-              _this.$router.push('/confirmorder?type=1')
+//              _this.$router.push('/confirmorder?type=1')
+//              _this.$router.push({name:'deliveryaddress'})
+              _this.$router.push({name:'confirmorder'})
+
             }, 2000)
           }
         })

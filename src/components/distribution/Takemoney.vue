@@ -60,31 +60,11 @@
       }
     },
     created(){
-      console.log('run created.');
-      console.log(this.moneylist);
+      /*console.log('run created.');
+      console.log(this.moneylist);*/
     },
     mounted(){
-      let params = {
-        data: {
-//          type:'all',
-        }
-      }
-      recordStatistics_get(params, (res) => {
-        if (res.statusCode === 1) {
-          console.log(res)
-          this.ok = res.data.ok.c_money_sum;
-          this.pay = res.data.pay.c_money_sum;
-          this.defaults = res.data.default.c_money_sum;
-          this.manage = res.data.manage.c_money_sum;
-
-
-//          console.log(this.moneylist)
-          console.log(res)
-
-        } else {
-          console.log('请求失败')
-        }
-      })
+      this.init();
     },
     methods: {
 
@@ -98,8 +78,34 @@
             duration: 2000
           });
         }
+      },
+      init(){
+        let params = {
+          data: {
+//          type:'all',
+          }
+        }
+        recordStatistics_get(params, (res) => {
+          if (res.statusCode === 1) {
+            console.log(res)
+            this.ok = res.data.ok.c_money_sum;
+            this.pay = res.data.pay.c_money_sum;
+            this.defaults = res.data.default.c_money_sum;
+            this.manage = res.data.manage.c_money_sum;
+
+//            console.log(res)
+
+          } else {
+            console.log('请求失败')
+          }
+        })
       }
-    }
+    },
+    beforeRouteUpdate(to, from, next){
+     console.log('路由变化')
+      this.init()
+      next()
+    },
 
   }
 

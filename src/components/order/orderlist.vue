@@ -3,7 +3,7 @@
     <void-list>
       <li v-for="(v,i) in statusResult">
         <div>订单号：{{v.ordersn}}</div>
-        <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status,num:v.goods[0].total}}"
+        <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}"
                      tag="div">
           <img :src=v.goods[0].thumb alt="" class="order-small">
           <p>{{v.goods[0].title}}</p>
@@ -105,8 +105,8 @@
         });
       },
       loadMore () {
-        console.log(123)
-        console.log(this.loading)
+//        console.log(123)
+//        console.log(this.loading)
         this.loading = true;
         let params = {
           data: {
@@ -180,10 +180,12 @@
         this.$router.push({path: '/orderd', query: {oid: orderid, sta: 2}});
       },
     },
+
     computed: {},
     components: {
       voidList
     },
+
     created(){
       this.init(this.statusType)
     }
@@ -195,6 +197,7 @@
     padding-top: .01rem;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: .8rem;
     /*overflow: scroll;*/
   }
 

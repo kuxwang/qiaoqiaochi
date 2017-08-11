@@ -33,22 +33,6 @@
         <!-- <router-link class="iconfont right" :to="{name:'userinfo'}" tag="i">&#xe649;</router-link> -->
       </router-link>
       <section class="top">
-        <!--<div class="top_1">-->
-     <!--   <router-link class="topdiv-first" :to="{name: 'takemoney'}" tag="div">
-          &lt;!&ndash;<span class="title">推广？、费</span>&ndash;&gt;
-          &lt;!&ndash;<span class="num">{{recordStatistics_get.cg_money_sum}}</span><span class="yuan"> 元</span>&ndash;&gt;
-          推广费
-        </router-link>
-        &lt;!&ndash;</div>&ndash;&gt;
-        &lt;!&ndash;<div>&ndash;&gt;
-        <router-link :to="{name: 'takemoney'}" tag="div">
-          &lt;!&ndash;<span class="title">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>&ndash;&gt;
-          {{recordStatistics_get.c_money_sum}} 元
-          &lt;!&ndash;<span class="title">佣金</span>&ndash;&gt;
-          &lt;!&ndash;<span class="num">{{recordStatistics_get.c_money_sum}}</span><span class="yuan"> 元</span>&ndash;&gt;
-        </router-link>-->
-
-        <!--</div>-->
 
         <router-link class="money-top" :to="{name: 'takemoney'}" tag="div">
           推广费:{{recordStatistics_get.c_money_sum}} 元
@@ -293,7 +277,7 @@
                     _this.teamsStatistics.purchased = res.data.purchased  || 0;
                     _this.teamsStatistics.no_purchased = res.data.no_purchased  || 0;
                     orderStatistics({}, function (res) {
-                      console.log('orderStatistics');
+//                      console.log('orderStatistics');
                       if (res.statusCode == 1) {
                         _this.orderStatistics.total = res.data.total.order_count  || 0
                         _this.orderStatistics.lock = res.data.lock.order_count  || 0
@@ -332,7 +316,7 @@
             LOGINOUT(function (res) {
               console.log('推出成功')
             })
-          } else if (action == 'cancel') {//表示点击了取消
+          } else if (action === 'cancel') {//表示点击了取消
 
           }
         })
@@ -353,18 +337,23 @@
         return value || 0
       }
     },
-    mounted(){
+    activated () {
       this.init();
+      console.log('active1')
+    },
+    mounted(){
+//      this.init();
     },
     beforeRouteUpdate(to, from, next){
-//      console.log(to)
-/*      console.log(from)
-      console.log('的结果')*/
       if(from.name ==='userinfo'){
         this.init();
-        console.log('从用户反悔')
       }
-
+      /*if(from.name ==='extension' && to.name !== 'orderinfo'){
+        this.init();
+      }
+      if(from.name ==='partner' && to.name !=='partnerInfo'){
+        this.init();
+      }*/
       next()
     },
   }

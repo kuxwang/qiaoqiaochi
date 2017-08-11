@@ -56,8 +56,8 @@
   import {MessageBox} from 'mint-ui';
   //  import {Checklist} from 'mint-ui';
 
-  export default{
-    data(){
+  export default {
+    data() {
       return {
         onActives: '',
         addressLists: [],
@@ -65,24 +65,25 @@
       }
     },
     methods: {
-      goBack(){
+      goBack() {
         this.$router.go(-1);
       },
-      getMyAddress(v, i){
+      getMyAddress(v, i) {
         this.onActives = i;
+        this.isnull(false)
         this.$router.push('/confirmorder?type=1');
         this.getUserAddress(v);
         this.getOnActive(i);
       },
-      manage () {
+      manage() {
         this.$router.push({name: '/manageAddress'})
       },
-      edit (value) {
+      edit(value) {
         this.seteditAddresses(value)
-        this.oldaddress(value.province+' '+value.city+' '+value.area)
-        this.$router.push({path: '/editAddress'})
+        this.oldaddress(value.province + ' ' + value.city + ' ' + value.area)
+        this.$router.push({path: '/editAddress', query: {id: value.id}})
       },
-      deleteAddress (value) {
+      deleteAddress(value) {
         let params = {
           data: {
             addressid: value
@@ -116,8 +117,8 @@
         'getOnActive': 'GET_ONACTIVE',
         'getaddressnum': 'ADDRESSLISTNUM',
         'seteditAddresses': 'SETEDITADDRESS',
-        'oldaddress': 'OLDADDRESS'
-
+        'oldaddress': 'OLDADDRESS',
+        'isnull':"ISNULL"
       })
     },
     computed: {
@@ -128,15 +129,17 @@
         'addressListNum'
       ])
     },
-    mounted(){
+    mounted() {
       this.onActives = this.onActive
     },
-    created () {
+
+    created() {
       let _this = this
       addresses_get({}, res => {
         if (res.statusCode == 1) {
           _this.getaddressnum(res.data.list.length)
           _this.addressLists = res.data.list
+          console.log(res)
         } else {
           console.log('获取收货地址接口异常')
         }
@@ -285,7 +288,7 @@
     font-size: .16rem;
     /*right: .5rem;*/
     color: #666;
-    left:.1rem;
+    left: .1rem;
     padding: 0 .05rem;
     line-height: .5rem;
   }

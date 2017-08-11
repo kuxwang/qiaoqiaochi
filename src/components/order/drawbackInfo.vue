@@ -50,6 +50,9 @@
        }
      },
     methods: {
+      ...mapMutations({
+        isCon:'ISCONFIRM'
+      }),
       jumpOrderd () {
         let that=this;
         let params = {
@@ -61,6 +64,7 @@
         console.log(params)
         orderManu(params,res=>{
           if(res.statusCode==1){
+            that.isCon(2)
             Toast({
               message: '成功取消退款',
                 position: 'midlle',
@@ -79,7 +83,7 @@
           }
         })
       },
-      getListinfo(){ 
+      getListinfo(){
         let that=this;
         let refundid=this.$route.query.refundid
         let params={
@@ -98,10 +102,11 @@
     },
     computed: {
       ...mapState([
-        'drawbackobj'
+        'drawbackobj',
+//        'isConfirm'
       ]),
       ...mapGetters({
-        'reason':'REASON'
+        'reason':'REASON',
       }),
       reason () {
         return this.drawbackobj.reason || ''
@@ -114,10 +119,13 @@
       },
       price () {
         return this.drawbackobj.price || ''
-      } 
+      }
     },
     created(){
       this.getListinfo()
+    },
+    mounted(){
+
     }
   }
 </script>

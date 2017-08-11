@@ -17,7 +17,7 @@
         <input type="text" v-model="getAddress" placeholder="请输入收货人地址">
       </li>
       <li>
-        <input v-model="tel" maxlength="12" placeholder="请输入收货人联系电话" onkeyup="this.value=this.value.replace(/\D/g,'')"
+        <input v-model="tel" maxlength="11" placeholder="请输入收货人联系电话" onkeyup="this.value=this.value.replace(/\D/g,'')"
                onafterpaste="this.value=this.value.replace(/\D/g,'')">
       </li>
       <li>
@@ -149,35 +149,39 @@
         let _this = this
         let params = {
           data: {
-            realname: this.name,
-            mobile: this.tel,
-            province: this.area.province,
-            city: this.area.city,
-            area: this.area.area,
-            address: this.getAddress,
+            realname: _this.name,
+            mobile: _this.tel,
+            province: _this.area.province,
+            city: _this.area.city,
+            area: _this.area.area,
+            address: _this.getAddress,
           }
         }
 
         addresses_post(params, res => {
           if (res.statusCode == 1) {
             let info = {
-              realname: this.name,
-              mobile: this.tel,
-              province: this.area.province,
-              city: this.area.city,
-              area: this.area.area,
-              address: this.getAddress,
-              id: res.addressid
-            }
-            this.getUserAddress(info);
-            this.getOnActive(this.addressListNum)
+              realname: _this.name,
+              mobile: _this.tel,
+              province: _this.area.province,
+              city: _this.area.city,
+              area: _this.area.area,
+              address: _this.getAddress,
+              id: res.data
+            };
+            console.log(info)
+            console.log(res)
+//            _this.getUserAddress(info);
+//            _this.getOnActive(this.addressListNum);
+//          this.getUserAddress(v);
             Toast({
               message: '地址保存成功',
               position: 'middle',
               duration: 2000
             });
             setTimeout(() => {
-              _this.$router.push('/confirmorder?type=1')
+//              _this.$router.push('/confirmorder?type=1')
+              _this.$router.push({name:'deliveryaddress'})
             }, 2000)
           }
         })
@@ -190,7 +194,8 @@
       setTimeout(()=>{
         this.temp_addr='';
       },100)
-    }
+    },
+
   }
 </script>
 <style scoped>

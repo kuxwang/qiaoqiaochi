@@ -42,7 +42,7 @@
   }
 
   .header {
-    -webkit-transform: translateZ(0);
+    -webkit-transform: translateZ(0) !important;
   }
 
   /*公共头部*/

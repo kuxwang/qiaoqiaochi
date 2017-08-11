@@ -19,6 +19,7 @@
     <router-link class="noDeliveryAddress" tag="div" :to="{name:'deliveryaddress'}" v-if="!defaultAddress">
       设置收货地址
     </router-link>
+
     <ul class="goodsList">
       <li>
         <div class="goodsList-tp">
@@ -115,10 +116,11 @@
       			</span>
         <span class="mygoods-price">
 					¥
-					<span class="goods-intPrice">{{memberDiscount.realprice | calculatePrice1}}.</span>
+					<span class="goods-intPrice">{{memberDiscount.realprice + dispatches.price | calculatePrice1}}.</span>
 					<span class="goods-folatPrice">{{memberDiscount.realprice | calculatePrice2}}</span>
 				</span>
       </div>
+
       <button id="commitForm" class="settlement-lr fr" @click="goPay">
         提交订单
       </button>
@@ -131,11 +133,11 @@
 </template>
 <script>
   import {Header, MessageBox, Toast} from 'mint-ui';
-  import {GET_MYADDRESS1, GET_ORDER1, confirm_post} from '../../api/api';
-  import {mapMutations, mapState} from 'Vuex';
+  import {GET_MYADDRESS1, GET_ORDER1, confirm_post, DispatchMoney} from '../../api/api';
+  import {mapMutations, mapState, mapGetters} from 'Vuex';
   //  import _ from 'lodash'
-  export default{
-    data () {
+  export default {
+    data() {
       return {
         orderGoods: [],
         defaultAddress: '',
@@ -143,11 +145,12 @@
         dispatches: '',
         remark: '',
         shopSet: '',
-        payed: false
+        payed: false,
       }
     },
     methods: {
-      init () {
+      init() {
+        console.log('init run.');
         let _this = this;
         let params = {
           data: {
@@ -157,22 +160,28 @@
             goodsid: this.myOrders.goodsid || ''
           }
         };
+
+        // 首次进入，初始化展示内容。
         GET_ORDER1(params, res => {
-          if (res.statusCode == 1) {
+          console.log('get_order1 res :');
+          console.log(res);
+
+          if (res.statusCode === 1) {
             _this.orderGoods = res.data.orderGoods
             _this.defaultAddress = res.data.defaultAddress
             _this.memberDiscount = res.data.memberDiscount
             _this.dispatches = res.data.dispatches[0]
             _this.shopSet = res.data.shopSet
             _this.ADDRESS(res.data.addressLists)
+//            console.log(_this.defaultAddress)
           }
         })
       },
-      goBack () {
+      goBack() {
         this.$router.push('home');
       },
-      goPay () {
-        let _this=this
+      goPay() {
+        let _this = this
         let payed = this.payed;
 
         if (payed === false) {
@@ -192,6 +201,7 @@
               }
             }
           }
+
           let params = {
             data: {
               goods,
@@ -201,6 +211,16 @@
               remark,
             }
           }
+
+          if (addressid == '') {
+            Toast({
+              message: `请选择收货地址`,
+              position: 'middle',
+              duration: 2000
+            });
+            this.payed = false;
+          }
+
           confirm_post(params, res => {
             if (res.statusCode == 1) {
               let ordersn = res.data.ordersn
@@ -211,26 +231,25 @@
                duration: 2000
                });*/
               _this.ORDERINFO(ordersn);
+
               // setTimeout(() => {
               // document.getElementById('commitForm').removeAttribute('disabled')
               _this.$router.replace({name: 'payselect', query: {orderid: ordersn}})
               // }, 2000)
-            } else {
+            } else if (res.statusCode == -1) {
               Toast({
-                message: `请选择收货地址`,
+                message: `操作频繁请稍候`,
                 position: 'middle',
                 duration: 2000
               });
               this.payed = false;
             }
           })
-
-
         }
 
 
       },
-      goProducts(v){
+      goProducts(v) {
         let goodsId = v.goodsid;
         this.$router.push({name: 'details', query: {goodsId: goodsId}})
       },
@@ -240,24 +259,105 @@
     },
     computed: {
       ...mapState([
-        'userAddress', 'delivery', 'myOrders'
+        'delivery', 'myOrders'
+//        'delivery', 'myOrders'
       ]),
-      dispatch () {
+      ...mapGetters([
+        'userAddress',
+        'isNull',
+        'defaultAddressIsNull'
+      ]),
+      dispatch() {
         let dispatch = this.dispatches || this.delivery
         return dispatch || '商家配送'
       }
     },
+//    beforeRouteUpdate(to, from, next) {
+////      console.log(to)
+//      console.log('from:');
+//      console.log(from);
+//
+//      let _this = this;
+//
+//      console.log('this:');
+//      console.log(_this);
+//
+//      this.payed = false;
+//      var myaddres = '';
+////      setTimeout(() => {
+////
+////        if (from.name === 'deliveryaddress' && _this.isNull === true) {
+////
+////          if (this.defaultAddressIsNull == 0) {
+////            console.log('add running.');
+//////            this.defaultAddress = '';
+////          } else {
+////            if (!_this.userAddress.city) {
+////              console.log('jinlail');
+//////              console.log(_this.userAddress);
+//////            myaddres = _this.userAddress.id;
+//////          _this.defaultAddress = _this.userAddress;
+////              _this.init()
+////            }
+////          }
+////
+////
+////        }
+////        else if (from.name === 'deliveryaddress' && this.isNull === false) {
+////
+//////          if(!_this.userAddress){
+//////            myaddres = _this.userAddress.id;
+//////            _this.defaultAddress = _this.userAddress;
+//////          }
+////
+////          myaddres = _this.userAddress.id;
+////          _this.defaultAddress = _this.userAddress;
+////
+////          console.log('_this.defaultAddress');
+////          console.log(_this.defaultAddress);
+////
+////
+////        } else if (from.name === 'addaddress') {
+////          myaddres = this.defaultAddress.id
+////        }
+////        /* if(to.name === 'manageAddress'){
+////           next({  path: '/qrCode'})
+////         }*/
+////        let params = {
+////          data: {
+////            optionid: this.myOrders.optionid || '',
+////            total: this.myOrders.total || '',
+////            goodsid: this.myOrders.goodsid || '',
+////            dispatchid: 1,
+////            addressid: myaddres
+////          }
+////        }
+////        DispatchMoney(params, res => {
+////          if (res.statusCode === 1) {
+////            _this.orderGoods = res.data.orderGoods
+////            _this.defaultAddress = res.data.defaultAddress
+////            _this.memberDiscount = res.data.memberDiscount
+////            _this.dispatches = res.data.dispatches
+////            _this.shopSet = res.data.shopSet
+////            _this.ADDRESS(res.data.addressLists)
+////          }
+////        });
+////        next()
+////      }, 100)
+//
+//
+//    },
     filters: {
-      calculatePrice1 (value) {
+      calculatePrice1(value) {
         let num = '';
-        if (typeof value == 'number') {
+        if (typeof value === 'number') {
           num = Math.floor(value) || 0
-        } else if (typeof value == 'string') {
+        } else if (typeof value === 'string') {
           num = Math.floor(Number(value)) || 0
         }
         return num || 0
       },
-      calculatePrice2 (value) {
+      calculatePrice2(value) {
         let num = ''
         if (typeof value == 'number') {
           num = value.toFixed(2).toString().split('.')[1]
@@ -269,24 +369,76 @@
       }
     },
     watch: {
-      '$route' (to, from) {
+      '$route'(to, from) {
+        let _this = this;
+        console.log('route run.');
+        console.log(this.userAddress);
         if (this.$route.query.type) {
-          this.defaultAddress = this.userAddress
-        }
-      },
-      remark: function (newValue) {
-        if (newValue.length > 0) {
+          console.log(this.userAddress);
+          this.defaultAddress = this.userAddress;
+          console.log(this.defaultAddress);
+
+
+          let params = {
+            data: {
+              cartids: this.myOrders.cartids || '',
+              optionid: this.myOrders.optionid || '',
+              total: this.myOrders.total || '',
+              goodsid: this.myOrders.goodsid || '',
+              dispatchid: 1,
+              addressid: this.defaultAddress.id
+            }
+          }
+
+
+          DispatchMoney(params, res => {
+            console.log('DispatchMoney 391');
+            console.log(res);
+
+            if (res.statusCode === 1) {
+//              _this.orderGoods = res.data.orderGoods
+//              _this.defaultAddress = res.data.defaultAddress
+//              _this.memberDiscount = res.data.memberDiscount
+              _this.dispatches = res.data.dispatches
+//              _this.shopSet = res.data.shopSet
+//              _this.ADDRESS(res.data.addressLists)
+            }
+          });
 
         }
-      }
+
+        if (this.$route.query.addressListsLength == 0) {
+          console.log(this.userAddress);
+          this.defaultAddress = '';
+          console.log(this.defaultAddress)
+        }
+
+
+
+        console.log(this.userAddress);
+
+//        this.defaultAddress = this.userAddress
+      },
+//      remark: function (newValue) {
+//        if (newValue.length > 0) {
+//
+//        }
+//      }
+
+
     },
-    mounted () {
+    mounted() {
     },
-    activated () {
-      this.init()
+    updated() {
+//      this.init();
     },
-    created () {
-      this.init()
+    activated() {
+      console.log('activated run.');
+      this.init();
+    },
+    created() {
+      console.log('created run.');
+      this.init();
     }
   }
 </script>
