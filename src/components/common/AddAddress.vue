@@ -17,7 +17,7 @@
         <input type="text" v-model="getAddress" placeholder="请输入收货人地址">
       </li>
       <li>
-        <input v-model="tel" maxlength="12" placeholder="请输入收货人联系电话" onkeyup="this.value=this.value.replace(/\D/g,'')"
+        <input v-model="tel" maxlength="11" placeholder="请输入收货人联系电话" onkeyup="this.value=this.value.replace(/\D/g,'')"
                onafterpaste="this.value=this.value.replace(/\D/g,'')">
       </li>
       <li>

@@ -13,6 +13,8 @@ export default {
   backprice:state=>state.backprice,
   oldaddress:state=>state.oldaddress,
   isConfirm:state=>state.isConfirm,
-  isNull:state=>state.isNull
+  isNull:state=>state.isNull,
+  defaultAddressIsNull:state=>state.defaultAddressIsNull
+
 }
 

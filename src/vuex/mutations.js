@@ -21,7 +21,8 @@ import {
   SETEDITADDRESS,
   OLDADDRESS,
   ISCONFIRM,
-  ISNULL
+  ISNULL,
+  GET_DEFAULTADDRESSISNULL
 }
   from
     './mutation-types.js'
@@ -97,6 +98,10 @@ export default {
   },
   [ISNULL](state, data) {
     state.isNull=data;
+    console.log(data)
+  },
+  [GET_DEFAULTADDRESSISNULL](state, data) {
+    state.defaultAddressIsNull=data;
     console.log(data)
   },
 }

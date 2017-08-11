@@ -47,7 +47,10 @@
     },
     methods: {
       goBack(){
-        this.$router.push({name:'confirmorder',query:{}});
+        console.log('addresslists:');
+        console.log(this.addressLists.length);
+        this.get_defaultaddressisnull(this.addressLists.length);
+        this.$router.push({name:'confirmorder',query:{'addressListsLength' : this.addressLists.length}});
       },
       getMyAddress(v, i){
         this.isnull(false)
@@ -63,7 +66,8 @@
         'getUserAddress': 'GET_USERADDRESS',
         'getOnActive': 'GET_ONACTIVE',
         'getaddressnum': 'ADDRESSLISTNUM',
-        'isnull':'ISNULL'
+        'isnull':'ISNULL',
+        'get_defaultaddressisnull' : 'GET_DEFAULTADDRESSISNULL'
       })
     },
     computed: {
@@ -108,6 +112,10 @@
           if (res.statusCode == 1) {
             _this.getaddressnum(res.data.list.length)
             _this.addressLists = res.data.list
+
+//            if(res.data.list.length === 0){
+//              this.defaultAddressIsNull = true;
+//            }
           } else {
             console.log('获取收货地址接口异常')
           }

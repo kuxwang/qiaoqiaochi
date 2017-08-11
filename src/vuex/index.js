@@ -33,7 +33,8 @@ const state = {
   seteditAddress: '',
   oldaddress: '', //原来的地址
   isConfirm:0,
-  isNull:true
+  isNull:true,
+  defaultAddressIsNull : false
 }
 
 export default new Vuex.Store({

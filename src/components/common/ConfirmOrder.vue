@@ -19,6 +19,7 @@
     <router-link class="noDeliveryAddress" tag="div" :to="{name:'deliveryaddress'}" v-if="!defaultAddress">
       设置收货地址
     </router-link>
+
     <ul class="goodsList">
       <li>
         <div class="goodsList-tp">
@@ -56,7 +57,6 @@
           <div class="deliveryMode-lf fl">
             给卖家留言:
           </div>
-          {{isNull}}
           <div class="deliveryMode-lr fl">
             <input type="text" name="" v-model="remark" placeholder="选填:对本次交易的说明)">
           </div>
@@ -150,6 +150,7 @@
     },
     methods: {
       init() {
+        console.log('init run.');
         let _this = this;
         let params = {
           data: {
@@ -159,7 +160,12 @@
             goodsid: this.myOrders.goodsid || ''
           }
         };
+
+        // 首次进入，初始化展示内容。
         GET_ORDER1(params, res => {
+          console.log('get_order1 res :');
+          console.log(res);
+
           if (res.statusCode === 1) {
             _this.orderGoods = res.data.orderGoods
             _this.defaultAddress = res.data.defaultAddress
@@ -167,7 +173,7 @@
             _this.dispatches = res.data.dispatches[0]
             _this.shopSet = res.data.shopSet
             _this.ADDRESS(res.data.addressLists)
-            console.log(_this.defaultAddress)
+//            console.log(_this.defaultAddress)
           }
         })
       },
@@ -195,6 +201,7 @@
               }
             }
           }
+
           let params = {
             data: {
               goods,
@@ -204,7 +211,7 @@
               remark,
             }
           }
-          console.log(params);
+
           if (addressid == '') {
             Toast({
               message: `请选择收货地址`,
@@ -224,6 +231,7 @@
                duration: 2000
                });*/
               _this.ORDERINFO(ordersn);
+
               // setTimeout(() => {
               // document.getElementById('commitForm').removeAttribute('disabled')
               _this.$router.replace({name: 'payselect', query: {orderid: ordersn}})
@@ -256,76 +264,89 @@
       ]),
       ...mapGetters([
         'userAddress',
-        'isNull'
+        'isNull',
+        'defaultAddressIsNull'
       ]),
       dispatch() {
         let dispatch = this.dispatches || this.delivery
         return dispatch || '商家配送'
       }
     },
-    beforeRouteUpdate(to, from, next) {
-      console.log(to)
-
-      let _this = this
-      this.payed = false;
-      var myaddres = '';
-      setTimeout(() => {
-//        if (from.name === 'deliveryaddress' && to.name !== 'manageAddress') {
-        if (from.name === 'deliveryaddress'&&_this.isNull===true){
-          console.log(_this.userAddress)
-          if(!_this.userAddress.city){
-            console.log('jinlail');
-            console.log(_this.userAddress);
-//            myaddres = _this.userAddress.id;
-//          _this.defaultAddress = _this.userAddress;
-            _this.init()
-          }
-        }
-        else if (from.name === 'deliveryaddress'&&this.isNull===false) {
-
-//          if(!_this.userAddress){
-//            myaddres = _this.userAddress.id;
-//            _this.defaultAddress = _this.userAddress;
-//          }
-
-            myaddres = _this.userAddress.id;
-            _this.defaultAddress = _this.userAddress;
-
-
-        } else if (from.name === 'addaddress') {
-          myaddres = this.defaultAddress.id
-        }
-       /* if(to.name === 'manageAddress'){
-          next({  path: '/qrCode'})
-        }*/
-        let params = {
-          data: {
-            optionid: this.myOrders.optionid || '',
-            total: this.myOrders.total || '',
-            goodsid: this.myOrders.goodsid || '',
-            dispatchid: 1,
-            addressid: myaddres
-          }
-        }
-        console.log(this.defaultAddress)
-        DispatchMoney(params, res => {
-          if (res.statusCode === 1) {
-            _this.orderGoods = res.data.orderGoods
-//           _this.defaultAddress = res.data.defaultAddress
-            _this.memberDiscount = res.data.memberDiscount
-            _this.dispatches = res.data.dispatches
-            _this.shopSet = res.data.shopSet
-            _this.ADDRESS(res.data.addressLists)
-
-
-          }
-        })
-        next()
-      }, 100)
-
-
-
-    },
+//    beforeRouteUpdate(to, from, next) {
+////      console.log(to)
+//      console.log('from:');
+//      console.log(from);
+//
+//      let _this = this;
+//
+//      console.log('this:');
+//      console.log(_this);
+//
+//      this.payed = false;
+//      var myaddres = '';
+////      setTimeout(() => {
+////
+////        if (from.name === 'deliveryaddress' && _this.isNull === true) {
+////
+////          if (this.defaultAddressIsNull == 0) {
+////            console.log('add running.');
+//////            this.defaultAddress = '';
+////          } else {
+////            if (!_this.userAddress.city) {
+////              console.log('jinlail');
+//////              console.log(_this.userAddress);
+//////            myaddres = _this.userAddress.id;
+//////          _this.defaultAddress = _this.userAddress;
+////              _this.init()
+////            }
+////          }
+////
+////
+////        }
+////        else if (from.name === 'deliveryaddress' && this.isNull === false) {
+////
+//////          if(!_this.userAddress){
+//////            myaddres = _this.userAddress.id;
+//////            _this.defaultAddress = _this.userAddress;
+//////          }
+////
+////          myaddres = _this.userAddress.id;
+////          _this.defaultAddress = _this.userAddress;
+////
+////          console.log('_this.defaultAddress');
+////          console.log(_this.defaultAddress);
+////
+////
+////        } else if (from.name === 'addaddress') {
+////          myaddres = this.defaultAddress.id
+////        }
+////        /* if(to.name === 'manageAddress'){
+////           next({  path: '/qrCode'})
+////         }*/
+////        let params = {
+////          data: {
+////            optionid: this.myOrders.optionid || '',
+////            total: this.myOrders.total || '',
+////            goodsid: this.myOrders.goodsid || '',
+////            dispatchid: 1,
+////            addressid: myaddres
+////          }
+////        }
+////        DispatchMoney(params, res => {
+////          if (res.statusCode === 1) {
+////            _this.orderGoods = res.data.orderGoods
+////            _this.defaultAddress = res.data.defaultAddress
+////            _this.memberDiscount = res.data.memberDiscount
+////            _this.dispatches = res.data.dispatches
+////            _this.shopSet = res.data.shopSet
+////            _this.ADDRESS(res.data.addressLists)
+////          }
+////        });
+////        next()
+////      }, 100)
+//
+//
+//    },
     filters: {
       calculatePrice1(value) {
         let num = '';
@@ -349,27 +370,74 @@
     },
     watch: {
       '$route'(to, from) {
+        let _this = this;
+        console.log('route run.');
+        console.log(this.userAddress);
         if (this.$route.query.type) {
-          this.defaultAddress = this.userAddress
-          console.log(this.defaultAddress)
-        }
-//        this.defaultAddress = this.userAddress
-      },
-      remark: function (newValue) {
-        if (newValue.length > 0) {
+          console.log(this.userAddress);
+          this.defaultAddress = this.userAddress;
+          console.log(this.defaultAddress);
+
+
+          let params = {
+            data: {
+              cartids: this.myOrders.cartids || '',
+              optionid: this.myOrders.optionid || '',
+              total: this.myOrders.total || '',
+              goodsid: this.myOrders.goodsid || '',
+              dispatchid: 1,
+              addressid: this.defaultAddress.id
+            }
+          }
+
+
+          DispatchMoney(params, res => {
+            console.log('DispatchMoney 391');
+            console.log(res);
+
+            if (res.statusCode === 1) {
+//              _this.orderGoods = res.data.orderGoods
+//              _this.defaultAddress = res.data.defaultAddress
+//              _this.memberDiscount = res.data.memberDiscount
+              _this.dispatches = res.data.dispatches
+//              _this.shopSet = res.data.shopSet
+//              _this.ADDRESS(res.data.addressLists)
+            }
+          });
 
         }
-      }
+
+        if (this.$route.query.addressListsLength == 0) {
+          console.log(this.userAddress);
+          this.defaultAddress = '';
+          console.log(this.defaultAddress)
+        }
+
+
+
+        console.log(this.userAddress);
+
+//        this.defaultAddress = this.userAddress
+      },
+//      remark: function (newValue) {
+//        if (newValue.length > 0) {
+//
+//        }
+//      }
+
+
     },
     mounted() {
     },
-    updated(){
+    updated() {
 //      this.init();
     },
     activated() {
+      console.log('activated run.');
       this.init();
     },
     created() {
+      console.log('created run.');
       this.init();
     }
   }
