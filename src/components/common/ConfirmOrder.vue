@@ -205,7 +205,7 @@
           let params = {
             data: {
               goods,
-              dispatchid,
+              dispatchid:1,
               addressid,
               cartids,
               remark,
@@ -385,7 +385,8 @@
               optionid: this.myOrders.optionid || '',
               total: this.myOrders.total || '',
               goodsid: this.myOrders.goodsid || '',
-              dispatchid: 1,
+//              dispatchid: 1,
+              dispatchid:1,
               addressid: this.defaultAddress.id
             }
           }
