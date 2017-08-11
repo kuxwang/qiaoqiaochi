@@ -402,15 +402,17 @@
               _this.dispatches = res.data.dispatches
 //              _this.shopSet = res.data.shopSet
 //              _this.ADDRESS(res.data.addressLists)
+              _this.payed = false;
             }
           });
 
         }
 
-        if (this.$route.query.addressListsLength == 0) {
+        if (this.$route.query.addressListsLength === 0) {
           console.log(this.userAddress);
           this.defaultAddress = '';
           console.log(this.defaultAddress)
+
         }
 
 
