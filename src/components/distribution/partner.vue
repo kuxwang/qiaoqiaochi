@@ -261,7 +261,7 @@
 
         let _this = this;
         this.myCurNo = 1;
-//        this.$refs.requestStatus.loadingStatus = 0
+        this.$refs.requestStatus.loadingStatus = 0
         _this.selected = index;
         _this.personlist = [];
         let params = {
@@ -276,7 +276,7 @@
             if (res.statusCode == 1) {
 //              console.log(_this.$refs)
               _this.personlist = _this.personlist.concat(res.data.lists);
-              _this.$refs.requestStatus.loadingStatus = _this.personlist ? 1 : 0
+              _this.$refs.requestStatus.loadingStatus = 1
               if (res.data.length < _this.psizes) {
                 _this.allLoaded = true;
               }
@@ -317,6 +317,7 @@
       searchlist(){
         this.personlist = [];
         this.selected = 4;
+        this.$refs.requestStatus.loadingStatus = 0
         if (this.find.length === 11) {
           var obj = {
             mobile: this.find
@@ -336,9 +337,9 @@
           data: obj
         };
         teams(params, (res) => {
+          this.$refs.requestStatus.loadingStatus = 1
           if (res.statusCode === 1) {
             this.personlist = res.data;
-            this.$refs.requestStatus.loadingStatus = 0
             if (!this.personlist || this.personlist.length <= 1) {
               this.searched = false
             } else {
@@ -379,7 +380,7 @@
       _this.personnumall = _this.$route.query.all;
       _this.personp = _this.$route.query.agent;
       _this.personnp = _this.$route.query.fans;
-      _this.$refs.requestStatus.loadingStatus = this.personlist ? 1 : 0
+      _this.$refs.requestStatus.loadingStatus = 1
     },
     computed: {
       ...mapGetters([
@@ -389,6 +390,7 @@
     beforeRouteUpdate(to, from, next){
       this.allLoaded = !this.allLoaded;
       console.log(this.allLoaded + '的结果')
+
       next()
     },
 
