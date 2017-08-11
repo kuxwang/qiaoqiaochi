@@ -398,8 +398,21 @@
       this.$refs.requestStatus.loadingStatus = this.personlist ? 1 : 0
     },
     beforeRouteUpdate(to, from, next){
-      this.allLoaded = !this.allLoaded;
-      console.log(this.allLoaded + '的结果')
+      if (to.name === 'orderinfo'){
+
+        this.isScrolls(this.allLoaded)
+        this.allLoaded = true;
+        console.log('qu')
+        console.log(this.allLoaded)
+      }
+      if(from.name=== 'orderinfo' ){
+        this.allLoaded=this.isScroll;
+        console.log('huilai')
+        console.log(this.allLoaded)
+
+      }
+
+//      console.log(this.allLoaded + '的结果')
       next()
     },
 

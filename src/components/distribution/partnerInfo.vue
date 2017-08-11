@@ -1,10 +1,9 @@
 <template>
   <div class="mainInfo">
-    <mt-header title="用户详情" style="z-index: 4" fixed>
-      <router-link to="/partner" slot="left">
+    <mt-header fixed title="用户详情">
+      <a slot="left" @click="goBack">
         <mt-button icon="back"></mt-button>
-      </router-link>
-      <mt-button slot="right"></mt-button>
+      </a>
     </mt-header>
     <div class="containe"r>
     <div class="header-img">
@@ -69,33 +68,43 @@
       goBack: function () {
         this.$router.go(-1)
       },
+      init () {
+        let params = {
+          data: {
+            openid: this.$route.query.openid,
+          }
+        }
+        teams(params, (res) => {
+          console.log('asdasdasd')
+          if (res.statusCode == 1) {
+            console.log(res)
+            this.teamsinfo = res.data;
+            this.levelname=res.data.level.levelname;
+            this. agentlevel=res.data. agentlevel.levelname;
+            this.cg_money_sum=res.data.recordStatistics.cg_money_sum;
+            this.c_money_sum=res.data.recordStatistics.c_money_sum;
+            this.o_status_1_price=res.data.orderStatistics.o_status_1_price;
+            this.o_status_2_price=res.data.orderStatistics.o_status_2_price;
+            this.o_status_3_price=res.data.orderStatistics.o_status_3_price;
+            this.o_status_r1_price=res.data.orderStatistics.o_status_r1_price;
+          }else{
+            console.log('会员信息请求出错')
+          }
+        });
+      }
     },
     mounted() {
-      let params = {
-        data: {
-          openid: this.$route.query.openid,
-        }
-      }
-      teams(params, (res) => {
-      if (res.statusCode == 1) {
-        console.log(res)
-        this.teamsinfo = res.data;
-        this.levelname=res.data.level.levelname;
-        this. agentlevel=res.data. agentlevel.levelname;
-        this.cg_money_sum=res.data.recordStatistics.cg_money_sum;
-        this.c_money_sum=res.data.recordStatistics.c_money_sum;
-        this.o_status_1_price=res.data.orderStatistics.o_status_1_price;
-        this.o_status_2_price=res.data.orderStatistics.o_status_2_price;
-        this.o_status_3_price=res.data.orderStatistics.o_status_3_price;
-        this.o_status_r1_price=res.data.orderStatistics.o_status_r1_price;
-    }else{
-        console.log('会员信息请求出错')
-      }
-  });
+        this.init()
+    },
+    created () {
+
     }
   }
 </script>
 <style scoped>
+  @import '../../assets/css/fonts/iconfont.css';
+  @import '../../assets/css/reset/reset.css';
+
   .mainInfo{
     position: fixed;
     top: 0;
@@ -124,6 +133,7 @@
   }
   .header-img>h4{
     margin-bottom:.3rem;
+    font-size: .20rem;
   }
   .header-img>div{
     padding: 0 .1rem;

@@ -22,7 +22,8 @@ import {
   OLDADDRESS,
   ISCONFIRM,
   ISNULL,
-  GET_DEFAULTADDRESSISNULL
+  GET_DEFAULTADDRESSISNULL,
+  ISSCROLL
 }
   from
     './mutation-types.js'
@@ -102,6 +103,10 @@ export default {
   },
   [GET_DEFAULTADDRESSISNULL](state, data) {
     state.defaultAddressIsNull=data;
+    console.log(data)
+  },
+  [ISSCROLL](state, data) {
+    state.isScroll=data;
     console.log(data)
   },
 }

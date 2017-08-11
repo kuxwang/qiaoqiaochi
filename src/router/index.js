@@ -115,7 +115,8 @@ export default new Router({
         {
           path: '/vipCenter/userinfo',
           name: 'userinfo',
-          component: UserInfo
+          component: UserInfo,
+
         },
         {
           path: '/extension',
@@ -127,6 +128,8 @@ export default new Router({
               name: 'orderinfo',
               component: orderinfo
             },
+
+
 
           ]
         },

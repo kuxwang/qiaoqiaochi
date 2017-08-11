@@ -14,7 +14,8 @@ export default {
   oldaddress:state=>state.oldaddress,
   isConfirm:state=>state.isConfirm,
   isNull:state=>state.isNull,
-  defaultAddressIsNull:state=>state.defaultAddressIsNull
+  defaultAddressIsNull:state=>state.defaultAddressIsNull,
+  isScroll:state=>state.isScroll
 
 }
 

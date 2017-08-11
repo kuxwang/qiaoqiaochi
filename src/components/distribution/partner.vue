@@ -63,8 +63,7 @@
     <!--<span class="iconfont">&#xe612;</span>-->
     <!--未找到伙伴<br>-->
     <!--</div>-->
-
-    <!--<router-view></router-view>-->
+    <router-view></router-view>
   </div>
 
 </template>
@@ -134,8 +133,6 @@
           _this.allLoaded = false;
         }
         _this.$refs.requestStatus.loadingStatus = 0
-
-
         switch (idx) {
           case 1:
             let params = {
@@ -233,7 +230,6 @@
                 _this.personlist = res.data;
                 if (!_this.personlist || _this.personlist.length <= 1) {
                   _this.searched = false
-
                 } else {
                   let obji = []
                   obji.push(res.data)
@@ -273,23 +269,23 @@
           }
         }
 //        setTimeout(function () {
-          teamsLists(params, (res) => {
-            if (res.statusCode == 1) {
+        teamsLists(params, (res) => {
+          if (res.statusCode == 1) {
 //              console.log(_this.$refs)
-              _this.personlist = _this.personlist.concat(res.data.lists);
-              _this.$refs.requestStatus.loadingStatus = 1
-              if (res.data.length < _this.psizes) {
-                _this.allLoaded = true;
-              }
+            _this.personlist = _this.personlist.concat(res.data.lists);
+            _this.$refs.requestStatus.loadingStatus = 1
+            if (res.data.length < _this.psizes) {
+              _this.allLoaded = true;
+            }
 //              console.log(_this.personlist.length);
 //              console.log(_this.selected);
 //              console.log(_this.myCurNo);
-            } else {
-              _this.allLoaded = true;
-              console.log('请求失败`${res.statusCode} , ${res.data}` ')
-            }
+          } else {
+            _this.allLoaded = true;
+            console.log('请求失败`${res.statusCode} , ${res.data}` ')
+          }
 
-          })
+        })
 //        }, 10000)
 //        teamsLists(params, (res) => {
 //          if (res.statusCode == 1) {
@@ -361,6 +357,7 @@
       },
       ...mapMutations({
         'searchnum': 'SEARCHNUM',
+        'isScrolls':'ISSCROLL'
       }),
 
     },
@@ -385,12 +382,25 @@
     computed: {
       ...mapGetters([
         'tabselect',
+        'isScroll'
       ])
     },
     beforeRouteUpdate(to, from, next){
-      this.allLoaded = !this.allLoaded;
-      console.log(this.allLoaded + '的结果')
+      if (to.name === 'partnerInfo'){
 
+        this.isScrolls(this.allLoaded)
+        this.allLoaded = true;
+        console.log('qu')
+        console.log(this.allLoaded)
+      }
+      if(from.name=== 'partnerInfo' ){
+          this.allLoaded=this.isScroll;
+          console.log('huilai')
+          console.log(this.allLoaded)
+
+      }
+
+//      console.log(this.allLoaded + '的结果')
       next()
     },
 
