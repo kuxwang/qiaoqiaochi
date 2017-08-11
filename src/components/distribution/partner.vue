@@ -110,7 +110,6 @@
       };
       teamsLists(params, (res) => {
         if (res.statusCode == 1) {
-          console.log(res.data)
           to.meta.post = res.data
           next()
 
@@ -262,7 +261,7 @@
 
         let _this = this;
         this.myCurNo = 1;
-        this.$refs.requestStatus.loadingStatus = 0
+//        this.$refs.requestStatus.loadingStatus = 0
         _this.selected = index;
         _this.personlist = [];
         let params = {
@@ -275,7 +274,7 @@
 //        setTimeout(function () {
           teamsLists(params, (res) => {
             if (res.statusCode == 1) {
-              console.log(_this.$refs)
+//              console.log(_this.$refs)
               _this.personlist = _this.personlist.concat(res.data.lists);
               _this.$refs.requestStatus.loadingStatus = _this.personlist ? 1 : 0
               if (res.data.length < _this.psizes) {

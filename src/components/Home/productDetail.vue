@@ -80,7 +80,7 @@
   </transition>
 </template>
 <script>
-  import { Header,Popup,Toast} from 'mint-ui';
+  import { Header,Popup,Toast,Indicator} from 'mint-ui';
   import {productDetail,addCart,GET_CARTNUMS} from '../../api/api.js';
   import {setStore, getStore} from '../../config/myUtils';
   import {mapMutations, mapGetters } from 'Vuex';
@@ -187,6 +187,8 @@
             that.total=goods.total;
             that.isShow=true;
             document.getElementById("intro").innerHTML=goods.content;
+//            Indicator.close();
+
             if(res.data.level.levelname){
               that.isVip=true;
               that.vipname=res.data.level.levelname;
@@ -199,10 +201,12 @@
                 _that.delGoodsNum=res.data.cartcount;
               }else{
                 console.log('请求失败')
+//                Indicator.close();
               }
             })
           }else{
             console.log('请求失败')
+//            Indicator.close();
           }
         })
       },
@@ -221,8 +225,12 @@
       this.popupVisible = false;
       next()
     },
-    mounted(){
+    mounted () {
       this.getInfo();
+    },
+    created() {
+//        console.log(123123123212)
+//      Indicator.open();
     }
   }
 </script>

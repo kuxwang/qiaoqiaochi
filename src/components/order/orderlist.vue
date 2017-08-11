@@ -1,6 +1,6 @@
 <template>
   <ul class="order-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50">
-    <void-list>
+    <void-list ref="requestStatus">
       <li v-for="(v,i) in statusResult">
         <div>订单号：{{v.ordersn}}</div>
         <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}"
@@ -88,21 +88,40 @@
         this.page = 1;
         this.statusType = statusType;
         this.loading = false;
+//        this.this.statusResult = [];
+//        this.$refs.requestStatus.loadingStatus = 1
+        this.$refs.requestStatus.loadingStatus = 1
         let params = {
           data: {
             page: this.page,
             status: statusType
           }
         };
-        orderList(params, res => {
-          console.log(res)
-          if (res.statusCode == 1) {
-            this.statusResult = res.data
+//        setTimeout(function () {
+          orderList(params, res => {
+            console.log(res)
+            if (res.statusCode == 1) {
+              this.statusResult = res.data
+              console.log(this.statusResult)
+            } else {
+              this.statusResult = []
+              this.$refs.requestStatus.loadingStatus = this.statusResult ? 1 : 0
 
-          }else {
-            this.statusResult = []
-          }
-        });
+            }
+          });
+//        }, 5000)
+//        orderList(params, res => {
+//          console.log(res)
+//          if (res.statusCode == 1) {
+//            this.statusResult = res.data
+//            console.log(this.statusResult)
+//
+//          } else {
+//            this.statusResult = []
+//            this.$refs.requestStatus.loadingStatus = this.statusResult ? 1 : 0
+//
+//          }
+//        });
       },
       loadMore () {
 //        console.log(123)
@@ -185,9 +204,12 @@
     components: {
       voidList
     },
+    mounted(){
+      this.init(this.statusType)
+
+    },
 
     created(){
-      this.init(this.statusType)
     }
   }
 </script>

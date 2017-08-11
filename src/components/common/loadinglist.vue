@@ -3,7 +3,7 @@
     <slot>
       <div v-if="loadingStatus==1" class="tips">
         <span class="iconfont">&#xe612;</span>
-        未找到伙伴<br>
+        未找到数据<br>
       </div>
       <div v-if="loadingStatus==0" class="loading">
       </div>

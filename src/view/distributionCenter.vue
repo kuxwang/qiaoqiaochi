@@ -40,7 +40,6 @@
           <!-- <router-link class="iconfont right" :to="{name:'userinfo'}" tag="i">&#xe649;</router-link> -->
         </router-link>
         <section class="top">
-
           <router-link class="money-top" :to="{name: 'takemoney'}" tag="div">
             推广费:{{recordStatistics_get.c_money_sum}} 元
           </router-link>
@@ -521,7 +520,7 @@
   }
 
   .content {
-    margin-bottom: .7rem;
+    margin-bottom: .25rem;
   }
 
   .content .mfriend {
@@ -684,7 +683,7 @@
     top: 0;
     width: 100%;
     /*overflow: auto;*/
-    /*overflow-y: scroll;*/
+    overflow-y: scroll;
     /*-webkit-overflow-scrolling: touch;*/
     height: 6.2rem;
     /*overflow-y: scroll;*/

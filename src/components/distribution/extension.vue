@@ -59,7 +59,9 @@
       </div>
     </div>
 
-      <ul class="p-list" v-if="orderlist.length"  v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded" infinite-scroll-distance="10">
+    <ul class="p-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded"
+        infinite-scroll-distance="10">
+      <loading-list ref="requestStatus">
         <li class="p-cell" v-if="i.ordersn" v-for="(i,index) in orderlist" @click="orderinfo(index)">
           <div class="up">
             <span class="ordernum">订单编号{{i.ordersn}}</span>
@@ -78,25 +80,30 @@
               <span>￥{{i.price}}</span>
             </div>
           </div>
+
         </li>
-      </ul>
+      </loading-list>
+    </ul>
     <!--  <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded == false" v-if="">
         <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">继续滚动，可加载更多</span>
         <span v-show="bottomStatus === 'loading'"><mt-spinner type="snake"></mt-spinner></span>
       </div>-->
-    <div v-if="!orderlist.length" class="tips">
-      <span class="iconfont">&#xe66f;</span>
-      没有相关订单<br>
-    </div>
+    <!--<div v-if="!orderlist.length" class="tips">-->
+      <!--<span class="iconfont">&#xe66f;</span>-->
+      <!--没有相关订单<br>-->
+    <!--</div>-->
   </div>
 
 </template>
 <script>
   import MtCell from "../../../node_modules/mint-ui/packages/cell/src/cell";
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
-  import {Search, Loadmore, InfiniteScroll,Toast} from 'mint-ui';
+  import {Search, Loadmore, InfiniteScroll, Toast} from 'mint-ui';
   import {mapMutations, mapGetters} from 'vuex';
   import {orderStatistics, orderLists, orders} from '../../api/api'
+  import loadingList from '../common/loadinglist.vue'
+
+
   export default{
     data () {
       return {
@@ -116,11 +123,11 @@
         allLoaded: false,
         isTrue: false,
         onePage: false,
-        loding:true
+        loding: true
       }
     },
     beforeRouteEnter (to, from, next) {
-      let _this=this;
+      let _this = this;
       let params = {
         data: {
           type: to.query.type,
@@ -135,10 +142,10 @@
           to.meta.post = res.data
           console.log(res.data)
           next(vm => {
-              console.log(vm.orderlist)
-              console.log('okokok')
+            console.log(vm.orderlist)
+            console.log('okokok')
           })
-        }else{
+        } else {
           console.log('请求失败`${res.statusCode} , ${res.data}` ')
         }
 
@@ -155,15 +162,15 @@
         let _this = this;
 //        this.selected = idx;
         /*if(idx==5){
-          this.orderlist = [];
-          this.allLoaded = true;
-        }else if(page===1) {
-          this.orderlist = [];
-          this.allLoaded = false;
-          this.myCurNo = 1;
-        }*/
-        if(page==1){
-          _this.orderlist=[]
+         this.orderlist = [];
+         this.allLoaded = true;
+         }else if(page===1) {
+         this.orderlist = [];
+         this.allLoaded = false;
+         this.myCurNo = 1;
+         }*/
+        if (page == 1) {
+          _this.orderlist = []
         }
         switch (idx) {
           case 1:
@@ -177,13 +184,13 @@
             orderLists(params, (res) => {
 
               if (res.statusCode == 1) {
-                  this.orderlist = this.orderlist.concat(res.data);
+                this.orderlist = this.orderlist.concat(res.data);
 
-                  if (res.data.length < _this.psizes) {
-                    _this.allLoaded = true;
-                  }
+                if (res.data.length < _this.psizes) {
+                  _this.allLoaded = true;
+                }
                 console.log(this.orderlist.length)
-              }else{
+              } else {
                 _this.allLoaded = true;
                 console.log('请求失败`${res.statusCode} , ${res.data}` ')
               }
@@ -205,7 +212,7 @@
                 if (res.data.length < _this.psizes) {
                   _this.allLoaded = true;
                 }
-              }else{
+              } else {
                 _this.allLoaded = true;
                 console.log('请求失败`${res.statusCode} , ${res.data}` ')
               }
@@ -227,7 +234,7 @@
                 if (res.data.length < _this.psizes) {
                   _this.allLoaded = true;
                 }
-              }else{
+              } else {
                 _this.allLoaded = true;
                 console.log('请求失败`${res.statusCode} , ${res.data}` ')
               }
@@ -249,7 +256,7 @@
                 if (res.data.length < _this.psizes) {
                   _this.allLoaded = true;
                 }
-              }else{
+              } else {
                 _this.allLoaded = true;
                 console.log('请求失败`${res.statusCode} , ${res.data}` ')
               }
@@ -262,11 +269,13 @@
 
         }
       },
-      tabnav(type,index){
-        let _this=this;
-        this.myCurNo=1;
-        _this.selected=index;
-        _this.orderlist=[];
+      tabnav(type, index){
+        let _this = this;
+        this.myCurNo = 1;
+        _this.selected = index;
+        _this.orderlist = [];
+        _this.$refs.requestStatus.loadingStatus = 0
+
         let params = {
           data: {
             type: type,
@@ -275,17 +284,16 @@
           }
         }
         orderLists(params, (res) => {
-
           if (res.statusCode == 1) {
             _this.orderlist = _this.orderlist.concat(res.data);
-
+            _this.$refs.requestStatus.loadingStatus = _this.personlist ? 1 : 0
             if (res.data.length < _this.psizes) {
               _this.allLoaded = true;
             }
             console.log(_this.orderlist.length);
             console.log(_this.selected);
             console.log(_this.myCurNo);
-          }else{
+          } else {
             _this.allLoaded = true;
             console.log('请求失败`${res.statusCode} , ${res.data}` ')
           }
@@ -296,27 +304,27 @@
         searchnum: 'SEARCHNUM',
         ordersn: 'ORDERSN',
       }),
-/*      handleBottomChange(status) {
-        console.log(status);
-        this.bottomStatus = status
-      },
-      loadBottom() {
-         console.log('xx1');
-//         return ;
-        this.myCurNo += 1;
-//        this.$refs.loadmore.onBottomLoaded();
-        this.selecttab(this.selected, this.myCurNo);
+      /*      handleBottomChange(status) {
+       console.log(status);
+       this.bottomStatus = status
+       },
+       loadBottom() {
+       console.log('xx1');
+       //         return ;
+       this.myCurNo += 1;
+       //        this.$refs.loadmore.onBottomLoaded();
+       this.selecttab(this.selected, this.myCurNo);
 
-      },*/
+       },*/
       loadMore(){
-        this.myCurNo=this.myCurNo+1;
+        this.myCurNo = this.myCurNo + 1;
         this.selecttab(this.selected, this.myCurNo)
       },
       searchlist(){
-        this.orderlist=[];
-        this.selected=5
+        this.orderlist = [];
+        this.selected = 5
         this.allLoaded = true;
-        let _this=this;
+        let _this = this;
         if (_this.find.length === 20) {
           let params = {
             data: {
@@ -336,7 +344,7 @@
               _this.searched = false
             }
           })
-        }else if(!_this.find){
+        } else if (!_this.find) {
           Toast({
             message: '请输入订单号或者用户ID。',
             position: 'middle',
@@ -351,9 +359,9 @@
           };
           orders(params, (res) => {
             if (res.statusCode === 1) {
-                console.log(res)
-                _this.orderlist = res.data.order;
-                console.log(_this.orderlist)
+              console.log(res)
+              _this.orderlist = res.data.order;
+              console.log(_this.orderlist)
 
             } else {
               console.log('请求失败');
@@ -362,7 +370,6 @@
         }
 
       }
-
 
 
     },
@@ -375,23 +382,24 @@
 //    },
 
     created(){
-      let _this=this;
+      let _this = this;
       this.selected = this.$route.query.stab;
-      console.log(this.$route.query.stab);
       let res = this.$route.meta.post;
-      _this.orderlist=res
-      _this.ordertotal=_this.$route.query.total;
-      _this.orderrefund=_this.$route.query.refund;
-      _this.orderlock=_this.$route.query.lock;
-      _this.orderok=_this.$route.query.ok;
+      _this.orderlist = res
+      _this.ordertotal = _this.$route.query.total;
+      _this.orderrefund = _this.$route.query.refund;
+      _this.orderlock = _this.$route.query.lock;
+      _this.orderok = _this.$route.query.ok;
     },
-
+    components: {
+      loadingList
+    },
     mounted(){
-
+      this.$refs.requestStatus.loadingStatus = this.personlist ? 1 : 0
     },
     beforeRouteUpdate(to, from, next){
-        this.allLoaded=!this.allLoaded;
-      console.log(this.allLoaded+'的结果')
+      this.allLoaded = !this.allLoaded;
+      console.log(this.allLoaded + '的结果')
       next()
     },
 
@@ -605,8 +613,8 @@
 
   .logo {
     flex: 1;
-    width:.43rem;
-    height:.43rem;
+    width: .43rem;
+    height: .43rem;
     margin-top: .1rem;
     /*padding: 0.1rem 0;*/
   }
@@ -638,7 +646,7 @@
 
   .logo img {
     width: 100%;
-    height:100%;
+    height: 100%;
     border-radius: 50%;
     vertical-align: middle;
     display: block;
@@ -839,7 +847,8 @@
     transition: .2s linear;
     vertical-align: middle;
   }
-  .tips{
+
+  .tips {
 
   }
 </style>
