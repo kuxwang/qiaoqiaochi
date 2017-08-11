@@ -121,6 +121,18 @@
           }
         })
         next()
+      }else if(from.name ==='editAddress') {
+        let _this = this
+        addresses_get({}, res => {
+          console.log(res)
+          if (res.statusCode == 1) {
+            _this.getaddressnum(res.data.list.length)
+            _this.addressLists = res.data.list
+          } else {
+            console.log('获取收货地址接口异常')
+          }
+        })
+        next()
       }
       else{
         next()
