@@ -272,6 +272,8 @@
         return dispatch || '商家配送'
       }
     },
+
+
 //    beforeRouteUpdate(to, from, next) {
 ////      console.log(to)
 //      console.log('from:');
