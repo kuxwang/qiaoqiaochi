@@ -52,13 +52,13 @@
     padding-bottom:0.5rem;
   }
   .goodsList-itme1 {
-    width: 3.75rem;
+    width: 100%;
     height: 2.64rem;
   }
 
   .goodsList-itme1 img {
     display: block;
-    width: 3.75rem;
+    width: 100%;
     height: 2.64rem;
   }
   .goodsList-itme2 {
@@ -68,7 +68,7 @@
 
   .goodsList-itme2 img {
     display: block;
-    width: 3.75rem;
+    width: 100%;
     height: 3.75rem;
   }
 
