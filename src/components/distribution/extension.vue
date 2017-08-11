@@ -320,7 +320,6 @@
        this.myCurNo += 1;
        //        this.$refs.loadmore.onBottomLoaded();
        this.selecttab(this.selected, this.myCurNo);
-
        },*/
       loadMore(){
         this.myCurNo = this.myCurNo + 1;
@@ -405,7 +404,6 @@
     },
     beforeRouteUpdate(to, from, next){
       if (to.name === 'orderinfo'){
-
         this.isScrolls(this.allLoaded)
         this.allLoaded = true;
         console.log('qu')
