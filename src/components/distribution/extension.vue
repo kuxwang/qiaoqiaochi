@@ -172,6 +172,7 @@
         if (page == 1) {
           _this.orderlist = []
         }
+        _this.$refs.requestStatus.loadingStatus = 0
         switch (idx) {
           case 1:
             let params = {
@@ -184,6 +185,7 @@
             orderLists(params, (res) => {
 
               if (res.statusCode == 1) {
+                _this.$refs.requestStatus.loadingStatus = 1
                 this.orderlist = this.orderlist.concat(res.data);
 
                 if (res.data.length < _this.psizes) {
@@ -207,6 +209,7 @@
             };
             orderLists(params, (res) => {
               if (res.statusCode == 1) {
+                _this.$refs.requestStatus.loadingStatus = 1
                 this.orderlist = this.orderlist.concat(res.data);
 
                 if (res.data.length < _this.psizes) {
@@ -229,6 +232,7 @@
             };
             orderLists(params, (res) => {
               if (res.statusCode == 1) {
+                _this.$refs.requestStatus.loadingStatus = 1
                 this.orderlist = this.orderlist.concat(res.data);
 
                 if (res.data.length < _this.psizes) {
@@ -251,6 +255,7 @@
             };
             orderLists(params, (res) => {
               if (res.statusCode == 1) {
+                _this.$refs.requestStatus.loadingStatus = 1
                 this.orderlist = this.orderlist.concat(res.data);
 
                 if (res.data.length < _this.psizes) {
@@ -265,6 +270,7 @@
             })
             break;
           default:
+            _this.$refs.requestStatus.loadingStatus = 1
             console.log('hehhe')
 
         }
@@ -286,7 +292,7 @@
         orderLists(params, (res) => {
           if (res.statusCode == 1) {
             _this.orderlist = _this.orderlist.concat(res.data);
-            _this.$refs.requestStatus.loadingStatus = _this.personlist ? 1 : 0
+            _this.$refs.requestStatus.loadingStatus = 1
             if (res.data.length < _this.psizes) {
               _this.allLoaded = true;
             }
@@ -294,6 +300,7 @@
             console.log(_this.selected);
             console.log(_this.myCurNo);
           } else {
+            _this.$refs.requestStatus.loadingStatus = 1
             _this.allLoaded = true;
             console.log('请求失败`${res.statusCode} , ${res.data}` ')
           }
@@ -395,7 +402,7 @@
       loadingList
     },
     mounted(){
-      this.$refs.requestStatus.loadingStatus = this.personlist ? 1 : 0
+      this.$refs.requestStatus.loadingStatus = 1
     },
     beforeRouteUpdate(to, from, next){
       if (to.name === 'orderinfo'){
