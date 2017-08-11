@@ -1,13 +1,9 @@
 <template>
-  <div>
+  <div class="icons">
     <slot>
-      <div class="share-page" v-if="loadingStatus==1">
-        <div class="iconfont">
-          &#xe60f;
-        </div>
-        <p>您还没有相关订单</p>
-        <p>赶快去购物吧</p>
-        <router-link tag="button" to="/">再逛逛</router-link>
+      <div v-if="loadingStatus==1" class="tips">
+        <span class="iconfont">&#xe612;</span>
+        未找到数据<br>
       </div>
       <div v-if="loadingStatus==0" class="loading">
       </div>
@@ -33,7 +29,7 @@
   .share-page {
     padding: .9rem 1rem;
     color: #999;
-    background: #ececec;
+    /*background: rgb(228, 228, 228);*/
   }
 
   .share-page > div.iconfont {
@@ -54,6 +50,19 @@
     color: #ddd;
   }
 
+  .tips {
+    text-align: center;
+    font-size: .14rem;
+    color: #666;
+    margin-top: 1.8rem;
+
+  }
+
+  .tips .iconfont {
+    display: block;
+    font-size: .8rem;
+  }
+
   .loading {
     width: 1rem;
     height: 1rem;
@@ -65,4 +74,5 @@
     background: url('../../assets/images/Magnify.gif') no-repeat center center;
     background-size: 100% 100%;
   }
+
 </style>

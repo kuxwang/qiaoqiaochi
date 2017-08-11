@@ -108,6 +108,7 @@
 //        console.log(this.slots[0].values.length)
       },
       cityValuesChange(picker, values) {
+//          console.log(values)
         // 防止没有省份时报错
         if (values[0]) {
           this.slots[1].values = address.filter((item, index) => {
@@ -180,7 +181,6 @@
         addresses_put(params, res => {
             console.log(res)
           if (res.statusCode == 1) {
-
             let info = {
               realname: _this.name,
               mobile: _this.tel,
