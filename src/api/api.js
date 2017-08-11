@@ -7,7 +7,7 @@ const base = 'https://api.duoyunjiav2.wshoto.com';
 const header = 'application/json';
 const dataType = 'json';
 
-/**
+/** 2
  * 分销中心
  */
 const commissions = {
