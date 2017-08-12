@@ -80,7 +80,12 @@
       },
       edit(value) {
         this.seteditAddresses(value)
-        this.oldaddress(value.province + ' ' + value.city + ' ' + value.area)
+        let params = {
+          province: value.province,
+          city: value.city,
+          area: value.area
+        }
+        this.oldaddress(params)
         this.$router.push({path: '/editAddress', query: {id: value.id}})
       },
       deleteAddress(value) {
@@ -118,7 +123,7 @@
         'getaddressnum': 'ADDRESSLISTNUM',
         'seteditAddresses': 'SETEDITADDRESS',
         'oldaddress': 'OLDADDRESS',
-        'isnull':"ISNULL"
+        'isnull': "ISNULL"
       })
     },
     computed: {
@@ -239,7 +244,7 @@
     width: 3.75rem;
     height: 1px;
     border-bottom: 1px solid rgba(0, 0, 0, .1);
-    top:.8rem;
+    top: .8rem;
   }
 
   .mint-checklist-label {

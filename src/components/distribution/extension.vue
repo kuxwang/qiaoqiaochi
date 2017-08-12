@@ -89,8 +89,8 @@
         <span v-show="bottomStatus === 'loading'"><mt-spinner type="snake"></mt-spinner></span>
       </div>-->
     <!--<div v-if="!orderlist.length" class="tips">-->
-      <!--<span class="iconfont">&#xe66f;</span>-->
-      <!--没有相关订单<br>-->
+    <!--<span class="iconfont">&#xe66f;</span>-->
+    <!--没有相关订单<br>-->
     <!--</div>-->
   </div>
 </template>
@@ -309,6 +309,8 @@
       ...mapMutations({
         searchnum: 'SEARCHNUM',
         ordersn: 'ORDERSN',
+        isScrolls: 'ISSCROLL'
+
       }),
       /*      handleBottomChange(status) {
        console.log(status);
@@ -367,7 +369,6 @@
               console.log(res)
               _this.orderlist = res.data.order;
               console.log(_this.orderlist)
-
             } else {
               console.log('请求失败');
             }
@@ -403,17 +404,16 @@
       this.$refs.requestStatus.loadingStatus = 1
     },
     beforeRouteUpdate(to, from, next){
-      if (to.name === 'orderinfo'){
+      if (to.name === 'orderinfo') {
         this.isScrolls(this.allLoaded)
         this.allLoaded = true;
         console.log('qu')
         console.log(this.allLoaded)
       }
-      if(from.name=== 'orderinfo' ){
-        this.allLoaded=this.isScroll;
+      if (from.name === 'orderinfo') {
+        this.allLoaded = this.isScroll;
         console.log('huilai')
         console.log(this.allLoaded)
-
       }
 
 //      console.log(this.allLoaded + '的结果')
@@ -423,7 +423,7 @@
     computed: {
       ...mapGetters([
         'tabselect',
-
+        'isScroll'
       ]),
     }
   }

@@ -91,7 +91,11 @@ export default {
     state.seteditAddress = seteditAddress;
   },
   [OLDADDRESS] (state, oldaddress) {
-    state.oldaddress = oldaddress;
+    state.oldaddress = oldaddress.province + ' ' + oldaddress.city + ' ' + oldaddress.area;
+    state.oldprovince = oldaddress.province;
+    state.oldcity = oldaddress.city;
+    state.oldprovince = oldaddress.area;
+
   },
   [ISCONFIRM](state, isConfirm) {
     state.isConfirm = isConfirm;
