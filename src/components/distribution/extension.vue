@@ -89,11 +89,10 @@
         <span v-show="bottomStatus === 'loading'"><mt-spinner type="snake"></mt-spinner></span>
       </div>-->
     <!--<div v-if="!orderlist.length" class="tips">-->
-      <!--<span class="iconfont">&#xe66f;</span>-->
-      <!--没有相关订单<br>-->
+    <!--<span class="iconfont">&#xe66f;</span>-->
+    <!--没有相关订单<br>-->
     <!--</div>-->
   </div>
-
 </template>
 <script>
   import MtCell from "../../../node_modules/mint-ui/packages/cell/src/cell";
@@ -172,6 +171,7 @@
         if (page == 1) {
           _this.orderlist = []
         }
+        _this.$refs.requestStatus.loadingStatus = 0
         switch (idx) {
           case 1:
             let params = {
@@ -184,6 +184,7 @@
             orderLists(params, (res) => {
 
               if (res.statusCode == 1) {
+                _this.$refs.requestStatus.loadingStatus = 1
                 this.orderlist = this.orderlist.concat(res.data);
 
                 if (res.data.length < _this.psizes) {
@@ -207,6 +208,7 @@
             };
             orderLists(params, (res) => {
               if (res.statusCode == 1) {
+                _this.$refs.requestStatus.loadingStatus = 1
                 this.orderlist = this.orderlist.concat(res.data);
 
                 if (res.data.length < _this.psizes) {
@@ -229,6 +231,7 @@
             };
             orderLists(params, (res) => {
               if (res.statusCode == 1) {
+                _this.$refs.requestStatus.loadingStatus = 1
                 this.orderlist = this.orderlist.concat(res.data);
 
                 if (res.data.length < _this.psizes) {
@@ -251,6 +254,7 @@
             };
             orderLists(params, (res) => {
               if (res.statusCode == 1) {
+                _this.$refs.requestStatus.loadingStatus = 1
                 this.orderlist = this.orderlist.concat(res.data);
 
                 if (res.data.length < _this.psizes) {
@@ -265,6 +269,7 @@
             })
             break;
           default:
+            _this.$refs.requestStatus.loadingStatus = 1
             console.log('hehhe')
 
         }
@@ -286,7 +291,7 @@
         orderLists(params, (res) => {
           if (res.statusCode == 1) {
             _this.orderlist = _this.orderlist.concat(res.data);
-            _this.$refs.requestStatus.loadingStatus = _this.personlist ? 1 : 0
+            _this.$refs.requestStatus.loadingStatus = 1
             if (res.data.length < _this.psizes) {
               _this.allLoaded = true;
             }
@@ -294,21 +299,18 @@
             console.log(_this.selected);
             console.log(_this.myCurNo);
           } else {
+            _this.$refs.requestStatus.loadingStatus = 1
             _this.allLoaded = true;
             console.log('请求失败`${res.statusCode} , ${res.data}` ')
           }
 
         });
       },
-   /*   ...mapMutations({
+      ...mapMutations({
         searchnum: 'SEARCHNUM',
         ordersn: 'ORDERSN',
-        'isScrolls':'ISSCROLL'
-      }),*/
-      ...mapMutations({
-        'searchnum': 'SEARCHNUM',
-        'isScrolls':'ISSCROLL',
-        'ordersn' : 'ORDERSN',
+        isScrolls: 'ISSCROLL'
+
       }),
       /*      handleBottomChange(status) {
        console.log(status);
@@ -320,7 +322,6 @@
        this.myCurNo += 1;
        //        this.$refs.loadmore.onBottomLoaded();
        this.selecttab(this.selected, this.myCurNo);
-
        },*/
       loadMore(){
         this.myCurNo = this.myCurNo + 1;
@@ -368,7 +369,6 @@
               console.log(res)
               _this.orderlist = res.data.order;
               console.log(_this.orderlist)
-
             } else {
               console.log('请求失败');
             }
@@ -400,31 +400,32 @@
     components: {
       loadingList
     },
-    computed: {
-      ...mapGetters([
-        'tabselect',
-        'isScroll'
-      ])
-    },
     mounted(){
-      this.$refs.requestStatus.loadingStatus = this.personlist ? 1 : 0
+      this.$refs.requestStatus.loadingStatus = 1
     },
     beforeRouteUpdate(to, from, next){
-      if (to.name === 'orderinfo'){
+      if (to.name === 'orderinfo') {
         this.isScrolls(this.allLoaded)
         this.allLoaded = true;
         console.log('qu')
         console.log(this.allLoaded)
       }
-      if(from.name === 'orderinfo' ){
-        this.allLoaded=this.isScroll;
+      if (from.name === 'orderinfo') {
+        this.allLoaded = this.isScroll;
         console.log('huilai')
         console.log(this.allLoaded)
-
       }
+
+//      console.log(this.allLoaded + '的结果')
       next()
     },
 
+    computed: {
+      ...mapGetters([
+        'tabselect',
+        'isScroll'
+      ]),
+    }
   }
 </script>
 <style scoped>

@@ -20,10 +20,10 @@
         <input v-model="tel" maxlength="12" placeholder="请输入收货人联系电话" onkeyup="this.value=this.value.replace(/\D/g,'')"
                onafterpaste="this.value=this.value.replace(/\D/g,'')">
       </li>
-      <li>
-        <input v-model="zipCode" maxlength="6" placeholder="请输入邮编" onkeyup="this.value=this.value.replace(/\D/g,'')"
-               onafterpaste="this.value=this.value.replace(/\D/g,'')">
-      </li>
+      <!--<li>-->
+      <!--<input v-model="zipCode" maxlength="6" placeholder="请输入邮编" onkeyup="this.value=this.value.replace(/\D/g,'')"-->
+      <!--onafterpaste="this.value=this.value.replace(/\D/g,'')">-->
+      <!--</li>-->
     </ul>
     <div class="newlyAdded" @click="save">
       保存地址
@@ -44,8 +44,8 @@
 <script>
   import {Toast, Picker, Popup, DatetimePicker, Checklist} from 'mint-ui';
   import {address, slots} from '../../assets/js/address';
-  import {mapState, mapMutations,mapGetters} from 'Vuex';
-  import {addresses_post,addresses_put} from '../../api/api';
+  import {mapState, mapMutations, mapGetters} from 'Vuex';
+  import {addresses_post, addresses_put} from '../../api/api';
   export default{
     data(){
       return {
@@ -64,7 +64,10 @@
     computed: {
       ...mapState([
         'addressListNum',
-        'seteditAddress'
+        'seteditAddress',
+        'oldprovince',
+        'oldcity',
+        'oldarea'
       ]),
       ...mapGetters([
         'oldaddress'
@@ -94,16 +97,16 @@
             return item;
           }
           /*if(item.aname == this.prov){
-            return item;
-          }*/
+           return item;
+           }*/
         });
         /*this.slots[0].values[0].aname='ceshi';
-        this.slots[1].values[0].aname='ceshi';
-        this.slots[2].values[0].aname='ceshi'*/
+         this.slots[1].values[0].aname='ceshi';
+         this.slots[2].values[0].aname='ceshi'*/
         console.log(this.slots[0])
         console.log(this.slots[1])
-       /* console.log(this.slots[1])
-        console.log(this.slots[2])*/
+        /* console.log(this.slots[1])
+         console.log(this.slots[2])*/
 //        this.slots[0].values.push({aname:})
 //        console.log(this.slots[0].values.length)
       },
@@ -151,20 +154,21 @@
         } else if (!this.tel) {
           Toast('请填写收货人手机号')
           return
-        } else if (!this.zipCode) {
-          Toast('请填写邮编')
-          return
         }
+//        else if (!this.zipCode) {
+//          Toast('请填写邮编')
+//          return
+//        }
         let telreg = /^0?(13[0-9]|15[012356789]|18[0236789]|14[57])[0-9]{8}$/; //验证手机号
-        let zipCodereg = /^\d{6}$/; //验证邮政编码
+//        let zipCodereg = /^\d{6}$/; //验证邮政编码
         if (!telreg.test(this.tel)) {
           Toast('手机格式错误')
           return
         }
-        if (!zipCodereg.test(this.zipCode)) {
-          Toast('邮编格式错误')
-          return
-        }
+//        if (!zipCodereg.test(this.zipCode)) {
+//          Toast('邮编格式错误')
+//          return
+//        }
         let _this = this
         let params = {
           data: {
@@ -177,9 +181,8 @@
             addressid: _this.$route.query.id
           }
         }
-
         addresses_put(params, res => {
-            console.log(res)
+          console.log(res)
           if (res.statusCode == 1) {
             let info = {
               realname: _this.name,
@@ -204,7 +207,7 @@
             setTimeout(() => {
 //              _this.$router.push('/confirmorder?type=1')
 //              _this.$router.push({name:'deliveryaddress'})
-              _this.$router.push({name:'deliveryaddress'})
+              _this.$router.push({name: 'deliveryaddress'})
 
             }, 2000)
           }
@@ -218,16 +221,19 @@
       this.initAddress()
     },
     created () {
-        this.name = this.seteditAddress.realname
-        this.getAddress = this.seteditAddress.address
+      this.name = this.seteditAddress.realname
+      this.getAddress = this.seteditAddress.address
 //        this.getAddress = this.seteditAddress.province + this.seteditAddress.city + this.seteditAddress.area
-        this.tel = this.seteditAddress.mobile
-        this.zipcode = this.seteditAddress.zipCode
-      console.log(this.zipcode)
-      setTimeout(()=>{
-        this.temp_addr = this.oldaddress
-      },100)
-
+      this.tel = this.seteditAddress.mobile
+      this.zipcode = this.seteditAddress.zipCode
+      setTimeout(() => {
+        this.temp_addr = this.oldaddress;
+        this.area = {
+          province: this.oldprovince,
+          city: this.oldcity,
+          area: this.oldarea
+        }
+      }, 100)
 
 
     }

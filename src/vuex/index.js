@@ -35,7 +35,10 @@ const state = {
   isConfirm:0,
   isNull:true,
   defaultAddressIsNull : false,
-  isScorll:''
+  isScorll:'',
+  oldprovince:'',
+  oldcity:'',
+  oldarea:'',
 }
 
 export default new Vuex.Store({

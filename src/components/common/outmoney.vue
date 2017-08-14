@@ -8,10 +8,10 @@
       </mt-header>
     </section>
     <ul class="order">
-     <!-- <div class="pic">
-        &lt;!&ndash;<img src="../../assets/images/confirmorder-01.jpg" alt="">&ndash;&gt;
-        &lt;!&ndash;<img :src="goods.thumb" alt="icon">&ndash;&gt;
-      </div>-->
+      <!-- <div class="pic">
+         &lt;!&ndash;<img src="../../assets/images/confirmorder-01.jpg" alt="">&ndash;&gt;
+         &lt;!&ndash;<img :src="goods.thumb" alt="icon">&ndash;&gt;
+       </div>-->
       <div class="details">
         <span class="span1">￥{{moneytotal}}</span>
         <!--<span class="span2">{{shopSet.name}}-{{order.ordersn}}</span>-->
@@ -27,7 +27,7 @@
         <div>
           <label class="mint-checklist-label fl" @click="isChecked=1">
             <span class="mint-checkbox" v-if="wechat_app.switch">
-              <input type="checkbox" :checked="true" class="mint-checkbox-input" >
+              <input type="checkbox" :checked="true" class="mint-checkbox-input">
               <span class="mint-checkbox-core"></span>
             </span>
             <span class="mint-checkbox" v-if="!wechat_app.switch">
@@ -44,8 +44,8 @@
         </div>
         <div>
           <label class="mint-checklist-label fl" @click="isChecked=2">
-            <span class="mint-checkbox" v-if="alipay_app.switch" >
-              <input type="checkbox" :checked="isChecked==2" class="mint-checkbox-input" >
+            <span class="mint-checkbox" v-if="alipay_app.switch">
+              <input type="checkbox" :checked="isChecked==2" class="mint-checkbox-input">
               <span class="mint-checkbox-core"></span>
             </span>
             <span class="mint-checkbox" v-if="!alipay_app.switch">
@@ -61,13 +61,21 @@
     <button class="commit ocolor" @click="pay">
       确认提现
     </button>
+    <div class="p-list">
+      <h6>温馨提示：</h6>
+      <p>&nbsp;&nbsp;亲爱的朵云家会员：</p>
+      <p>1：客户确认收货后，过7天无理由退换货期后，即可提现。</p>
+      <p>2：平台暂时只能提现到个人支付宝账户，后期可提现到个人微信钱包。</p>
+      <p>3：提现金额为10元起提现，请在每周三9:00-17:00提现，平台会进行审核发放！感谢您的支持！</p>
+      <p>4：提现当日，每人发放不得超过2次，否则发放不了。</p>
+    </div>
   </div>
 </template>
 
 <script>
   import {Checklist, Toast} from 'mint-ui';
   import {mapState} from 'Vuex';
-  import {withdrawals_post,recordStatistics_get} from '../../api/api';
+  import {withdrawals_post, recordStatistics_get} from '../../api/api';
   export default {
     data () {
       return {
@@ -81,7 +89,7 @@
         payStstus: 0,
         value: 0,
         type: 0,
-        moneytotal:''
+        moneytotal: ''
       }
     },
     methods: {
@@ -99,9 +107,9 @@
               position: 'middle',
               duration: 2000
             });
-            setTimeout(()=>{
-              this.$router.push({name:'takemoney'})
-            },2000)
+            setTimeout(() => {
+              this.$router.push({name: 'takemoney'})
+            }, 2000)
 
           })
         } else {
@@ -120,19 +128,17 @@
       }
     },
     created () {
-      let _this=this
-      let params={
-        data: {
-
-        }
+      let _this = this
+      let params = {
+        data: {}
       }
-      recordStatistics_get(params,(res)=>{
-        if(res.statusCode==1){
-         /* this.moneylist=res.data
-          console.log(this.moneylist)*/
+      recordStatistics_get(params, (res) => {
+        if (res.statusCode == 1) {
+          /* this.moneylist=res.data
+           console.log(this.moneylist)*/
           console.log(res)
-          _this.moneytotal=res.data.ok.c_money_sum
-        }else {
+          _this.moneytotal = res.data.ok.c_money_sum
+        } else {
           console.log('请求失败')
         }
       })
@@ -297,8 +303,23 @@
     background-color: #d9d9d9;
     border-color: #ccc;
   }
+
   .detail {
     width: 100%;
+  }
+
+  .p-list {
+    padding: .3rem;
+    text-align: left;
+  }
+
+  .p-list > h6 {
+    font-weight: bold;
+  }
+
+  .p-list > p {
+    font-size: .11rem;
+    line-height: .18rem;
   }
 </style>
 
