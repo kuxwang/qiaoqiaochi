@@ -11,7 +11,8 @@
           <span class="fl"><i>收货人：</i>{{defaultAddress.realname}}</span>
           <span class="fr">{{defaultAddress.mobile}}</span>
         </li>
-        <li class="deliveryAddress-lr-addr lr1">
+        <li class="delive
+        ryAddress-lr-addr lr1">
           收货地址：{{defaultAddress.province}}{{defaultAddress.city}}{{defaultAddress.area}}{{defaultAddress.address}}
         </li>
       </ul>

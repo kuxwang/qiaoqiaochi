@@ -6,7 +6,7 @@
     <!--</router-link>-->
     <!--</mt-header>-->
     <div class="container">
-      <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :maxDistance="60"
+      <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :maxDistance="50"
                    :distanceIndex="disindex"
                    :top-distance="30" ref="loadmore">
         <div slot="top" class="mint-loadmore-top">
@@ -255,7 +255,12 @@
         if (from.name === 'vipCenter') {
           this.memberInfo.avatar = this.imgUrl
         }
+      },
+      topStatus (newValue) {
+        console.log(newValue)
       }
+
+
     },
     computed: {
       ...mapState([
@@ -332,7 +337,6 @@
 
         MessageBox({title: '确认退出当前账号?', message: '点击确认退出', showCancelButton: true}).then(action => {
           if (action == 'confirm') {//表示点击了确定
-            // _webapp.logOut((res)=>{})
             console.log('试试')
             LOGINOUT(function (res) {
               console.log('推出成功')
@@ -343,6 +347,7 @@
         })
       },
       handleTopChange(status) {
+        console.log(status)
         this.topStatus = status;
       },
       loadTop(){
@@ -365,6 +370,7 @@
     mounted(){
 //      this.init();
     },
+
     beforeRouteUpdate(to, from, next){
       if (from.name === 'userinfo') {
         this.init();

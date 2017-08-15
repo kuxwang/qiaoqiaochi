@@ -109,7 +109,7 @@
   import {mapMutations} from 'Vuex';
   import {memberInfo, PUT_USERINFO, PUT_USERAVATARS, USERPHOTO} from '../../api/api';
   import {_webapp} from '../../config/webapp.js';
-//  import {_webapp} from '../../config/webapp.js';
+  //  import {_webapp} from '../../config/webapp.js';
 
   export default{
     data(){
@@ -121,7 +121,7 @@
         myWx: '',
         myZfb: '',
         myZfbName: '',
-         myName:'',
+        myName:'',
         myPlace: '',
         myProvince: '',
         myCity: '',
@@ -251,13 +251,19 @@
             _this.initAddress();
             _this.delImg = res.data.avatar;
             _this.myPhone = res.data.mobile;
-             _this.myNc = res.data.nickname;
+            _this.myNc = res.data.nickname;
             _this.myName=res.data.realname;
             _this.myWx = res.data.weixin;
             _this.myZfb = res.data.alipay_account;
             _this.myImg=res.data.avatar;
             _this.myZfbName = res.data.alipay_name;
-            _this.myPlace = `${res.data.province} ${res.data.city} ${res.data.area}`;
+            setTimeout(()=>{
+              _this.myPlace = `${res.data.province} ${res.data.city} ${res.data.area}`;
+              _this.myProvince = res.data.province;
+              _this.myCity = res.data.city;
+              _this.myRegion = res.data.area
+            },100)
+
             if (res.data.birthyear != '' && res.data.birthmonth != '' && res.data.birthday != '') {
               _this.myDate = `${res.data.birthyear}年 ${res.data.birthmonth}月 ${res.data.birthday}日`;
             } else {
@@ -288,6 +294,35 @@
             area: this.myRegion,
             avatar: this.myImg
           }
+        }
+
+        if (!this.myNc) {
+          Toast('请填写昵称')
+          return
+        } else if (!this.myName) {
+          Toast('请填写姓名')
+          return
+        } else if (!this.myPlace) {
+          Toast('请选择城市')
+          return
+        } else if (!this.myZfbName) {
+          Toast('请输入支付宝姓名')
+          return
+        } else if (!this.myZfb) {
+          Toast('请输入支付宝账户')
+          return
+        } else if (!this.myWx) {
+          Toast('请输入微信号')
+          return
+        } else if (!this.myDate) {
+          Toast('请选择生日')
+          return
+        } else if (!this.myImg) {
+          Toast('请上传头像')
+          return
+        } else if (!this.myPhone) {
+          Toast('请输入手机号')
+          return
         }
         let _this = this;
         PUT_USERINFO(params, function (res) {
@@ -324,7 +359,23 @@
         })
       }
     },
-    mounted() {
+    watch : {
+      myPlace (newValue) {
+        console.log(newValue)
+      },
+      myProvince (newValue) {
+        console.log(newValue)
+      },
+      myCity (newValue) {
+        console.log(newValue)
+      },
+
+      myRegion (newValue) {
+        console.log(newValue)
+      },
+
+    },
+    created () {
 
       this.getUserInfo();
     }
