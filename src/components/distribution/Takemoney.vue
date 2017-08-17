@@ -61,7 +61,7 @@
     },
     created(){
       /*console.log('run created.');
-      console.log(this.moneylist);*/
+       console.log(this.moneylist);*/
     },
     mounted(){
       this.init();
@@ -102,7 +102,7 @@
       }
     },
     beforeRouteUpdate(to, from, next){
-     console.log('路由变化')
+      console.log('路由变化')
       this.init()
       next()
     },
@@ -200,6 +200,7 @@
   .mint-header {
     z-index: 3;
   }
+
   .mint-header .mint-button {
     line-height: .41rem;
   }
