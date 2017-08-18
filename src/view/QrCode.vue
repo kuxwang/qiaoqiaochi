@@ -64,7 +64,7 @@
           _this.$refs.loadmore.onTopLoaded();
           if (res.statusCode === 1) {
             _this.qrimg = res.data
-          } else if (res.statusCode === -2) {
+          } else if (res.statusCode == -2) {
             _this.qrimg = ''
           } else {
             Toast({
@@ -83,10 +83,10 @@
       }
     },
     activated () {
-      this.init();
+//      this.init();
     },
     created () {
-
+      this.init();
     },
 
   }
@@ -103,7 +103,8 @@
   .main {
     position: absolute;
     top: 0;
-    overflow-y: scroll;
+    overflow-y: scroll
+    width: 100%;
   }
 
   .imgbox {
@@ -134,7 +135,7 @@
 
   .container {
     /*margin-top: .45rem;*/
-    position:relative;
+    position: relative;
     top: 0;
     /*left:0;*/
     width: 100%;
