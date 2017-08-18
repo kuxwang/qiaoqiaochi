@@ -191,11 +191,12 @@
            <router-view></router-view>
          </transition> -->
       </mt-loadmore>
+      <transition name="slide">
+        <router-view></router-view>
+      </transition>
     </div>
     <v-tabbar></v-tabbar>
-    <transition name="slide">
-      <router-view></router-view>
-    </transition>
+
   </div>
 </template>
 <script>
@@ -720,5 +721,8 @@
     display: block;
     background: url('../assets/images/Spinner.gif') no-repeat 100% 100%;
     background-size: 100% 100%;
+  }
+  .main1 {
+    overflow-y: scroll !important;
   }
 </style>

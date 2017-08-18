@@ -51,7 +51,11 @@
     color: #252525 !important;
     border-bottom: 1px solid #e3e3e3;
     font-size: 0.16rem !important;
-    height: 45px !important;
+    height: .45rem !important;
+  }
+
+  .mintui {
+    font-size: .16rem !important;
   }
 
   .ocolor {
@@ -120,6 +124,7 @@
   .mint-header-button > a {
     display: block;
   }
+
 
 
 </style>

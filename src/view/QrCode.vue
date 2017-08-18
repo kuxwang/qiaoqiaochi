@@ -1,16 +1,18 @@
 <template>
   <div class="main">
-    <!--<mt-header fixed title="二维码" class="header">-->
-    <!--</mt-header>-->
-    <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :maxDistance="60"
+  <!--  <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :maxDistance="60"
                  :distanceIndex="disindex"
-                 :top-distance="30" ref="loadmore">
-      <div slot="top" class="mint-loadmore-top">
-          <span class="iconfont" v-show="topStatus !== 'loading'"
+                 :top-distance="30" ref="loadmore">-->
+      <!--<div slot="top" class="mint-loadmore-top">-->
+        <!--  <span class="iconfont" v-show="topStatus !== 'loading'"
                 :class="{ 'rotate': topStatus === 'drop' }">&#xe732;下拉刷新</span>
-        <span class="loading" v-show="topStatus === 'loading'">加载中</span>
-      </div>
+        <span class="loading" v-show="topStatus === 'loading'">加载中</span>-->
 
+
+
+      <!--</div>-->
+      <!--<mt-header fixed title="二维码" class="header">-->
+      <!--</mt-header>-->
       <div class="container">
         <div class="imgbox" @click="clickhavib()" v-if="qrimg">
           <img :src="qrimg"/>
@@ -20,7 +22,7 @@
           您还不是分销商
         </div>
       </div>
-    </mt-loadmore>
+    <!--</mt-loadmore>-->
     <v-tabbar></v-tabbar>
   </div>
 </template>
@@ -33,7 +35,7 @@
       return {
         qrimg: '',
         topStatus: '',
-        disindex: 2,
+        disindex: 3,
       }
     },
     components: {
@@ -42,10 +44,8 @@
     methods: {
       loadTop () {
         this.init()
-
       },
       handleTopChange(status) {
-//          console.log(status)
         this.topStatus = status;
       },
       clickhavib () {
@@ -59,12 +59,10 @@
       init(){
         let _this = this;
         Qrimg({}, res => {
-//            this.topStatus = '0'
-//          console.log(1)
-          _this.$refs.loadmore.onTopLoaded();
+          console.log(1)
           if (res.statusCode === 1) {
             _this.qrimg = res.data
-          } else if (res.statusCode == -2) {
+          } else if (res.statusCode === -2) {
             _this.qrimg = ''
           } else {
             Toast({
@@ -74,19 +72,13 @@
             });
           }
         })
-
-      }
-    },
-    watch: {
-      topStatus (newValue) {
-        console.log(newValue)
       }
     },
     activated () {
-//      this.init();
+      this.init();
     },
     created () {
-      this.init();
+
     },
 
   }
@@ -99,17 +91,13 @@
   * {
     font-size: .16rem;
   }
-
   .main {
-    position: absolute;
-    top: 0;
-    overflow-y: scroll
-    width: 100%;
+    height: 6.67rem;
+    overflow-y: hidden;
   }
-
   .imgbox {
     width: 100%;
-    /*height: 5.96rem;*/
+    height: 5.96rem;
     left: 0;
     top: 0;
     margin: 0 auto;
@@ -135,11 +123,8 @@
 
   .container {
     /*margin-top: .45rem;*/
-    position: relative;
-    top: 0;
-    /*left:0;*/
     width: 100%;
-    height: 10rem;
+    /*height: 6.6rem;*/
   }
 
   .title {
