@@ -91,7 +91,10 @@
   * {
     font-size: .16rem;
   }
-
+  .main {
+    height: 6.67rem;
+    overflow-y: hidden;
+  }
   .imgbox {
     width: 100%;
     height: 5.96rem;

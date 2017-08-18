@@ -7,7 +7,7 @@
         </router-link>
       </mt-header>
     </section>
-
+    <div class="hehe">
     <ul class="userinfo-list">
       <li class="userinfo-header">
 	          <span class="fl">
@@ -77,6 +77,7 @@
       <button class="postUserInfo-item">
         提交
       </button>
+    </div>
     </div>
     <!-- 所在城市 -->
     <mt-popup v-model="mypopup1" position="bottom" class="cityPopup">
@@ -344,8 +345,19 @@
     background: #ececec;
     /*overflow: hidden;*/
     z-index: 30;
-    overflow-y: scroll;
+    /*overflow-y: scroll;*/
 
+  }
+  .hehe {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ececec;
+    /*overflow: hidden;*/
+    z-index: 30;
+    overflow-y: scroll;
   }
 
   .header {
@@ -471,6 +483,9 @@
 
   .picker-item {
     font-size: 0.16rem;
+  }
+  .mint-header {
+    z-index: 31 !important;
   }
 </style>
 
