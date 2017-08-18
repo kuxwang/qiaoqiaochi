@@ -343,7 +343,9 @@
     height: 100%;
     background: #ececec;
     /*overflow: hidden;*/
-    z-index: 30
+    z-index: 30;
+    overflow-y: scroll;
+
   }
 
   .header {

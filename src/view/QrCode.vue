@@ -1,13 +1,16 @@
 <template>
   <div class="main">
-    <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :maxDistance="60"
+  <!--  <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :maxDistance="60"
                  :distanceIndex="disindex"
-                 :top-distance="30" ref="loadmore">
-      <div slot="top" class="mint-loadmore-top">
-          <span class="iconfont" v-show="topStatus !== 'loading'"
+                 :top-distance="30" ref="loadmore">-->
+      <!--<div slot="top" class="mint-loadmore-top">-->
+        <!--  <span class="iconfont" v-show="topStatus !== 'loading'"
                 :class="{ 'rotate': topStatus === 'drop' }">&#xe732;下拉刷新</span>
-        <span class="loading" v-show="topStatus === 'loading'">加载中</span>
-      </div>
+        <span class="loading" v-show="topStatus === 'loading'">加载中</span>-->
+
+
+
+      <!--</div>-->
       <!--<mt-header fixed title="二维码" class="header">-->
       <!--</mt-header>-->
       <div class="container">
@@ -19,7 +22,7 @@
           您还不是分销商
         </div>
       </div>
-    </mt-loadmore>
+    <!--</mt-loadmore>-->
     <v-tabbar></v-tabbar>
   </div>
 </template>
