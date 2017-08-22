@@ -615,7 +615,7 @@
   }
 
   .deliveryMode {
-    width: 3.57rem;
+    width: 95.2%;
     margin: 0rem 0.1rem;
     border-bottom: 0.01rem solid #E5E5E5;
   }
