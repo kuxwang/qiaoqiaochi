@@ -59,10 +59,10 @@
       init(){
         let _this = this;
         Qrimg({}, res => {
-          console.log(1)
-          if (res.statusCode === 1) {
+//          console.log(1)
+          if (res.statusCode == 1) {
             _this.qrimg = res.data
-          } else if (res.statusCode === -2) {
+          } else if (res.statusCode == -2) {
             _this.qrimg = ''
           } else {
             Toast({

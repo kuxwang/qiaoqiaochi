@@ -5,11 +5,15 @@
       var clientWidth = docEl.clientWidth
       var docbody = doc.body
       if (!clientWidth) return
+      var fsize = 100 * (clientWidth / 375)
       docEl.style.fontSize = 100 * (clientWidth / 375) + 'px'
       docbody.style.height = (win.screen.height / (100 * (clientWidth / 375))) + 'rem'
-      setTimeout(function () {
-        // document.getElementById('app').style.display = 'block'
-      }, 1)
+
+      var realfz = ~~(+window.getComputedStyle(document.getElementsByTagName("html")[0]).fontSize.replace('px','')*100)/100
+      // console.log(realfz)
+      if(fsize !== realfz){
+        document.getElementsByTagName("html")[0].style.cssText = 'font-size: ' + realfz * (realfz / realfz) +"px";
+      }
     }
   if (!doc.addEventListener) return
 
