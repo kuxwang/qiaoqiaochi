@@ -492,7 +492,7 @@
     overflow: auto;
     /*overflow-y: scroll;*/
     -webkit-overflow-scrolling: touch;
-    height: 6.2rem;
+    height: 6.9rem;
     /*overflow-y: scroll;*/
 
   }
