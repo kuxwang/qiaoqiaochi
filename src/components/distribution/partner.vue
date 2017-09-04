@@ -836,11 +836,12 @@
   }
 
   .logo {
-    flex: 1;
+    /*flex: 1;*/
+    width: .58rem;
   }
 
   .info {
-    flex: 5;
+    flex: 1;
     text-align: left;
     margin-left: 0.1rem;
     position: relative;

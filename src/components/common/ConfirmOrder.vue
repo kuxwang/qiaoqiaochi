@@ -380,6 +380,7 @@
     watch: {
       '$route'(to, from) {
         let _this = this;
+        _this.payed = false
         console.log('route run.');
         console.log(this.userAddress);
         if (this.$route.query.type) {
@@ -445,12 +446,14 @@
 //      this.init();
     },
     activated() {
+      this.payed = false;
       console.log('activated run.');
       this.init();
     },
     created() {
       console.log('created run.');
       this.init();
+      this.payed = false
     }
   }
 </script>

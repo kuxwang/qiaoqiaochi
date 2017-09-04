@@ -50,14 +50,14 @@
    font-size: 0.24rem;
   }
   .tabbar {
-    z-index: 1 !important;
+    z-index: 10 !important;
   }
   .mint-tabbar{
     background: #fff;
     border-top: 1px solid #E7E7E7;
     position: fixed;
     -webkit-transform: translateZ(0);
-    z-index: 1;
+    z-index: 10;
   }
   .mint-tab-item{
     color:#525252;

@@ -49,7 +49,7 @@
     -webkit-overflow-scrolling: auto;
   }
   .goodsList{
-    padding-bottom:0.5rem;
+    /*padding-bottom:0.5rem;*/
   }
   .goodsList-itme1 {
     width: 100%;
@@ -86,7 +86,8 @@
     overflow: auto;
     /*overflow-y: scroll;*/
     -webkit-overflow-scrolling: touch;
-    height: 6.7rem;
+    height: 100%;
+    padding-bottom: .5rem;
     /*overflow-y: scroll;*/
 
   }

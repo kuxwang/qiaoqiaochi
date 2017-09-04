@@ -124,7 +124,7 @@
     height: 100%;
     background: #ececec;
     overflow: hidden;
-    z-index: 2;
+    z-index: 20;
     display: flex;
     flex-direction: column;
   }
@@ -197,9 +197,7 @@
     background-color: #f5751d;
     color: #fff;
     line-height: .45rem;
-    /*position: absolute;*/
-    /*bottom: 0;*/
-    z-index: 3;
+    /*z-index: ;*/
 
   }
 
@@ -211,16 +209,19 @@
     line-height: .41rem;
   }
   .container {
-    /*position: absolute;*/
-    /*top:0;*/
     width: 100%;
     overflow: auto;
     /*overflow-y: scroll;*/
     -webkit-overflow-scrolling: touch;
-    /*height: 100%;*/
     background-color: #ececec;
     /*overflow-y: scroll;*/
     flex: 1;
+    margin-top: .45rem;
+  }
+  section {
+    position: fixed;
+    width: 100%;
+
   }
 
 </style>

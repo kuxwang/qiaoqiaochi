@@ -101,21 +101,19 @@
 
     },
 
-
-
-
   }
 
 </script>
 
 <style scoped>
   .main {
+    /*position: fixed;*/
     position: fixed;
     top: 0rem;
     width: 100%;
     height: 100%;
     background: #eee;
-    z-index: 3;
+    z-index: 30;
     overflow: hidden;
   }
 
@@ -125,7 +123,6 @@
     background: #fff;
     /*margin-top: .5rem;*/
     border: 1px solid #eee;
-
   }
 
   li {

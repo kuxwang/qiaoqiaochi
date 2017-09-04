@@ -191,12 +191,12 @@
            <router-view></router-view>
          </transition> -->
       </mt-loadmore>
-      <transition name="slide">
-        <router-view></router-view>
-      </transition>
-    </div>
-    <v-tabbar></v-tabbar>
 
+    </div>
+    <transition name="slide">
+      <router-view></router-view>
+    </transition>
+    <v-tabbar></v-tabbar>
   </div>
 </template>
 <script>
@@ -388,7 +388,7 @@
     font-size: .16rem;
   }
 
-  .main, .main1 {
+  .main {
     position: fixed;
     top: 0;
     left: 0;
@@ -686,8 +686,9 @@
     /*overflow: auto;*/
     overflow-y: scroll;
     /*-webkit-overflow-scrolling: touch;*/
-    height: 6.2rem;
+    height: 100%;
     /*overflow-y: scroll;*/
+    padding-bottom: .3rem;
 
   }
 

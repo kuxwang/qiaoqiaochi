@@ -7,15 +7,14 @@ const base = 'https://api.duoyunjiav2.wshoto.com';
 const header = 'application/json';
 const dataType = 'json';
 
-/** 2
+/**
  * 分销中心
  */
 const commissions = {
   recordStatistics_get: {url: `${base}/commissions/recordStatistics`, method: 'GET', header, dataType},
   recordStatistics_post: {url: `${base}/commissions/recordStatistics`, method: 'POST', header, dataType},
   /**
-   * 订单统计
-   * 订单列表
+
    */
 
   orderStatistics: {url: `${base}/commissions/orderStatistics`, method: 'GET', header, dataType},
