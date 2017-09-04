@@ -109,11 +109,8 @@
     </ul>
     </div>
 
-
-
-
     <div class="settlement clearfix">
-      <div class="settlement-lf">
+      <div class="settlement-lf fl">
       			<span class="settlement-item-lf">
       				共
       				<span>
@@ -128,7 +125,7 @@
 				</span>
       </div>
 
-      <button id="commitForm" class="settlement-lr" @click="goPay">
+      <button id="commitForm" class="settlement-lr fr" @click="goPay">
         提交订单
       </button>
     </div>
@@ -672,13 +669,8 @@
     font-weight: bolder;
   }
 
-  .settlement {
-    /*position: fixed;*/
-    /*left: 0;*/
-    /*right: 0;*/
-    /*bottom: 0;*/
+/*  .settlement {
     height: 0.50rem;
-    /*padding: 0rem 0rem 0rem 0.1rem;*/
     border-top: 1px solid #e7e7e7;
     background: #fff;
     z-index: 50;
@@ -709,7 +701,54 @@
 
   .settlement-item-lf span {
     color: #F5751D;
+  }*/
+
+
+  .settlement {
+    /*position: fixed;*/
+    position: relative;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /*top: 92.5%;*/
+    /*height: 0.50rem;*/
+    padding: 0rem 0rem 0rem 0.1rem;
+    border-top: 1px solid #e7e7e7;
+    background: #fff;
+    /*z-index: 31*/
   }
+
+  .settlement-lf {
+    width: 2.50rem;
+    height: 0.50rem;
+    line-height: 0.50rem;
+    font-size: 0.14rem;
+    color: #666;
+    text-align: right
+
+  }
+
+  .settlement-lr {
+    width: 1.10rem;
+    height: 0.50rem;
+    line-height: 0.50rem;
+    font-size: 0.16rem;
+    background: #F5751D;
+    color: #fff;
+    text-align: center;
+    outline: none;
+  }
+
+  .settlement-item-lf span {
+    color: #F5751D;
+  }
+
+
+
+
+
+
+
 
   .exhibition {
     margin: 0.1rem 0rem 0.6rem 0rem;

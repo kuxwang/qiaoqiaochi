@@ -672,7 +672,6 @@
     font-size: .16rem;
     line-height: .35rem;
   }
-
   .nummoney {
     white-space: nowrap;
     overflow: hidden;

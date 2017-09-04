@@ -7,6 +7,7 @@
         </router-link>
       </mt-header>
     </section>
+    <div class="container">
     <section class="top">
     </section>
     <ul class="nav-tab">
@@ -65,7 +66,7 @@
     <!--</div>-->
     <router-view></router-view>
   </div>
-
+  </div>
 </template>
 <script>
   import {Popup, Picker, Toast} from 'mint-ui';
@@ -944,6 +945,14 @@
   .tips .iconfont {
     display: block;
     font-size: .8rem;
+  }
+  .container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+    height: 100%;
+    padding-bottom: .5rem;
   }
 
 </style>

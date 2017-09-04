@@ -5,7 +5,7 @@
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-
+    <div class="container1"> </div>
     <div class="mint-navbar page-part" id="nav">
       <a class="mint-tab-item" :class="{'is-selected': isselect==1}" @click="isselect=1">
         <div class="mint-tab-item-icon"></div>
@@ -33,8 +33,10 @@
       <order-lists ref="mylist"></order-lists>
     </div>
     </div>
+
     <v-tabbar id="tabbar"></v-tabbar>
     <router-view></router-view>
+
   </div>
 </template>
 <script>
@@ -239,6 +241,17 @@
     /*overflow-y: scroll;*/
 
   }
+  /*.container1 {
+    position: absolute;
+    top:0;
+    width: 100%;
+    overflow: hi;
+    !*overflow-y: scroll;*!
+    !*-webkit-overflow-scrolling: touch;*!
+    height: 100%;
+    !*overflow-y: scroll;*!
+
+  }*/
   #nav {
     z-index: 4;
   }

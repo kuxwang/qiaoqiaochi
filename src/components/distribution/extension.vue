@@ -7,7 +7,7 @@
         </router-link>
       </mt-header>
     </section>
-
+    <div class="container">
     <div class="list-header c-1">
       <transition name="slide">
         <router-view></router-view>
@@ -92,6 +92,7 @@
     <!--<span class="iconfont">&#xe66f;</span>-->
     <!--没有相关订单<br>-->
     <!--</div>-->
+  </div>
   </div>
 </template>
 <script>
@@ -867,5 +868,16 @@
 
   .tips {
 
+  }
+  .container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+    /*overflow-y: scroll;*/
+    /*-webkit-overflow-scrolling: touch;*/
+    height: 100%;
+    /*overflow-y: scroll;*/
+    padding-bottom: .5rem;
   }
 </style>
