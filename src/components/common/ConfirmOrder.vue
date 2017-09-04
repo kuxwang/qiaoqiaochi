@@ -5,6 +5,7 @@
         <mt-button icon="back"></mt-button>
       </a>
     </mt-header>
+    <div class="container">
     <router-link class="deliveryAddress" tag="div" :to="{name:'deliveryaddress'}" v-if="defaultAddress">
       <ul class="fl deliveryAddress-lr">
         <li class="delivery-people clearfix">
@@ -106,8 +107,13 @@
 				</span>
       </li>
     </ul>
+    </div>
+
+
+
+
     <div class="settlement clearfix">
-      <div class="settlement-lf fl">
+      <div class="settlement-lf">
       			<span class="settlement-item-lf">
       				共
       				<span>
@@ -122,7 +128,7 @@
 				</span>
       </div>
 
-      <button id="commitForm" class="settlement-lr fr" @click="goPay">
+      <button id="commitForm" class="settlement-lr" @click="goPay">
         提交订单
       </button>
     </div>
@@ -460,7 +466,9 @@
     height: 100%;
     background: #efeff4;
     overflow: auto;
-    z-index: 30
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
   }
 
   .header {
@@ -471,7 +479,7 @@
   .deliveryAddress {
     padding: 0.15rem;
     /*   height: 1rem;*/
-    margin-top: 0.54rem;
+    /*margin-top: 0.54rem;*/
     background: #fff;
     position: relative;
     overflow: hidden
@@ -662,15 +670,16 @@
   }
 
   .settlement {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    /*position: fixed;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*bottom: 0;*/
     height: 0.50rem;
-    padding: 0rem 0rem 0rem 0.1rem;
+    /*padding: 0rem 0rem 0rem 0.1rem;*/
     border-top: 1px solid #e7e7e7;
     background: #fff;
-    z-index: 50
+    z-index: 50;
+    display: flex;
   }
 
   .settlement-lf {
@@ -679,7 +688,9 @@
     line-height: 0.50rem;
     font-size: 0.14rem;
     color: #666;
-    text-align: right
+    text-align: right;
+    flex: 1;
+    padding-right: .1rem;
   }
 
   .settlement-lr {
@@ -740,7 +751,7 @@
   }
 
   .noDeliveryAddress {
-    margin-top: 0.55rem;
+    /*margin-top: 0.55rem;*/
     height: 0.5rem;
     line-height: 0.5rem;
     background: #646C89;
@@ -765,4 +776,15 @@
   .mygoods-price, .goods-price, .goods-num {
     color: red !important;
   }
+
+  .container {
+    /*position: absolute;*/
+    width: 100%;
+    margin-top: .55rem;
+    flex: 1;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
+
+
 </style>

@@ -7,6 +7,7 @@
         </router-link>
       </mt-header>
     </section>
+    <div class="container">
     <div class="title">
       <span class="up">可提现金额（元）</span>
       <span class="down">{{ok}}</span>
@@ -40,6 +41,8 @@
     <!--  <router-link to="./outmoney" tag="div" class="btn" >
         提现
       </router-link>-->
+
+    </div>
     <div class="btn" @click="go1">提现</div>
 
     <router-view></router-view>
@@ -120,8 +123,10 @@
     width: 100%;
     height: 100%;
     background: #ececec;
-    overflow: auto;
+    overflow: hidden;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
   }
 
   .title {
@@ -192,8 +197,9 @@
     background-color: #f5751d;
     color: #fff;
     line-height: .45rem;
-    position: fixed;
-    bottom: 0;
+    /*position: absolute;*/
+    /*bottom: 0;*/
+    z-index: 3;
 
   }
 
@@ -203,6 +209,18 @@
 
   .mint-header .mint-button {
     line-height: .41rem;
+  }
+  .container {
+    /*position: absolute;*/
+    /*top:0;*/
+    width: 100%;
+    overflow: auto;
+    /*overflow-y: scroll;*/
+    -webkit-overflow-scrolling: touch;
+    /*height: 100%;*/
+    background-color: #ececec;
+    /*overflow-y: scroll;*/
+    flex: 1;
   }
 
 </style>
