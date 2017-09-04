@@ -110,7 +110,7 @@
     </div>
 
     <div class="settlement clearfix">
-      <div class="settlement-lf fl">
+      <div class="settlement-lf  fl">
       			<span class="settlement-item-lf">
       				共
       				<span>
@@ -669,7 +669,7 @@
     font-weight: bolder;
   }
 
-/*  .settlement {
+ /* .settlement {
     height: 0.50rem;
     border-top: 1px solid #e7e7e7;
     background: #fff;

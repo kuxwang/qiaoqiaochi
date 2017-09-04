@@ -14,7 +14,6 @@ const commissions = {
   recordStatistics_get: {url: `${base}/commissions/recordStatistics`, method: 'GET', header, dataType},
   recordStatistics_post: {url: `${base}/commissions/recordStatistics`, method: 'POST', header, dataType},
   /**
-
    */
 
   orderStatistics: {url: `${base}/commissions/orderStatistics`, method: 'GET', header, dataType},

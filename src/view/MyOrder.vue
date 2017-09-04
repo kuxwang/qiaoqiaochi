@@ -1,11 +1,10 @@
 <template>
   <div class="main order-header">
     <mt-header id="topheader" title="我的订单" fixed>
-      <router-link to="/" slot="left">
+      <router-link to="/userCenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-    <div class="container1"> </div>
     <div class="mint-navbar page-part" id="nav">
       <a class="mint-tab-item" :class="{'is-selected': isselect==1}" @click="isselect=1">
         <div class="mint-tab-item-icon"></div>
@@ -29,14 +28,12 @@
       </a>
     </div>
     <div id="b" class="container">
-    <div id="page-navbar" class="page-navbar">
-      <order-lists ref="mylist"></order-lists>
+      <div id="page-navbar" class="page-navbar">
+        <order-lists ref="mylist"></order-lists>
+      </div>
     </div>
-    </div>
-
     <v-tabbar id="tabbar"></v-tabbar>
     <router-view></router-view>
-
   </div>
 </template>
 <script>
@@ -56,6 +53,7 @@
     },
     watch: {
       isselect(val){
+        console.log(val)
         switch (val) {
           case 1 :
             this.$refs.mylist.statusType = '';
@@ -64,7 +62,6 @@
           case 2 :
             this.$refs.mylist.statusType = 0;
             this.$refs.mylist.init(0);
-            console.log(this.isConfirm)
             break;
           case 3 :
             this.$refs.mylist.statusType = 1;
@@ -80,53 +77,50 @@
             break;
         }
       },
-      $route (to,from) {
-
-        if (from.name === 'orderd'&&this.isConfirm===2) {
+      $route (to, from) {
+        if (from.name === 'orderd' && this.isConfirm === 2) {
 //        this.memberInfo.avatar = this.imgUrl
           console.log(this.isConfirm)
           this.isConf(1)
           this.isselect = 1
           this.$refs.mylist.statusType = '';
           this.$refs.mylist.init('')
+        }
       }
-    }
     },
 
     methods: {
       ...mapMutations({
-        isConf:'ISCONFIRM'
+        isConf: 'ISCONFIRM'
       }),
       setHeight () {
-        /*let contentDiv = document.getElementById('page-navbar');
-        let topDiv = document.getElementById('topheader');
-        let navDiv = document.getElementById('nav');
-        let tabbarDiv = document.getElementsByClassName('tabbar');
-        let diffHeght = (document.body.clientHeight - topDiv.clientHeight - navDiv.clientHeight - 50) / 100 + 'rem';*/
-//        contentDiv.style.height = diffHeght;
         let a = document.getElementById('b');
         let topDiv = document.getElementById('topheader');
         let navDiv = document.getElementById('nav');
         let diffHeght = (document.body.clientHeight - topDiv.clientHeight - navDiv.clientHeight - 10) / 100 + 'rem';
-          a.style.height = diffHeght;
-          console.log(diffHeght)
+        a.style.height = diffHeght;
       }
     },
     created(){
+//      this.selected=this.$route.query.stab
+      this.isselect = 1
 
     },
     mounted () {
-      this.setHeight()
+      this.setHeight();
+
+//      console.log(this.isselect)
+    },
+    activated(){
+//      this.isselect = this.$route.query.stab
+//      console.log(this.$route.query.stab)
+      console.log('位置')
     },
     computed: {
       ...mapGetters([
         'isConfirm'
       ])
     },
-//    activated () {
-//      console.log('1')
-//      this.$refs.mylist.init('')
-//    },
 
     components: {
       vTabbar,
@@ -230,28 +224,19 @@
   * {
     box-sizing: border-box;
   }
+
   .container {
     position: absolute;
-    top:0;
+    top: 0;
     width: 100%;
     overflow: auto;
     /*overflow-y: scroll;*/
     -webkit-overflow-scrolling: touch;
-    height: 100%;
+    height: 6.7rem !important;
     /*overflow-y: scroll;*/
 
   }
-  /*.container1 {
-    position: absolute;
-    top:0;
-    width: 100%;
-    overflow: hi;
-    !*overflow-y: scroll;*!
-    !*-webkit-overflow-scrolling: touch;*!
-    height: 100%;
-    !*overflow-y: scroll;*!
 
-  }*/
   #nav {
     z-index: 4;
   }
