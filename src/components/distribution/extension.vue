@@ -451,7 +451,7 @@
     height: 100%;
     background: #ececec;
     overflow: auto;
-    z-index: 2;
+    z-index: 20;
   }
 
   .avatar {

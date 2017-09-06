@@ -305,19 +305,31 @@
                       _this.orderStatistics.lock = res.data.lock.order_count || 0
                       _this.orderStatistics.refund = res.data.refund.order_count || 0
                       _this.orderStatistics.ok = res.data.ok.order_count || 0
-                      _this.$refs.loadmore.onTopLoaded();
+//                      _this.$refs.loadmore.onTopLoaded();
+                      setTimeout(()=>{
+                        _this.$refs.loadmore.onTopLoaded();
+                      },1000)
                     } else {
                       console.log('获取团队数量统计接口数据异常')
+                      setTimeout(()=>{
+                        _this.$refs.loadmore.onTopLoaded();
+                      },1000)
                     }
                   })
                 } else {
                   console.log('佣金统计接口数据异常')
+                  setTimeout(()=>{
+                    _this.$refs.loadmore.onTopLoaded();
+                  },1000)
                 }
               });
             }
           })
         } else {
           console.log('会员接口数据异常')
+          setTimeout(()=>{
+            _this.$refs.loadmore.onTopLoaded();
+          },1000)
         }
       });
     },

@@ -425,7 +425,7 @@
     height: 100%;
     background: #ececec;
     overflow: auto;
-    z-index: 4;
+    z-index: 20;
   }
 
   .mint-header {

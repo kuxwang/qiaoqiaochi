@@ -110,7 +110,7 @@
     </div>
 
     <div class="settlement clearfix">
-      <div class="settlement-lf  fl">
+      <div class="settlement-lf">
       			<span class="settlement-item-lf">
       				共
       				<span>
@@ -125,7 +125,7 @@
 				</span>
       </div>
 
-      <button id="commitForm" class="settlement-lr fr" @click="goPay">
+      <button id="commitForm" class="settlement-lr" @click="goPay">
         提交订单
       </button>
     </div>
@@ -669,7 +669,7 @@
     font-weight: bolder;
   }
 
- /* .settlement {
+  .settlement {
     height: 0.50rem;
     border-top: 1px solid #e7e7e7;
     background: #fff;
@@ -701,21 +701,21 @@
 
   .settlement-item-lf span {
     color: #F5751D;
-  }*/
+  }
 
 
-  .settlement {
-    /*position: fixed;*/
+  /*.settlement {
+    !*position: fixed;*!
     position: relative;
     left: 0;
     right: 0;
     bottom: 0;
-    /*top: 92.5%;*/
-    /*height: 0.50rem;*/
+    !*top: 92.5%;*!
+    !*height: 0.50rem;*!
     padding: 0rem 0rem 0rem 0.1rem;
     border-top: 1px solid #e7e7e7;
     background: #fff;
-    /*z-index: 31*/
+    !*z-index: 31*!
   }
 
   .settlement-lf {
@@ -742,7 +742,7 @@
   .settlement-item-lf span {
     color: #F5751D;
   }
-
+*/
 
 
 
