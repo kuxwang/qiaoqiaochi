@@ -389,7 +389,7 @@
   }
 
   .goods-list {
-    padding-top: 0.45rem;
+    padding-top: 0.65rem;
     margin-bottom: 0.6rem;
   }
 

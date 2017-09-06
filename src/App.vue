@@ -51,11 +51,12 @@
     color: #252525 !important;
     border-bottom: 1px solid #e3e3e3;
     font-size: 0.16rem !important;
-    height: .45rem !important;
+    /*height: .45rem !important;*/
+    height: .64rem !important;
   }
 
   .mintui {
-    font-size: .16rem !important;
+    font-size: .20rem !important;
   }
 
   .ocolor {
@@ -148,6 +149,9 @@
     height: .32rem !important;
     left: -0.15rem !important;
     top: .03rem !important;
+  }
+  .mint-header-title {
+    font-size: .17rem !important;
   }
 
 

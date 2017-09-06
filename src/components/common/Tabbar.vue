@@ -65,4 +65,10 @@
   .router-link-exact-active{
     color:#ff771b;
   }
+  .mint-tabbar {
+    height: .5rem;
+  }
+  .mint-tab-item-label {
+
+  }
 </style>

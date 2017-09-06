@@ -269,6 +269,7 @@
       //佣金统计
       memberInfo({}, function (res) {
         if (res.statusCode == 1) {
+          _this.$refs.loadmore.onTopLoaded();
           console.log(res)
           _this.memberInfo.nickname = res.data.nickname
           _this.memberInfo.id = res.data.id
@@ -306,9 +307,6 @@
                       _this.orderStatistics.refund = res.data.refund.order_count || 0
                       _this.orderStatistics.ok = res.data.ok.order_count || 0
 //                      _this.$refs.loadmore.onTopLoaded();
-                      setTimeout(()=>{
-                        _this.$refs.loadmore.onTopLoaded();
-                      },1000)
                     } else {
                       console.log('获取团队数量统计接口数据异常')
                       setTimeout(()=>{

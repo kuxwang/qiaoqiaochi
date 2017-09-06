@@ -25,3 +25,4 @@ export const removeStore = name => {
   window.localStorage.removeItem(name)
 }
 
+

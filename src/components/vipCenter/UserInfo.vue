@@ -418,7 +418,7 @@
 
 
   .userinfo-list {
-    margin-top: 0.54rem;
+    margin-top: 0.74rem;
     overflow: hidden;
   }
 

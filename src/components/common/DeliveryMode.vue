@@ -96,7 +96,7 @@
   }
 
   .deliverymode-list {
-    margin-top: 0.55rem;
+    margin-top: 0.7rem;
   }
 
   .deliverymode-list li {

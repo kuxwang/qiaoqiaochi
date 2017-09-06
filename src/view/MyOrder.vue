@@ -155,7 +155,7 @@
   }
 
   .page-part {
-    top: .4rem;
+    top: .6rem;
     height: .45rem !important;
     position: fixed;
     width: 100%;
@@ -216,7 +216,7 @@
 
   .page-navbar {
     overflow-y: scroll;
-    margin-top: .8rem;
+    margin-top: 1rem;
     /*height: 6.22rem;*/
     -webkit-overflow-scrolling: touch
   }

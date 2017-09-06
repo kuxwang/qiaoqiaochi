@@ -633,7 +633,7 @@
   .p-list {
     display: block;
     background-color: #ececec;
-    margin-top: 1.85rem;
+    margin-top: 2.05rem;
   }
 
   .p-cell {
@@ -718,7 +718,7 @@
     display: flex;
     position: fixed;
     width: 100%;
-    top: .45rem;
+    top: .65rem;
     z-index: 1;
   }
 
@@ -774,7 +774,7 @@
     position: fixed;
     z-index: 2;
     background-color: #eee;
-    top: 1.3rem;
+    top: 1.5rem;
     padding: 0 2%;
 
   }

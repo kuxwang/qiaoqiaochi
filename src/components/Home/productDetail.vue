@@ -494,6 +494,7 @@
     -webkit-overflow-scrolling: touch;
     height: 6.9rem;
     /*overflow-y: scroll;*/
+    padding-top: .2rem;
 
   }
 

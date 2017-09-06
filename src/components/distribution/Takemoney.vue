@@ -72,7 +72,7 @@
     methods: {
 
       go1(){
-        if (this.ok !== 0) {
+        if (this.ok !== 0 || this.ok !=undefined || this.ok !='') {
           this.$router.push({name: 'outmoney'})
         } else {
           Toast({
@@ -193,11 +193,12 @@
     display: block;
     width: 100%;
     margin: 0 auto;
-    height: .45rem;
+    height: .5rem;
     background-color: #f5751d;
     color: #fff;
-    line-height: .45rem;
+    line-height: .5rem;
     /*z-index: ;*/
+    font-size: .2rem;
 
   }
 

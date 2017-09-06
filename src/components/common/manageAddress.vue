@@ -174,7 +174,7 @@
   }
 
   .deliveryAddress {
-    margin-top: 0.55rem;
+    margin-top: 0.7rem;
     margin-bottom: 0.58rem;
   }
 

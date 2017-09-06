@@ -822,7 +822,7 @@
   .container {
     /*position: absolute;*/
     width: 100%;
-    margin-top: .55rem;
+    margin-top: .65rem;
     flex: 1;
     overflow: hidden;
     overflow-y: scroll;
