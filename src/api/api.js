@@ -6,6 +6,7 @@ import axios from 'axios'
 import qs from 'qs'
 import {_webapp} from '../config/_webapp.js'
 import {fn} from '../config/myUtils.js'
+import {Indicator} from 'mint-ui';
 
 const base = 'https://api.duoyunjiav2.wshoto.com';
 const header = 'application/json';
@@ -83,7 +84,7 @@ const commissions = {
   /**
    * 获取团队指定用户
    */
-  teams: {url: `${base}/commissions/teams`, method: 'GET', header, dataType},
+  teams: {url: `${base}/commissions/teamse`, method: 'GET', header, dataType},
   /**p
    * 获取团队数量统计
    */
@@ -380,6 +381,8 @@ export const addresses_put = function (params, callback) {
  * 商品详情
  */
 export const productDetail = function (params, callback) {
+
+
   setParams(Object.assign(params, product.productDetail), callback)
 
   // _webapp.requestx(Object.assign(params, product.productDetail), function (res) {
@@ -495,7 +498,12 @@ export const paymentFun = function (type, params, callback) {
  * @constructor
  */
 export const Qrimg = function (params, callback) {
+  Indicator.open({
+    text: '加载中...',
+    spinnerType: 'fading-circle'
+  });
   _webapp.requestx(Object.assign(params, qrimg), function (res) {
+    Indicator.close();
     callback(res)
   })
 };

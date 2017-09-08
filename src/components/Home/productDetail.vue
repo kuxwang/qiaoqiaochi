@@ -168,6 +168,10 @@
         this.num++;
       },
       getInfo:function () {
+        Indicator.open({
+          text: '加载中...',
+          spinnerType: 'fading-circle'
+        });
 
         let that=this;
         let good_id=this.$route.query.goodsId;
@@ -177,7 +181,10 @@
           }
         }
         productDetail(params,function (res) {
+
+          Indicator.close();
           if(res.statusCode===1){
+
             that.goodNums=res.data.goodscount;
             let goods=res.data.goods
             that.goodsId=goods.id;

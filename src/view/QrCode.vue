@@ -17,9 +17,13 @@
         <div class="imgbox" @click="clickhavib()" v-if="qrimg">
           <img :src="qrimg"/>
         </div>
-        <div class="tip" v-else>
+        <div class="tip" v-else-if="qrimg==-2">
           <span class="iconfont">&#xe609;</span>
           您还不是分销商
+        </div>
+        <div class="tip" v-else="qrimg==-1">
+          <span class="iconfont">&#xe696;</span>
+          网路异常请重试
         </div>
       </div>
     <!--</mt-loadmore>-->
@@ -63,13 +67,14 @@
           if (res.statusCode == 1) {
             _this.qrimg = res.data
           } else if (res.statusCode == -2) {
-            _this.qrimg = ''
+            _this.qrimg = -2
           } else {
             Toast({
               message: '网络异常，请重试',
               position: 'middle',
               duration: 2000
             });
+            _this.qrimg = -1
           }
         })
       }
