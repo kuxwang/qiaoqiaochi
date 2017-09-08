@@ -25,7 +25,6 @@ let axios_instance = axios.create({
     'Accept': 'application/json, text/javascript, */*; q=0.01'
   }
 })
-
 /*判断请求方法，对应请求函数*/
 
 let breviaryfoo = opt => {

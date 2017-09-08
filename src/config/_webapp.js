@@ -673,7 +673,7 @@ export var _webapp = {
   },
 
   getSessionkey : function(){
-    return '72ebd63f0e608742d8634ad836dfb563';
+    return 'b2a1d96eb9d96c0977b8ca0baeb81b62';
   },
 
   getAccessToken : function(){
