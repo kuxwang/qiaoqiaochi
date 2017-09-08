@@ -56,20 +56,6 @@ let setParams = (params, callback) => {
   return breviaryfoo({type: type, url: url, params: param, callback})
 }
 
-// let getUserInfo = () => {
-//
-// }
-/**
- * post方法
- * @param params
- * @param callback
- */
-
-//
-// export const recordStatistics_post_1 = function (params, callback) {
-//   return axios_instance.post(`${base}/commissions/recordStatistics`, params).then(res => res.data).then(res => callback)
-// };
-
 /** 2
  * 分销中心
  */
