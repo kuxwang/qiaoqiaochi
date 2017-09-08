@@ -260,7 +260,7 @@
   }
 
   .addAddress-list {
-    margin-top: 0.54rem;
+    margin-top: .7rem;
   }
 
   .addAddress-list li {

@@ -7,6 +7,7 @@
         </router-link>
       </mt-header>
     </section>
+    <div class="container">
     <section class="top">
     </section>
     <ul class="nav-tab">
@@ -65,7 +66,7 @@
     <!--</div>-->
     <router-view></router-view>
   </div>
-
+  </div>
 </template>
 <script>
   import {Popup, Picker, Toast} from 'mint-ui';
@@ -424,7 +425,7 @@
     height: 100%;
     background: #ececec;
     overflow: auto;
-    z-index: 4;
+    z-index: 20;
   }
 
   .mint-header {
@@ -632,7 +633,7 @@
   .p-list {
     display: block;
     background-color: #ececec;
-    margin-top: 1.85rem;
+    margin-top: 2.05rem;
   }
 
   .p-cell {
@@ -717,7 +718,7 @@
     display: flex;
     position: fixed;
     width: 100%;
-    top: .45rem;
+    top: .65rem;
     z-index: 1;
   }
 
@@ -773,7 +774,7 @@
     position: fixed;
     z-index: 2;
     background-color: #eee;
-    top: 1.3rem;
+    top: 1.5rem;
     padding: 0 2%;
 
   }
@@ -836,11 +837,12 @@
   }
 
   .logo {
-    flex: 1;
+    /*flex: 1;*/
+    width: .58rem;
   }
 
   .info {
-    flex: 5;
+    flex: 1;
     text-align: left;
     margin-left: 0.1rem;
     position: relative;
@@ -943,6 +945,14 @@
   .tips .iconfont {
     display: block;
     font-size: .8rem;
+  }
+  .container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+    height: 100%;
+    padding-bottom: .5rem;
   }
 
 </style>

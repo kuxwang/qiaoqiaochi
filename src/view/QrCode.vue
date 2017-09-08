@@ -92,8 +92,10 @@
     font-size: .16rem;
   }
   .main {
-    height: 6.67rem;
+    /*height: 6.67rem;*/
+    height: 100%;
     overflow-y: hidden;
+
   }
   .imgbox {
     width: 100%;
@@ -122,9 +124,10 @@
   }
 
   .container {
-    /*margin-top: .45rem;*/
     width: 100%;
-    /*height: 6.6rem;*/
+    height: 100%;
+    padding-bottom: .5rem;
+
   }
 
   .title {

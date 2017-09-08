@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tabbar">
     <mt-tabbar>
       <router-link class="mint-tab-item" :to="{name:'home'}"  tag="a">
         <div class="mint-tab-item-label">
@@ -49,16 +49,26 @@
   .tabIcon{
    font-size: 0.24rem;
   }
+  .tabbar {
+    z-index: 10 !important;
+  }
   .mint-tabbar{
     background: #fff;
     border-top: 1px solid #E7E7E7;
     position: fixed;
-    -webkit-transform: translateZ(0)
+    -webkit-transform: translateZ(0);
+    z-index: 10;
   }
   .mint-tab-item{
     color:#525252;
   }
   .router-link-exact-active{
     color:#ff771b;
+  }
+  .mint-tabbar {
+    height: .5rem;
+  }
+  .mint-tab-item-label {
+
   }
 </style>

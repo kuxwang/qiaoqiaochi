@@ -7,6 +7,7 @@
         </router-link>
       </mt-header>
     </section>
+    <div class="container">
     <div class="title">
       <span class="up">可提现金额（元）</span>
       <span class="down">{{ok}}</span>
@@ -40,6 +41,8 @@
     <!--  <router-link to="./outmoney" tag="div" class="btn" >
         提现
       </router-link>-->
+
+    </div>
     <div class="btn" @click="go1">提现</div>
 
     <router-view></router-view>
@@ -69,7 +72,7 @@
     methods: {
 
       go1(){
-        if (this.ok !== 0) {
+        if (this.ok !== 0 || this.ok !=undefined || this.ok !='') {
           this.$router.push({name: 'outmoney'})
         } else {
           Toast({
@@ -120,8 +123,10 @@
     width: 100%;
     height: 100%;
     background: #ececec;
-    overflow: auto;
-    z-index: 2;
+    overflow: hidden;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
   }
 
   .title {
@@ -188,12 +193,12 @@
     display: block;
     width: 100%;
     margin: 0 auto;
-    height: .45rem;
+    height: .5rem;
     background-color: #f5751d;
     color: #fff;
-    line-height: .45rem;
-    position: fixed;
-    bottom: 0;
+    line-height: .5rem;
+    /*z-index: ;*/
+    font-size: .2rem;
 
   }
 
@@ -203,6 +208,21 @@
 
   .mint-header .mint-button {
     line-height: .41rem;
+  }
+  .container {
+    width: 100%;
+    overflow: auto;
+    /*overflow-y: scroll;*/
+    -webkit-overflow-scrolling: touch;
+    background-color: #ececec;
+    /*overflow-y: scroll;*/
+    flex: 1;
+    margin-top: .45rem;
+  }
+  section {
+    position: fixed;
+    width: 100%;
+
   }
 
 </style>

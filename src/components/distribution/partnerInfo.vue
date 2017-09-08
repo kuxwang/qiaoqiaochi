@@ -113,7 +113,7 @@
     height:100%;
     background: #fff;
     overflow: hidden;
-    z-index: 99999;
+    z-index: 9999;
 
   }
   .mt-header{
@@ -122,7 +122,7 @@
   .header-img{
     background: #fff;
     margin-top:.45rem;
-    padding-top:.3rem;
+    padding-top:.5rem;
     padding-bottom:.05rem;
   }
   .header-img>img{

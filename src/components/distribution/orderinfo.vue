@@ -121,7 +121,7 @@
   .title {
     background: #fff;
     padding: .26rem 0px .1rem;
-    margin-top: .5rem
+    margin-top: .64rem
   }
   .title span {
     font-weight: 400;
