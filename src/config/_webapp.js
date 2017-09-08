@@ -115,7 +115,6 @@ export var _webapp = {
         _webapp.callback(newData, callback);
       }
     });
-
   },
 
   requestx_real: function (params, callback) {
@@ -644,13 +643,12 @@ export var _webapp = {
 
     res.timestamp = Date.parse(new Date()) / 1000;
     res.sessionkey = _webapp.getSessionkey();
-
     var accessToken = _webapp.getAccessToken();
     var arr = [];
     var str = '';
 
     for (var arrk in res) {
-      if (res[arrk] !== '') {
+      if (res[arrk] !== '' && arrk !== 'access_token' && arrk !== 'sign') {
         arr.push(arrk);
       }
     }
@@ -667,7 +665,6 @@ export var _webapp = {
     str += 'key=' + accessToken.auth_key;
 
     res.sign = hex_md5(str);
-    // console.log(res);
     return res;
   },
 
@@ -675,15 +672,15 @@ export var _webapp = {
     return Date.parse(new Date()) / 1000;
   },
 
-  getSessionkey: function () {
-    return 'aa0ccabf9c98db0567f371a30bf84e7f';
+  getSessionkey : function(){
+    return '72ebd63f0e608742d8634ad836dfb563';
   },
 
-  getAccessToken: function () {
+  getAccessToken : function(){
     return {
-      'access_token': '30092bf76aa42b9c0708968842482ebf',
-      'auth_key': 'FD10m5QQ',
-      'timestamp': '9501160189'
+      'access_token' : '30092bf76aa42b9c0708968842482ebf',
+      'auth_key' : 'FD10m5QQ',
+      'timestamp' : '9501160189'
     };
   },
   //退出登录

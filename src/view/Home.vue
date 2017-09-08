@@ -20,6 +20,7 @@
   import vTabbar from '../components/common/Tabbar';
   import vScroll from '../components/common/scroll';
 
+
   export default{
     data(){
       return {

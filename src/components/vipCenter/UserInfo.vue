@@ -273,7 +273,7 @@
           }
         })
       },
-      toastPhone(){
+      toastPhone () {
         Toast({
           message: '手机号已经绑定无法修改',
           position: 'top',

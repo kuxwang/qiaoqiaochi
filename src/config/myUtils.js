@@ -1,4 +1,4 @@
-// import tMap from 'tMap'
+
 /**
  * 存储localStorage
  */
@@ -24,4 +24,15 @@ export const removeStore = name => {
   if (!name) return
   window.localStorage.removeItem(name)
 }
+
+/**
+ *
+ * @type setSession
+ */
+export const fn = {
+  setSession () {
+    let sessionKey = fn.setUserInfo();
+  },
+}
+
 

@@ -267,9 +267,9 @@
     init () {
       let _this = this;
       //佣金统计
-      memberInfo({}, function (res) {
+      memberInfo({data:{}}, function (res) {
+//        console.log(res)
         if (res.statusCode == 1) {
-          console.log(res)
           _this.memberInfo.nickname = res.data.nickname
           _this.memberInfo.id = res.data.id
           _this.memberInfo.level = res.data.level
@@ -278,48 +278,51 @@
           _this.memberInfo.from = res.data.parent_name
           _this.memberInfo.level = res.data.agentleveldetail.levelname
           _this.setImgUrl(_this.memberInfo.avatar)
-          recordStatistics_get({data: {type: ''}}, function (res) {
-            console.log(res)
-            if (res.statusCode == 1) {
-              let data = res.data
-              console.log(res.data)
-              _this.recordStatistics_get.cg_money_sum = res.data.total.c_money_sum || 0;
-              _this.recordStatistics_get.c_money_sum = res.data.total.c_money_sum || 0;
-              _this.recordStatistics_get.o_status_3 = res.data.o_status_3.c_money_sum || 0;
-              _this.recordStatistics_get.pay = res.data.pay.c_money_sum || 0;
-//                _this.recordStatistics_get.check = res.data.check.c_money_sum || 0;
-              _this.recordStatistics_get.check = res.data.check.c_money_sum || 0;
-              _this.recordStatistics_get.ok = res.data.ok.c_money_sum || 0;
-              _this.recordStatistics_get.invalid = res.data.invalid.cg_money_sum || 0;
-              _this.recordStatistics_get.apply = res.data.apply.c_money_sum;
-              _this.recordStatistics_get.o_status_0 = res.data.o_status_0.c_money_sum || 0;
-              teamsStatistics({}, function (res) {
-                if (res.statusCode == 1) {
-                  _this.teamsStatistics.all = res.data.all || 0;
-                  _this.teamsStatistics.purchased = res.data.purchased || 0;
-                  _this.teamsStatistics.no_purchased = res.data.no_purchased || 0;
-                  orderStatistics({}, function (res) {
-//                      console.log('orderStatistics');
-                    if (res.statusCode == 1) {
-                      _this.orderStatistics.total = res.data.total.order_count || 0
-                      _this.orderStatistics.lock = res.data.lock.order_count || 0
-                      _this.orderStatistics.refund = res.data.refund.order_count || 0
-                      _this.orderStatistics.ok = res.data.ok.order_count || 0
-                      _this.$refs.loadmore.onTopLoaded();
-                    } else {
-                      console.log('获取团队数量统计接口数据异常')
-                    }
-                  })
-                } else {
-                  console.log('佣金统计接口数据异常')
-                }
-              });
-            }
-          })
+
         } else {
           console.log('会员接口数据异常')
         }
       });
+      recordStatistics_get({data: {type: ''}}, function (res) {
+        if (res.statusCode == 1) {
+          let data = res.data
+          console.log(res.data)
+          _this.recordStatistics_get.cg_money_sum = res.data.total.c_money_sum || 0;
+          _this.recordStatistics_get.c_money_sum = res.data.total.c_money_sum || 0;
+          _this.recordStatistics_get.o_status_3 = res.data.o_status_3.c_money_sum || 0;
+          _this.recordStatistics_get.pay = res.data.pay.c_money_sum || 0;
+//                _this.recordStatistics_get.check = res.data.check.c_money_sum || 0;
+          _this.recordStatistics_get.check = res.data.check.c_money_sum || 0;
+          _this.recordStatistics_get.ok = res.data.ok.c_money_sum || 0;
+          _this.recordStatistics_get.invalid = res.data.invalid.cg_money_sum || 0;
+          _this.recordStatistics_get.apply = res.data.apply.c_money_sum;
+          _this.recordStatistics_get.o_status_0 = res.data.o_status_0.c_money_sum || 0;
+
+        }
+      })
+      teamsStatistics({}, function (res) {
+        if (res.statusCode == 1) {
+          _this.teamsStatistics.all = res.data.all || 0;
+          _this.teamsStatistics.purchased = res.data.purchased || 0;
+          _this.teamsStatistics.no_purchased = res.data.no_purchased || 0;
+
+        } else {
+          console.log('佣金统计接口数据异常')
+        }
+      });
+
+      orderStatistics({}, function (res) {
+//                      console.log('orderStatistics');
+        if (res.statusCode == 1) {
+          _this.orderStatistics.total = res.data.total.order_count || 0
+          _this.orderStatistics.lock = res.data.lock.order_count || 0
+          _this.orderStatistics.refund = res.data.refund.order_count || 0
+          _this.orderStatistics.ok = res.data.ok.order_count || 0
+          _this.$refs.loadmore.onTopLoaded();
+        } else {
+          console.log('获取团队数量统计接口数据异常')
+        }
+      })
     },
     partnertab(idx){
       this.tabselect(idx)
