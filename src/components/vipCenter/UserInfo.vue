@@ -239,12 +239,12 @@
       getMyImg(e){
         let that = this;
         _webapp.uploadImg((res) => {
-          this.myImg = res.data
-          this.IMGURL(res.data)
+          that.myImg = res.data;
+          that.IMGURL(res.data)
         })
       },
       getUserInfo(){
-        let params = {}
+        let params = {data : {}}
         let _this = this
         memberInfo(params, function (res) {
           console.log(res.data)
@@ -281,7 +281,10 @@
         });
       },
       postUserInfo(){
-        let newDates=`${(this.myDate.match(/\d+/g))[0]}-${(this.myDate.match(/\d+/g))[1]}-${(this.myDate.match(/\d+/g))[2]}`;
+        let newDates = '';
+        if(this.myDate){
+          newDates=`${(this.myDate.match(/\d+/g))[0]}-${(this.myDate.match(/\d+/g))[1]}-${(this.myDate.match(/\d+/g))[2]}`;
+        }
         let params = {
           'data': {
             nickname:this.myNc,
@@ -296,55 +299,44 @@
             avatar: this.myImg
           }
         }
+        console.log(params.data);
 
-        if (!this.myNc) {
-          Toast('请填写昵称')
-          return
-        } else if (!this.myName) {
-          Toast('请填写姓名')
-          return
-        } else if (!this.myPlace) {
-          Toast('请选择城市')
-          return
-        } else if (!this.myZfbName) {
-          Toast('请输入支付宝姓名')
-          return
-        } else if (!this.myZfb) {
-          Toast('请输入支付宝账户')
-          return
-        } else if (!this.myWx) {
-          Toast('请输入微信号')
-          return
-        } else if (!this.myDate) {
-          Toast('请选择生日')
-          return
-        } else if (!this.myImg) {
-          Toast('请上传头像')
-          return
-        } else if (!this.myPhone) {
-          Toast('请输入手机号')
-          return
+        if(!params.data.nickname){
+          Toast('请输入您的昵称');
+          return ;
         }
+
+        if(!params.data.weixin){
+          Toast('请输入您的微信账号');
+          return ;
+        }
+
+        if(!params.data.alipay_name || !params.data.alipay_account){
+          Toast('请将您的支付宝信息填写完整');
+          return ;
+        }
+
+        if(!params.data.realname){
+          Toast('请输入您的真实姓名');
+          return ;
+        }
+
+        if(!params.data.province || !params.data.city || !params.data.area){
+          Toast('请选择您所在的城市');
+          return ;
+        }
+
+        if(!params.data.birth){
+          Toast('请选择您的出生日期');
+          return ;
+        }
+
         let _this = this;
+
         PUT_USERINFO(params, function (res) {
           if (res.statusCode === 1) {
             _this.$router.go(-1);
-            let that = _this;
-            // if(that.myImg!=''){
 
-            // let params={
-            // 	'data':{
-            // 		avatar:that.myImg
-            // 	}
-            // }
-            // PUT_USERAVATARS(params, function (res) {
-            // 	if(res.statusCode===1){
-            // 		console.log('上传图片成功')
-            // 	}else{
-            // 		console.log('请求')
-            // 	}
-            // })
-            //
             Toast({
               message: '个人信息提交成功!',
               position: 'middle',
@@ -352,30 +344,36 @@
             });
           } else {
             Toast({
-              message: '个人信息提交失败',
+              message: res.data,
               position: 'middle',
               duration: 2000
             });
           }
+
         })
       }
     },
     watch : {
       myPlace (newValue) {
-        console.log(newValue)
+//        console.log(newValue)
       },
       myProvince (newValue) {
-        console.log(newValue)
+//        console.log(newValue)
       },
       myCity (newValue) {
-        console.log(newValue)
+//        console.log(newValue)
       },
 
       myRegion (newValue) {
-        console.log(newValue)
+//        console.log(newValue)
       },
 
     },
+    activated(){
+      this.getUserInfo();
+      console.log('Userinfo')
+    },
+
     created () {
 
       this.getUserInfo();

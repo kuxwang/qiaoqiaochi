@@ -11,7 +11,7 @@ const app = r => require.ensure([], () => r(require('../App.vue')), 'app')
 //Home
 import Home from '../view/Home.vue'
 
-const Order = r => require.ensure([], () => r(require('../view/Order.vue')), 'Order')
+// const Order = r => require.ensure([], () => r(require('../view/Order.vue')), 'Order')
 const MyOrder = r => require.ensure([], () => r(require('../view/MyOrder.vue')), 'Order')
 const ShoppingCart = r => require.ensure([], () => r(require('../view/ShoppingCart.vue')), 'ShoppingCart')
 const VipCenter = r => require.ensure([], () => r(require('../view/distributionCenter.vue')), 'VipCenter')
@@ -99,7 +99,8 @@ export default new Router({
           path: '/drawbackInfo',
           name: 'drawbackInfo',
           component: DrawbackInfo,
-        }
+        },
+
       ]
     },
     {
@@ -207,9 +208,13 @@ export default new Router({
           component: DeliveryMode
         }
       ]
-
     },
 
+    {
+      path: '/orderpayselect',
+      name: 'orderpayselect',
+      component: payselect
+    },
     {
       path: '/payselect',
       name: 'payselect',

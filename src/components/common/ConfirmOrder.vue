@@ -110,7 +110,7 @@
     </div>
 
     <div class="settlement clearfix">
-      <div class="settlement-lf">
+      <div class="settlement-lf fl" >
       			<span class="settlement-item-lf">
       				共
       				<span>
@@ -125,7 +125,7 @@
 				</span>
       </div>
 
-      <button id="commitForm" class="settlement-lr" @click="goPay">
+      <button id="commitForm" class="settlement-lr fr" @click="goPay">
         提交订单
       </button>
     </div>
@@ -194,7 +194,7 @@
           let goods = ''
           let dispatchid = this.dispatch.id
           let cartids = this.myOrders.cartids
-          let remark = this.remark || '123'
+          let remark = this.remark || ''
           if (this.orderGoods) {
             for (let i = 0, j = this.orderGoods.length; i < j; i++) {
               console.log(this.orderGoods)
@@ -242,7 +242,7 @@
               // }, 2000)
             } else if (res.statusCode == -1) {
               Toast({
-                message: `操作频繁请稍候`,
+                message: res.data,
                 position: 'middle',
                 duration: 2000
               });
@@ -669,53 +669,49 @@
     font-weight: bolder;
   }
 
+  /*.settlement {*/
+    /*height: 0.50rem;*/
+    /*border-top: 1px solid #e7e7e7;*/
+    /*background: #fff;*/
+    /*z-index: 50;*/
+    /*display: flex;*/
+  /*}*/
+
+  /*.settlement-lf {*/
+    /*width: 2.50rem;*/
+    /*height: 0.50rem;*/
+    /*line-height: 0.50rem;*/
+    /*font-size: 0.14rem;*/
+    /*color: #666;*/
+    /*text-align: right;*/
+    /*padding-right: .1rem;*/
+  /*}*/
+
+  /*.settlement-lr {*/
+    /*!*width: 1.10rem;*!*/
+    /*flex: 1;*/
+    /*height: 0.50rem;*/
+    /*line-height: 0.50rem;*/
+    /*font-size: 0.16rem;*/
+    /*background: #F5751D;*/
+    /*color: #fff;*/
+    /*text-align: center;*/
+    /*outline: none;*/
+  /*}*/
+
+  /*.settlement-item-lf span {*/
+    /*color: #F5751D;*/
+  /*}*/
+
+
   .settlement {
-    height: 0.50rem;
-    border-top: 1px solid #e7e7e7;
-    background: #fff;
-    z-index: 50;
-    display: flex;
-  }
-
-  .settlement-lf {
-    width: 2.50rem;
-    height: 0.50rem;
-    line-height: 0.50rem;
-    font-size: 0.14rem;
-    color: #666;
-    text-align: right;
-    flex: 1;
-    padding-right: .1rem;
-  }
-
-  .settlement-lr {
-    width: 1.10rem;
-    height: 0.50rem;
-    line-height: 0.50rem;
-    font-size: 0.16rem;
-    background: #F5751D;
-    color: #fff;
-    text-align: center;
-    outline: none;
-  }
-
-  .settlement-item-lf span {
-    color: #F5751D;
-  }
-
-
-  /*.settlement {
-    !*position: fixed;*!
     position: relative;
     left: 0;
     right: 0;
     bottom: 0;
-    !*top: 92.5%;*!
-    !*height: 0.50rem;*!
     padding: 0rem 0rem 0rem 0.1rem;
     border-top: 1px solid #e7e7e7;
     background: #fff;
-    !*z-index: 31*!
   }
 
   .settlement-lf {
@@ -742,7 +738,7 @@
   .settlement-item-lf span {
     color: #F5751D;
   }
-*/
+
 
 
 

@@ -98,12 +98,17 @@
       orders(params, (res) => {
         this.ordernum = res.data.order
         this.ordercom = res.data.commssion
-        this.totalmoney = res.data.commssion[0].c_money
-        this.nickname = res.data.commssion[0].nickname
-        this.c_rate = res.data.commssion[0].c_rate
-        console.log(this.ordernum)
-        console.log(this.ordercom)
-        console.log(res)
+
+        if(this.ordercom.length > 0){
+          this.totalmoney = res.data.commssion[0].c_money || '';
+          this.nickname = res.data.commssion[0].nickname || '';
+          this.c_rate = res.data.commssion[0].c_rate || ''
+        }else{
+          this.totalmoney = 0;
+          this.nickname = '';
+          this.c_rate = '';
+        }
+
 //        this.totalmoney=res.data.order[0].c_money
       })
     },

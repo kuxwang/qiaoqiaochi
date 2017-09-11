@@ -6,29 +6,17 @@
   </div>
 </template>
 <script>
-  //  import BScroll from 'better-scroll'
-  //  import Vue from 'vue'
   export default {
     name: 'app',
-    created () {
-
-//      const allScroll = new BScroll(this.$refs.app, {})
-    },
-    methods: {
-//        initScroll () {
-//          const allScroll = new BScroll(document.getElementById('app'), {})
-//        }
-//
-    }
+    created () {},
+    methods: {}
   }
 </script>
-
 
 <style>
   @import './assets/css/fonts/iconfont.css';
 
   #app {
-    /*width: 3.75rem;*/
     height: 100%;
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -38,7 +26,7 @@
     position: relative;
     background-color: #efeff4 !important;
     overflow: hidden;
-    -webkit-overflow-scrolling: touch;
+
   }
 
   .header {
@@ -119,39 +107,53 @@
     /*height: 6.2rem;*/
     overflow: hidden;
   }
+
   .mint-header .mint-button {
     width: .4rem;
   }
+
   .mint-header-button > a {
     display: block;
   }
+
   .mint-indicator {
     position: fixed !important;
     top: 1rem !important;
     z-index: 100 !important;
     height: .5rem !important;
   }
+
   .mint-indicator-wrapper {
     height: 1rem !important;
 
   }
+
   .mint-indicator-spin {
     position: absolute;
 
-
   }
+
   .mint-indicator-text {
     position: relative;
     top: .35rem;
   }
-  .mint-spinner-fading-circle  {
+
+  .mint-spinner-fading-circle {
     width: .32rem !important;
     height: .32rem !important;
     left: -0.15rem !important;
     top: .03rem !important;
   }
+
   .mint-header-title {
     font-size: .17rem !important;
+  }
+  .mint-msgbox-confirm {
+   color: #F5751D;
+  }
+  .mint-msgbox-message {
+    line-height: .2rem;
+
   }
 
 

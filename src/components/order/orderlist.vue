@@ -72,15 +72,17 @@
   import {mapMutations, mapGetters, mapState} from 'vuex'
   import {orderList, orderManu} from '../../api/api.js'
   import voidList from './voidlist'
+
   export default {
     data(){
       return {
         statusResult: [],
         statusType: '',
         page: 1,
-        loading: false,
+        loading: true,
         canReason: '其他原因',
-        isloading: true
+        isloading: true,
+        psize:5
       }
     },
     methods: {
@@ -94,14 +96,23 @@
         let params = {
           data: {
             page: this.page,
-            status: statusType
+            status: statusType,
+            psize:this.psize
           }
         };
 //        setTimeout(function () {
-          orderList(params, res => {
+        let tab=document.getElementById('ordertab')
+        tab.setAttribute('class','mint-tab-item router-link-exact-active router-link-active');
+
+
+        console.log('orderdetail running')
+
+        orderList(params, res => {
+
             console.log(res)
             if (res.statusCode == 1) {
               this.statusResult = res.data
+              this.isloading=false;
               console.log(this.statusResult)
             } else {
               this.statusResult = []
@@ -130,28 +141,27 @@
         let params = {
           data: {
             page: ++this.page,
-            status: this.statusType
+            status: this.statusType,
+            pszie:this.psize
           }
         };
-        setTimeout(() => {
-          orderList(params, res => {
-            if (res.statusCode == 1) {
-              this.statusResult = this.statusResult.concat(res.data);
-              setTimeout(() => {
-                this.loading = false;
-              }, 1000)
+        orderList(params, res => {
+          if (res.statusCode == 1) {
+            this.statusResult = this.statusResult.concat(res.data);
+            setTimeout(() => {
+              this.loading = false;
+            }, 1000)
 
-            } else {
-              this.isloading = false
-              this.loading = true;
+          } else {
+            this.isloading = false
+            this.loading = true;
 //              Toast({
 //                message: res.data,
 //                position: 'middle',
 //                duration: 1000
 //              });
-            }
-          });
-        }, 500);
+          }
+        });
 //        }
       },
       cancel: function (orderid) {
@@ -190,7 +200,7 @@
       },
       pay(x){
 //        this.orderinfo(x);
-        this.$router.push({path: 'payselect', query: {orderid: x}});
+        this.$router.push({name: 'orderpayselect', query: {orderid: x}});
       },
       refund: function (refundid) {
         this.$router.push({name: 'drawbackInfo', query: {refundid: refundid}});
@@ -219,7 +229,7 @@
     padding-top: .01rem;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: .8rem;
+    /*margin-bottom: .8rem;*/
     /*overflow: scroll;*/
   }
 

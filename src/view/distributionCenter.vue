@@ -1,9 +1,9 @@
 <template>
-  <div class="main">
+  <div class="main needsclick">
     <div class="container">
-      <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :maxDistance="60"
-                   :distanceIndex="disindex"
-                   :top-distance="30" ref="loadmore">
+      <!--<mt-loadmore :top-method.stop="loadTop" @top-status-change="handleTopChange" :maxDistance="60"-->
+                   <!--:distanceIndex="disindex"-->
+                   <!--:top-distance="30" ref="loadmore">-->
         <div slot="top" class="mint-loadmore-top">
           <span class="iconfont" v-show="topStatus !== 'loading'"
                 :class="{ 'rotate': topStatus === 'drop' }">&#xe732;下拉刷新</span>
@@ -80,9 +80,18 @@
             </router-link>
           </ul>
 
+          <div class="mfriend" v-if="false">
+            <span class="mint-cell-text" style=" padding: 5px; display: block; border-bottom: 1px dashed #ccc;">Message</span>
+
+            <div style="min-height: 320px; width: 100%; overflow: auto;">
+              <ul style="width: 100%; height: 320px; padding: 5px;" class="messageApp"></ul>
+            </div>
+          </div>
+
           <div class="mfriend">
             <span class="mint-cell-text">推广订单</span>
           </div>
+
           <ul class="order-list">
             <!--<li class="li1" @click="ordertab(1)">-->
             <router-link class="li1"
@@ -180,25 +189,26 @@
             </li>
           </ul>
           <button class="outLogin" @click="outLogin">退出登录</button>
+          <div class="version">版本号：v1.8.5</div>
 
         </section>
         <!--  <transition name="slide">
            <router-view></router-view>
          </transition> -->
-      </mt-loadmore>
-      <transition name="slide">
-        <router-view></router-view>
-      </transition>
-    </div>
-    <v-tabbar></v-tabbar>
+      <!--</mt-loadmore>-->
 
+    </div>
+    <transition name="slide">
+    <router-view></router-view>
+    </transition>
+    <v-tabbar></v-tabbar>
   </div>
 </template>
 <script>
 
   import vTabbar from '../components/common/Tabbar.vue'
   import {recordStatistics_get, teamsStatistics, orderStatistics, memberInfo, LOGINOUT} from '../api/api'
-  import {_webapp} from '../config/_webapp.js';
+  import {_webapp} from '../config/hook.js';
   import {mapMutations, mapGetters, mapState} from 'vuex'
   import {MessageBox} from 'mint-ui';
 
@@ -217,7 +227,6 @@
           apply: '0', //申请中
           o_status_0: '0', //待打款
           ok: '0'
-
         },
         teamsStatistics: {
           all: '0',  //总人数
@@ -240,7 +249,8 @@
           },
           from: ''  //推荐人
         },
-        defaultAvatar: ''
+        defaultAvatar: '',
+        webDebug : _webapp.debug
       }
     },
     components: {
@@ -262,7 +272,11 @@
     init () {
       let _this = this;
       //佣金统计
-      memberInfo({}, function (res) {
+//      console.log()
+      memberInfo({data : {}}, function (res) {
+        _webapp.log('memberInfo res');
+        _webapp.log(res);
+
         if (res.statusCode == 1) {
           console.log(res)
           _this.memberInfo.nickname = res.data.nickname
@@ -270,7 +284,7 @@
           _this.memberInfo.level = res.data.level
           _this.memberInfo.leveldetail = res.data.leveldetail
           _this.memberInfo.avatar = res.data.avatar
-          _this.memberInfo.from = res.data.parent_name
+          _this.memberInfo.from = res.data.parent_name || '朵云家'
           _this.memberInfo.level = res.data.agentleveldetail.levelname
           _this.setImgUrl(_this.memberInfo.avatar)
 
@@ -282,7 +296,7 @@
         if (res.statusCode == 1) {
           let data = res.data
           console.log(res.data)
-          _this.recordStatistics_get.cg_money_sum = res.data.total.c_money_sum || 0;
+          _this.recordStatistics_get.cg_money_sum = res.data.total.cg_money_sum || 0;
           _this.recordStatistics_get.c_money_sum = res.data.total.c_money_sum || 0;
           _this.recordStatistics_get.o_status_3 = res.data.o_status_3.c_money_sum || 0;
           _this.recordStatistics_get.pay = res.data.pay.c_money_sum || 0;
@@ -292,27 +306,25 @@
           _this.recordStatistics_get.invalid = res.data.invalid.cg_money_sum || 0;
           _this.recordStatistics_get.apply = res.data.apply.c_money_sum;
           _this.recordStatistics_get.o_status_0 = res.data.o_status_0.c_money_sum || 0;
-
         }
       })
-      teamsStatistics({}, function (res) {
+      teamsStatistics({data : {}}, function (res) {
         if (res.statusCode == 1) {
           _this.teamsStatistics.all = res.data.all || 0;
           _this.teamsStatistics.purchased = res.data.purchased || 0;
           _this.teamsStatistics.no_purchased = res.data.no_purchased || 0;
-
         } else {
           console.log('佣金统计接口数据异常')
         }
       });
-      orderStatistics({}, function (res) {
+      orderStatistics({data : {}}, function (res) {
 //                      console.log('orderStatistics');
         if (res.statusCode == 1) {
           _this.orderStatistics.total = res.data.total.order_count || 0
           _this.orderStatistics.lock = res.data.lock.order_count || 0
           _this.orderStatistics.refund = res.data.refund.order_count || 0
           _this.orderStatistics.ok = res.data.ok.order_count || 0
-          _this.$refs.loadmore.onTopLoaded();
+//          _this.$refs.loadmore.onTopLoaded();
         } else {
           console.log('获取团队数量统计接口数据异常')
         }
@@ -331,12 +343,8 @@
       MessageBox({title: '确认退出当前账号?', message: '点击确认退出', showCancelButton: true}).then(action => {
         if (action == 'confirm') {//表示点击了确定
         // _webapp.logOut((res)=>{})
-        console.log('试试')
-        LOGINOUT(function (res) {
-          console.log('推出成功')
-        })
-      } else if (action === 'cancel') {//表示点击了取消
-
+//        console.log('试试')
+        _webapp.nativeLogin();
       }
     })
     },
@@ -344,6 +352,7 @@
       this.topStatus = status;
     },
     loadTop(){
+      console.log('run');
       this.init()
     },
   ...mapMutations({
@@ -357,6 +366,7 @@
     }
   },
   activated () {
+
     this.init();
     console.log('active1')
   },
@@ -385,7 +395,7 @@
     font-size: .16rem;
   }
 
-  .main, .main1 {
+  .main {
     position: fixed;
     top: 0;
     left: 0;
@@ -715,5 +725,13 @@
   }
   .main1 {
     overflow-y: scroll !important;
+  }
+  .version {
+    text-align: center;
+    padding: 0 .1rem;
+    font-size: .12rem;
+    margin-top: .1rem;
+    margin-bottom: .1rem;
+    color: #b3abab;
   }
 </style>

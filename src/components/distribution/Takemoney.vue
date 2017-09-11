@@ -72,15 +72,18 @@
     methods: {
 
       go1(){
-        if (this.ok !== 0 || this.ok !=undefined || this.ok !='') {
+        console.log('run');
+        console.log(this.ok);
+        if(this.ok > 0){
           this.$router.push({name: 'outmoney'})
-        } else {
+        }else{
           Toast({
             message: '没有可提现的金额',
             position: 'middle',
             duration: 2000
           });
         }
+
       },
       init(){
         let params = {
@@ -199,7 +202,9 @@
     line-height: .5rem;
     /*z-index: ;*/
     font-size: .2rem;
-
+    z-index: 20 !important;
+    position: fixed;
+    bottom: 0;
   }
 
   .mint-header {
@@ -211,16 +216,16 @@
   }
   .container {
     width: 100%;
-    overflow: auto;
+    overflow: hidden;
     /*overflow-y: scroll;*/
     -webkit-overflow-scrolling: touch;
     background-color: #ececec;
     /*overflow-y: scroll;*/
     flex: 1;
-    margin-top: .45rem;
+    /*margin-top: .45rem;*/
   }
   section {
-    position: fixed;
+    /*position: fixed;*/
     width: 100%;
 
   }

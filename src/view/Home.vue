@@ -12,32 +12,34 @@
         </router-link>
       </ul>
     </div>
-      <v-tabbar></v-tabbar>
-      <router-view></router-view>
+    <v-tabbar></v-tabbar>
+    <router-view></router-view>
   </div>
 </template>
 <script>
   import vTabbar from '../components/common/Tabbar';
   import vScroll from '../components/common/scroll';
+  import {fn} from '../config/myUtils'
 
 
   export default{
     data(){
       return {
-        img1:require('../assets/images/home-01.jpg'),
-        img2:require('../assets/images/home-02.jpg')
+        img1: require('../assets/images/home-01.jpg'),
+        img2: require('../assets/images/home-02.jpg')
       }
     },
-    mounted(){
+    mounted () {
+
     },
-    components:{
+    components: {
       vTabbar,
       vScroll
     }
   }
 </script>
 <style scoped>
-  .content{
+  .content {
     position: fixed;
     top: 0;
     left: 0;
@@ -49,9 +51,11 @@
     z-index: 50;
     -webkit-overflow-scrolling: auto;
   }
-  .goodsList{
+
+  .goodsList {
     /*padding-bottom:0.5rem;*/
   }
+
   .goodsList-itme1 {
     width: 100%;
     height: 2.64rem;
@@ -62,9 +66,10 @@
     width: 100%;
     height: 2.64rem;
   }
+
   .goodsList-itme2 {
- /*   width: 3.75rem;
-    height: 3.75rem;*/
+    /*   width: 3.75rem;
+       height: 3.75rem;*/
   }
 
   .goodsList-itme2 img {
@@ -82,7 +87,7 @@
 
   .container {
     position: absolute;
-    top:0;
+    top: 0;
     width: 100%;
     overflow: auto;
     /*overflow-y: scroll;*/

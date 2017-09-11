@@ -14,18 +14,19 @@
       <!--<mt-header fixed title="二维码" class="header">-->
       <!--</mt-header>-->
       <div class="container">
-        <div class="imgbox" @click="clickhavib()" v-if="qrimg">
+        <div class="imgbox" @click="clickhavib()" v-if="type == 0">
           <img :src="qrimg"/>
         </div>
-        <div class="tip" v-else-if="qrimg==-2">
+        <div class="tip" v-if="type == 1">
           <span class="iconfont">&#xe609;</span>
           您还不是分销商
         </div>
-        <div class="tip" v-else="qrimg==-1">
-          <span class="iconfont">&#xe696;</span>
-          网路异常请重试
+        <div class="tip" v-if="type == 2">
+          <span class="iconfont">&#xe609;</span>
+          网络异常
         </div>
       </div>
+
     <!--</mt-loadmore>-->
     <v-tabbar></v-tabbar>
   </div>
@@ -33,13 +34,14 @@
 <script>
   import vTabbar from '../components/common/Tabbar';
   import {Qrimg, QrimgSave} from '../api/api';
-  import {Toast} from 'mint-ui'
+  import {Toast,Indicator} from 'mint-ui'
   export default{
     data(){
       return {
         qrimg: '',
         topStatus: '',
         disindex: 3,
+        type:''
       }
     },
     components: {
@@ -61,20 +63,24 @@
         })
       },
       init(){
+
         let _this = this;
-        Qrimg({}, res => {
+        Qrimg({data :{}}, res => {
+          Indicator.close()
+
 //          console.log(1)
           if (res.statusCode == 1) {
             _this.qrimg = res.data
+            _this.type=0
           } else if (res.statusCode == -2) {
-            _this.qrimg = -2
+            _this.type = 1
           } else {
+            _this.type == 2
             Toast({
-              message: '网络异常，请重试',
+              message: res.data,
               position: 'middle',
               duration: 2000
             });
-            _this.qrimg = -1
           }
         })
       }
@@ -83,7 +89,11 @@
       this.init();
     },
     created () {
-
+      Indicator.open({
+        text: '加载中...',
+        spinnerType: 'fading-circle'
+      });
+      this.init();
     },
 
   }

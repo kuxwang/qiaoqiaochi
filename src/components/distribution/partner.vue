@@ -191,7 +191,6 @@
               }
             }
             teamsLists(params, (res) => {
-              console.log(1111111)
               if (res.statusCode == 1) {
                 _this.personlist = _this.personlist.concat(res.data.lists);
                 _this.$refs.requestStatus.loadingStatus = 1
@@ -247,8 +246,6 @@
             break;
           default:
             _this.$refs.requestStatus.loadingStatus = 1
-            console.log('hehhe')
-
         }
 
       },
@@ -315,13 +312,13 @@
       searchlist(){
         this.personlist = [];
         this.selected = 4;
-        this.$refs.requestStatus.loadingStatus = 0
+        let obj = {};
         if (this.find.length === 11) {
-          var obj = {
+          obj = {
             mobile: this.find
           }
         } else if (Number(this.find)) {
-          var obj = {
+          obj = {
             id: this.find
           }
         } else {
@@ -334,26 +331,32 @@
         let params = {
           data: obj
         };
-        teams(params, (res) => {
-          this.$refs.requestStatus.loadingStatus = 1
-          if (res.statusCode === 1) {
-            this.personlist = res.data;
-            if (!this.personlist || this.personlist.length <= 1) {
-              this.searched = false
-            } else {
-              let obji = []
-              obji.push(res.data)
-              this.personlist = obji
+
+        if(typeof params.data.mobile !== 'undefined' || typeof params.data.id !== 'undefined'){
+          this.$refs.requestStatus.loadingStatus = 0
+
+          teams(params, (res) => {
+            this.$refs.requestStatus.loadingStatus = 1
+            if (res.statusCode === 1) {
+              this.personlist = res.data;
+              if (!this.personlist || this.personlist.length <= 1) {
+                this.searched = false
+              } else {
+                let obji = []
+                obji.push(res.data)
+                this.personlist = obji
 //                  console.log(this.personlist)
+              }
+            } else {
+              Toast({
+                message: res.data,
+                position: 'middle',
+                duration: 2000
+              });
             }
-          } else {
-            Toast({
-              message: res.data,
-              position: 'middle',
-              duration: 2000
-            });
-          }
-        })
+          })
+        }
+
 
       },
       ...mapMutations({
@@ -634,6 +637,7 @@
     display: block;
     background-color: #ececec;
     margin-top: 2.05rem;
+    padding-bottom: .4rem;
   }
 
   .p-cell {

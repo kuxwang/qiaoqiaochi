@@ -675,8 +675,8 @@
         orderinfo: 'ORDERINFO'
       }),
       pay(x){
-        this.orderinfo(x)
-        this.$router.push({path:'payselect',query:{orderid:x}});
+//        this.orderinfo(x)
+//        this.$router.push({path:'payselect',query:{orderid:x}});
       },
       fun2: function (obj) {
         let a = obj.status

@@ -126,13 +126,21 @@
         refundid: '',
         myid: '',
         goodsid: '',
-        orderStatus: ''
+        orderStatus: '',
+        flush : false
       }
     },
     methods: {
       goBack: function () {
 //        this.$router.go(-1)
-        this.$router.push({path:'order'})
+//        if(){}
+
+        if(this.flush){
+          this.$router.push({path:'order', query : {flush : 1}})
+        }else{
+          this.$router.push({path:'order'})
+        }
+
       },
       refund: function () {
         this.$router.push({name: 'drawbackInfo', query: {refundid: this.myid}})
@@ -153,12 +161,16 @@
               }
             }
             orderManu(params, function (res) {
+              console.log('orderManu running :');
               console.log(res)
               if (res.statusCode == 1) {
-                location.reload()
+//                location.reload()
+                that.orderStatus = 3;
+                that.flush = true;
+//                that.$router.push({name: 'order', query: {flush:1}})
               }
               else {
-                MessageBox.alert('操作成功').then(action => {
+                MessageBox.alert('确认收货失败了，请返回上一页再次尝试。').then(action => {
 
                 });
               }
@@ -196,8 +208,11 @@
 //                    break;
 //                  }
 //                }
+
                 MessageBox.alert('操作成功').then(action => {
-                  that.$router.push({path: 'details', query: {goodsId: that.goodsId}})
+//                  that.$router.go(-1)
+                  that.$router.push({name: 'order', query: {flush:1}})
+                  document.getElementById('ordertab').style.color='#ff771b'
                 });
               }
             })
@@ -264,6 +279,14 @@
 //          that.isShow=true;
 //        }
       });
+    },
+    beforeRouteLeave : function(to, from, next){
+      console.log('to');
+      console.log(to);
+      console.log('from');
+      console.log(from);
+//      to.path = to.path + '';
+      next();
     },
     created:function () {
       this.oid=this.$route.query.oid

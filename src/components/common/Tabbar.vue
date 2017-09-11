@@ -7,7 +7,7 @@
           立即购买
         </div>
       </router-link>
-      <router-link class="mint-tab-item" :to="{name:'order'}"  tag="a">
+      <router-link id="ordertab" class="mint-tab-item"  :to="{name:'order'}"  tag="a">
         <div class="mint-tab-item-label">
           <div class="iconfont tabIcon">&#xe7d8;</div>
           我的订单

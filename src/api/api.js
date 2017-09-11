@@ -4,9 +4,11 @@
 // import {_webapp} from '../config/webapp.js'
 import axios from 'axios'
 import qs from 'qs'
-import {_webapp} from '../config/_webapp.js'
-import {fn} from '../config/myUtils.js'
-import {Indicator} from 'mint-ui';
+// import {_webapp} from '../config/_webapp.js'
+import {_webapp} from '../config/hook.js'
+import {MessageBox} from 'mint-ui'
+
+// import {fn} from '../config/myUtils.js'
 
 const base = 'https://api.duoyunjiav2.wshoto.com';
 const header = 'application/json';
@@ -15,6 +17,7 @@ const dataType = 'json';
 /**
  * axios需要将post方法中的需要上传的参数使用qs库进行编码
  */
+
 let axios_instance = axios.create({
   transformRequest: [function (data) {
     data = qs.stringify(data)
@@ -26,41 +29,198 @@ let axios_instance = axios.create({
     'Accept': 'application/json, text/javascript, */*; q=0.01'
   }
 })
-/*判断请求方法，对应请求函数*/
 
+/**
+ * 判断接口的信息是否正确
+ * @param opt
+ * @returns {Array}
+ */
+let resulthandling = (opt) => {
+  let newData = []
+  opt.statusCode = opt.statusCode / 1;
+  if (opt.statusCode === 1) {
+    newData = {
+      'statusCode': opt.statusCode,
+      'data': opt.res
+    };
+  } else {
+    if (opt.statusCode === 10005) {
+      // newData = {'statusCode' : -1, 'data' : '获取用户信息失败，可能是在其他设备中登陆'};
+      MessageBox({
+        title: '友情提示',
+        message: '获取用户信息失败，可能是登陆超时或在其他设备中登陆，点击确认将为您跳转至登陆页面',
+        showCancelButton: false,
+        closeOnClickModal : false
+      }).then(action => {
+        _webapp.nativeLogin();
+      });
+
+      return ;
+    } else if (opt.statusCode === 10010) {
+      _webapp.log('opt.statusCode 10010 running.');
+      _webapp.getApiToken(() => {
+        if (_webapp.checkApiToken()) {
+          setParams(opt.params, opt.callback);
+          return false;
+        } else {
+          MessageBox({
+            title: '友情提示',
+            message: '很抱歉，系统可能出现了点问题，请您关闭APP（需后台任务清除）后重新尝试',
+            showCancelButton: false,
+            closeOnClickModal : false
+          }).then(action => {
+            _webapp.nativeLogin();
+            // newData = _webapp.getApiTokenSync() || {'statusCode': -1, 'data': '获取公众号通讯令牌异常，请关闭app后重新尝试'};
+          });
+        }
+      });
+    }else{
+      newData = {
+        'statusCode': opt.statusCode,
+        'data': opt.res
+      };
+    }
+  }
+
+  return newData
+}
+
+/**
+ * 判断请求方法，对应请求函数
+ *
+ **/
 let breviaryfoo = opt => {
-  let apitoken = _webapp.getAccessToken().access_token
   switch (opt.type) {
     case 'POST':
-      return axios_instance.post(opt.url+'?access_token='+apitoken, opt.params).then(res => res.data).then(res => { return {'statusCode':res.statusCode,'data':res.result}}).then(opt.callback)
+      return axios_instance.post(opt.url + '?access_token=' + opt.apitoken, opt.params).then(res => {
+        return {'res': res.data.result, 'statusCode' : res.data.statusCode, 'params': opt.params, 'callback': opt.callback}
+      }).then(resulthandling).then(opt.callback)
       break;
     case 'PUT':
-      return axios_instance.put(opt.url+'?access_token='+apitoken, opt.params).then(res => res.data).then(res => { return {'statusCode':res.statusCode,'data':res.result}}).then(opt.callback)
+      return axios_instance.put(opt.url + '?access_token=' + opt.apitoken, opt.params).then(res => {
+        return {'res': res.data.result, 'statusCode' : res.data.statusCode, 'params': opt.params, 'callback': opt.callback}
+      }).then(resulthandling).then(opt.callback)
       break;
     case 'DELETE':
-      return axios_instance.delete(opt.url+'?access_token='+apitoken, {params: opt.params}).then(res => res.data).then(res => { return {'statusCode':res.statusCode,'data':res.result}}).then(opt.callback)
+      return axios_instance.delete(opt.url + '?access_token=' + opt.apitoken, {params: opt.params}).then(res => {
+        return {'res': res.data.result, 'statusCode' : res.data.statusCode, 'params': opt.params, 'callback': opt.callback}
+      }).then(resulthandling).then(opt.callback)
       break;
     case 'GET':
-      return axios_instance.get(opt.url+'?access_token='+apitoken, {params: opt.params}).then(res => res.data).then(res => { return {'statusCode':res.statusCode,'data':res.result}}).then(opt.callback)
+      return axios_instance.get(opt.url + '?access_token=' + opt.apitoken, {params: opt.params}).then(res => {
+        return {'res': res.data.result, 'statusCode' : res.data.statusCode, 'params': opt.params, 'callback': opt.callback}
+      }).then(resulthandling).then(opt.callback)
       break;
   }
 }
 
+/**
+ * 获取access_token,auth_key
+ */
+let isgetApiToken = (r) => {
+
+  if (_webapp.checkApiToken()) {
+    let access_token = _webapp.apiToken.data.access_token;
+    let auth_key = _webapp.apiToken.data.auth;
+
+    return {
+      'access_token': access_token,
+      'auth_key': auth_key,
+    }
+  } else {
+    _webapp.log('api.js 111 running');
+
+    if(r === true){
+      return {};
+    }
+
+    _webapp.getApiToken(() => {
+      _webapp.log('api.js 109 running.');
+      if(_webapp.checkApiToken()){
+        isgetApiToken(true);
+      }else{
+        _webapp.log('getApiToken fail.');
+      }
+    })
+  }
+}
+
+export let iGetApiToken = function(callback){
+  if(_webapp.checkApiToken()){
+    callback(true);
+  }else{
+    _webapp.getApiToken(function(){
+      if(_webapp.checkApiToken()){
+        callback(true);
+      }else{
+        callback(false);
+      }
+    });
+  }
+};
+
+export let iGetSessionKey = function(callback){
+  if(_webapp.checkSessionKey()){
+    callback(true);
+  }else{
+    _webapp.getSessionKey(function(){
+      if(_webapp.checkSessionKey()){
+        callback(true);
+      }else{
+        callback(false);
+      }
+    });
+  }
+};
+
+/**
+ *  获取sessionkey
+ */
+let isgetsessionKey = (r) => {
+  if (_webapp.checkSessionKey()) {
+    return {
+      'sessionkey': _webapp.sessionKey.data.sessionkey
+    }
+  } else {
+
+    if(r === true){
+      return {};
+    }
+
+    _webapp.getSessionKey(res => {
+      if(_webapp.checkSessionKey()){
+        isgetsessionKey(true)
+      }
+    })
+  }
+}
+
+
+/**
+ * 配置请求参数
+ */
 let setParams = (params, callback) => {
+  // _webapp.log('setParams params');
+  // _webapp.log(params);
   let param = params.data
   let type = params.method
   let url = params.url
-  let apitoken = _webapp.getAccessToken()
-  // param['access_token'] = apitoken.access_token
-  param = _webapp.getSign(param)
-  return breviaryfoo({type: type, url: url, params: param, callback})
+  let sessionkey = ''
+  let auth_key = ''
+  let access_token = ''
+
+  let apiToken = _webapp.getApiTokenSync();
+  let sessionKey = _webapp.getSessionKeySync();
+  param['sessionkey'] = sessionKey.data.sessionkey;
+  param = _webapp.getSignData(param, apiToken.data.auth_key);
+  // _webapp.log(param);
+  return breviaryfoo({type: type, url: url, params: param, callback, apitoken: apiToken.data.access_token})
 }
 
-/** 2
+
+/**
  * 分销中心
  */
-
-
 const commissions = {
   recordStatistics_get: {url: `${base}/commissions/recordStatistics`, method: 'GET', header, dataType},
   recordStatistics_post: {url: `${base}/commissions/recordStatistics`, method: 'POST', header, dataType},
@@ -84,7 +244,7 @@ const commissions = {
   /**
    * 获取团队指定用户
    */
-  teams: {url: `${base}/commissions/teamse`, method: 'GET', header, dataType},
+  teams: {url: `${base}/commissions/teams`, method: 'GET', header, dataType},
   /**p
    * 获取团队数量统计
    */
@@ -165,13 +325,33 @@ const qrimg = {url: `${base}/qrimgs`, method: 'GET', header, dataType}
  */
 const orderDo = {orderD: {url: `${base}/orders/operationOrder`, method: 'PUT', header, dataType}};
 
+/**
+ * 首页商品展示 yellowStar
+ */
+const MYGOODS = {url: `${base}/goods`, method: 'GET', header, dataType}
+
+/**
+ * 购物车 yellowStar
+ */
+const MYCARTS1 = {url: `${base}/carts`, method: 'GET', header, dataType}
+
+const MYCARTS3 = {url: `${base}/carts`, method: 'DELETE', header, dataType}
+
+const USERAVATARS = {url: `${base}/uploads`, method: 'PUT', header, dataType}
+
+/**
+ * 个人中心 yellowStar
+ */
+const USERINFO = {url: `${base}/members`, method: 'PUT', header, dataType}
+
+/**
+ * 购物车数量 yellowStar
+ */
+const CARTNUMS = {url: `${base}/carts/cartNums`, method: 'GET', header, dataType}
 
 
 export const orderLists = function (params, callback) {
   setParams(Object.assign(params, commissions.orderLists), callback)
-  // _webapp.requestx(Object.assign(params, commissions.orderLists), function (res) {
-  //   callback(res)
-  // })
 };
 /**
  * 获取团队数量统计
@@ -180,9 +360,6 @@ export const orderLists = function (params, callback) {
  */
 export const teamsStatistics = function (params, callback) {
   setParams(Object.assign(params, commissions.teamsStatistics), callback)
-  // _webapp.requestx(Object.assign(params, commissions.teamsStatistics), function (res) {
-  //   callback(res)
-  // })
 };
 /**
  * 佣金统计
@@ -191,30 +368,17 @@ export const teamsStatistics = function (params, callback) {
  */
 export const recordStatistics_get = function (params, callback) {
   setParams(Object.assign(params, commissions.recordStatistics_get), callback)
-  //
-  // _webapp.requestx(Object.assign(params, commissions.recordStatistics_get), function (res) {
-  //   callback(res)
-  // })
 };
 /**
  * 获取团队数量统计
  * @param params
  * @param callback
  */
-// export const teamsStatistics = function (params, callback) {_webapp.requestx(Object.assign(params, commissions.teamsStatistics), function (res) {callback(res)})};
 export const teamsLists = function (params, callback) {
   setParams(Object.assign(params, commissions.teamsLists), callback)
-
-  // _webapp.requestx(Object.assign(params, commissions.teamsLists), function (res) {
-  //   callback(res)
-  // })
 };
 export const teams = function (params, callback) {
   setParams(Object.assign(params, commissions.teams), callback)
-  //
-  // _webapp.requestx(Object.assign(params, commissions.teams), function (res) {
-  //   callback(res)
-  // })
 };
 //订单列表
 
@@ -225,11 +389,6 @@ export const teams = function (params, callback) {
  */
 export const orderStatistics = function (params, callback) {
   setParams(Object.assign(params, commissions.orderStatistics), callback)
-
-  //
-  // _webapp.requestx(Object.assign(params, commissions.orderStatistics), function (res) {
-  //   callback(res)
-  // })
 };
 /**
  * 订单列表
@@ -243,13 +402,7 @@ export const orderStatistics = function (params, callback) {
  */
 export const orders = function (params, callback) {
   setParams(Object.assign(params, commissions.orders), callback)
-
-  // _webapp.requestx(Object.assign(params, commissions.orders), function (res) {
-  //
-  //   callback(res)
-  // })
 };
-
 
 
 /**
@@ -271,16 +424,9 @@ export const withdrawals_post = function (params, callback) {
   setParams(Object.assign(params, commissions.withdrawals_post), callback)
 };
 
-
 /**
  * 首页商品展示 yellowStar
  */
-const MYGOODS = {
-  url: `${base}/goods`,
-  method: 'GET',
-  header,
-  dataType
-}
 export const GET_MYGOODS = function (params, callback) {
   setParams(Object.assign(params, MYGOODS), callback)
 };
@@ -288,50 +434,26 @@ export const GET_MYGOODS = function (params, callback) {
 /**
  * 购物车 yellowStar
  */
-const MYCARTS1 = {
-  url: `${base}/carts`,
-  method: 'GET',
-  header,
-  dataType
-}
 export const GET_MYCARTS = function (params, callback) {
   setParams(Object.assign(params, MYCARTS1), callback)
 };
 
-const MYCARTS2 = {
-  url: `${base}/carts`,
-  method: 'PUT',
-  header,
-  dataType
-}
+const MYCARTS2 = {url: `${base}/carts`, method: 'PUT', header, dataType}
+
 export const PUT_MYCARTS = function (params, callback) {
   setParams(Object.assign(params, MYCARTS2), callback)
 };
-const MYCARTS3 = {url: `${base}/carts`, method: 'DELETE', header, dataType}
+
 export const DELETE_MYCARTS = function (params, callback) {
   setParams(Object.assign(params, MYCARTS3), callback)
-  //
-  // _webapp.requestx(Object.assign(params, MYCARTS3), function (res) {
-  //   callback(res)
-  // })
 };
-
 
 /**
  * 下单 yellowStar
  */
-const ORDER1 = {
-  url: `${base}/orders/confirm`,
-  method: 'GET',
-  header,
-  dataType
-}
+const ORDER1 = {url: `${base}/orders/confirm`, method: 'GET', header, dataType}
 export const GET_ORDER1 = function (params, callback) {
   setParams(Object.assign(params, ORDER1), callback)
-  //
-  // _webapp.requestx(Object.assign(params, ORDER1), function (res) {
-  //   callback(res)
-  // })
 };
 
 
@@ -342,11 +464,6 @@ export const GET_ORDER1 = function (params, callback) {
  */
 export const addresses_get = function (params, callback) {
   setParams(Object.assign(params, addresses.addresses_get), callback)
-
-  // _webapp.requestx(Object.assign(params, addresses.addresses_get), function (res) {
-  //   callback(res)
-  //
-  // })
 };
 
 /**
@@ -354,77 +471,46 @@ export const addresses_get = function (params, callback) {
  */
 export const addresses_post = function (params, callback) {
   setParams(Object.assign(params, addresses.addresses_post), callback)
-  //
-  // _webapp.requestx(Object.assign(params, addresses.addresses_post), function (res) {
-  //   callback(res)
-  // })
 };
 /**
  * 删除地址
  */
 export const addresses_delete = function (params, callback) {
   setParams(Object.assign(params, addresses.addresses_delete), callback)
-
-  // _webapp.requestx(Object.assign(params, addresses.addresses_delete), function (res) {
-  //   callback(res)
-  // })
 };
+/**
+ * 地址信息更新
+ * @param params
+ * @param callback
+ */
 export const addresses_put = function (params, callback) {
   setParams(Object.assign(params, addresses.addresses_put), callback)
-
-  // _webapp.requestx(Object.assign(params, addresses.addresses_put), function (res) {
-  //   callback(res)
-  // })
 };
 
 /**
  * 商品详情
  */
 export const productDetail = function (params, callback) {
-
-
   setParams(Object.assign(params, product.productDetail), callback)
-
-  // _webapp.requestx(Object.assign(params, product.productDetail), function (res) {
-  //   callback(res)
-  // })
 }
 /**
  * 加入购物车
  */
 export const addCart = function (params, callback) {
   setParams(Object.assign(params, cart.addCart), callback)
-
-  // _webapp.requestx(Object.assign(params, cart.addCart), function (res) {
-  //   callback(res)
-  // })
 };
 /**
  * 订单列表
  */
 export const orderList = function (params, callback) {
   setParams(Object.assign(params, order.orderList), callback)
-
-  // _webapp.requestx(Object.assign(params, order.orderList), function (res) {
-  //   callback(res)
-  // })
 };
 /**
  * 订单详情
  */
 export const orderDetail = function (params, callback) {
   setParams(Object.assign(params, orderd.orderDetail), callback)
-  // _webapp.requestx(Object.assign(params, orderd.orderDetail), function (res) {
-  //   callback(res)
-  // })
 };
-
-
-
-
-
-
-
 
 
 /**
@@ -432,10 +518,6 @@ export const orderDetail = function (params, callback) {
  */
 export const expressInfo = function (params, callback) {
   setParams(Object.assign(params, express.exp), callback)
-
-  // _webapp.requestx(Object.assign(params, express.exp), function (res) {
-  //   callback(res)
-  // })
 };
 
 /**
@@ -443,10 +525,6 @@ export const expressInfo = function (params, callback) {
  */
 export const dispatchs_get = function (params, callback) {
   setParams(Object.assign(params, dispatchs.dispatchs_get), callback)
-
-  // _webapp.requestx(Object.assign(params, dispatchs.dispatchs_get), function (res) {
-  //   callback(res)
-  // })
 };
 /**
  * 上传订单
@@ -455,10 +533,6 @@ export const dispatchs_get = function (params, callback) {
  */
 export const confirm_post = function (params, callback) {
   setParams(Object.assign(params, ordersinfo.confirm_post), callback)
-
-  // _webapp.requestx(Object.assign(params, ordersinfo.confirm_post), function (res) {
-  //   callback(res)
-  // })
 };
 
 /**
@@ -466,10 +540,6 @@ export const confirm_post = function (params, callback) {
  */
 export const payment_get = function (params, callback) {
   setParams(Object.assign(params, ordersinfo.payment_get), callback)
-
-  // _webapp.requestx(Object.assign(params, ordersinfo.payment_get), function (res) {
-  //   callback(res)
-  // })
 };
 
 /**
@@ -477,10 +547,6 @@ export const payment_get = function (params, callback) {
  */
 export const payment_post = function (params, callback) {
   setParams(Object.assign(params, ordersinfo.payment_post), callback)
-  //
-  // _webapp.requestx(Object.assign(params, ordersinfo.payment_post), function (res) {
-  //   callback(res)
-  // })
 };
 
 /**
@@ -498,14 +564,10 @@ export const paymentFun = function (type, params, callback) {
  * @constructor
  */
 export const Qrimg = function (params, callback) {
-  Indicator.open({
-    text: '加载中...',
-    spinnerType: 'fading-circle'
-  });
-  _webapp.requestx(Object.assign(params, qrimg), function (res) {
-    Indicator.close();
+  /*_webapp.requestx(Object.assign(params, qrimg), function (res) {
     callback(res)
-  })
+  })*/
+  setParams(Object.assign(params, qrimg), callback);
 };
 
 /**
@@ -520,39 +582,23 @@ export const QrimgSave = function (url) {
 /**
  * 个人中心 yellowStar
  */
-const USERINFO = {url: `${base}/members`, method: 'PUT', header, dataType}
 export const PUT_USERINFO = function (params, callback) {
   setParams(Object.assign(params, USERINFO), callback)
-
-  // _webapp.requestx(Object.assign(params, USERINFO), function (res) {
-  //   callback(res)
-  // })
 };
-const USERAVATARS = {url: `${base}/uploads`, method: 'PUT', header, dataType}
 export const PUT_USERAVATARS = function (params, callback) {
   setParams(Object.assign(params, USERAVATARS), callback)
-
-  // _webapp.requestx(Object.assign(params, USERAVATARS), function (res) {
-  //   callback(res)
-  // })
 };
 export const USERPHOTO = function () {
   _webapp.uploadImg((res) => {
-      callback(res)
-    }
-  )
+    callback(res)
+  })
 }
 
 /**
  * 购物车数量 yellowStar
  */
-const CARTNUMS = {url: `${base}/carts/cartNums`, method: 'GET', header, dataType}
 export const GET_CARTNUMS = function (params, callback) {
   setParams(Object.assign(params, CARTNUMS), callback)
-
-  // _webapp.requestx(Object.assign(params, CARTNUMS), function (res) {
-  //   callback(res)
-  // })
 };
 
 /**
@@ -569,25 +615,14 @@ export const LOGINOUT = function () {
  */
 export const orderManu = function (params, callback) {
   setParams(Object.assign(params, orderDo.orderD), callback)
-
-  // _webapp.requestx(Object.assign(params, orderDo.orderD), function (res) {
-  //   callback(res)
-  // })
 };
+
 export const orderRe = function (params, callback) {
   setParams(Object.assign(params, orderRes.orderR), callback)
-
-  // _webapp.requestx(Object.assign(params, orderRes.orderR), function (res) {
-  //   callback(res)
-  // })
 };
 
 export const DispatchMoney = function (params, callback) {
   setParams(Object.assign(params, dispatchMoney.dispatchMoney), callback)
-
-  // _webapp.requestx(Object.assign(params, dispatchMoney.dispatchMoney), function (res) {
-  //   callback(res)
-  // })
 };
 
 

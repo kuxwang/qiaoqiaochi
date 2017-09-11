@@ -82,7 +82,7 @@
     beforeRouteUpdate(to, from, next){
       if(from.name === 'editaddress'){
         let _this = this
-        addresses_get({}, res => {
+        addresses_get({data :{}}, res => {
           console.log(res)
           if (res.statusCode == 1) {
             _this.getaddressnum(res.data.list.length)
@@ -95,7 +95,7 @@
         next()
       }else if(from.name === 'addaddress'){
         let _this = this
-        addresses_get({}, res => {
+        addresses_get({data : {}}, res => {
           console.log(res)
           if (res.statusCode == 1) {
             _this.getaddressnum(res.data.list.length)
@@ -107,7 +107,7 @@
         next()
       }else if(from.name ==='manageAddress'){
         let _this = this
-        addresses_get({}, res => {
+        addresses_get({data : {}}, res => {
           console.log(res)
           if (res.statusCode == 1) {
             _this.getaddressnum(res.data.list.length)
@@ -123,7 +123,7 @@
         next()
       }else if(from.name ==='editAddress') {
         let _this = this
-        addresses_get({}, res => {
+        addresses_get({data : {}}, res => {
           console.log(res)
           if (res.statusCode == 1) {
             _this.getaddressnum(res.data.list.length)
@@ -143,7 +143,7 @@
     },
     created () {
       let _this = this
-      addresses_get({}, res => {
+      addresses_get({data : {}}, res => {
         console.log(res)
         if (res.statusCode == 1) {
           _this.getaddressnum(res.data.list.length)

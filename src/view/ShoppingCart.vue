@@ -274,7 +274,7 @@
         }
       },
       mycartsInt(){
-        let params = {}
+        let params = {data : {}}
         let _this = this
         GET_MYCARTS(params, function (res) {
           if (res.statusCode === 1) {

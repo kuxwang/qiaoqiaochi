@@ -92,6 +92,8 @@
         this.mypopup1 = false;
       },
       initAddress() {//城市初始化
+        console.log('init address');
+        console.log(this.slots);
         this.slots[0].values = address.filter((item, index) => {
           if (item.apid === 0) {
             return item;
@@ -111,7 +113,7 @@
 //        console.log(this.slots[0].values.length)
       },
       cityValuesChange(picker, values) {
-//          console.log(values)
+          console.log(values)
         // 防止没有省份时报错
         if (values[0]) {
           this.slots[1].values = address.filter((item, index) => {
@@ -132,8 +134,6 @@
         if (values[2]) {
           // 这里可以指定地址符，此处以空格进行连接
           this.temp_addr = values[0].aname + ' ' + values[1].aname + ' ' + values[2].aname;
-          console.log(this.temp_addr)
-          console.log(values)
           this.area = {
             province: values[0].aname,
             city: values[1].aname,
@@ -169,6 +169,10 @@
 //          Toast('邮编格式错误')
 //          return
 //        }
+
+        console.log('this.area');
+        console.log(this.area);
+
         let _this = this
         let params = {
           data: {
@@ -181,6 +185,7 @@
             addressid: _this.$route.query.id
           }
         }
+
         addresses_put(params, res => {
           console.log(res)
           if (res.statusCode == 1) {
@@ -227,12 +232,14 @@
       this.tel = this.seteditAddress.mobile
       this.zipcode = this.seteditAddress.zipCode
       setTimeout(() => {
+        console.log(this.oldaddress);
         this.temp_addr = this.oldaddress;
         this.area = {
           province: this.oldprovince,
           city: this.oldcity,
           area: this.oldarea
         }
+
       }, 100)
 
 

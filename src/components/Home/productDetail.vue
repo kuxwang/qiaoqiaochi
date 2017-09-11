@@ -68,7 +68,7 @@
           <div class="cal-box">
             <div>
               <button class="reduce-down" @click="reduce(num)">-</button>
-              <input class="num-box" v-model=num />
+              <input class="num-box" v-model=num disabled />
               <button class="add-up" @click="add">+</button>
             </div>
             <p>购买数量</p>
@@ -126,7 +126,7 @@
           addCart(params,function (res) {
             console.log(_this)
             if(res.statusCode==1){
-              let params={};
+              let params={data : {}};
               let that=_this;
               GET_CARTNUMS(params,function (res) {//获取购物车当前数量
                 if(res.statusCode===1){
@@ -172,7 +172,6 @@
           text: '加载中...',
           spinnerType: 'fading-circle'
         });
-
         let that=this;
         let good_id=this.$route.query.goodsId;
         let params={
@@ -181,10 +180,8 @@
           }
         }
         productDetail(params,function (res) {
-
-          Indicator.close();
+          Indicator.close()
           if(res.statusCode===1){
-
             that.goodNums=res.data.goodscount;
             let goods=res.data.goods
             that.goodsId=goods.id;
@@ -201,7 +198,7 @@
               that.vipname=res.data.level.levelname;
               that.vipcount=res.data.level.discount;
             };
-            let params={};
+            let params={data : {}};
             let _that=that;
             GET_CARTNUMS(params,function (res) {//获取购物车当前数量
               if(res.statusCode===1){
@@ -231,6 +228,26 @@
     beforeRouteLeave (to, from, next) {
       this.popupVisible = false;
       next()
+    },
+
+    watch: {
+      '$route'(to, from) {
+        let _that=this;
+        if (from.name == 'shoppingCart') {
+          console.log('from shopcar')
+          let params={
+            data: {}
+          }
+          GET_CARTNUMS(params, function (res) {//获取购物车当前数量
+            if (res.statusCode === 1) {
+              _that.delGoodsNum = res.data.cartcount;
+            } else {
+              console.log('请求失败')
+//                Indicator.close();
+            }
+          });
+        }
+      }
     },
     mounted () {
       this.getInfo();

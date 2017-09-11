@@ -78,14 +78,23 @@
         }
       },
       $route (to, from) {
+        console.log(from.name)
+        if(to.query.flush ==1){
+          this.$refs.mylist.statusType = '';
+          this.$refs.mylist.init('')
+          console.log('flush')
+        }
         if (from.name === 'orderd' && this.isConfirm === 2) {
-//        this.memberInfo.avatar = this.imgUrl
+//        this.memberInfo.avatar = this.imgUrlß
           console.log(this.isConfirm)
           this.isConf(1)
           this.isselect = 1
           this.$refs.mylist.statusType = '';
           this.$refs.mylist.init('')
         }
+
+
+
       }
     },
 
@@ -109,12 +118,15 @@
     mounted () {
       this.setHeight();
 
+
+
 //      console.log(this.isselect)
     },
     activated(){
 //      this.isselect = this.$route.query.stab
 //      console.log(this.$route.query.stab)
       console.log('位置')
+
     },
     computed: {
       ...mapGetters([
@@ -218,7 +230,8 @@
     overflow-y: scroll;
     margin-top: 1rem;
     /*height: 6.22rem;*/
-    -webkit-overflow-scrolling: touch
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: .8rem;
   }
 
   * {

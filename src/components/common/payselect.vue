@@ -2,7 +2,7 @@
   <div class="main">
     <section>
       <mt-header title="支付">
-        <router-link to="/home" slot="left">
+        <router-link :to="{name:'order',query:{flush:1}}" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
       </mt-header>
@@ -60,7 +60,7 @@
     <!--<div>1234567</div>-->
     <!--{{data}}-->
     <button class="commit ocolor" @click="pay">
-      支付订单
+      {{payText}}
     </button>
   </div>
 </template>
@@ -68,6 +68,8 @@
 <script>
   import {Checklist, Toast, Indicator} from 'mint-ui';
   import {mapState} from 'Vuex';
+  import {_webapp} from '../../config/hook';
+
   import {payment_post, payment_get, paymentFun} from '../../api/api';
   export default {
     data () {
@@ -80,6 +82,7 @@
         wechat_app: [],
         alipay_app: [],
         payStstus: 0,
+        payText : '支付订单'
 //        loadingStatus: 0,
 //        post: {},
 //        data:[]
@@ -130,31 +133,62 @@
               type
             }
           }
+          _this.payText = '订单提交中...';
           payment_post(params, res => {
-            this.loadingStatus = 0
+//            let testData = {"statusCode":1,"result":"biz_content=%7B%22timeout_express%22%3A%2230m%22%2C%22seller_id%22%3A%22%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22total_amount%22%3A%2279.20%22%2C%22subject%22%3A%22%5Cu6735%5Cu4e91%5Cu5bb6%5Cu8ba2%5Cu5355%3A+SH201709090448288640%22%2C%22body%22%3A%222%3A0%22%2C%22out_trade_no%22%3A%22SH201709090448288640%22%7D&app_id=2017070407639762&method=alipay.trade.app.pay&charset=UTF-8&timestamp=2017-09-09+05%3A53%3A06&version=1.0&sign_type=RSA&notify_url=http%3A%2F%2Fduoyunjiav2.wshoto.com%2Faddons%2Fewei_shop%2Fpayment%2Falipay%2Fnotify_app.php&sign=Q%2FNg0crDmBplk6d7aub9WlBkZ1THKx9iFxLnwGvXzD4ynEdcZ1WH1gUoa%2BqDTSFkln6J58qxpEZlnYKIBl2KsZv%2FsDVAZXs2q49TpTG7kKuTfxcDCbYBKOWPTofKnWfz3jlGzL7yaKWbiI%2BYm8EI1VZa2NRT%2Fi%2Bq9jiYJBALIWk%3D"}
+//            console.log(res);
+            let _this = this;
+
+            _this.payText = '正在发起支付...';
+            _webapp.payment(type, res.data, function(payResult){
+              _this.loadingStatus = 0;
+
+              if (payResult.statusCode == 1) {
+                _this.payStstus = 1
+                Toast({
+                  message: '支付成功',
+                  position: 'middle',
+                  duration: 2000
+                });
+                setTimeout(() => {
+                  _this.$router.push({name:'order'})
+                }, 2000)
+              } else {
+                Toast({
+                  message: `支付异常：${payResult.data}`,
+                  position: 'middle',
+                  duration: 2500
+                });
+              }
+
+              _this.payText = '支付订单';
+            });
+
+//            return ;
+//            this.loadingStatus = 0
 //            Toast({
 //              message: `${typeof res.statusCode}|${res.statusCode}`,
 //              position: 'middle',
 //              duration: 2000
 //            });
-            if (res.statusCode == 1) {
-              _this.payStstus = 1
-              Toast({
-                message: '支付成功',
-                position: 'middle',
-                duration: 2000
-              });
-              setTimeout(() => {
-                _this.$router.push({name:'order'})
-
-              }, 2000)
-            } else {
-              Toast({
-                message: `支付异常：${res.data}`,
-                position: 'middle',
-                duration: 2000
-              });
-            }
+//            if (res.statusCode == 1) {
+//              _this.payStstus = 1
+//              Toast({
+//                message: '支付成功',
+//                position: 'middle',
+//                duration: 2000
+//              });
+//              setTimeout(() => {
+//                _this.$router.push({name:'order'})
+//
+//              }, 2000)
+//            } else {
+//              Toast({
+//                message: `支付异常：${res.data}`,
+//                position: 'middle',
+//                duration: 2000
+//              });
+//            }
 
             /*if (res.statusCode == 1) {
              paymentFun(type, res.data, data => {
@@ -172,6 +206,23 @@
           });
         }
 
+      }
+    },
+    activated(){
+      this.payText = '支付订单';
+      //        console.log(this.post)
+      let res = this.$route.meta.post
+      console.log(res)
+      if (res.statusCode == 1) {
+//        this.loadingStatus = 1
+        this.goods = res.data.order.goods[0]
+        this.shopSet = res.data.shopSet
+        this.order = res.data.order
+        this.payment = res.data.payment
+        this.wechat_app = res.data.payment.wechat_app
+        this.alipay_app = res.data.payment.alipay_app
+      } else {
+        console.log('支付订单获取接口异常')
       }
     },
     computed: {
@@ -221,9 +272,19 @@
 
   .main {
     font-size: .16rem;
-    height: 6.67rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ececec;
+    /*overflow: auto;*/
+    overflow: hidden;
+
+
     /*background: #fff;*/
   }
+
 
   ul {
 

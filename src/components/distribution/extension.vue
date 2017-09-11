@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <section>
-      <mt-header fixed title="推广订单" class="c-1">
+      <mt-header title="推广订单" class="c-1">
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
@@ -358,20 +358,25 @@
             position: 'middle',
             duration: 2000
           });
-        }
-        else {
+        }else {
           let params = {
             data: {
               mid: _this.find
             }
           };
           orders(params, (res) => {
+            console.log(res);
             if (res.statusCode === 1) {
               console.log(res)
               _this.orderlist = res.data.order;
               console.log(_this.orderlist)
             } else {
-              console.log('请求失败');
+              Toast({
+                message: res.data,
+                position: 'middle',
+                duration: 2000
+              });
+//              console.log('请求失败');
             }
           })
         }
@@ -579,6 +584,7 @@
     background-color: #ececec;
     margin-top: 2.05rem;
     -webkit-overflow-scrolling: touch;
+    padding-bottom: .4rem;
 
   }
 

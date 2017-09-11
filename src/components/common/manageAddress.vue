@@ -79,12 +79,18 @@
         this.$router.push({name: '/manageAddress'})
       },
       edit(value) {
+        console.log('manage edit');
+        console.log(value);
+
         this.seteditAddresses(value)
         let params = {
           province: value.province,
           city: value.city,
           area: value.area
         }
+        console.log('params');
+        console.log(params);
+
         this.oldaddress(params)
         this.$router.push({path: '/editAddress', query: {id: value.id}})
       },
@@ -140,7 +146,7 @@
 
     created() {
       let _this = this
-      addresses_get({}, res => {
+      addresses_get({data : {}}, res => {
         if (res.statusCode == 1) {
           _this.getaddressnum(res.data.list.length)
           _this.addressLists = res.data.list

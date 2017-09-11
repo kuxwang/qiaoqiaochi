@@ -1,4 +1,4 @@
-// import tMap from 'tMap'
+import {_webapp} from './webapp'
 /**
  * 存储localStorage
  */
@@ -27,12 +27,11 @@ export const removeStore = name => {
 
 /**
  *
- * @type setSession
+ * app端的数据交互功能
  */
+
 export const fn = {
-  setSession () {
-    let sessionKey = fn.setUserInfo();
-  },
+
 }
 
 
