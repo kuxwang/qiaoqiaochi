@@ -70,7 +70,7 @@
 <script>
   import {MessageBox, Loadmore, Toast, InfiniteScroll} from 'mint-ui';
   import {mapMutations, mapGetters, mapState} from 'vuex'
-  import {orderList, orderManu} from '../../api/api.js'
+  import {orderList, orderManu} from '../../../api/api.js'
   import voidList from './voidlist'
 
   export default {

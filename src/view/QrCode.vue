@@ -32,7 +32,7 @@
   </div>
 </template>
 <script>
-  import vTabbar from '../components/common/Tabbar';
+  import vTabbar from '../components/mode/Tabbar';
   import {Qrimg, QrimgSave} from '../api/api';
   import {Toast,Indicator} from 'mint-ui'
   export default{

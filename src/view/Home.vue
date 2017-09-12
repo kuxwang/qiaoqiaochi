@@ -1,26 +1,24 @@
 <template>
   <div class="content">
-    <div class="container">
-      <ul class="goodsList">
-        <li class="goodsList-itme1">
-          <img src="../assets/images/home-01.jpg">
-          <!-- <img v-lazy="img1"> -->
-        </li>
-        <router-link class="goodsList-itme2" :to="{path:'/details',query:{goodsId:4}}" tag="li">
-          <img src="../assets/images/home-02.jpg">
-          <!-- <img v-lazy="img2"> -->
-        </router-link>
-      </ul>
+    <div class="top-bar">
+      <div class="logo"></div>
+
+    </div>
+    <div class="scroll-view">
+
+
+
+
+
     </div>
     <v-tabbar></v-tabbar>
     <router-view></router-view>
   </div>
 </template>
 <script>
-  import vTabbar from '../components/common/Tabbar';
-  import vScroll from '../components/common/scroll';
+  import vTabbar from '../components/mode/Tabbar';
+  import vScroll from '../components/mode/scroll';
   import {fn} from '../config/myUtils'
-
 
   export default{
     data(){
@@ -38,63 +36,20 @@
     }
   }
 </script>
-<style scoped>
+<style lang="less" scoped>
+  @import '../assets/css/reset/reset.css';
+  @import '../assets/css/reset/common.less';
   .content {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #efeff4;
-    /*overflow: auto;*/
-    overflow: hidden;
-    z-index: 50;
-    -webkit-overflow-scrolling: auto;
+    .page-view();
   }
 
-  .goodsList {
-    /*padding-bottom:0.5rem;*/
-  }
-
-  .goodsList-itme1 {
-    width: 100%;
-    height: 2.64rem;
-  }
-
-  .goodsList-itme1 img {
-    display: block;
-    width: 100%;
-    height: 2.64rem;
-  }
-
-  .goodsList-itme2 {
-    /*   width: 3.75rem;
-       height: 3.75rem;*/
-  }
-
-  .goodsList-itme2 img {
-    display: block;
-    width: 100%;
-    height: 3.75rem;
-  }
-
-  .scroll-style {
-    height: 100%;
-    /*width: 100%;*/
-    /*height: 6.2rem;*/
-    overflow: hidden;
-  }
-
-  .container {
+  .scroll-view {
     position: absolute;
     top: 0;
+    .scroll-view(100%);
     width: 100%;
-    overflow: auto;
-    /*overflow-y: scroll;*/
-    -webkit-overflow-scrolling: touch;
-    height: 100%;
     padding-bottom: .5rem;
-    /*overflow-y: scroll;*/
-
   }
+
+
 </style>

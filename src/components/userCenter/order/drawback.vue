@@ -32,7 +32,7 @@
 </template>
 <script>
   import {header,MessageBox} from 'mint-ui';
-  import {orderManu} from '../../api/api.js';
+  import {orderManu} from '../../../api/api.js';
   import {mapMutations, mapGetters} from 'vuex'
   export default{
     data(){
@@ -106,8 +106,8 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/fonts/iconfont.css';
-  @import '../../assets/css/reset/reset.css';
+  @import '../../../assets/css/fonts/iconfont.css';
+  @import '../../../assets/css/reset/reset.css';
   .main {
     position: fixed;
     left: 0;

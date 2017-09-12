@@ -37,7 +37,7 @@
 </template>
 <script>
   import { Header,Toast } from 'mint-ui'
-  import { orderManu,orderRe} from '../../api/api'
+  import { orderManu,orderRe} from '../../../api/api'
   import {mapMutations, mapGetters,mapState} from 'vuex'
   export default {
      data(){

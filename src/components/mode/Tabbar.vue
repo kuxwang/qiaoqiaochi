@@ -4,13 +4,13 @@
       <router-link class="mint-tab-item" :to="{name:'home'}"  tag="a">
         <div class="mint-tab-item-label">
           <div class="iconfont tabIcon">&#xe89f;</div>
-          立即购买
+          首页
         </div>
       </router-link>
-      <router-link id="ordertab" class="mint-tab-item"  :to="{name:'order'}"  tag="a">
+      <router-link id="ordertab" class="mint-tab-item"  :to="{name:'category'}"  tag="a">
         <div class="mint-tab-item-label">
           <div class="iconfont tabIcon">&#xe7d8;</div>
-          我的订单
+          分类
         </div>
       </router-link>
       <router-link class="mint-tab-item" :to="{name:'shoppingCart'}"  tag="a">

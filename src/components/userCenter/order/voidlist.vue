@@ -62,7 +62,7 @@
     margin-top: 1.5rem;
     /*url('../assets/images/Spinner.gif')*/
     /*background: url('../../assets/images/loading.gif') no-repeat center center;*/
-    background: url('../../assets/images/Magnify.gif') no-repeat center center;
+    background: url('../../../assets/images/Magnify.gif') no-repeat center center;
     background-size: 100% 100%;
   }
 </style>

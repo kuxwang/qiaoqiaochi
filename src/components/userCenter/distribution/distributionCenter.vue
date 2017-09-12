@@ -206,9 +206,9 @@
 </template>
 <script>
 
-  import vTabbar from '../components/common/Tabbar.vue'
-  import {recordStatistics_get, teamsStatistics, orderStatistics, memberInfo, LOGINOUT} from '../api/api'
-  import {_webapp} from '../config/hook.js';
+  import vTabbar from '../../mode/Tabbar.vue'
+  import {recordStatistics_get, teamsStatistics, orderStatistics, memberInfo, LOGINOUT} from '../../../api/api'
+  import {_webapp} from '../../../config/hook.js';
   import {mapMutations, mapGetters, mapState} from 'vuex'
   import {MessageBox} from 'mint-ui';
 
@@ -388,8 +388,8 @@
   }
 </script>
 <style scoped>
-  @import '../assets/css/fonts/iconfont.css';
-  @import '../assets/css/reset/reset.css';
+  @import '../../../assets/css/fonts/iconfont.css';
+  @import '../../../assets/css/reset/reset.css';
 
   * {
     font-size: .16rem;
@@ -430,7 +430,7 @@
   .icon > img {
     width: .70rem;
     height: .70rem;
-    background: url('../assets/images/userinfo-02.png') no-repeat 100% 100%;
+    background: url('../../../assets/images/userinfo-02.png') no-repeat 100% 100%;
     background-size: 100% 100%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -720,7 +720,7 @@
     width: .4rem;
     height: .4rem;
     display: block;
-    background: url('../assets/images/Spinner.gif') no-repeat 100% 100%;
+    background: url('../../../assets/images/spinner.gif') no-repeat 100% 100%;
     background-size: 100% 100%;
   }
   .main1 {

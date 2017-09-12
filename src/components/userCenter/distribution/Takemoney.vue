@@ -50,7 +50,7 @@
 </template>
 <script>
 
-  import {withdrawals_get, withdrawals_post, recordStatistics_get} from '../../api/api.js';
+  import {withdrawals_get, withdrawals_post, recordStatistics_get} from '../../../api/api.js';
   import {Toast} from 'mint-ui';
 
   export default{

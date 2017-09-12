@@ -7,63 +7,78 @@ Vue.use(Router)
  * index模块
  */
 const app = r => require.ensure([], () => r(require('../App.vue')), 'app')
-// const  = r => require.ensure([], () => r(require('../components/index/alertLogin.vue')), 'alertLogin')
-//Home
+
+/*
+*
+*
+* */
 import Home from '../view/Home.vue'
-
-// const Order = r => require.ensure([], () => r(require('../view/Order.vue')), 'Order')
-const MyOrder = r => require.ensure([], () => r(require('../view/MyOrder.vue')), 'Order')
+const Category = r => require.ensure([], () => r(require('../view/Category.vue')), 'Category')
+const MyOrder = r => require.ensure([], () => r(require('../components/userCenter/order/MyOrder.vue')), 'Order')
 const ShoppingCart = r => require.ensure([], () => r(require('../view/ShoppingCart.vue')), 'ShoppingCart')
-const VipCenter = r => require.ensure([], () => r(require('../view/distributionCenter.vue')), 'VipCenter')
-const QrCode = r => require.ensure([], () => r(require('../view/QrCode.vue')), 'QrCode')
+const UserCenter = r => require.ensure([], () => r(require('../view/UserCenter.vue')), 'UserCenter')
+const Empty = r => require.ensure([], () => r(require('../view/Empty.vue')), 'Empty')
 
-/**
- * 分销模块
- * @param r
- */
-const extension = r => require.ensure([], () => r(require('../components/distribution/extension.vue')), 'vipCvnenter')
-const partner = r => require.ensure([], () => r(require('../components/distribution/partner.vue')), 'vipCvnenter')
-const partnerInfo = r => require.ensure([], () => r(require('../components/distribution/partnerInfo.vue')), 'vipCvnenter')
-const orderinfo = r => require.ensure([], () => r(require('../components/distribution/orderinfo.vue')), 'vipCvnenter')
-const UserInfo = r => require.ensure([], () => r(require('../components/VipCenter/UserInfo.vue')), 'distribution')
+// const QrCode = r => require.ensure([], () => r(require('../view/QrCode.vue')), 'QrCode')
 
 
-/**
- *
- * @param 提现  提现列表
- */
-const takemoney = r => require.ensure([], () => r(require('../components/distribution/Takemoney.vue')), 'vipCvnenter')
-const Moneylist = r => require.ensure([], () => r(require('../components/distribution/Moneylist.vue')), 'vipCvnenter')
+
+/*
+* 个人中心
+* VipCenter 分销中心
+* Extension 推广订单
+* Partner 我的团队
+* partnerInfo 伙伴信息
+* Orderinfo 推广订单详情
+* UserInfo 用户信息
+* Takemoney 提现页面
+* Moneylist 提现列表
+*
+* */
+const VipCenter = r => require.ensure([], () => r(require('../components/userCenter/distribution/distributionCenter.vue')), 'UserCenter')
+const Extension = r => require.ensure([], () => r(require('../components/userCenter/distribution/extension.vue')), 'UserCenter')
+const Partner = r => require.ensure([], () => r(require('../components/userCenter/distribution/partner.vue')), 'UserCenter')
+const PartnerInfo = r => require.ensure([], () => r(require('../components/userCenter/distribution/partnerInfo.vue')), 'UserCenter')
+const Orderinfo = r => require.ensure([], () => r(require('../components/userCenter/distribution/orderinfo.vue')), 'UserCenter')
+const UserInfo = r => require.ensure([], () => r(require('../components/userCenter/user/UserInfo.vue')), 'UserCenter')
+const Takemoney = r => require.ensure([], () => r(require('../components/userCenter/distribution/Takemoney.vue')), 'UserCenter')
+const Moneylist = r => require.ensure([], () => r(require('../components/userCenter/distribution/Moneylist.vue')), 'UserCenter')
 
 
-/**
- * 商品详情模块
- */
-const goodsDetails = r => require.ensure([], () => r(require('../components/Home/productDetail.vue')), 'goodsDetails')
-const payselect = r => require.ensure([], () => r(require('../components/common/payselect.vue')), 'goodsDetails')
+/*
+*  分类模块
+*  List 分类列表
+*  Details 详情
+* */
+const List = r => require.ensure([], () => r(require('../components/category/List.vue')), 'Category')
+const Details = r => require.ensure([], () => r(require('../components/category/productDetail.vue')), 'Category')
+
+
+
+// const Payselect = r => require.ensure([], () => r(require('../components/common/payselect.vue')), 'goodsDetails')
 const Outmoney = r => require.ensure([], () => r(require('../components/common/outmoney.vue')), 'goodsDetails')
 
 /**
  * 确认订单页面
  */
-const ConfirmOrder = r => require.ensure([], () => r(require('../components/common/ConfirmOrder.vue')), 'common')
-const DeliveryAddress = r => require.ensure([], () => r(require('../components/common/DeliveryAddress.vue')), 'common')
-const AddAddress = r => require.ensure([], () => r(require('../components/common/AddAddress.vue')), 'common')
-const DeliveryMode = r => require.ensure([], () => r(require('../components/common/DeliveryMode.vue')), 'common')
-const manageAddress = r => require.ensure([], () => r(require('../components/common/manageAddress.vue')), 'common')
-const editAddress = r => require.ensure([], () => r(require('../components/common/editAddress.vue')), 'common')
+const ConfirmOrder = r => require.ensure([], () => r(require('../components/submitOrder/ConfirmOrder.vue')), 'submitOrder')
+const DeliveryAddress = r => require.ensure([], () => r(require('../components/submitOrder/DeliveryAddress.vue')), 'submitOrder')
+const AddAddress = r => require.ensure([], () => r(require('../components/submitOrder/AddAddress.vue')), 'submitOrder')
+const DeliveryMode = r => require.ensure([], () => r(require('../components/submitOrder/DeliveryMode.vue')), 'submitOrder')
+const ManageAddress = r => require.ensure([], () => r(require('../components/submitOrder/manageAddress.vue')), 'submitOrder')
+const EditAddress = r => require.ensure([], () => r(require('../components/submitOrder/EditAddress.vue')), 'submitOrder')
 /**
  * 订单详情
  */
-const Orderd = r => require.ensure([], () => r(require('../components/order/orderDetail.vue')), 'Orderd')
-const Logistics = r => require.ensure([], () => r(require('../components/order/logistics.vue')), 'Logistics')
-const Drawback = r => require.ensure([], () => r(require('../components/order/drawback.vue')), 'Drawback')
-const DrawbackInfo = r => require.ensure([], () => r(require('../components/order/drawbackInfo.vue')), 'DrawbackInfo')
+const Orderd = r => require.ensure([], () => r(require('../components/userCenter/order/orderDetail.vue')), 'Orderd')
+const Logistics = r => require.ensure([], () => r(require('../components/userCenter/order/logistics.vue')), 'Logistics')
+const Drawback = r => require.ensure([], () => r(require('../components/userCenter/order/drawback.vue')), 'Drawback')
+const DrawbackInfo = r => require.ensure([], () => r(require('../components/userCenter/order/drawbackInfo.vue')), 'DrawbackInfo')
 
 export default new Router({
   routes: [
+    //首页
     {
-
       path: '',
       name: 'home',
       component: Home,
@@ -71,81 +86,82 @@ export default new Router({
         {
           path: '/details',
           name: 'details',
-          component: goodsDetails,
+          component: Details,
         },
+        // {
+        //   path:'/list',
+        //   name:'list',
+        //   component:List
+        // }
       ]
     },
-    {
-      path: '/order',
-      name: 'order',
-      component: MyOrder,
-      children: [
-        {
-          path: '/orderd',
-          name: 'orderd',
-          component: Orderd,
-        },
-        {
-          path: '/logistics',
-          name: 'logistics',
-          component: Logistics,
-        },
-        {
-          path: '/drawback',
-          name: 'drawback',
-          component: Drawback,
-        },
-        {
-          path: '/drawbackInfo',
-          name: 'drawbackInfo',
-          component: DrawbackInfo,
-        },
 
+    /*
+    * 分类
+    * */
+
+    {
+      path: '/category',
+      name:'category',
+      component:Category,
+      children:[
+        {
+          path: '/category/list',
+          name:'list2',
+          component:List,
+          children: [
+            {
+              path: 'list/details',
+              name: 'detail',
+              component: Details,
+            },
+          ]
+        }
       ]
     },
+
+
+    //购物车
     {
       path: '/shoppingCart',
       name: 'shoppingCart',
       component: ShoppingCart
     },
+
     {
       path: '/vipCenter',
       name: 'vipCenter',
       component: VipCenter,
       children: [
-        {
-          path: '/vipCenter/userinfo',
-          name: 'userinfo',
-          component: UserInfo,
-        },
+
         {
           path: '/extension',
           name: 'extension',
-          component: extension,
+          component: Extension,
           children: [
             {
               path: '/orderinfo',
               name: 'orderinfo',
-              component: orderinfo
+              component: Orderinfo
             },
           ]
         },
         {
           path: '/partner',
           name: 'partner',
-          component: partner,
+          component: Partner,
           children: [
             {
               path: '/partnerInfo',
               name: 'partnerInfo',
-              component: partnerInfo
+              component: PartnerInfo
             },
           ]
         },
         {
           path: '/takemoney',
           name: 'takemoney',
-          component: takemoney,
+          component: Takemoney,
           children: [
             {
               path: '/moneylist',
@@ -161,65 +177,116 @@ export default new Router({
         }
       ]
     },
+
+    //提交订单流程
     {
-      path: '/qrCode',
-      name: 'qrCode',
-      component: QrCode
+      path:'/submit',
+      component:Empty,
+      children:[
+        {
+          path: '/confirmOrder',
+          name: 'confirmOrder',
+          component: ConfirmOrder,
+          children: [     //选择地址  配送方式
+            {
+              path: '/deliveryAddress',
+              name: 'deliveryAddress',
+              component: DeliveryAddress,
+              children: [
+                {
+                  path: '/manageAddress',
+                  name: 'manageAddress',
+                  component: ManageAddress,
+                  children: [
+                    {
+                      path: '/addAddress',
+                      name: 'addAddress',
+                      component: AddAddress
+                    },
+                    {
+                      path: '/editAddress',
+                      name: 'editAddress',
+                      component: EditAddress
+                    }
+                  ]
+                },
+              ]  //
+            },
+            {
+              path: '/deliveryMode',
+              name: 'deliveryMode',
+              component: DeliveryMode
+            }
+          ]
+        },
+      ]
     },
+
     {
-      path: '/confirmorder',
-      name: 'confirmorder',
-      component: ConfirmOrder,
+      path: '/userCenter',
+      name:'userCenter',
+      component: UserCenter,
       children: [
         {
-          path: '/deliveryaddress',
-          name: 'deliveryaddress',
+          path: '/order',
+          name: 'order',
+          component: MyOrder,
+          children: [
+            {
+              path: '/orderd',
+              name: 'orderd',
+              component: Orderd,
+            },
+            {
+              path: '/logistics',
+              name: 'logistics',
+              component: Logistics,
+            },
+            {
+              path: '/drawback',
+              name: 'drawback',
+              component: Drawback,
+            },
+            {
+              path: '/drawbackInfo',
+              name: 'drawbackInfo',
+              component: DrawbackInfo,
+            },
+
+          ]
+        },
+        {
+          path: '/userCenter/userInfo',
+          name: 'userInfo',
+          component: UserInfo,
+        },
+        {
+          path: '/deliveryAddress',
+          name: 'deliveryAddress',
           component: DeliveryAddress,
           children: [
             {
               path: '/manageAddress',
               name: 'manageAddress',
-              component: manageAddress,
+              component: ManageAddress,
               children: [
                 {
-                  path: '/addaddress',
-                  name: 'addaddress',
+                  path: '/addAddress',
+                  name: 'addAddress',
                   component: AddAddress
                 },
                 {
                   path: '/editAddress',
                   name: 'editAddress',
-                  component: editAddress
+                  component: EditAddress
                 }
-
               ]
             },
-
-            {
-              path: '/payselect',
-              name: 'payselect',
-              component: payselect
-            }
           ]
         },
-        {
-          path: '/deliverymode',
-          name: 'deliverymode',
-          component: DeliveryMode
-        }
       ]
     },
 
-    {
-      path: '/orderpayselect',
-      name: 'orderpayselect',
-      component: payselect
-    },
-    {
-      path: '/payselect',
-      name: 'payselect',
-      component: payselect
-    },
 
     {
       path: '*',

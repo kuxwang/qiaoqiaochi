@@ -72,9 +72,9 @@
   import {Popup, Picker, Toast} from 'mint-ui';
 
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
-  import {teamsStatistics, teamsLists, teams} from '../../api/api.js'
+  import {teamsStatistics, teamsLists, teams} from '../../../api/api.js'
   import {mapMutations, mapGetters} from 'vuex';
-  import loadingList from '../common/loadinglist.vue'
+  import loadingList from '../../common/loadinglist.vue'
   export default{
     data () {
       return {
@@ -413,8 +413,8 @@
 
 </script>
 <style scoped>
-  @import '../../assets/css/fonts/iconfont.css';
-  @import '../../assets/css/reset/reset.css';
+  @import '../../../assets/css/fonts/iconfont.css';
+  @import '../../../assets/css/reset/reset.css';
 
   * {
     font-size: .16rem;

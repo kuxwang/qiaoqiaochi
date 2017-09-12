@@ -38,9 +38,9 @@
 </template>
 <script>
   import {Navbar, MessageBox, Loadmore, Toast} from 'mint-ui';
-  import vTabbar from '../components/common/Tabbar';
-  import orderLists from '../components/order/orderlist';
-  import {orderList, orderManu} from '../api/api.js'
+  import vTabbar from '../../mode/Tabbar';
+  import orderLists from './orderlist';
+  import {orderList, orderManu} from '../../../api/api.js'
   import {mapMutations, mapGetters} from 'vuex'
   export default{
     name: 'page-navbar',
@@ -141,7 +141,7 @@
   }
 </script>
 <style scoped>
-  @import '../assets/css/reset/reset.css';
+  @import '../../../assets/css/reset/reset.css';
 
   * {
     font-size: .15rem;

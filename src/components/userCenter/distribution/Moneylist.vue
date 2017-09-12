@@ -37,7 +37,7 @@
 </template>
 
 <script>
-  import {withdrawals_get, withdrawals_post} from '../../api/api.js';
+  import {withdrawals_get, withdrawals_post} from '../../../api/api.js';
   import { Loadmore } from 'mint-ui';
 
   export default{

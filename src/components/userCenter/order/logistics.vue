@@ -52,7 +52,7 @@
 <script>
   import { Header} from 'mint-ui'
   import { mapState} from 'Vuex'
-  import { expressInfo ,orderDetail} from '../../api/api.js'
+  import { expressInfo ,orderDetail} from '../../../api/api.js'
   export default {
     data(){
       return{
