@@ -52,7 +52,7 @@
 </template>
 <script>
   import {mapGetters, mapMutations, mapState} from 'vuex';
-  import {addresses_get, addresses_delete} from '../../api/api';
+  import {addresses_get, addresses_delete} from '../../../api/api';
   import {MessageBox} from 'mint-ui';
   //  import {Checklist} from 'mint-ui';
 
@@ -160,8 +160,8 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/fonts/iconfont.css';
-  @import '../../assets/css/reset/reset.css';
+  @import '../../../assets/css/fonts/iconfont.css';
+  @import '../../../assets/css/reset/reset.css';
 
   .main {
     position: fixed;

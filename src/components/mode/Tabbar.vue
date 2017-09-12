@@ -22,15 +22,15 @@
       <router-link class="mint-tab-item" :to="{name:'vipCenter'}"  tag="a">
         <div class="mint-tab-item-label">
           <div class="iconfont tabIcon">&#xe603;</div>
-          会员中心
+          个人中心
         </div>
       </router-link>
-      <router-link class="mint-tab-item" :to="{name:'qrCode'}"  tag="a">
+     <!-- <router-link class="mint-tab-item" :to="{name:'qrCode'}"  tag="a">
         <div class="mint-tab-item-label">
           <div class="iconfont tabIcon">&#xe60c;</div>
           我的二维码
         </div>
-      </router-link>
+      </router-link>-->
     </mt-tabbar>
     </div>
 </template>

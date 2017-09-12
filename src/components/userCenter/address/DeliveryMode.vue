@@ -16,7 +16,7 @@
 </template>
 <script>
   import {mapGetters, mapMutations} from 'vuex';
-  import {dispatchs_get} from '../../api/api';
+  import {dispatchs_get} from '../../../api/api';
   export default{
     data(){
       return {
@@ -76,8 +76,8 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/fonts/iconfont.css';
-  @import '../../assets/css/reset/reset.css';
+  @import '../../../assets/css/fonts/iconfont.css';
+  @import '../../../assets/css/reset/reset.css';
 
   .main {
     position: fixed;
@@ -127,7 +127,7 @@
     height: 0.12rem;
     top: 0.18rem;
     right: 0.2rem;
-    background: url('../../assets/images/userinfo-01.png') no-repeat center center;
+    background: url('../../../assets/images/userinfo-01.png') no-repeat center center;
     background-size: cover;
   }
 

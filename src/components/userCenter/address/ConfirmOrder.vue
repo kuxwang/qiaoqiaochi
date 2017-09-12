@@ -137,7 +137,7 @@
 </template>
 <script>
   import {Header, MessageBox, Toast} from 'mint-ui';
-  import {GET_MYADDRESS1, GET_ORDER1, confirm_post, DispatchMoney} from '../../api/api';
+  import {GET_MYADDRESS1, GET_ORDER1, confirm_post, DispatchMoney} from '../../../api/api';
   import {mapMutations, mapState, mapGetters} from 'Vuex';
   //  import _ from 'lodash'
   export default {
@@ -455,8 +455,8 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/fonts/iconfont.css';
-  @import '../../assets/css/reset/reset.css';
+  @import '../../../assets/css/fonts/iconfont.css';
+  @import '../../../assets/css/reset/reset.css';
 
   .main {
     position: fixed;
@@ -501,7 +501,7 @@
     height: 0.12rem;
     top: 0.295rem;
     right: 0.1rem;
-    background: url('../../assets/images/userinfo-01.png') no-repeat center center;
+    background: url('../../../assets/images/userinfo-01.png') no-repeat center center;
     background-size: cover;
   }
 
@@ -613,7 +613,7 @@
     height: 0.12rem;
     top: 0.17rem;
     right: 0rem;
-    background: url('../../assets/images/userinfo-01.png') no-repeat center center;
+    background: url('../../../assets/images/userinfo-01.png') no-repeat center center;
     background-size: cover;
   }
 
@@ -807,7 +807,7 @@
     height: 0.12rem;
     top: 0.19rem;
     right: 0.1rem;
-    background: url('../../assets/images/userinfo-03.png') no-repeat center center;
+    background: url('../../../assets/images/userinfo-03.png') no-repeat center center;
     background-size: cover;
   }
 

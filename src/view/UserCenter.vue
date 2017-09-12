@@ -307,7 +307,7 @@
   .icon > img {
     width: .70rem;
     height: .70rem;
-    background: url('../assets/images/userinfo-02.png') no-repeat 100% 100%;
+    /*background: url('../assets/images/userinfo-02.png') no-repeat 100% 100%;*/
     background-size: 100% 100%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -621,7 +621,7 @@
     width: .4rem;
     height: .4rem;
     display: block;
-    background: url('../assets/images/Spinner.gif') no-repeat 100% 100%;
+    /*background: url('../assets/images/Spinner.gif') no-repeat 100% 100%;*/
     background-size: 100% 100%;
   }
 

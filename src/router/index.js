@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import App from '../App'
 Vue.use(Router)
 
 /**
@@ -10,7 +9,6 @@ const app = r => require.ensure([], () => r(require('../App.vue')), 'app')
 
 /*
 *
-*
 * */
 import Home from '../view/Home.vue'
 const Category = r => require.ensure([], () => r(require('../view/Category.vue')), 'Category')
@@ -18,9 +16,6 @@ const MyOrder = r => require.ensure([], () => r(require('../components/userCente
 const ShoppingCart = r => require.ensure([], () => r(require('../view/ShoppingCart.vue')), 'ShoppingCart')
 const UserCenter = r => require.ensure([], () => r(require('../view/UserCenter.vue')), 'UserCenter')
 const Empty = r => require.ensure([], () => r(require('../view/Empty.vue')), 'Empty')
-
-// const QrCode = r => require.ensure([], () => r(require('../view/QrCode.vue')), 'QrCode')
-
 
 
 /*
@@ -61,12 +56,12 @@ const Outmoney = r => require.ensure([], () => r(require('../components/common/o
 /**
  * 确认订单页面
  */
-const ConfirmOrder = r => require.ensure([], () => r(require('../components/submitOrder/ConfirmOrder.vue')), 'submitOrder')
-const DeliveryAddress = r => require.ensure([], () => r(require('../components/submitOrder/DeliveryAddress.vue')), 'submitOrder')
-const AddAddress = r => require.ensure([], () => r(require('../components/submitOrder/AddAddress.vue')), 'submitOrder')
-const DeliveryMode = r => require.ensure([], () => r(require('../components/submitOrder/DeliveryMode.vue')), 'submitOrder')
-const ManageAddress = r => require.ensure([], () => r(require('../components/submitOrder/manageAddress.vue')), 'submitOrder')
-const EditAddress = r => require.ensure([], () => r(require('../components/submitOrder/EditAddress.vue')), 'submitOrder')
+const ConfirmOrder = r => require.ensure([], () => r(require('../components/userCenter/address/ConfirmOrder.vue')), 'submitOrder')
+const DeliveryAddress = r => require.ensure([], () => r(require('../components/userCenter/address/DeliveryAddress.vue')), 'submitOrder')
+const AddAddress = r => require.ensure([], () => r(require('../components/userCenter/address/AddAddress.vue')), 'submitOrder')
+const DeliveryMode = r => require.ensure([], () => r(require('../components/userCenter/address/DeliveryMode.vue')), 'submitOrder')
+const ManageAddress = r => require.ensure([], () => r(require('../components/userCenter/address/manageAddress.vue')), 'submitOrder')
+const EditAddress = r => require.ensure([], () => r(require('../components/userCenter/address/EditAddress.vue')), 'submitOrder')
 /**
  * 订单详情
  */
@@ -88,11 +83,11 @@ export default new Router({
           name: 'details',
           component: Details,
         },
-        // {
-        //   path:'/list',
-        //   name:'list',
-        //   component:List
-        // }
+        {
+          path:'/list',
+          name:'list',
+          component:List
+        }
       ]
     },
 
@@ -119,7 +114,6 @@ export default new Router({
         }
       ]
     },
-
 
     //购物车
     {
@@ -180,7 +174,7 @@ export default new Router({
 
     //提交订单流程
     {
-      path:'/submit',
+      path:'/empty',
       component:Empty,
       children:[
         {
@@ -189,23 +183,23 @@ export default new Router({
           component: ConfirmOrder,
           children: [     //选择地址  配送方式
             {
-              path: '/deliveryAddress',
-              name: 'deliveryAddress',
+              path: '/confirmOrder/deliveryAddress',
+              name: 'submitdeliveryAddress',
               component: DeliveryAddress,
               children: [
                 {
-                  path: '/manageAddress',
-                  name: 'manageAddress',
+                  path: '/confirmOrder/deliveryAddress/manageAddress',
+                  name: 'submitmanageAddress',
                   component: ManageAddress,
                   children: [
                     {
-                      path: '/addAddress',
-                      name: 'addAddress',
+                      path: '/confirmOrder/deliveryAddress/manageAddress/addAddress',
+                      name: 'submitaddAddress',
                       component: AddAddress
                     },
                     {
-                      path: '/editAddress',
-                      name: 'editAddress',
+                      path: '/confirmOrder/deliveryAddress/manageAddress/editAddress',
+                      name: 'submiteditAddress',
                       component: EditAddress
                     }
                   ]
@@ -234,7 +228,7 @@ export default new Router({
           children: [
             {
               path: '/orderd',
-              name: 'orderd',
+              // name: 'orderd',
               component: Orderd,
             },
             {

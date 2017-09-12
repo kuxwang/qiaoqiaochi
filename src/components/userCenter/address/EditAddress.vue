@@ -43,9 +43,9 @@
 </template>
 <script>
   import {Toast, Picker, Popup, DatetimePicker, Checklist} from 'mint-ui';
-  import {address, slots} from '../../assets/js/address';
+  import {address, slots} from '../../../assets/js/address';
   import {mapState, mapMutations, mapGetters} from 'Vuex';
-  import {addresses_post, addresses_put} from '../../api/api';
+  import {addresses_post, addresses_put} from '../../../api/api';
   export default{
     data(){
       return {
@@ -247,8 +247,8 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/fonts/iconfont.css';
-  @import '../../assets/css/reset/reset.css';
+  @import '../../../assets/css/fonts/iconfont.css';
+  @import '../../../assets/css/reset/reset.css';
 
   .main {
     position: fixed;
@@ -286,7 +286,7 @@
     height: 0.12rem;
     top: 0.18rem;
     right: 0.2rem;
-    background: url('../../assets/images/userinfo-01.png') no-repeat center center;
+    background: url('../../../assets/images/userinfo-01.png') no-repeat center center;
     background-size: cover;
   }
 

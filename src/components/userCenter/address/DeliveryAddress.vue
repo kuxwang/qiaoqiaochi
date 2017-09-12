@@ -36,7 +36,7 @@
 </template>
 <script>
   import {mapGetters, mapMutations, mapState} from 'vuex';
-  import {addresses_get} from '../../api/api';
+  import {addresses_get} from '../../../api/api';
 
   export default{
     data(){
@@ -157,8 +157,8 @@
   }
 </script>
 <style scoped>
-  @import '../../assets/css/fonts/iconfont.css';
-  @import '../../assets/css/reset/reset.css';
+  @import '../../../assets/css/fonts/iconfont.css';
+  @import '../../../assets/css/reset/reset.css';
 
   .main {
     position: fixed;
