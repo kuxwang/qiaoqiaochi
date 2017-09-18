@@ -90,19 +90,19 @@
             </router-link>
 
             <!--<router-link class="center-cell" :to="{name:'footprint'}" tag="li">-->
-            <!--<li class="center-cell" @click="msg()">
+            <li class="center-cell" @click="msg()">
             <div class="iconfont icon5">&#xe616;</div>
             <div class="title-list">售后规则</div>
             <i class="iconfont right">&#xe649;</i>
-            </li>-->
+            </li>
             <!--</router-link>-->
-            <!--<li class="center-cell" @click="msg()">
-            &lt;!&ndash;<router-link class="center-cell" :to="{name:'footprint'}" tag="li">&ndash;&gt;
+            <li class="center-cell" @click="msg()">
+            <!--<router-link class="center-cell" :to="{name:'footprint'}" tag="li">-->
               <div class="iconfont icon6">&#xe639;</div>
               <div class="title-list">关于我们</div>
               <i class="iconfont right">&#xe649;</i>
-            &lt;!&ndash;</router-link>&ndash;&gt;
-            </li>-->
+            <!--</router-link>-->
+            </li>
           </ul>
           <button class="outLogin" @click="outLogin">退出登录</button>
         </section>
@@ -132,7 +132,6 @@
       return {
         topStatus: '',
         disindex: 3,
-
         orderStatistics: {
           total: '0',//全部
           lock: '0',//未结算

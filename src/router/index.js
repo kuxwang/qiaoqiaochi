@@ -30,14 +30,14 @@ const Empty = r => require.ensure([], () => r(require('../view/Empty.vue')), 'Em
 * Moneylist 提现列表
 *
 * */
-const VipCenter = r => require.ensure([], () => r(require('../components/userCenter/distribution/distributionCenter.vue')), 'UserCenter')
-const Extension = r => require.ensure([], () => r(require('../components/userCenter/distribution/extension.vue')), 'UserCenter')
-const Partner = r => require.ensure([], () => r(require('../components/userCenter/distribution/partner.vue')), 'UserCenter')
-const PartnerInfo = r => require.ensure([], () => r(require('../components/userCenter/distribution/partnerInfo.vue')), 'UserCenter')
-const Orderinfo = r => require.ensure([], () => r(require('../components/userCenter/distribution/orderinfo.vue')), 'UserCenter')
+const VipCenter = r => require.ensure([], () => r(require('../view/distributionCenter.vue')), 'UserCenter')
+const Extension = r => require.ensure([], () => r(require('../components/distribution/extension.vue')), 'UserCenter')
+const Partner = r => require.ensure([], () => r(require('../components/distribution/partner.vue')), 'UserCenter')
+const PartnerInfo = r => require.ensure([], () => r(require('../components/distribution/partnerInfo.vue')), 'UserCenter')
+const Orderinfo = r => require.ensure([], () => r(require('../components/distribution/orderinfo.vue')), 'UserCenter')
 const UserInfo = r => require.ensure([], () => r(require('../components/userCenter/user/UserInfo.vue')), 'UserCenter')
-const Takemoney = r => require.ensure([], () => r(require('../components/userCenter/distribution/Takemoney.vue')), 'UserCenter')
-const Moneylist = r => require.ensure([], () => r(require('../components/userCenter/distribution/Moneylist.vue')), 'UserCenter')
+const Takemoney = r => require.ensure([], () => r(require('../components/distribution/Takemoney.vue')), 'UserCenter')
+const Moneylist = r => require.ensure([], () => r(require('../components/distribution/Moneylist.vue')), 'UserCenter')
 
 
 /*
@@ -122,6 +122,8 @@ export default new Router({
       component: ShoppingCart
     },
 
+
+    //分销
     {
       path: '/vipCenter',
       name: 'vipCenter',

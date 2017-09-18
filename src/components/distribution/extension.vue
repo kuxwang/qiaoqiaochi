@@ -96,12 +96,12 @@
   </div>
 </template>
 <script>
-  import MtCell from "../../../../node_modules/mint-ui/packages/cell/src/cell";
+  import MtCell from "../../../node_modules/mint-ui/packages/cell/src/cell";
   //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
   import {Search, Loadmore, InfiniteScroll, Toast} from 'mint-ui';
   import {mapMutations, mapGetters} from 'vuex';
-  import {orderStatistics, orderLists, orders} from '../../../api/api'
-  import loadingList from '../../common/loadinglist.vue'
+  import {orderStatistics, orderLists, orders} from '../../api/api'
+  import loadingList from '../common/loadinglist.vue'
 
 
   export default{
@@ -435,8 +435,8 @@
   }
 </script>
 <style scoped>
-  @import '../../../assets/css/fonts/iconfont.css';
-  @import '../../../assets/css/reset/reset.css';
+  @import '../../assets/css/fonts/iconfont.css';
+  @import '../../assets/css/reset/reset.css';
 
   * {
     font-size: .16rem;

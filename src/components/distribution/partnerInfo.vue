@@ -49,7 +49,7 @@
 </template>
 <script>
   import {Header} from 'mint-ui'
-  import { teams} from '../../../api/api.js';
+  import { teams} from '../../api/api.js';
   export default{
     data(){
       return{
@@ -102,8 +102,8 @@
   }
 </script>
 <style scoped>
-  @import '../../../assets/css/fonts/iconfont.css';
-  @import '../../../assets/css/reset/reset.css';
+  @import '../../assets/css/fonts/iconfont.css';
+  @import '../../assets/css/reset/reset.css';
 
   .mainInfo{
     position: fixed;

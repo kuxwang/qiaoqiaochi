@@ -19,6 +19,12 @@
           购物车
         </div>
       </router-link>
+      <router-link class="mint-tab-item" :to="{name:'vipCenter'}"  tag="a">
+        <div class="mint-tab-item-label">
+          <div class="iconfont tabIcon">&#xe603;</div>
+          店铺
+        </div>
+      </router-link>
       <router-link class="mint-tab-item" :to="{name:'userCenter'}"  tag="a">
         <div class="mint-tab-item-label">
           <div class="iconfont tabIcon">&#xe603;</div>
@@ -38,8 +44,7 @@
 //  import { Tabbar ,TabItem } from 'mint-ui';
   export default{
     components:{
-//      Tabbar,
-//      TabItem
+
     }
   }
 </script>
