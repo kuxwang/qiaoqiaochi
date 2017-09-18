@@ -19,7 +19,7 @@
           购物车
         </div>
       </router-link>
-      <router-link class="mint-tab-item" :to="{name:'vipCenter'}"  tag="a">
+      <router-link class="mint-tab-item" :to="{name:'userCenter'}"  tag="a">
         <div class="mint-tab-item-label">
           <div class="iconfont tabIcon">&#xe603;</div>
           个人中心

@@ -1,737 +1,310 @@
 <template>
-  <div class="main needsclick">
+  <div class="page">
+    <mt-header title="店铺管理" fixed>
+      <router-link to="/userCenter" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+    </mt-header>
     <div class="container">
-      <!--<mt-loadmore :top-method.stop="loadTop" @top-status-change="handleTopChange" :maxDistance="60"-->
-                   <!--:distanceIndex="disindex"-->
-                   <!--:top-distance="30" ref="loadmore">-->
-        <div slot="top" class="mint-loadmore-top">
-          <span class="iconfont" v-show="topStatus !== 'loading'"
-                :class="{ 'rotate': topStatus === 'drop' }">&#xe732;下拉刷新</span>
-          <span class="loading" v-show="topStatus === 'loading'">加载中</span>
+      <div class="user">
+          <div class="user__logo">
+            <img :src="img1"/>
+          </div>
+          <div class="user__info">
+            <h5>向阳</h5>
+            <div class="user__info__id">ID:123456</div>
+          </div>
+          <div class="user__qcode">
+            <img :src="img1"/>
+          </div>
+      </div>
+      <ul class="nagative">
+        <li class="nav__item">
+          <div class="logo">
+            <img src="../../../assets/images/panter.png"/>
+          </div>
+          <span>团队管理</span>
+        </li>
+        <li class="nav__item">
+          <div class="logo">
+            <img src="../../../assets/images/order.png"/>
+          </div>
+          <span>订单管理</span>
+        </li>
+        <li class="nav__item">
+          <div class="logo">
+            <img src="../../../assets/images/money.png"/>
+          </div>
+          <span>收益管理</span>
+        </li>
+      </ul>
+      <section>
+        <div class="title">
+          <div class="icon"></div>
+          <div class="text">直属团队</div>
+          <div class="right">邀请加入<span class="iconfont">&#xe61b;</span></div>
         </div>
-        <router-link class="avatar" tag="section" :to="{name:'userinfo'}">
-          <div class="icon">
-            <img :src="memberInfo.avatar" alt="">
+        <div class="info">
+          <div class="info__item1">
+            <div>100</div>
+            总人数
           </div>
-          <div class="message">
-            <div>
-              <span class="nametype">昵称:</span>
-              <span>{{memberInfo.nickname}}</span>
-            </div>
-            <div>
-              <span class="nametype">会员ID:</span>
-              <span>{{memberInfo.id}}</span>
-            </div>
-            <div>
-              <span class="nametype">等级:</span>
-              <span>{{memberInfo.level}}</span>
-            </div>
-            <div>
-              <span class="nametype">推荐人:</span>
-              <span>{{memberInfo.from}}</span>
-            </div>
+          <div class="info__item2">
+            <div>100</div>
+            本月人数
           </div>
-          <i class="iconfont right">&#xe649;</i>
-          <!-- <router-link class="iconfont right" :to="{name:'userinfo'}" tag="i">&#xe649;</router-link> -->
-        </router-link>
-        <section class="top">
-          <router-link class="money-top" :to="{name: 'takemoney'}" tag="div">
-            推广费:{{recordStatistics_get.c_money_sum}} 元
-          </router-link>
-        </section>
-        <section class="content">
-          <div class="mfriend">
-            <span class="mint-cell-text">我的伙伴</span>
+        </div>
+      </section>
+      <section>
+        <div class="title">
+          <div class="icon"></div>
+          <div class="text">收益</div>
+          <div class="right">每月明细<span class="iconfont">&#xe61b;</span></div>
+        </div>
+        <div class="money">
+          <div class="info__item3">
+            今日收益（元）
+            <div>100</div>
           </div>
-          <ul>
-            <!--<router-link to="/partner" tag="li">-->
-            <router-link class="li1"
-                         :to="{path:'partner',query:{stab:1,type:'all',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}"
-                         tag="li">
-              <!--<li class="li1" @click="partnertab(1)">-->
-              <div class="title">所有伙伴</div>
-              <div class="iconfont listicon">&#xe646;</div>
-              <div class="nummoney">
-                <span class="num">{{teamsStatistics.all}}</span><span class="yuan"> 人</span>
-              </div>
-              <!--</li>-->
-            </router-link>
-            <router-link class="li1"
-                         :to="{path:'partner',query:{stab:2,type:'agent',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}"
-                         tag="li">
-              <!--<li class="li2" @click="partnertab(2)">-->
-              <div class="title">已购买伙伴</div>
-              <div class="iconfont listicon">&#xe600;</div>
-              <div class="nummoney">
-                <span class="num">{{teamsStatistics.purchased}}</span><span class="yuan"> 人</span>
-              </div>
-              <!--</li>-->
-            </router-link>
-            <router-link class="li1"
-                         :to="{path:'partner',query:{stab:3,type:'fans',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}"
-                         tag="li">
-              <!--<li class="li3" @click="partnertab(3)">-->
-              <div class="title">未购买伙伴</div>
-              <div class="iconfont listicon">&#xe60d;</div>
-              <div class="nummoney">
-                <span class="num">{{teamsStatistics.no_purchased}}</span><span class="yuan"> 人</span>
-              </div>
-              <!--</li>-->
-            </router-link>
-          </ul>
-
-          <div class="mfriend" v-if="false">
-            <span class="mint-cell-text" style=" padding: 5px; display: block; border-bottom: 1px dashed #ccc;">Message</span>
-
-            <div style="min-height: 320px; width: 100%; overflow: auto;">
-              <ul style="width: 100%; height: 320px; padding: 5px;" class="messageApp"></ul>
-            </div>
-          </div>
-
-          <div class="mfriend">
-            <span class="mint-cell-text">推广订单</span>
-          </div>
-
-          <ul class="order-list">
-            <!--<li class="li1" @click="ordertab(1)">-->
-            <router-link class="li1"
-                         :to="{path:'extension',query:{stab:1,type:'total',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}"
-                         tag="li">
-              <div class="title">全部</div>
-              <div class="iconfont listicon">&#xe624;</div>
-              <div class="nummoney">
-                <span class="num">{{orderStatistics.total}}</span><span class="yuan"> 单</span>
-              </div>
-            </router-link>
-            <!--</li>-->
-            <router-link class="li1"
-                         :to="{path:'extension',query:{stab:2,type:'lock',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}"
-                         tag="li">
-              <!--<li @click="ordertab(2)" class="li1">-->
-              <div class="title">未结算</div>
-              <div class="iconfont listicon">&#xe624;</div>
-              <div class="nummoney">
-                <span class="num">{{orderStatistics.lock}}</span><span class="yuan"> 单</span>
-              </div>
-            </router-link>
-            <!--</li>-->
-            <router-link class="li1"
-                         :to="{path:'extension',query:{stab:3,type:'refund',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}"
-                         tag="li">
-              <!--<li class="li2" @click="ordertab(3)">-->
-              <div class="title">已退款</div>
-              <div class="iconfont listicon">&#xe8b5;</div>
-              <div class="nummoney">
-                <span class="num">{{orderStatistics.refund}}</span><span class="yuan"> 单</span>
-              </div>
-              <!--</li>-->
-            </router-link>
-            <router-link class="li1"
-                         :to="{path:'extension',query:{stab:4,type:'ok',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}"
-                         tag="li">
-              <!--<li class="li3" @click="ordertab(4)">-->
-              <div class="title">已结算</div>
-              <div class="iconfont listicon">&#xe619;</div>
-              <div class="nummoney">
-                <span class="num">{{orderStatistics.ok}}</span><span class="yuan"> 单</span>
-              </div>
-              <!--</li>-->
-            </router-link>
-          </ul>
-
-          <div class="mfriend">
-            <span class="mint-cell-text">推广费</span>
-            <span class="mint-cell-text-right">去提现</span>
-            <router-link class="text-right" tag="div" to="/takemoney"></router-link>
-          </div>
-          <ul class="tuiguang">
-            <li class="li1">
-              <div class="title">已收货业绩</div>
-              <div class="iconfont listicon">&#xe61e;</div>
-              <div class="nummoney">
-                <span class="num">{{recordStatistics_get.o_status_3}}</span><span class="yuan"> 元</span>
-              </div>
-            </li>
-            <li class="li2">
-              <div class="title">已提现业绩</div>
-              <div class="iconfont listicon">&#xe630;</div>
-              <div class="nummoney">
-                <span class="num">{{recordStatistics_get.pay}}</span><span class="yuan"> 元</span>
-              </div>
-            </li>
-            <li class="li3">
-              <div class="title">可提现业绩</div>
-              <div class="iconfont listicon">&#xe608;</div>
-              <div class="nummoney">
-                <span class="num">{{recordStatistics_get.ok}}</span><span class="yuan"> 元</span>
-              </div>
-            </li>
-            <li class="li4">
-              <div class="title">被驳回业绩</div>
-              <div class="iconfont listicon">&#xe620;</div>
-              <div class="nummoney">
-                <span class="num">{{recordStatistics_get.invalid}}</span><span class="yuan"> 元</span>
-              </div>
-            </li>
-            <li class="li5">
-              <div class="title">申请中业绩</div>
-              <div class="iconfont listicon">&#xe602;</div>
-              <div class="nummoney">
-                <span class="num">{{recordStatistics_get.apply}}</span><span class="yuan"> 元</span>
-              </div>
-            </li>
-            <li class="li6">
-              <div class="title">待打款业绩</div>
-              <div class="iconfont listicon">&#xe625;</div>
-              <div class="nummoney">
-                <span class="num">{{recordStatistics_get.check}}</span><span class="yuan"> 元</span>
-              </div>
-            </li>
-          </ul>
-          <button class="outLogin" @click="outLogin">退出登录</button>
-          <div class="version">版本号：v1.8.5</div>
-
-        </section>
-        <!--  <transition name="slide">
-           <router-view></router-view>
-         </transition> -->
-      <!--</mt-loadmore>-->
-
+          <p>本月收益<span>88.88</span>元</p>
+          <p>累计收益<span>88.88</span>元</p>
+        </div>
+      </section>
     </div>
-    <transition name="slide">
-    <router-view></router-view>
-    </transition>
-    <v-tabbar></v-tabbar>
   </div>
 </template>
-<script>
 
-  import vTabbar from '../../mode/Tabbar.vue'
-  import {recordStatistics_get, teamsStatistics, orderStatistics, memberInfo, LOGINOUT} from '../../../api/api'
+<script>
+  import {recordStatistics_get, teamsStatistics, orderStatistics, memberInfo, } from '../../../api/api'
   import {_webapp} from '../../../config/hook.js';
   import {mapMutations, mapGetters, mapState} from 'vuex'
   import {MessageBox} from 'mint-ui';
-
-  export default{
-    data () {
+  export default {
+    data(){
       return {
-        topStatus: '',
-        disindex: 3,
-        recordStatistics_get: {
-          cg_money_sum: '0',//销售总额
-          c_money_sum: '0', //佣金总额
-          o_status_3: '0', //已收货
-          pay: '0', //已提现
-          check: '0', //可提现
-          invalid: '0', //被驳回的业绩
-          apply: '0', //申请中
-          o_status_0: '0', //待打款
-          ok: '0'
-        },
-        teamsStatistics: {
-          all: '0',  //总人数
-          purchased: '0',  //已购买人数
-          no_purchased: '0'  //未购买人数
-        },
-        orderStatistics: {
-          total: '0',//全部
-          lock: '0',//未结算
-          refund: '0',//已退款
-          ok: '0', //已结算
-        },
-        memberInfo: {
-          nickname: '',//昵称
-          id: '',//会员id
-          level: '',//会员等级
-          avatar: '',
-          leveldetail: {
-            levelname: '默认等级',
-          },
-          from: ''  //推荐人
-        },
-        defaultAvatar: '',
-        webDebug : _webapp.debug
+        img1: require('../../../assets/images/confirmorder-01.jpg'),
       }
     },
-    components: {
-      vTabbar
-    },
-    watch: {
-      $route (from) {
-        if (from.name === 'vipCenter') {
-          this.memberInfo.avatar = this.imgUrl
-        }
-      }
-    },
-    computed: {
-      ...mapState([
-        'imgUrl'
-      ])
-  },
-  methods: {
-    init () {
-      let _this = this;
-      //佣金统计
-//      console.log()
-      memberInfo({data : {}}, function (res) {
-        _webapp.log('memberInfo res');
-        _webapp.log(res);
+    methods: {
+      init(){
+        let _this=this;
+        memberInfo({data : {}}, function (res) {
+          _webapp.log('memberInfo res');
+          _webapp.log(res);
 
-        if (res.statusCode == 1) {
-          console.log(res)
-          _this.memberInfo.nickname = res.data.nickname
-          _this.memberInfo.id = res.data.id
-          _this.memberInfo.level = res.data.level
-          _this.memberInfo.leveldetail = res.data.leveldetail
-          _this.memberInfo.avatar = res.data.avatar
-          _this.memberInfo.from = res.data.parent_name || '朵云家'
-          _this.memberInfo.level = res.data.agentleveldetail.levelname
-          _this.setImgUrl(_this.memberInfo.avatar)
+          if (res.statusCode == 1) {
+            console.log(res)
+            _this.memberInfo.nickname = res.data.nickname
+            _this.memberInfo.id = res.data.id
+            _this.memberInfo.level = res.data.level
+            _this.memberInfo.leveldetail = res.data.leveldetail
+            _this.memberInfo.avatar = res.data.avatar
+            _this.memberInfo.from = res.data.parent_name || '朵云家'
+            _this.memberInfo.level = res.data.agentleveldetail.levelname
+            _this.setImgUrl(_this.memberInfo.avatar)
 
-        } else {
-          console.log('会员接口数据异常')
-        }
-      });
-      recordStatistics_get({data: {type: ''}}, function (res) {
-        if (res.statusCode == 1) {
-          let data = res.data
-          console.log(res.data)
-          _this.recordStatistics_get.cg_money_sum = res.data.total.cg_money_sum || 0;
-          _this.recordStatistics_get.c_money_sum = res.data.total.c_money_sum || 0;
-          _this.recordStatistics_get.o_status_3 = res.data.o_status_3.c_money_sum || 0;
-          _this.recordStatistics_get.pay = res.data.pay.c_money_sum || 0;
-//                _this.recordStatistics_get.check = res.data.check.c_money_sum || 0;
-          _this.recordStatistics_get.check = res.data.check.c_money_sum || 0;
-          _this.recordStatistics_get.ok = res.data.ok.c_money_sum || 0;
-          _this.recordStatistics_get.invalid = res.data.invalid.cg_money_sum || 0;
-          _this.recordStatistics_get.apply = res.data.apply.c_money_sum;
-          _this.recordStatistics_get.o_status_0 = res.data.o_status_0.c_money_sum || 0;
-        }
-      })
-      teamsStatistics({data : {}}, function (res) {
-        if (res.statusCode == 1) {
-          _this.teamsStatistics.all = res.data.all || 0;
-          _this.teamsStatistics.purchased = res.data.purchased || 0;
-          _this.teamsStatistics.no_purchased = res.data.no_purchased || 0;
-        } else {
-          console.log('佣金统计接口数据异常')
-        }
-      });
-      orderStatistics({data : {}}, function (res) {
-//                      console.log('orderStatistics');
-        if (res.statusCode == 1) {
-          _this.orderStatistics.total = res.data.total.order_count || 0
-          _this.orderStatistics.lock = res.data.lock.order_count || 0
-          _this.orderStatistics.refund = res.data.refund.order_count || 0
-          _this.orderStatistics.ok = res.data.ok.order_count || 0
-//          _this.$refs.loadmore.onTopLoaded();
-        } else {
-          console.log('获取团队数量统计接口数据异常')
-        }
-      })
+          } else {
+            console.log('会员接口数据异常')
+          }
+        })
+        teamsStatistics({data : {}}, function (res) {
+          if (res.statusCode == 1) {
+            _this.teamsStatistics.all = res.data.all || 0;
+            _this.teamsStatistics.purchased = res.data.purchased || 0;
+            _this.teamsStatistics.no_purchased = res.data.no_purchased || 0;
+          } else {
+            console.log('佣金统计接口数据异常')
+          }
+        });
+      },
+      partnertab(idx){
+        this.tabselect(idx)
+        this.$router.push({name: `partner`})
+      },
+      ordertab(idx){
+        this.tabselect(idx)
+        this.$router.push({name: `extension`})
+      },
     },
-    partnertab(idx){
-      this.tabselect(idx)
-      this.$router.push({name: `partner`})
-    },
-    ordertab(idx){
-      this.tabselect(idx)
-      this.$router.push({name: `extension`})
-    },
-    outLogin(){
+    created(){
 
-      MessageBox({title: '确认退出当前账号?', message: '点击确认退出', showCancelButton: true}).then(action => {
-        if (action == 'confirm') {//表示点击了确定
-        // _webapp.logOut((res)=>{})
-//        console.log('试试')
-        _webapp.nativeLogin();
-      }
-    })
-    },
-    handleTopChange(status) {
-      this.topStatus = status;
-    },
-    loadTop(){
-      console.log('run');
-      this.init()
-    },
-  ...mapMutations({
-      tabselect: 'TABSELECT',
-      setImgUrl: 'IMGURL'
-    })
-  },
-  filter: {
-    setdefault (value) {
-      return value || 0
     }
-  },
-  activated () {
 
-    this.init();
-    console.log('active1')
-  },
-  mounted(){
-//      this.init();
-  },
-  beforeRouteUpdate(to, from, next){
-    if (from.name === 'userinfo') {
-      this.init();
-    }
-    /*if(from.name ==='extension' && to.name !== 'orderinfo'){
-     this.init();
-     }
-     if(from.name ==='partner' && to.name !=='partnerInfo'){
-     this.init();
-     }*/
-    next()
-  },
   }
+
 </script>
-<style scoped>
-  @import '../../../assets/css/fonts/iconfont.css';
+
+<style lang="less" scoped>
   @import '../../../assets/css/reset/reset.css';
+  @import '../../../assets/css/reset/common.less';
+  @import '../../../assets/css/fonts/iconfont.css';
 
-  * {
-    font-size: .16rem;
+  .page {
+    .page-view();
   }
-
-  .main {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #ececec;
-    /*overflow: auto;*/
-    overflow: hidden;
-  }
-
-  .avatar {
-    position: relative;
-    top: 0;
-    left: 0;
-    /*margin-top: .4rem;*/
-    height: 1rem;
-    padding: .15rem;
-    color: #fff;
-    background-color: #f47f2f;
-  }
-
-  .icon {
-    width: .70rem;
-    height: .70rem;
-    background: grey;
-    float: left;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-  }
-
-  .icon > img {
-    width: .70rem;
-    height: .70rem;
-    background: url('../../../assets/images/userinfo-02.png') no-repeat 100% 100%;
-    background-size: 100% 100%;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-  }
-
-  .message {
-    width: 78%;
-    height: 100%;
-    float: left;
-  }
-
-  .message div {
-    width: 100%;
-    /*height: 33%;*/
-    height: 25%;
-  }
-
-  .message > div > span {
-    display: block;
-    max-width: 100%;
-    height: 100%;
-    float: left;
-    font-size: .14rem;
-    line-height: .23rem;
-    padding: 0 0 0 10px;
-  }
-
-  .message > span {
-    font-size: .14rem;
-    float: left;
-    display: block;
-    padding: 0 0 0 10px;
-  }
-
-  .avatar > .right {
-    position: absolute;
-    top: .4rem;
-    right: .2rem;
-  }
-
-  .top {
-    /*height: .55rem;*/
-    height: .35rem;
-    /*background: #fff;*/
-    background: rgb(244, 127, 47);
-    -webkit-box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
-    -moz-box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
-    box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
-  }
-
-  .top > div {
-    position: relative;
-    width: 50%;
-    height: 100%;
-    background: rgba(0, 0, 0, .2);
-    float: left;
-    line-height: .5484rem;
-    color: #fff;
-    font-size: .25rem;
-  }
-
-  .top > div > span {
-    line-height: .32rem;
-    /*color: red;*/
-    color: #fff;
-  }
-
-  .top .title {
-    display: block;
-    height: .25rem;
-    font-size: .14rem;
-    /*color: #666;*/
-    color: #fff;
-  }
-
-  .yuan {
-    color: red;
-    font-size: .10rem;
-  }
-
-  .num {
-    color: red;
-    font-size: .14rem;
-  }
-
-  .top_1:after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: .1rem;
-    width: 1px;
-    height: 70%;
-    background-color: rgba(0, 0, 0, .1);
-  }
-
-  .content {
-    margin-bottom: .25rem;
-  }
-
-  .content .mfriend {
-    position: relative;
-    margin-top: .05rem;
-    text-align: left;
-    color: rgba(0, 0, 0, .7);
-    background-color: #fff;
-    padding: .08rem .2rem;
-    border-bottom: 1px solid rgba(0, 0, 0, .1);
-  }
-
-  .mint-cell-text {
-    font-size: 0.14rem;
-    font-weight: 700;
-  }
-
-  .content ul {
-    /*margin-top: .1rem;*/
-    height: .90rem;
-    -webkit-box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
-    -moz-box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
-    box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
-  }
-
-  .content .tuiguang {
-    height: 1.8rem;
-  }
-
-  .content li {
-    position: relative;
-    display: block;
-    width: 33.3%;
-    height: .90rem;
-    float: left;
-    background-color: #fff;
-    padding: .1rem .2rem;
-  }
-
-  .content .li1:after, .content .li2:after, .content .li4:after, .content .li5:after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: .14rem;
-    width: 1px;
-    height: 70%;
-    background-color: rgba(0, 0, 0, .1);
-  }
-
-  .content .li4, .content .li5, .content .li6 {
-    border-top: 1px solid rgba(0, 0, 0, .2)
-  }
-
-  .content .title {
-    color: rgba(0, 0, 0, .5);
-    font-size: .14rem;
-    line-height: .2rem;
-  }
-
-  .content .iconfont {
-    width: .28rem;
-    height: .30rem;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: .20rem;
-    /*border: 1px solid #F5751D;*/
-    line-height: .3rem;
-    /*color: #F5751D;*/
-    border-radius: 50%;
-  }
-
-  .details {
-    margin-top: .1rem;
-  }
-
-  .details li {
-    margin-top: .04rem;
-    /*border-top: 1px solid rgba(0, 0, 0, .3)*/
-    /*border-top: 1px solid rgba(0, 0, 0, .3)*/
-  }
-
-  .order-list {
-    display: flex;
-  }
-
-  .order-list li {
-    flex: 1;
-  }
-
-  .outLogin {
-    display: block;
-    margin-top: 0.05rem;
-    width: 100%;
-    height: 0.45rem;
-    -webkit-box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);
-    box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);
-    background: #fff;
-    color: rgba(0, 0, 0, .5);
-    font-size: 0.16rem;
-    border: none;
-    outline: none;
-  }
-
-  .topdiv-first:after {
-    content: '';
-    position: absolute;
-    width: 1px;
-    height: .40rem;
-    top: .09rem;
-    right: 0;
-    background: rgba(255, 255, 255, .1);
-
-  }
-
-  .mint-cell-text-right {
-    position: absolute;
-    right: .4rem;
-    top: .1rem;
-    font-size: 0.14rem;
-    /*font-weight: 700;*/
-    color: rgba(0, 0, 0, .3);
-
-  }
-
-  .mint-cell-text-right:after {
-    content: '>';
-    position: absolute;
-    top: -.01rem;
-    width: .1rem;
-    right: -.2rem;
-    color: rgba(0, 0, 0, .3);
-  }
-
-  .text-right {
-    position: absolute;
-    width: 30%;
-    height: 100%;
-    top: 0;
-    right: 0;
-  }
-
-  .mint-header.is-fixed {
-    top: 0rem;
-  }
-
-  .top > .money-top {
-    width: 100%;
-    font-size: .16rem;
-    line-height: .35rem;
-  }
-
-  .nummoney {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
   .container {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    /*overflow: auto;*/
-    overflow-y: scroll;
-    /*-webkit-overflow-scrolling: touch;*/
+    margin-top: .64rem;
+    font-size: .14rem;
     height: 100%;
-    /*overflow-y: scroll;*/
-    padding-bottom: .3rem;
+    .user {
+      height: 1.2rem;
+      width: 100%;
+      background-color: @style2;
+      display: flex;
+      padding: .26rem .2rem;
+      justify-content: flex-start;
+      .user__logo {
+        width: .68rem;
+        height: .68rem;
+        border-radius: 50%;
+        img {
+          .imgfull(50%)
+        }
+      }
+      .user__info {
+        flex: 1;
+        width: 100%;
+        text-align: left;
+        margin-left: .1rem;
+      }
+      .user__qcode {
+        width: .4rem;
+        border-radius: 50%;
+        height: .68rem;
+        display: block;
+        img {
+          .imgfull(50%);
+          height: .4rem;
+          vertical-align: middle;
+          margin-top: .14rem;
+        }
+      }
+    }
+    .nagative {
+      margin-top: .1rem;
+      padding: .2rem 0;
+      text-align: center;
+      display: flex;
+      border-bottom: 1px solid @border;
+      .nav__item {
+        flex: 1;
+        display: block;
+        .logo {
+          width: .38rem;
+          height: .38rem;
+          margin: 0 auto;
+          margin-bottom: .1rem;
+          img {
+            .imgfull(50%)
+          }
+        }
+        span {
+          font-size: .14rem;
+          display: block;
+          margin-bottom: .05rem;
+        }
+      }
+    }
   }
-
-  .nametype {
-    display: inline-block;
-    width: .6rem;
-    text-align: right;
-  }
-
-  .mint-loadmore-top {
-    background: rgba(255, 255, 255, .7);
-  }
-
-  .loading {
-    position: relative;
-  }
-
-  .loading:before {
-    content: '';
-    position: absolute;
-    left: -0.35rem;
-    top: -.08rem;
-    width: .4rem;
-    height: .4rem;
-    display: block;
-    background: url('../../../assets/images/spinner.gif') no-repeat 100% 100%;
-    background-size: 100% 100%;
-  }
-  .main1 {
-    overflow-y: scroll !important;
-  }
-  .version {
-    text-align: center;
+  section {
     padding: 0 .1rem;
-    font-size: .12rem;
-    margin-top: .1rem;
+    border-bottom: 1px solid @border;
+    border-top: 1px solid @border;
     margin-bottom: .1rem;
-    color: #b3abab;
+    .title {
+      width: 100%;
+      height: .42rem;
+      line-height: .42rem;
+      display: flex;
+      text-align: left;
+      .icon {
+        width: 5px;
+        background-color: @style2;
+        height: .14rem;
+        margin-top: .14rem;
+        margin-right: .1rem;
+      }
+      .text {
+        flex: 1;
+        font-size: .14rem;
+      }
+      .right {
+        font-weight: bold;
+        color: @style2;
+        width: .8rem;
+        font-size: .11rem;
+        text-align: right;
+      }
+    }
   }
+  section {
+    .info {
+      width: 100%;
+      display: flex;
+      .info__item1 {
+        width: 1.16rem;
+        font-size: .11rem;
+        div {
+          /*font-size: .22rem;*/
+          font-size: .26rem;
+          text-transform: uppercase;
+          color: #007aff;
+        }
+      }
+      .info__item2 {
+          width: 1.16rem;
+          font-size: .11rem;
+          div {
+            /*font-size: .22rem;*/
+            font-size: .215rem;
+            text-transform: uppercase;
+            color: #333;
+          }
+        }
+      }
+    .money {
+      .info__item3 {
+        height: 1rem;
+        padding: .2rem 0 .26rem .15rem;
+        text-align: left;
+        font-size: .12em;
+        color: #007aff;
+        div {
+          /*font-size: .22rem;*/
+          font-size: .31rem;
+          text-transform: uppercase;
+          color: #333;
+          margin-top: .08rem;
+        }
+      }
+      p {
+        line-height: .48rem;
+        border-top: 1px solid #ebecf1;
+        font-size: .12rem;
+        color: #333;
+        text-align: left;
+        padding-left: .15rem;
+        span {
+          color: #007aff;
+        }
+      }
+    }
+
+
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 </style>

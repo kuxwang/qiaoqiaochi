@@ -192,14 +192,6 @@
           }
         });
       },
-      partnertab(idx) {
-        this.tabselect(idx)
-        this.$router.push({name: `partner`})
-      },
-      ordertab(idx) {
-        this.tabselect(idx)
-        this.$router.push({name: `extension`})
-      },
       outLogin() {
 
         MessageBox({title: '确认退出当前账号?', message: '点击确认退出', showCancelButton: true}).then(action => {
@@ -218,7 +210,7 @@
         this.topStatus = status;
       },
       loadTop() {
-//        this.init()
+
       },
       msg() {
         Toast({
@@ -241,7 +233,7 @@
       this.init();
     },
     mounted() {
-//      this.init();
+
     },
     beforeRouteUpdate(to, from, next) {
       if (from.name === 'userinfo') {

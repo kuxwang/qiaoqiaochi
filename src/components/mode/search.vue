@@ -28,7 +28,7 @@
 </template>
 <script>
   import searchVoid from './searchVoid'
-  import {Search,Merchants} from '../../api/api'
+  import {Search} from '../../api/api'
   import { mapMutations, mapGetters } from 'vuex'
   import _ from 'lodash'
   export default {
