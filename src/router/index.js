@@ -71,7 +71,7 @@ const Drawback = r => require.ensure([], () => r(require('../components/userCent
 const DrawbackInfo = r => require.ensure([], () => r(require('../components/userCenter/order/drawbackInfo.vue')), 'DrawbackInfo')
 
 
-const Apply = r => require.ensure([], () => r(require('../components/userCenter/user/Apply.vue')), 'UserCenter')
+const Applys = r => require.ensure([], () => r(require('../components/userCenter/user/Apply.vue')), 'UserCenter')
 const Coupon = r => require.ensure([], () => r(require('../components/userCenter/user/Coupon.vue')), 'UserCenter')
 const Opinion = r => require.ensure([], () => r(require('../components/userCenter/user/Opinion.vue')), 'UserCenter')
 
@@ -292,17 +292,17 @@ export default new Router({
           ]
         },
         {
-          path:'/apply',
-          name:'apply',
-          Component:Apply
+          path:'/userCenter/apply',
+          name:'applys',
+          Component:Applys
         },
         {
-          path:'/coupon',
+          path:'/userCenter/coupon',
           name:'coupon',
           Component:Coupon
         },
         {
-          path:'/opinion',
+          path:'/userCenter/opinion',
           name:'opinion',
           Component:Opinion
         }

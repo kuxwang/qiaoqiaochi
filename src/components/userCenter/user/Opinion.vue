@@ -1,12 +1,12 @@
 <template>
-  <div class="page">
+  <div class="main">
     <mt-header title="意见反馈" fixed>
       <router-link to="/userCenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
     <div class="container">
-
+       1111111111111
     </div>
   </div>
 </template>
@@ -35,7 +35,7 @@
   @import '../../../assets/css/fonts/iconfont.css';
 
   .page {
-    .page-view();
+    .page-view(1);
   }
   .container {
 
