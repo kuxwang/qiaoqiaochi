@@ -106,11 +106,6 @@
           </ul>
           <button class="outLogin" @click="outLogin">退出登录</button>
         </section>
-        <!-- <div class="postUserInfo" @click="outLogin">
-           <button class="postUserInfo-item">
-             保存
-           </button>
-         </div>-->
       </mt-loadmore>
     </div>
     <v-tabbar></v-tabbar>
