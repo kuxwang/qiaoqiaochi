@@ -46,8 +46,7 @@ const Moneylist = r => require.ensure([], () => r(require('../components/userCen
 *  Details 详情
 * */
 const List = r => require.ensure([], () => r(require('../components/category/List.vue')), 'Category')
-const Details = r => require.ensure([], () => r(require('../components/category/productDetail.vue')), 'Category')
-
+const Details = r => require.ensure([], () => r(require('../components/category/goodsDetail.vue')), 'Category')
 
 
 // const Payselect = r => require.ensure([], () => r(require('../components/common/payselect.vue')), 'goodsDetails')
