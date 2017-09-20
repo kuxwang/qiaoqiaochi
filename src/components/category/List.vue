@@ -32,7 +32,7 @@
       <ul v-show="goodlist.length" class="list" v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded"
           infinite-scroll-distance="60">
         <!--<li class="list-cell" v-for="i in goodlist">-->
-        <router-link class="list-cell" :to="{name:'detail',query:{id:i.id}}" tag="li" v-for="i in goodlist">
+        <router-link class="list-cell" :to="{name:'detail',query:{goodsId:i.id}}" tag="li" v-for="i in goodlist">
           <div class="logo">
             <img :src="i.thumb"/>
           </div>

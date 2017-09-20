@@ -10,6 +10,7 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased;
+
 :hover {
   outline: none;
 }
@@ -19,7 +20,7 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
 a {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   -webkit-user-select: none;
-   -moz-user-focus: none;
+  -moz-user-focus: none;
   -moz-user-select: none;
 }
 
@@ -56,11 +57,26 @@ a {
   -ms-text-overflow: ellipsis;
   white-space: nowrap;
 }
-.lr2{overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;}
-.lr3{overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;}
-input[disabled]{background: #fcfcfc}
 
+.lr2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
 
+.lr3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+input[disabled] {
+  background: #fcfcfc
+}
 
 /**
 详情页内容详情样式无法添加，只能在此添加
@@ -78,5 +94,14 @@ input[disabled]{background: #fcfcfc}
 }
 
 .intro img {
+  width: 100%;
+}
+
+.intro table {
+  /*box-sizing: content-box;*/
+  width: 100% !important;
+}
+
+.intro tbody {
   width: 100%;
 }
