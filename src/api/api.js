@@ -255,6 +255,33 @@ const commissions = {
   withdrawals_get: {url: `${base}/commissions/withdrawals`, method: 'GET', header, dataType},
   withdrawals_post: {url: `${base}/commissions/withdrawals`, method: 'POST', header, dataType},
 };
+
+const goods = {
+  product: {url: `${base}/products`, method: 'GET', header, dataType},  //获取单一商品或商品组
+  goodsIndex: {url: `${base}/goods/goodsIndex`, method: 'GET', header, dataType},
+  advs: {url: `${base}/slides`, method: 'GET', header, dataType},
+  categorys: {url: `${base}/products/categories`, method: 'GET', header, dataType},  //分类检索
+  attributes: {url: `${base}/products/attributes`, method: 'GET', header, dataType}, //获取指定属性的商品
+  category: {url: `${base}/categories`, method: 'GET', header, dataType}, //首页分类
+  search: {url: `${base}/products/search`, method: 'GET', header, dataType}, //获取指定属性的商品
+  history: {url: `${base}/products/history`, method: 'GET', header, dataType}, //历史足迹
+  deletehistory: {url: `${base}/products/history`, method: 'DELETE', header, dataType}, //删除历史足迹
+  adv: {url: `${base}/wxappadvs`, method: 'GET', header, dataType} //广告
+}
+
+const collect = {
+  list: {url: `${base}/products/favorite`, method: 'GET', header, dataType},  //收藏列表
+  add: {url: `${base}/products/favorite`, method: 'POST', header, dataType},  //添加收藏
+  remove: {url: `${base}/products/favorite`, method: 'DELETE', header, dataType},  //删除收藏
+}
+
+
+
+
+
+
+
+
 /**
  * 商品详情
  */
@@ -490,9 +517,48 @@ export const addresses_put = function (params, callback) {
 /**
  * 商品详情
  */
-export const productDetail = function (params, callback) {
-  setParams(Object.assign(params, product.productDetail), callback)
+
+export const ProductDetail = function (params, callback) {
+  setParams(Object.assign(params, goods.product), callback)
 }
+export const GoodsIndex = function (params, callback) {
+  setParams(Object.assign(params, goods.goodsIndex), callback)
+
+}
+export const Advs = function (params, callback) {
+  setParams(Object.assign(params, goods.advs), callback)
+}
+export const Categorys = function (params, callback) {
+  setParams(Object.assign(params, goods.categorys), callback)
+}
+
+export const Category = function (params, callback) {
+  setParams(Object.assign(params, goods.category), callback)
+
+}
+
+
+export const Search = function (params, callback) {
+  setParams(Object.assign(params, goods.search), callback)
+
+}
+export const Attributes = function (params, callback) {
+  setParams(Object.assign(params, goods.attributes), callback)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * 加入购物车
  */

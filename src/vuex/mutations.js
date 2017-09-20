@@ -24,7 +24,7 @@ import {
   ISNULL,
   GET_DEFAULTADDRESSISNULL,
   ISSCROLL,
-  // USERINFO
+  ADDTYPE
 }
   from
     './mutation-types.js'
@@ -92,11 +92,10 @@ export default {
     state.seteditAddress = seteditAddress;
   },
   [OLDADDRESS] (state, oldaddress) {
-    console.log(oldaddress)
     state.oldaddress = oldaddress.province + ' ' + oldaddress.city + ' ' + oldaddress.area;
     state.oldprovince = oldaddress.province;
     state.oldcity = oldaddress.city;
-    state.oldarea = oldaddress.area;
+    state.oldprovince = oldaddress.area;
 
   },
   [ISCONFIRM](state, isConfirm) {
@@ -112,14 +111,11 @@ export default {
     console.log(data)
   },
   [ISSCROLL](state, data) {
-    state.isScroll = data;
+    state.isScroll=data;
     console.log(data)
   },
-  // [USERINFO](state, data) {
-  //   state.userInfo.access_token = data.access_token;
-  //   state.userInfo.sessionkey = data.sessionkey;
-  //   state.userInfo.auth_key = data.auth_key;
-  //   state.userInfo.timestamp = data.timestamp;
-  //   console.log(state.userInfo)
-  // },
+  [ADDTYPE](state, data) {
+    state.addtype=data;
+    console.log(data)
+  },
 }

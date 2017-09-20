@@ -47,10 +47,12 @@ const Moneylist = r => require.ensure([], () => r(require('../components/distrib
 * */
 const List = r => require.ensure([], () => r(require('../components/category/List.vue')), 'Category')
 const Details = r => require.ensure([], () => r(require('../components/category/productDetail.vue')), 'Category')
+// const payselect = r => require.ensure([], () => r(require('../components/common/payselect.vue')), 'goodsDetails')
 
 
 
-// const Payselect = r => require.ensure([], () => r(require('../components/common/payselect.vue')), 'goodsDetails')
+
+const Payselect = r => require.ensure([], () => r(require('../components/common/payselect.vue')), 'goodsDetails')
 const Outmoney = r => require.ensure([], () => r(require('../components/common/outmoney.vue')), 'goodsDetails')
 
 /**
@@ -185,50 +187,36 @@ export default new Router({
       ]
     },
 
-    //提交订单流程
+
     {
-      path:'/empty',
+      path:'/em',
       component:Empty,
-      children:[
+      children: [
         {
-          path: '/confirmOrder',
-          name: 'confirmOrder',
+          path: '/confirmorder',
+          name: 'confirmorder',
           component: ConfirmOrder,
-          children: [     //选择地址  配送方式
+          children: [
             {
-              path: '/confirmOrder/deliveryAddress',
-              name: 'submitdeliveryAddress',
-              component: DeliveryAddress,
-              children: [
-                {
-                  path: '/confirmOrder/deliveryAddress/manageAddress',
-                  name: 'submitmanageAddress',
-                  component: ManageAddress,
-                  children: [
-                    {
-                      path: '/confirmOrder/deliveryAddress/manageAddress/addAddress',
-                      name: 'submitaddAddress',
-                      component: AddAddress
-                    },
-                    {
-                      path: '/confirmOrder/deliveryAddress/manageAddress/editAddress',
-                      name: 'submiteditAddress',
-                      component: EditAddress
-                    }
-                  ]
-                },
-              ]  //
+              path: '/confirmorder/details',
+              name: 'confirmdetails',
+              component: Details
             },
             {
-              path: '/deliveryMode',
-              name: 'deliveryMode',
+              path: '/payselect',
+              name: 'payselect',
+              component: Payselect
+            },
+            {
+              path: '/deliverymode',
+              name: 'deliverymode',
               component: DeliveryMode
             }
           ]
+
         },
       ]
     },
-
     {
       path: '/userCenter',
       name:'userCenter',
@@ -267,30 +255,7 @@ export default new Router({
           name: 'userInfo',
           component: UserInfo,
         },
-        {
-          path: '/deliveryAddress',
-          name: 'deliveryAddress',
-          component: DeliveryAddress,
-          children: [
-            {
-              path: '/manageAddress',
-              name: 'manageAddress',
-              component: ManageAddress,
-              children: [
-                {
-                  path: '/addAddress',
-                  name: 'addAddress',
-                  component: AddAddress
-                },
-                {
-                  path: '/editAddress',
-                  name: 'editAddress',
-                  component: EditAddress
-                }
-              ]
-            },
-          ]
-        },
+
         {
           path:'/userCenter/apply',
           name:'applys',
@@ -306,6 +271,31 @@ export default new Router({
           name:'opinion',
           component:Opinion
         }
+      ]
+    },
+    {
+      path: '/deliveryaddress',
+      name: 'deliveryaddress',
+      component: DeliveryAddress,
+      children: [
+        {
+          path: '/manageAddress',
+          name: 'manageAddress',
+          component: ManageAddress,
+          children: [
+            {
+              path: '/addaddress',
+              name: 'addaddress',
+              component: AddAddress
+            },
+            {
+              path: '/editAddress',
+              name: 'editAddress',
+              component: EditAddress
+            },
+
+          ]
+        },
       ]
     },
 

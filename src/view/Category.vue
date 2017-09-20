@@ -24,7 +24,7 @@
 
 
 <script>
-  import vTabbar from '../components/mode/Tabbar.vue'
+  import vTabbar from '../components/mode/Tabbar'
   import vSearch from '../components/mode/search';
   import {Category, ProductDetail, Categorys} from '../api/api'
   import {mapMutations, mapGetters, mapState} from 'vuex'

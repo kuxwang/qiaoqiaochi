@@ -44,7 +44,7 @@
 <script>
   import {Toast, Picker, Popup, DatetimePicker, Checklist} from 'mint-ui';
   import {address, slots} from '../../../assets/js/address';
-  import {mapState, mapMutations} from 'Vuex';
+  import {mapState, mapMutations,mapGetters} from 'Vuex';
   import {addresses_post} from '../../../api/api';
   export default{
     data(){
@@ -64,7 +64,10 @@
     computed: {
       ...mapState([
           'addressListNum'
-      ])
+      ]),
+      ...mapGetters([
+        'addtype'
+      ]),
     },
     methods: {
       ...mapMutations({
@@ -169,19 +172,13 @@
               address: _this.getAddress,
               id: res.data
             };
-            console.log(info)
-            console.log(res)
-//            _this.getUserAddress(info);
-//            _this.getOnActive(this.addressListNum);
-//          this.getUserAddress(v);
             Toast({
               message: '地址保存成功',
               position: 'middle',
               duration: 2000
             });
             setTimeout(() => {
-//              _this.$router.push('/confirmorder?type=1')
-              _this.$router.push({name:'deliveryaddress'})
+              this.$router.go(-1)
             }, 2000)
           }
         })
@@ -219,7 +216,8 @@
   }
 
   .addAddress-list {
-    margin-top: 0.7rem;
+    /*margin-top: 0.7rem;*/
+    margin-top: 0.58rem;
   }
 
   .addAddress-list li {
