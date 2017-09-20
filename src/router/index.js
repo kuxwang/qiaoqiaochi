@@ -8,8 +8,8 @@ Vue.use(Router)
 const app = r => require.ensure([], () => r(require('../App.vue')), 'app')
 
 /*
-*
-* */
+ *
+ * */
 import Home from '../view/Home.vue'
 const Category = r => require.ensure([], () => r(require('../view/Category.vue')), 'Category')
 const MyOrder = r => require.ensure([], () => r(require('../components/userCenter/order/MyOrder.vue')), 'Order')
@@ -19,17 +19,17 @@ const Empty = r => require.ensure([], () => r(require('../view/Empty.vue')), 'Em
 
 
 /*
-* 个人中心
-* VipCenter 分销中心
-* Extension 推广订单
-* Partner 我的团队
-* partnerInfo 伙伴信息
-* Orderinfo 推广订单详情
-* UserInfo 用户信息
-* Takemoney 提现页面
-* Moneylist 提现列表
-*
-* */
+ * 个人中心
+ * VipCenter 分销中心
+ * Extension 推广订单
+ * Partner 我的团队
+ * partnerInfo 伙伴信息
+ * Orderinfo 推广订单详情
+ * UserInfo 用户信息
+ * Takemoney 提现页面
+ * Moneylist 提现列表
+ *
+ * */
 const VipCenter = r => require.ensure([], () => r(require('../view/distributionCenter.vue')), 'UserCenter')
 const Extension = r => require.ensure([], () => r(require('../components/distribution/extension.vue')), 'UserCenter')
 const Partner = r => require.ensure([], () => r(require('../components/distribution/partner.vue')), 'UserCenter')
@@ -41,12 +41,12 @@ const Moneylist = r => require.ensure([], () => r(require('../components/distrib
 
 
 /*
-*  分类模块
-*  List 分类列表
-*  Details 详情
-* */
+ *  分类模块
+ *  List 分类列表
+ *  Details 详情
+ * */
 const List = r => require.ensure([], () => r(require('../components/category/List.vue')), 'Category')
-const Details = r => require.ensure([], () => r(require('../components/category/productDetail.vue')), 'Category')
+const Details = r => require.ensure([], () => r(require('../components/category/goodsDetail.vue')), 'Category')
 // const payselect = r => require.ensure([], () => r(require('../components/common/payselect.vue')), 'goodsDetails')
 
 
@@ -105,8 +105,8 @@ export default new Router({
     },
 
     /*
-    * 分类
-    * */
+     * 分类
+     * */
 
     {
       path: '/category',
