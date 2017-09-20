@@ -90,29 +90,25 @@
             </router-link>
 
             <router-link class="center-cell" :to="{name:'applys'}" tag="li">
-            <!--<li class="center-cell" @click="msg()">-->
             <div class="iconfont icon5">&#xe616;</div>
             <div class="title-list">我要开店</div>
             <i class="iconfont right">&#xe649;</i>
-            <!--</li>-->
             </router-link>
-            <li class="center-cell" @click="msg()">
-            <!--<router-link class="center-cell" :to="{name:'footprint'}" tag="li">-->
+            <router-link class="center-cell" :to="{name:'coupon'}" tag="li">
               <div class="iconfont icon6">&#xe639;</div>
-              <div class="title-list">关于我们</div>
+              <div class="title-list">优惠券</div>
               <i class="iconfont right">&#xe649;</i>
-            <!--</router-link>-->
-            </li>
+            </router-link>
           </ul>
           <button class="outLogin" @click="outLogin">退出登录</button>
         </section>
       </mt-loadmore>
-      <router-view></router-view>
+      <!--<router-view></router-view>-->
     </div>
     <v-tabbar></v-tabbar>
-   <!-- <transition name="slide">
+    <transition name="slide">
       <router-view></router-view>
-    </transition>-->
+    </transition>
   </div>
 </template>
 <script>

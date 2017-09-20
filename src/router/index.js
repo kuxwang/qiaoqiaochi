@@ -294,17 +294,17 @@ export default new Router({
         {
           path:'/userCenter/apply',
           name:'applys',
-          Component:Applys
+          component:Applys
         },
         {
           path:'/userCenter/coupon',
           name:'coupon',
-          Component:Coupon
+          component:Coupon
         },
         {
           path:'/userCenter/opinion',
           name:'opinion',
-          Component:Opinion
+          component:Opinion
         }
       ]
     },
