@@ -53,7 +53,7 @@
 <script>
   import vTabbar from '../components/mode/Tabbar';
   import vSearch from '../components/mode/search';
-  import {fn} from '../config/myUtils'
+  import {fn} from '../config/myUtils';
 
   export default{
     data(){

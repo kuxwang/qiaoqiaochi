@@ -77,7 +77,8 @@ const Applys = r => require.ensure([], () => r(require('../components/userCenter
 const Coupon = r => require.ensure([], () => r(require('../components/userCenter/user/Coupon.vue')), 'UserCenter')
 const Opinion = r => require.ensure([], () => r(require('../components/userCenter/user/Opinion.vue')), 'UserCenter')
 
-
+const Collect = r => require.ensure([], () => r(require('../components/userCenter/user/Collect.vue')), 'UserCenter')
+const Footprint = r => require.ensure([], () => r(require('../components/userCenter/user/Footprint.vue')), 'UserCenter')
 
 
 
@@ -115,7 +116,7 @@ export default new Router({
       children:[
         {
           path: '/category/list',
-          name:'list2',
+          name:'clist',
           component:List,
           children: [
             {
@@ -255,7 +256,6 @@ export default new Router({
           name: 'userInfo',
           component: UserInfo,
         },
-
         {
           path:'/userCenter/apply',
           name:'applys',
@@ -270,7 +270,31 @@ export default new Router({
           path:'/userCenter/opinion',
           name:'opinion',
           component:Opinion
-        }
+        },
+        {
+          path: '/footprint',
+          name: 'footprint',
+          component: Footprint,
+          children: [
+            {
+              path: '/footprint/details',
+              name: 'fdetail',
+              component: Details
+            },
+          ]
+        },
+        {
+          path: '/collect',
+          name: 'collect',
+          component: Collect,
+          children: [
+            {
+              path: '/collect/details',
+              name: 'cdetails',
+              component: Details
+            },
+          ]
+        },
       ]
     },
     {

@@ -66,7 +66,7 @@
             </router-link>
           </ul>
           <ul class="center-list">
-            <router-link class="center-cell" :to="{name:'deliveryAddress',query:{from:1}}" tag="li">
+            <router-link class="center-cell" :to="{name:'deliveryaddress',query:{from:1}}" tag="li">
               <div class="iconfont icon1">&#xe60a;</div>
               <div class="title-list">收货地址管理</div>
               <i class="iconfont right">&#xe649;</i>
@@ -120,8 +120,8 @@
 
   import vTabbar from '../components/mode/Tabbar.vue'
   import {recordStatistics_get, teamsStatistics, orderStatistics, memberInfo, LOGINOUT} from '../api/api'
-  import {_webapp} from '../config/_webapp.js';
   import {mapMutations, mapGetters, mapState} from 'vuex'
+  import {_webapp} from '../config/hook.js';
   import {MessageBox, Toast} from 'mint-ui';
 
   export default {

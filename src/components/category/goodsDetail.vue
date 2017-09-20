@@ -314,7 +314,7 @@
     font-size: .15rem;
     /*overflow:auto;*/
     overflow: hidden;
-    z-index: 20;
+    z-index: 25;
   }
 
   .mint-header {
@@ -417,6 +417,7 @@
     bottom: 0;
     left: 0;
     -webkit-transform: translateZ(0);
+    z-index: 20;
     /*border-top: 1px solid #DDDDDD;*/
   }
 
