@@ -28,6 +28,7 @@
   import vSearch from '../components/mode/search';
   import {Category, ProductDetail, Categorys} from '../api/api'
   import {mapMutations, mapGetters, mapState} from 'vuex'
+  import dGoods from '../assets/images/dGoods.png'
 
 
 
