@@ -104,7 +104,17 @@
           })
         }
     },
-    actived(){
+    filters: {
+      dGoods (value) {
+        return value ? value : dGoods
+      }
+    },
+    components: {
+      vTabbar,
+      vSearch,
+    }
+    ,
+    mounted() {
       this.init()
     }
 
