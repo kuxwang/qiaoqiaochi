@@ -170,7 +170,7 @@
       init() {
         let _this = this;
         //用户信息
-        memberInfo({}, function (res) {
+        memberInfo({data:{}}, function (res) {
           if (res.statusCode == 1) {
             _this.$refs.loadmore.onTopLoaded();
             _this.memberInfo.nickname = res.data.nickname

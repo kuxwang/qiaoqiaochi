@@ -105,11 +105,11 @@
 </template>
 <script>
   import {Header, Popup, Toast, Indicator, Loadmore} from 'mint-ui';
-  import {productDetail, addCart, GET_CARTNUMS} from '../../api/api.js';
+  import {ProductDetail, addCart, GET_CARTNUMS} from '../../api/api.js';
   import {setStore, getStore} from '../../config/myUtils';
   import {mapMutations, mapGetters} from 'Vuex';
   export default {
-    data(){
+    data () {
       return {
         popupVisible: false,
         isVip: false,
@@ -217,7 +217,7 @@
             id: good_id,
           }
         }
-        productDetail(params, function (res) {
+        ProductDetail(params, function (res) {
           Indicator.close()
           if (res.statusCode === 1) {
             that.goodNums = res.data.goodscount;
