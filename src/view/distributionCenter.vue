@@ -8,11 +8,11 @@
     <div class="container">
       <div class="user">
           <div class="user__logo">
-            <img :src="img1"/>
+            <img :src="memberInfo.avatar"/>
           </div>
           <div class="user__info">
-            <h5>向阳</h5>
-            <div class="user__info__id">ID:123456</div>
+            <h5>{{memberInfo.nickname}}</h5>
+            <div class="user__info__id">ID:{{memberInfo.id}}</div>
           </div>
           <div class="user__qcode">
             <img :src="img1"/>
@@ -93,6 +93,26 @@
     data(){
       return {
         img1: require('../assets/images/confirmorder-01.jpg'),
+        memberInfo: {
+          nickname: '',//昵称
+          id: '',//会员id
+          level: '',//会员等级
+          avatar: '',
+          leveldetail: {
+            levelname: '默认等级',
+          },
+          mobile: '',
+          from: '',  //推荐人
+          credit1: '',
+          credit2: '',
+        },
+        team:{
+          all:'',
+          month:''
+        }
+
+
+
       }
     },
     methods: {
@@ -111,7 +131,7 @@
             _this.memberInfo.avatar = res.data.avatar
             _this.memberInfo.from = res.data.parent_name || '朵云家'
             _this.memberInfo.level = res.data.agentleveldetail.levelname
-            _this.setImgUrl(_this.memberInfo.avatar)
+//            _this.setImgUrl(_this.memberInfo.avatar)
 
           } else {
             console.log('会员接口数据异常')
@@ -140,7 +160,7 @@
       vTabbar
     },
     created(){
-
+      this.init()
     }
 
   }
