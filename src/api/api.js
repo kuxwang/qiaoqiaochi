@@ -259,7 +259,7 @@ const commissions = {
 
 const goods = {
   product: {url: `${base}/products`, method: 'GET', header, dataType},  //获取单一商品或商品组
-  goodsIndex: {url: `${base}/goods/goodsIndex`, method: 'GET', header, dataType},
+  goodsIndex: {url: `${base}/products/goodsIndex`, method: 'GET', header, dataType},
   advs: {url: `${base}/slides`, method: 'GET', header, dataType},
   categorys: {url: `${base}/products/categories`, method: 'GET', header, dataType},  //分类检索
   attributes: {url: `${base}/products/attributes`, method: 'GET', header, dataType}, //获取指定属性的商品
