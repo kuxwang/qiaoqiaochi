@@ -277,12 +277,6 @@ const collect = {
 }
 
 
-
-
-
-
-
-
 /**
  * 商品详情
  */
@@ -690,6 +684,31 @@ export const orderRe = function (params, callback) {
 
 export const DispatchMoney = function (params, callback) {
   setParams(Object.assign(params, dispatchMoney.dispatchMoney), callback)
+};
+
+
+
+
+/*
+ * 收藏
+ * */
+export const Favorites = function (params, callback) {
+  setParams(Object.assign(params, collect.list), callback)
+};
+export const Favorite_add = function (params, callback) {
+  setParams(Object.assign(params, collect.add), callback)
+};
+export const Favorite_remove = function (params, callback) {
+  setParams(Object.assign(params, collect.remove), callback)
+};
+export const History = function (params, callback) {
+  setParams(Object.assign(params, goods.history), callback)
+
+};
+export const Deletehistory = function (params, callback) {
+
+  setParams(Object.assign(params, goods.deletehistory), callback)
+
 };
 
 
