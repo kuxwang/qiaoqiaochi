@@ -1,6 +1,20 @@
 <template>
-  <div class="content">
-
+  <div class="page">
+    <v-search class="bgwhite"></v-search>
+    <div class="list">
+      <ul class="list-l">
+        <li :class="['l-item',{tabActive: selected==index }]" v-for="(i,index) in list" @click="tab(index)">{{i.name}}
+        </li>
+      </ul>
+      <div class="list-r">
+        <router-link class="r-item" v-for=" (v,index) in goodslist"
+                     :to="{ name:'list',query:{pid: list[selected].id,cid:v.id,title:v.name}}"
+                     tag="div">
+          <img :src="v.thumb | dGoods">
+          <span>{{v.name}}</span>
+        </router-link>
+      </div>
+    </div>
     <transition name="slide">
       <router-view></router-view>
     </transition>
@@ -9,9 +23,113 @@
 </template>
 
 
-<style scoped>
-  .content {
+<script>
+  import vTabbar from '../components/mode/Tabbar'
+  import vSearch from '../components/mode/search';
+  import {Category, ProductDetail, Categorys} from '../api/api'
+  import {mapMutations, mapGetters, mapState} from 'vuex'
 
+
+
+  export default {
+    data(){
+      return {
+        img1: require('../assets/images/home-01.jpg'),
+        img2: require('../assets/images/home-02.jpg'),
+        list: [
+          {
+            name:'混合'
+          },
+          {
+            name:'混合'
+          },
+          {
+            name:'混合'
+          },
+          {
+            name:'混合'
+          }
+        ],  //左侧列表
+        goodslist: [
+          {
+            name:'呵呵',
+            id:1,
+          },
+          {
+            name:'呵呵',
+            id:1,
+          },
+          {
+            name:'呵呵',
+            id:1,
+          },
+          {
+            name:'呵呵',
+            id:1,
+          }
+        ], //右侧商品,
+        selected: 0,
+        find: ''
+      }
+    },
+    methods: {
+        tab(index){
+          this.selected = index;
+          this.goodslist = [];
+          let _this = this;
+          let params = {
+            data: {
+              pid: _this.list[index].id
+            }
+          }
+          Category(params, (res) => {
+            if (res.statusCode === 1) {
+              _this.goodslist = res.data
+            } else {
+            }
+          })
+
+        },
+        init(){
+          let _this = this;
+          let params = {
+            data: {}
+          }
+          Category(params, (res) => {
+            if (res.statusCode === 1) {
+              console.log(res)
+              _this.list = res.data;
+              _this.tab(0)
+            }
+          })
+        }
+    },
+    actived(){
+      this.init()
+    }
+
+
+
+  }
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+<style lang="less" scoped>
+  @import '../assets/css/reset/reset.css';
+  @import '../assets/css/reset/common.less';
+  @import '../assets/css/fonts/iconfont.css';
+  .page {
+  .page-view();
   }
 
   .search {

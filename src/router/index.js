@@ -8,8 +8,8 @@ Vue.use(Router)
 const app = r => require.ensure([], () => r(require('../App.vue')), 'app')
 
 /*
-*
-* */
+ *
+ * */
 import Home from '../view/Home.vue'
 const Category = r => require.ensure([], () => r(require('../view/Category.vue')), 'Category')
 const MyOrder = r => require.ensure([], () => r(require('../components/userCenter/order/MyOrder.vue')), 'Order')
@@ -19,37 +19,40 @@ const Empty = r => require.ensure([], () => r(require('../view/Empty.vue')), 'Em
 
 
 /*
-* 个人中心
-* VipCenter 分销中心
-* Extension 推广订单
-* Partner 我的团队
-* partnerInfo 伙伴信息
-* Orderinfo 推广订单详情
-* UserInfo 用户信息
-* Takemoney 提现页面
-* Moneylist 提现列表
-*
-* */
-const VipCenter = r => require.ensure([], () => r(require('../components/userCenter/distribution/distributionCenter.vue')), 'UserCenter')
-const Extension = r => require.ensure([], () => r(require('../components/userCenter/distribution/extension.vue')), 'UserCenter')
-const Partner = r => require.ensure([], () => r(require('../components/userCenter/distribution/partner.vue')), 'UserCenter')
-const PartnerInfo = r => require.ensure([], () => r(require('../components/userCenter/distribution/partnerInfo.vue')), 'UserCenter')
-const Orderinfo = r => require.ensure([], () => r(require('../components/userCenter/distribution/orderinfo.vue')), 'UserCenter')
+ * 个人中心
+ * VipCenter 分销中心
+ * Extension 推广订单
+ * Partner 我的团队
+ * partnerInfo 伙伴信息
+ * Orderinfo 推广订单详情
+ * UserInfo 用户信息
+ * Takemoney 提现页面
+ * Moneylist 提现列表
+ *
+ * */
+const VipCenter = r => require.ensure([], () => r(require('../view/distributionCenter.vue')), 'UserCenter')
+const Extension = r => require.ensure([], () => r(require('../components/distribution/extension.vue')), 'UserCenter')
+const Partner = r => require.ensure([], () => r(require('../components/distribution/partner.vue')), 'UserCenter')
+const PartnerInfo = r => require.ensure([], () => r(require('../components/distribution/partnerInfo.vue')), 'UserCenter')
+const Orderinfo = r => require.ensure([], () => r(require('../components/distribution/orderinfo.vue')), 'UserCenter')
 const UserInfo = r => require.ensure([], () => r(require('../components/userCenter/user/UserInfo.vue')), 'UserCenter')
-const Takemoney = r => require.ensure([], () => r(require('../components/userCenter/distribution/Takemoney.vue')), 'UserCenter')
-const Moneylist = r => require.ensure([], () => r(require('../components/userCenter/distribution/Moneylist.vue')), 'UserCenter')
+const Takemoney = r => require.ensure([], () => r(require('../components/distribution/Takemoney.vue')), 'UserCenter')
+const Moneylist = r => require.ensure([], () => r(require('../components/distribution/Moneylist.vue')), 'UserCenter')
 
 
 /*
-*  分类模块
-*  List 分类列表
-*  Details 详情
-* */
+ *  分类模块
+ *  List 分类列表
+ *  Details 详情
+ * */
 const List = r => require.ensure([], () => r(require('../components/category/List.vue')), 'Category')
 const Details = r => require.ensure([], () => r(require('../components/category/goodsDetail.vue')), 'Category')
+// const payselect = r => require.ensure([], () => r(require('../components/common/payselect.vue')), 'goodsDetails')
 
 
-// const Payselect = r => require.ensure([], () => r(require('../components/common/payselect.vue')), 'goodsDetails')
+
+
+const Payselect = r => require.ensure([], () => r(require('../components/common/payselect.vue')), 'goodsDetails')
 const Outmoney = r => require.ensure([], () => r(require('../components/common/outmoney.vue')), 'goodsDetails')
 
 /**
@@ -68,6 +71,17 @@ const Orderd = r => require.ensure([], () => r(require('../components/userCenter
 const Logistics = r => require.ensure([], () => r(require('../components/userCenter/order/logistics.vue')), 'Logistics')
 const Drawback = r => require.ensure([], () => r(require('../components/userCenter/order/drawback.vue')), 'Drawback')
 const DrawbackInfo = r => require.ensure([], () => r(require('../components/userCenter/order/drawbackInfo.vue')), 'DrawbackInfo')
+
+
+const Applys = r => require.ensure([], () => r(require('../components/userCenter/user/Apply.vue')), 'UserCenter')
+const Coupon = r => require.ensure([], () => r(require('../components/userCenter/user/Coupon.vue')), 'UserCenter')
+const Opinion = r => require.ensure([], () => r(require('../components/userCenter/user/Opinion.vue')), 'UserCenter')
+
+
+
+
+
+
 
 export default new Router({
   routes: [
@@ -91,8 +105,8 @@ export default new Router({
     },
 
     /*
-    * 分类
-    * */
+     * 分类
+     * */
 
     {
       path: '/category',
@@ -121,6 +135,8 @@ export default new Router({
       component: ShoppingCart
     },
 
+
+    //分销
     {
       path: '/vipCenter',
       name: 'vipCenter',
@@ -171,50 +187,36 @@ export default new Router({
       ]
     },
 
-    //提交订单流程
+
     {
-      path:'/empty',
+      path:'/em',
       component:Empty,
-      children:[
+      children: [
         {
-          path: '/confirmOrder',
-          name: 'confirmOrder',
+          path: '/confirmorder',
+          name: 'confirmorder',
           component: ConfirmOrder,
-          children: [     //选择地址  配送方式
+          children: [
             {
-              path: '/confirmOrder/deliveryAddress',
-              name: 'submitdeliveryAddress',
-              component: DeliveryAddress,
-              children: [
-                {
-                  path: '/confirmOrder/deliveryAddress/manageAddress',
-                  name: 'submitmanageAddress',
-                  component: ManageAddress,
-                  children: [
-                    {
-                      path: '/confirmOrder/deliveryAddress/manageAddress/addAddress',
-                      name: 'submitaddAddress',
-                      component: AddAddress
-                    },
-                    {
-                      path: '/confirmOrder/deliveryAddress/manageAddress/editAddress',
-                      name: 'submiteditAddress',
-                      component: EditAddress
-                    }
-                  ]
-                },
-              ]  //
+              path: '/confirmorder/details',
+              name: 'confirmdetails',
+              component: Details
             },
             {
-              path: '/deliveryMode',
-              name: 'deliveryMode',
+              path: '/payselect',
+              name: 'payselect',
+              component: Payselect
+            },
+            {
+              path: '/deliverymode',
+              name: 'deliverymode',
               component: DeliveryMode
             }
           ]
+
         },
       ]
     },
-
     {
       path: '/userCenter',
       name:'userCenter',
@@ -253,28 +255,45 @@ export default new Router({
           name: 'userInfo',
           component: UserInfo,
         },
+
         {
-          path: '/deliveryAddress',
-          name: 'deliveryAddress',
-          component: DeliveryAddress,
+          path:'/userCenter/apply',
+          name:'applys',
+          component:Applys
+        },
+        {
+          path:'/userCenter/coupon',
+          name:'coupon',
+          component:Coupon
+        },
+        {
+          path:'/userCenter/opinion',
+          name:'opinion',
+          component:Opinion
+        }
+      ]
+    },
+    {
+      path: '/deliveryaddress',
+      name: 'deliveryaddress',
+      component: DeliveryAddress,
+      children: [
+        {
+          path: '/manageAddress',
+          name: 'manageAddress',
+          component: ManageAddress,
           children: [
             {
-              path: '/manageAddress',
-              name: 'manageAddress',
-              component: ManageAddress,
-              children: [
-                {
-                  path: '/addAddress',
-                  name: 'addAddress',
-                  component: AddAddress
-                },
-                {
-                  path: '/editAddress',
-                  name: 'editAddress',
-                  component: EditAddress
-                }
-              ]
+              path: '/addaddress',
+              name: 'addaddress',
+              component: AddAddress
             },
+            {
+              path: '/editAddress',
+              name: 'editAddress',
+              component: EditAddress
+            },
+
           ]
         },
       ]

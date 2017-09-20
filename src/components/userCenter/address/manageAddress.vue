@@ -4,13 +4,8 @@
       <a slot="left" @click="goBack">
         <mt-button icon="back"></mt-button>
       </a>
-      <!--<a slot="right" @click="manage">-->
-      <!--<mt-button  title="管理">管理</mt-button>-->
-      <!--</a>-->
     </mt-header>
     <ul class="deliveryAddress">
-      <!--<li :class="{on:onActives==i}" @click.prevent="getMyAddress(v,i)" v-for="(v,i) in addressLists">-->
-      <!--<li @click.prevent="getMyAddress(v,i)" v-for="(v,i) in addressLists">-->
       <li v-for="(v,i) in addressLists">
         <div class="clearfix deliveryAddress-tp">
           <div class="fl">
@@ -42,9 +37,9 @@
         </div>
       </li>
     </ul>
-    <router-link class="addDeliveryAddress" tag="div" :to="{name:'addaddress'}">
+    <div class="addDeliveryAddress" @click="addaddr">
       新增收货地址
-    </router-link>
+    </div>
     <transition name="slide">
       <router-view></router-view>
     </transition>
@@ -54,7 +49,6 @@
   import {mapGetters, mapMutations, mapState} from 'vuex';
   import {addresses_get, addresses_delete} from '../../../api/api';
   import {MessageBox} from 'mint-ui';
-  //  import {Checklist} from 'mint-ui';
 
   export default {
     data() {
@@ -68,31 +62,18 @@
       goBack() {
         this.$router.go(-1);
       },
-      getMyAddress(v, i) {
-        this.onActives = i;
-        this.isnull(false)
-        this.$router.push('/confirmorder?type=1');
-        this.getUserAddress(v);
-        this.getOnActive(i);
-      },
-      manage() {
-        this.$router.push({name: '/manageAddress'})
-      },
       edit(value) {
-        console.log('manage edit');
-        console.log(value);
-
         this.seteditAddresses(value)
         let params = {
           province: value.province,
           city: value.city,
           area: value.area
         }
-        console.log('params');
-        console.log(params);
-
         this.oldaddress(params)
-        this.$router.push({path: '/editAddress', query: {id: value.id}})
+          this.$router.replace({name: 'editAddress', query: {id: value.id}})
+      },
+      addaddr(){
+        this.$router.replace({name: 'addaddress'})
       },
       deleteAddress(value) {
         let params = {
@@ -129,7 +110,8 @@
         'getaddressnum': 'ADDRESSLISTNUM',
         'seteditAddresses': 'SETEDITADDRESS',
         'oldaddress': 'OLDADDRESS',
-        'isnull': "ISNULL"
+        'isnull': "ISNULL",
+        'userAddress':'userAddress'
       })
     },
     computed: {
@@ -180,7 +162,8 @@
   }
 
   .deliveryAddress {
-    margin-top: 0.7rem;
+    /*margin-top: 0.7rem;*/
+    margin-top: .58rem;
     margin-bottom: 0.58rem;
   }
 

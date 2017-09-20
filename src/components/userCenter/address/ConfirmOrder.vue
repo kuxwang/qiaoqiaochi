@@ -5,19 +5,21 @@
         <mt-button icon="back"></mt-button>
       </a>
     </mt-header>
-    <div class="container">
-    <router-link class="deliveryAddress" tag="div" :to="{name:'deliveryaddress'}" v-if="defaultAddress">
+    <div class="order">
+      <div class="order-top">
+    <!--<router-link class="deliveryAddress" tag="div" :to="{name:'deliveryaddress'}" v-if="defaultAddress">-->
+      <div class="deliveryAddress"  v-if="defaultAddress" @click="addtype">
       <ul class="fl deliveryAddress-lr">
         <li class="delivery-people clearfix">
           <span class="fl"><i>收货人：</i>{{defaultAddress.realname}}</span>
           <span class="fr">{{defaultAddress.mobile}}</span>
         </li>
-        <li class="delive
-        ryAddress-lr-addr lr1">
+        <li class="deliveryAddress-lr-addr lr1">
           收货地址：{{defaultAddress.province}}{{defaultAddress.city}}{{defaultAddress.area}}{{defaultAddress.address}}
         </li>
       </ul>
-    </router-link>
+      </div>
+    <!--</router-link>-->
     <router-link class="noDeliveryAddress" tag="div" :to="{name:'deliveryaddress'}" v-if="!defaultAddress">
       设置收货地址
     </router-link>
@@ -32,10 +34,12 @@
           <div class="goodsList-mid clearfix" v-for="v in orderGoods" @click="goProducts(v)">
             <div class="goods-img fl">
               <img :src="v.thumb">
-              <!--<img src="../../assets/images/confirmorder-01.jpg">-->
             </div>
             <div class="goods-introduce fl lr3">
-              {{v.title}}
+              <p>{{v.title}}</p>
+              <div class="goods-option">
+               规格： {{v.optiontitle}}
+              </div>
             </div>
             <div class="goods-unitPrice fr">
               <div class="goods-price">
@@ -92,8 +96,8 @@
         </div>
         <span class="mygoods-price fr">
 					+¥
-					<span class="goods-intPrice">{{dispatches.price | calculatePrice1}}.</span>
-					<span class="goods-folatPrice">{{dispatches.price | calculatePrice2}}</span>
+					<span class="goods-intPrice">{{dispatchesprice | calculatePrice1}}.</span>
+					<span class="goods-folatPrice">{{dispatchesprice | calculatePrice2}}</span>
 				</span>
       </li>
       <li class="clearfix">
@@ -107,10 +111,11 @@
 				</span>
       </li>
     </ul>
-    </div>
+      </div>
+
 
     <div class="settlement clearfix">
-      <div class="settlement-lf fl" >
+      <div class="settlement-lf fl">
       			<span class="settlement-item-lf">
       				共
       				<span>
@@ -120,7 +125,7 @@
       			</span>
         <span class="mygoods-price">
 					¥
-					<span class="goods-intPrice">{{memberDiscount.realprice + dispatches.price | calculatePrice1}}.</span>
+					<span class="goods-intPrice">{{memberDiscount.realprice + dispatchesprice | calculatePrice1}}.</span>
 					<span class="goods-folatPrice">{{memberDiscount.realprice | calculatePrice2}}</span>
 				</span>
       </div>
@@ -133,6 +138,7 @@
     <transition name="slide">
       <router-view></router-view>
     </transition>
+  </div>
   </div>
 </template>
 <script>
@@ -147,14 +153,17 @@
         defaultAddress: '',
         memberDiscount: '',
         dispatches: '',
+        dispatchesprice: '',
         remark: '',
         shopSet: '',
         payed: false,
+        send:{},
+        new:false
       }
     },
     methods: {
       init() {
-        console.log('init run.');
+//        console.log('init run.');
         let _this = this;
         let params = {
           data: {
@@ -167,19 +176,20 @@
 
         // 首次进入，初始化展示内容。
         GET_ORDER1(params, res => {
-          console.log('get_order1 res :');
-          console.log(res);
-
           if (res.statusCode === 1) {
             _this.orderGoods = res.data.orderGoods
             _this.defaultAddress = res.data.defaultAddress
             _this.memberDiscount = res.data.memberDiscount
             _this.dispatches = res.data.dispatches[0]
+            _this.dispatchesprice = res.data.dispatches[0].price
             _this.shopSet = res.data.shopSet
             _this.ADDRESS(res.data.addressLists)
-//            console.log(_this.defaultAddress)
           }
         })
+      },
+      addtype(){
+        this.ADDTYPE(0)
+        this.$router.push('deliveryaddress');
       },
       goBack() {
         this.$router.push('home');
@@ -187,32 +197,32 @@
       goPay() {
         let _this = this
         let payed = this.payed;
-
         if (payed === false) {
           this.payed = true;
           let addressid = this.defaultAddress.id || ''
           let goods = ''
-          let dispatchid = this.dispatch.id
+          let dispatchid = this.dispatches.id
           let cartids = this.myOrders.cartids
-          let remark = this.remark || ''
+          let remark = this.remark || '123'
           if (this.orderGoods) {
             for (let i = 0, j = this.orderGoods.length; i < j; i++) {
-              console.log(this.orderGoods)
               if (i != j - 1) {
-                goods = this.orderGoods[i].goodsid + ',' + '0' + ',' + this.orderGoods[i].total + '|'
+                goods += this.orderGoods[i].goodsid + ',' + this.orderGoods[i].optionid  + ',' + this.orderGoods[i].total + '|'
               } else {
-                goods = this.orderGoods[i].goodsid + ',' + '0' + ',' + this.orderGoods[i].total
+                goods += this.orderGoods[i].goodsid + ',' + this.orderGoods[i].optionid  + ',' + this.orderGoods[i].total
               }
             }
           }
 
           let params = {
             data: {
-              goods,
-              dispatchid:1,
+              goods:goods,
+              dispatchid:dispatchid,
               addressid,
               cartids,
               remark,
+//              optionid: this.myOrders.optionid || '',
+
             }
           }
 
@@ -223,26 +233,25 @@
               duration: 2000
             });
             this.payed = false;
+            return;
           }
 
           confirm_post(params, res => {
             if (res.statusCode == 1) {
               let ordersn = res.data.ordersn
-              // document.getElementById('commitForm').setAttribute('disabled', 'disabled')
-              /*Toast({
-               message: '订单提交成功',
-               position: 'middle',
-               duration: 2000
-               });*/
               _this.ORDERINFO(ordersn);
 
-              // setTimeout(() => {
-              // document.getElementById('commitForm').removeAttribute('disabled')
               _this.$router.replace({name: 'payselect', query: {orderid: ordersn}})
-              // }, 2000)
             } else if (res.statusCode == -1) {
               Toast({
-                message: res.data,
+                message: `操作频繁请稍候`,
+                position: 'middle',
+                duration: 2000
+              });
+              this.payed = false;
+            }else {
+              Toast({
+                message: `操作频繁请稍候`,
                 position: 'middle',
                 duration: 2000
               });
@@ -258,9 +267,11 @@
         this.$router.push({name: 'details', query: {goodsId: goodsId}})
       },
       ...mapMutations([
-        'ADDRESS', 'ORDERINFO'
+        'ADDRESS', 'ORDERINFO',
+        'ADDTYPE'
       ])
     },
+
     computed: {
       ...mapState([
         'delivery', 'myOrders'
@@ -268,7 +279,6 @@
       ]),
       ...mapGetters([
         'userAddress',
-        'isNull',
         'defaultAddressIsNull'
       ]),
       dispatch() {
@@ -277,82 +287,6 @@
       }
     },
 
-
-//    beforeRouteUpdate(to, from, next) {
-////      console.log(to)
-//      console.log('from:');
-//      console.log(from);
-//
-//      let _this = this;
-//
-//      console.log('this:');
-//      console.log(_this);
-//
-//      this.payed = false;
-//      var myaddres = '';
-////      setTimeout(() => {
-////
-////        if (from.name === 'deliveryaddress' && _this.isNull === true) {
-////
-////          if (this.defaultAddressIsNull == 0) {
-////            console.log('add running.');
-//////            this.defaultAddress = '';
-////          } else {
-////            if (!_this.userAddress.city) {
-////              console.log('jinlail');
-//////              console.log(_this.userAddress);
-//////            myaddres = _this.userAddress.id;
-//////          _this.defaultAddress = _this.userAddress;
-////              _this.init()
-////            }
-////          }
-////
-////
-////        }
-////        else if (from.name === 'deliveryaddress' && this.isNull === false) {
-////
-//////          if(!_this.userAddress){
-//////            myaddres = _this.userAddress.id;
-//////            _this.defaultAddress = _this.userAddress;
-//////          }
-////
-////          myaddres = _this.userAddress.id;
-////          _this.defaultAddress = _this.userAddress;
-////
-////          console.log('_this.defaultAddress');
-////          console.log(_this.defaultAddress);
-////
-////
-////        } else if (from.name === 'addaddress') {
-////          myaddres = this.defaultAddress.id
-////        }
-////        /* if(to.name === 'manageAddress'){
-////           next({  path: '/qrCode'})
-////         }*/
-////        let params = {
-////          data: {
-////            optionid: this.myOrders.optionid || '',
-////            total: this.myOrders.total || '',
-////            goodsid: this.myOrders.goodsid || '',
-////            dispatchid: 1,
-////            addressid: myaddres
-////          }
-////        }
-////        DispatchMoney(params, res => {
-////          if (res.statusCode === 1) {
-////            _this.orderGoods = res.data.orderGoods
-////            _this.defaultAddress = res.data.defaultAddress
-////            _this.memberDiscount = res.data.memberDiscount
-////            _this.dispatches = res.data.dispatches
-////            _this.shopSet = res.data.shopSet
-////            _this.ADDRESS(res.data.addressLists)
-////          }
-////        });
-////        next()
-////      }, 100)
-//
-//
-//    },
     filters: {
       calculatePrice1(value) {
         let num = '';
@@ -374,17 +308,23 @@
         return num.length == 0 ? num + '00' : num.length == 1 ? num + '0' : num || '00'
       }
     },
+    beforeRouteEnter (to, from, next) {
+      console.log(from)
+      if(from.name=='detailsHome'){
+        next(()=>{
+          vm.init()
+        })
+      }
+
+    },
+
     watch: {
       '$route'(to, from) {
+        this.payed=false;
         let _this = this;
-        _this.payed = false
-        console.log('route run.');
-        console.log(this.userAddress);
-        if (this.$route.query.type) {
-          console.log(this.userAddress);
+        if (from.name=='deliveryaddress' && to.name=='confirmorder') {
           this.defaultAddress = this.userAddress;
-          console.log(this.defaultAddress);
-
+          _this.dispatches=_this.delivery
 
           let params = {
             data: {
@@ -392,65 +332,25 @@
               optionid: this.myOrders.optionid || '',
               total: this.myOrders.total || '',
               goodsid: this.myOrders.goodsid || '',
-//              dispatchid: 1,
               dispatchid:1,
               addressid: this.defaultAddress.id
             }
           }
-
-
           DispatchMoney(params, res => {
-            console.log('DispatchMoney 391');
-            console.log(res);
-
             if (res.statusCode === 1) {
-//              _this.orderGoods = res.data.orderGoods
-//              _this.defaultAddress = res.data.defaultAddress
-//              _this.memberDiscount = res.data.memberDiscount
-              _this.dispatches = res.data.dispatches
-//              _this.shopSet = res.data.shopSet
-//              _this.ADDRESS(res.data.addressLists)
+              _this.dispatchesprice = res.data.dispatches.price
               _this.payed = false;
             }
           });
-
         }
-
         if (this.$route.query.addressListsLength === 0) {
-          console.log(this.userAddress);
           this.defaultAddress = '';
-          console.log(this.defaultAddress)
-
         }
-
-
-
-        console.log(this.userAddress);
-
-//        this.defaultAddress = this.userAddress
       },
-//      remark: function (newValue) {
-//        if (newValue.length > 0) {
-//
-//        }
-//      }
 
-
-    },
-    mounted() {
-    },
-    updated() {
-//      this.init();
-    },
-    activated() {
-      this.payed = false;
-      console.log('activated run.');
-      this.init();
     },
     created() {
-      console.log('created run.');
       this.init();
-      this.payed = false
     }
   }
 </script>
@@ -466,10 +366,24 @@
     height: 100%;
     background: #efeff4;
     overflow: auto;
-    z-index: 30;
-    display: flex;
-    flex-direction: column;
+    z-index: 30
   }
+
+  .order {
+    position: relative;
+    /*top:.45rem;*/
+    width: 100%;
+    /*bottom: .45rem;*/
+    overflow: hidden;
+
+    height: 100%;
+  }
+  .order-top {
+    width: 100%;
+    height: 92.5%;
+    overflow-y: scroll;
+  }
+
 
   .header {
     font-size: 0.16rem;
@@ -479,10 +393,11 @@
   .deliveryAddress {
     padding: 0.15rem;
     /*   height: 1rem;*/
-    /*margin-top: 0.54rem;*/
+    margin-top: 0.54rem;
     background: #fff;
     position: relative;
-    overflow: hidden
+    overflow: hidden;
+    /*margin-top: .1rem;*/
   }
 
   .delivery-people {
@@ -596,6 +511,19 @@
     text-align: left;
     margin-left: 0.1rem;
   }
+  .goods-introduce p {
+    width: 1.90rem;
+    font-size: 0.12rem;
+    color: #666;
+    text-align: left;
+  }
+  .goods-introduce .goods-option{
+    width: 1.90rem;
+    font-size: 0.1rem;
+    color: #999;
+    text-align: left;
+    height: .16rem;
+  }
 
   .deflist {
     height: 0.46rem;
@@ -624,7 +552,7 @@
   }
 
   .deliveryMode {
-    width: 95.2%;
+    width: 3.57rem;
     margin: 0rem 0.1rem;
     border-bottom: 0.01rem solid #E5E5E5;
   }
@@ -669,49 +597,18 @@
     font-weight: bolder;
   }
 
-  /*.settlement {*/
-    /*height: 0.50rem;*/
-    /*border-top: 1px solid #e7e7e7;*/
-    /*background: #fff;*/
-    /*z-index: 50;*/
-    /*display: flex;*/
-  /*}*/
-
-  /*.settlement-lf {*/
-    /*width: 2.50rem;*/
-    /*height: 0.50rem;*/
-    /*line-height: 0.50rem;*/
-    /*font-size: 0.14rem;*/
-    /*color: #666;*/
-    /*text-align: right;*/
-    /*padding-right: .1rem;*/
-  /*}*/
-
-  /*.settlement-lr {*/
-    /*!*width: 1.10rem;*!*/
-    /*flex: 1;*/
-    /*height: 0.50rem;*/
-    /*line-height: 0.50rem;*/
-    /*font-size: 0.16rem;*/
-    /*background: #F5751D;*/
-    /*color: #fff;*/
-    /*text-align: center;*/
-    /*outline: none;*/
-  /*}*/
-
-  /*.settlement-item-lf span {*/
-    /*color: #F5751D;*/
-  /*}*/
-
-
   .settlement {
+    /*position: fixed;*/
     position: relative;
     left: 0;
     right: 0;
     bottom: 0;
+    /*top: 92.5%;*/
+    /*height: 0.50rem;*/
     padding: 0rem 0rem 0rem 0.1rem;
     border-top: 1px solid #e7e7e7;
     background: #fff;
+    /*z-index: 31*/
   }
 
   .settlement-lf {
@@ -738,13 +635,6 @@
   .settlement-item-lf span {
     color: #F5751D;
   }
-
-
-
-
-
-
-
 
   .exhibition {
     margin: 0.1rem 0rem 0.6rem 0rem;
@@ -789,7 +679,7 @@
   }
 
   .noDeliveryAddress {
-    /*margin-top: 0.55rem;*/
+    margin-top: 0.55rem;
     height: 0.5rem;
     line-height: 0.5rem;
     background: #646C89;
@@ -798,6 +688,7 @@
     color: #fff;
     text-align: left;
     position: relative;
+    /*margin-top: .1rem;*/
   }
 
   .noDeliveryAddress:after {
@@ -814,15 +705,4 @@
   .mygoods-price, .goods-price, .goods-num {
     color: red !important;
   }
-
-  .container {
-    /*position: absolute;*/
-    width: 100%;
-    margin-top: .65rem;
-    flex: 1;
-    overflow: hidden;
-    overflow-y: scroll;
-  }
-
-
 </style>

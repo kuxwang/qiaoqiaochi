@@ -70,7 +70,8 @@
         'oldarea'
       ]),
       ...mapGetters([
-        'oldaddress'
+        'oldaddress',
+        'addtype'
       ]),
     },
     methods: {
@@ -98,19 +99,7 @@
           if (item.apid === 0) {
             return item;
           }
-          /*if(item.aname == this.prov){
-           return item;
-           }*/
         });
-        /*this.slots[0].values[0].aname='ceshi';
-         this.slots[1].values[0].aname='ceshi';
-         this.slots[2].values[0].aname='ceshi'*/
-        console.log(this.slots[0])
-        console.log(this.slots[1])
-        /* console.log(this.slots[1])
-         console.log(this.slots[2])*/
-//        this.slots[0].values.push({aname:})
-//        console.log(this.slots[0].values.length)
       },
       cityValuesChange(picker, values) {
           console.log(values)
@@ -155,23 +144,11 @@
           Toast('请填写收货人手机号')
           return
         }
-//        else if (!this.zipCode) {
-//          Toast('请填写邮编')
-//          return
-//        }
         let telreg = /^0?(13[0-9]|15[012356789]|18[0236789]|14[57])[0-9]{8}$/; //验证手机号
-//        let zipCodereg = /^\d{6}$/; //验证邮政编码
         if (!telreg.test(this.tel)) {
           Toast('手机格式错误')
           return
         }
-//        if (!zipCodereg.test(this.zipCode)) {
-//          Toast('邮编格式错误')
-//          return
-//        }
-
-        console.log('this.area');
-        console.log(this.area);
 
         let _this = this
         let params = {
@@ -212,8 +189,9 @@
             setTimeout(() => {
 //              _this.$router.push('/confirmorder?type=1')
 //              _this.$router.push({name:'deliveryaddress'})
-              _this.$router.push({name: 'deliveryaddress'})
 
+//                _this.$router.push({name: 'deliveryaddress'})
+                this.$router.go(-1)
             }, 2000)
           }
         })
@@ -267,7 +245,8 @@
   }
 
   .addAddress-list {
-    margin-top: .7rem;
+    /*margin-top: .7rem;*/
+    margin-top: .58rem;
   }
 
   .addAddress-list li {

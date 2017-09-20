@@ -19,24 +19,30 @@
           </div>
       </div>
       <ul class="nagative">
-        <li class="nav__item">
+        <!--<li class="nav__item">-->
+          <router-link class="nav__item" :to="{name:'partner'}"  tag="li">
           <div class="logo">
-            <img src="../../../assets/images/panter.png"/>
+            <img src="../assets/images/panter.png"/>
           </div>
           <span>团队管理</span>
-        </li>
-        <li class="nav__item">
+          </router-link>
+        <!--</li>-->
+        <!--<li class="nav__item">-->
+          <router-link class="nav__item" :to="{name:'extension'}"  tag="li">
           <div class="logo">
-            <img src="../../../assets/images/order.png"/>
+            <img src="../assets/images/order.png"/>
           </div>
           <span>订单管理</span>
-        </li>
-        <li class="nav__item">
+          </router-link>
+        <!--</li>-->
+        <router-link class="nav__item" :to="{name:'takemoney'}"  tag="li">
+        <!--<li class="nav__item">-->
           <div class="logo">
-            <img src="../../../assets/images/money.png"/>
+            <img src="../assets/images/money.png"/>
           </div>
           <span>收益管理</span>
-        </li>
+        <!--</li>-->
+        </router-link>
       </ul>
       <section>
         <div class="title">
@@ -71,18 +77,22 @@
         </div>
       </section>
     </div>
+    <router-view></router-view>
+    <v-tabbar></v-tabbar>
   </div>
 </template>
 
 <script>
-  import {recordStatistics_get, teamsStatistics, orderStatistics, memberInfo, } from '../../../api/api'
-  import {_webapp} from '../../../config/hook.js';
+  import {recordStatistics_get, teamsStatistics, orderStatistics, memberInfo, } from '../api/api'
+  import {_webapp} from '../config/hook.js';
   import {mapMutations, mapGetters, mapState} from 'vuex'
   import {MessageBox} from 'mint-ui';
+  import vTabbar from '../components/mode/Tabbar.vue'
+
   export default {
     data(){
       return {
-        img1: require('../../../assets/images/confirmorder-01.jpg'),
+        img1: require('../assets/images/confirmorder-01.jpg'),
       }
     },
     methods: {
@@ -126,6 +136,9 @@
         this.$router.push({name: `extension`})
       },
     },
+    components: {
+      vTabbar
+    },
     created(){
 
     }
@@ -135,9 +148,9 @@
 </script>
 
 <style lang="less" scoped>
-  @import '../../../assets/css/reset/reset.css';
-  @import '../../../assets/css/reset/common.less';
-  @import '../../../assets/css/fonts/iconfont.css';
+  @import '../assets/css/reset/reset.css';
+  @import '../assets/css/reset/common.less';
+  @import '../assets/css/fonts/iconfont.css';
 
   .page {
     .page-view();

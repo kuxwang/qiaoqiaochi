@@ -58,7 +58,7 @@
 
 <script>
   import {mapMutations, mapGetters} from 'vuex';
-  import {orders} from '../../../api/api';
+  import {orders} from '../../api/api';
   export default{
     data () {
       return {

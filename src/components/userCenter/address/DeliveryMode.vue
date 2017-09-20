@@ -67,7 +67,8 @@
     },
     computed: {
       ...mapGetters([
-        'busActive'
+        'busActive',
+        'ADDTYPE'
       ])
     },
     mounted(){

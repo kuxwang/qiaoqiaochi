@@ -50,7 +50,7 @@
 </template>
 <script>
 
-  import {withdrawals_get, withdrawals_post, recordStatistics_get} from '../../../api/api.js';
+  import {withdrawals_get, withdrawals_post, recordStatistics_get} from '../../api/api.js';
   import {Toast} from 'mint-ui';
 
   export default{
@@ -185,6 +185,7 @@
     text-align: left;
     line-height: 2.5;
     padding: 0 0.1rem;
+    font-size: .14rem;
 
   }
 

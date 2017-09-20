@@ -32,19 +32,14 @@ const state = {
   imgUrl: '',
   seteditAddress: '',
   oldaddress: '', //原来的地址
-  isConfirm: 0,
-  isNull: true,
-  defaultAddressIsNull: false,
-  isScorll: '',
-  oldprovince: '',
-  oldcity: '',
-  oldarea: '',
-  // userInfo: {
-  //   apiToken: '',
-  //   auth_key: '',
-  //   timestamp: '',
-  //   access_token: ''
-  // }
+  isConfirm:0,
+  isNull:true,
+  defaultAddressIsNull : false,
+  isScorll:'',
+  oldprovince:'',
+  oldcity:'',
+  oldarea:'',
+  addtype:''
 }
 
 export default new Vuex.Store({

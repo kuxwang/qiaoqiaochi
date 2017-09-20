@@ -66,7 +66,7 @@
             </router-link>
           </ul>
           <ul class="center-list">
-            <router-link class="center-cell" :to="{name:'useraddress',query:{from:1}}" tag="li">
+            <router-link class="center-cell" :to="{name:'deliveryAddress',query:{from:1}}" tag="li">
               <div class="iconfont icon1">&#xe60a;</div>
               <div class="title-list">收货地址管理</div>
               <i class="iconfont right">&#xe649;</i>
@@ -89,29 +89,26 @@
               <i class="iconfont right">&#xe649;</i>
             </router-link>
 
-            <!--<router-link class="center-cell" :to="{name:'footprint'}" tag="li">-->
-            <!--<li class="center-cell" @click="msg()">
+            <router-link class="center-cell" :to="{name:'applys'}" tag="li">
             <div class="iconfont icon5">&#xe616;</div>
-            <div class="title-list">售后规则</div>
+            <div class="title-list">我要开店</div>
             <i class="iconfont right">&#xe649;</i>
-            </li>-->
-            <!--</router-link>-->
-            <!--<li class="center-cell" @click="msg()">
-            &lt;!&ndash;<router-link class="center-cell" :to="{name:'footprint'}" tag="li">&ndash;&gt;
+            </router-link>
+            <router-link class="center-cell" :to="{name:'coupon'}" tag="li">
               <div class="iconfont icon6">&#xe639;</div>
-              <div class="title-list">关于我们</div>
+              <div class="title-list">优惠券</div>
               <i class="iconfont right">&#xe649;</i>
-            &lt;!&ndash;</router-link>&ndash;&gt;
-            </li>-->
+            </router-link>
+            <router-link class="center-cell" :to="{name:'opinion'}" tag="li">
+              <div class="iconfont icon6">&#xe639;</div>
+              <div class="title-list">意见反馈</div>
+              <i class="iconfont right">&#xe649;</i>
+            </router-link>
           </ul>
           <button class="outLogin" @click="outLogin">退出登录</button>
         </section>
-        <!-- <div class="postUserInfo" @click="outLogin">
-           <button class="postUserInfo-item">
-             保存
-           </button>
-         </div>-->
       </mt-loadmore>
+      <!--<router-view></router-view>-->
     </div>
     <v-tabbar></v-tabbar>
     <transition name="slide">
@@ -132,7 +129,6 @@
       return {
         topStatus: '',
         disindex: 3,
-
         orderStatistics: {
           total: '0',//全部
           lock: '0',//未结算

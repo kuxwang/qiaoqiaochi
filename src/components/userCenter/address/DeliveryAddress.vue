@@ -47,20 +47,20 @@
     },
     methods: {
       goBack(){
-        console.log('addresslists:');
-        console.log(this.addressLists.length);
-        this.get_defaultaddressisnull(this.addressLists.length);
-        this.$router.push({name:'confirmorder',query:{'addressListsLength' : this.addressLists.length}});
+          this.$router.go(-1)
       },
       getMyAddress(v, i){
-        this.isnull(false)
-        this.onActives = i;
-        this.$router.push('/confirmorder?type=1');
-        this.getUserAddress(v);
-        this.getOnActive(i);
+        if(this.addtype==0){
+          this.isnull(false)
+          this.onActives = i;
+          this.$router.go(-1)
+          this.getUserAddress(v);
+          this.getOnActive(i);
+        }
       },
       manage () {
-        this.$router.push('/manageAddress')
+
+          this.$router.push({name:'manageAddress'})
       },
       ...mapMutations({
         'getUserAddress': 'GET_USERADDRESS',
@@ -73,57 +73,23 @@
     computed: {
       ...mapGetters([
         "onActive",
-        "isNull"
+        "isNull",
+        'addtype'
       ]),
       ...mapState([
         'addressListNum'
       ])
     },
+    beforeRouteLeave(to, from, next){
+      if(to.name==='confirmorder'){
+        to.query.addressListsLength=this.addressLists.length
+      }
+      next()
+    },
     beforeRouteUpdate(to, from, next){
-      if(from.name === 'editaddress'){
+      if(from.name === 'editAddress'||from.name === 'addaddress' || from.name ==='manageAddress'){
         let _this = this
         addresses_get({data :{}}, res => {
-          console.log(res)
-          if (res.statusCode == 1) {
-            _this.getaddressnum(res.data.list.length)
-            _this.addressLists = res.data.list
-          } else {
-            console.log('获取收货地址接口异常')
-          }
-        })
-      }else if(to.name === 'manageAddress'){
-        next()
-      }else if(from.name === 'addaddress'){
-        let _this = this
-        addresses_get({data : {}}, res => {
-          console.log(res)
-          if (res.statusCode == 1) {
-            _this.getaddressnum(res.data.list.length)
-            _this.addressLists = res.data.list
-          } else {
-            console.log('获取收货地址接口异常')
-          }
-        })
-        next()
-      }else if(from.name ==='manageAddress'){
-        let _this = this
-        addresses_get({data : {}}, res => {
-          console.log(res)
-          if (res.statusCode == 1) {
-            _this.getaddressnum(res.data.list.length)
-            _this.addressLists = res.data.list
-
-//            if(res.data.list.length === 0){
-//              this.defaultAddressIsNull = true;
-//            }
-          } else {
-            console.log('获取收货地址接口异常')
-          }
-        })
-        next()
-      }else if(from.name ==='editAddress') {
-        let _this = this
-        addresses_get({data : {}}, res => {
           console.log(res)
           if (res.statusCode == 1) {
             _this.getaddressnum(res.data.list.length)
@@ -135,6 +101,7 @@
         next()
       }
       else{
+        console.log('')
         next()
       }
     },
@@ -152,7 +119,6 @@
           console.log('获取收货地址接口异常')
         }
       })
-//      console.log(this.address)
     }
   }
 </script>
@@ -177,8 +143,9 @@
   }
 
   .deliveryAddress {
-    margin-top: 0.7rem;
-    /*margin-bottom: 0.58rem;*/
+    /*margin-top: 0.7rem;*/
+    margin-top: .58rem;
+    margin-bottom: 0.58rem;
   }
 
   .deliveryAddress li {
