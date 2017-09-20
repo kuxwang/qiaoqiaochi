@@ -10,7 +10,8 @@ import {MessageBox} from 'mint-ui'
 
 // import {fn} from '../config/myUtils.js'
 
-const base = 'https://api.duoyunjiav2.wshoto.com';
+const base = 'https://ws7.wshoto.com';
+// const base = 'https://api.duoyunjiav2.wshoto.com';
 const header = 'application/json';
 const dataType = 'json';
 
@@ -259,7 +260,7 @@ const commissions = {
  * 商品详情
  */
 const product = {
-  productDetail: {url: `${base}/goods`, method: 'GET', header, dataType}
+  productDetail: {url: `${base}/products`, method: 'GET', header, dataType}
 };
 /**
  * 加入购物车
@@ -328,7 +329,7 @@ const orderDo = {orderD: {url: `${base}/orders/operationOrder`, method: 'PUT', h
 /**
  * 首页商品展示 yellowStar
  */
-const MYGOODS = {url: `${base}/goods`, method: 'GET', header, dataType}
+const MYGOODS = {url: `${base}/products`, method: 'GET', header, dataType}
 
 /**
  * 购物车 yellowStar

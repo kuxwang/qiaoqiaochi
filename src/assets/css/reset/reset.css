@@ -59,3 +59,24 @@ a {
 .lr2{overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;}
 .lr3{overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;}
 input[disabled]{background: #fcfcfc}
+
+
+
+/**
+详情页内容详情样式无法添加，只能在此添加
+ */
+.intro > p {
+  width: 100%;
+  font-size: .15rem;
+  text-align: left;
+  padding-left: .03rem;
+}
+
+.intro > span {
+  font-size: .18rem;
+  color: #f01e1f;
+}
+
+.intro img {
+  width: 100%;
+}
