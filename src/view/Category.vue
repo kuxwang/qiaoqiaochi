@@ -8,7 +8,7 @@
       </ul>
       <div class="list-r">
         <router-link class="r-item" v-for=" (v,index) in goodslist"
-                     :to="{ name:'list',query:{pid: list[selected].id,cid:v.id,title:v.name}}"
+                     :to="{ name:'clist',query:{pid: list[selected].id,cid:v.id,title:v.name}}"
                      tag="div">
           <img :src="v.thumb | dGoods">
           <span>{{v.name}}</span>

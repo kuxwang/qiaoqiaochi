@@ -116,7 +116,7 @@ export default new Router({
       children:[
         {
           path: '/category/list',
-          name:'list2',
+          name:'clist',
           component:List,
           children: [
             {

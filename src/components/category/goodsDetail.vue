@@ -105,7 +105,7 @@
 </template>
 <script>
   import {Header, Popup, Toast, Indicator, Loadmore} from 'mint-ui';
-  import {productDetail, addCart, GET_CARTNUMS} from '../../api/api.js';
+  import {ProductDetail, addCart, GET_CARTNUMS} from '../../api/api.js';
   import {setStore, getStore} from '../../config/myUtils';
   import {mapMutations, mapGetters} from 'Vuex';
   export default {
@@ -217,7 +217,7 @@
             id: good_id,
           }
         }
-        productDetail(params, function (res) {
+        ProductDetail(params, function (res) {
           Indicator.close()
           if (res.statusCode === 1) {
             that.goodNums = res.data.goodscount;
@@ -314,7 +314,7 @@
     font-size: .15rem;
     /*overflow:auto;*/
     overflow: hidden;
-    z-index: 20;
+    z-index: 25;
   }
 
   .mint-header {
@@ -417,6 +417,7 @@
     bottom: 0;
     left: 0;
     -webkit-transform: translateZ(0);
+    z-index: 20;
     /*border-top: 1px solid #DDDDDD;*/
   }
 
