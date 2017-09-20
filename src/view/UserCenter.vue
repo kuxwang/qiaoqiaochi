@@ -66,7 +66,7 @@
             </router-link>
           </ul>
           <ul class="center-list">
-            <router-link class="center-cell" :to="{name:'useraddress',query:{from:1}}" tag="li">
+            <router-link class="center-cell" :to="{name:'deliveryAddress',query:{from:1}}" tag="li">
               <div class="iconfont icon1">&#xe60a;</div>
               <div class="title-list">收货地址管理</div>
               <i class="iconfont right">&#xe649;</i>
@@ -97,6 +97,11 @@
             <router-link class="center-cell" :to="{name:'coupon'}" tag="li">
               <div class="iconfont icon6">&#xe639;</div>
               <div class="title-list">优惠券</div>
+              <i class="iconfont right">&#xe649;</i>
+            </router-link>
+            <router-link class="center-cell" :to="{name:'opinion'}" tag="li">
+              <div class="iconfont icon6">&#xe639;</div>
+              <div class="title-list">意见反馈</div>
               <i class="iconfont right">&#xe649;</i>
             </router-link>
           </ul>

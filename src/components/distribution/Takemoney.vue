@@ -185,6 +185,7 @@
     text-align: left;
     line-height: 2.5;
     padding: 0 0.1rem;
+    font-size: .14rem;
 
   }
 

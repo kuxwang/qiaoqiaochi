@@ -1,12 +1,15 @@
 <template>
-  <div class="main">
+  <div class="page">
     <mt-header title="意见反馈" fixed>
       <router-link to="/userCenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
     <div class="container">
-       1111111111111
+       <textarea>
+
+       </textarea>
+
     </div>
   </div>
 </template>
@@ -38,7 +41,11 @@
     .page-view(1);
   }
   .container {
-
+    textarea {
+      width: 100%;
+      height: 1.6rem;
+      margin-bottom: .22rem;
+    }
   }
 
 </style>
