@@ -24,9 +24,14 @@
 
 
 <script>
+  import vTabbar from '../components/mode/Tabbar.vue'
+  import vSearch from '../components/mode/search';
+  import {Category, ProductDetail, Categorys} from '../api/api'
+  import {mapMutations, mapGetters, mapState} from 'vuex'
 
 
-  export  default {
+
+  export default {
     data(){
       return {
         img1: require('../assets/images/home-01.jpg'),
@@ -34,9 +39,35 @@
         list: [
           {
             name:'混合'
+          },
+          {
+            name:'混合'
+          },
+          {
+            name:'混合'
+          },
+          {
+            name:'混合'
           }
         ],  //左侧列表
-        goodslist: [], //右侧商品,
+        goodslist: [
+          {
+            name:'呵呵',
+            id:1,
+          },
+          {
+            name:'呵呵',
+            id:1,
+          },
+          {
+            name:'呵呵',
+            id:1,
+          },
+          {
+            name:'呵呵',
+            id:1,
+          }
+        ], //右侧商品,
         selected: 0,
         find: ''
       }
