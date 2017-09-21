@@ -210,6 +210,7 @@
   .main-search {
     height: 100%;
     background: rgb(240, 242, 245);
+
   }
 
   .search {
@@ -223,9 +224,20 @@
     /*background: url('../../assets/images/topbg.png') center center no-repeat;*/
     /*background-color: #eee;*/
     background-size: 100% 100%;
-    -webkit-box-shadow: 0 1px 4px rgba(138, 138, 138, .3);
+    /*-webkit-box-shadow: 0 1px 4px rgba(138, 138, 138, .3);
     -moz-box-shadow: 0 1px 4px rgba(138, 138, 138, .3);
-    box-shadow: 0 1px 4px rgba(138, 138, 138, .3);
+    box-shadow: 0 1px 4px rgba(138, 138, 138, .3);*/
+
+    /*width: 616px;*/
+    /*height: .64rem;*/
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background-color: #eaebed;
+
+
+
+
   }
 
   .white {
@@ -245,7 +257,8 @@
     font-size: .13rem;
     padding: 0 0.2rem;
     color: #333;
-    background: rgba(255, 255, 255, .7);
+    /*background: rgba(255, 255, 255, .7);*/
+    background: #e8e8e8;
     margin: .08rem 0;
     border-radius: .1rem .1rem .1rem .1rem;
   }

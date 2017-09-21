@@ -9,8 +9,8 @@
                 :class="{ 'rotate': topStatus === 'drop' }">&#xe732;下拉刷新</span>
           <span class="loading" v-show="topStatus === 'loading'">加载中</span>
         </div>
-        <router-link class="option" :to="{name:'userinfo'}">
-          设置
+        <router-link class="iconfont option" :to="{name:'userinfo'}">
+          &#xe63b;
         </router-link>
         <section class="avatar">
           <router-link class="icon" :to="{name:'userinfo'}">
@@ -19,16 +19,18 @@
           <div class="message">
             <div>
               <span class="hello">{{memberInfo.nickname}}</span>
-              <span class="level">{{memberInfo.leveldetail.levelname}}</span>
+              <span class="id">ID:{{memberInfo.id}}</span>
+              <!--<span class="level">{{memberInfo.id}}</span>-->
+              <!--<span class="level">{{memberInfo.leveldetail.levelname}}</span>-->
             </div>
-            <router-link class="mymoney" :to="{name: 'takemoney'}" tag="div">
+            <!--<router-link class="mymoney" :to="{name: 'takemoney'}" tag="div">
               <p>
                 {{memberInfo.credit2}} 元
               </p>
               <p>
                 我的余额
               </p>
-            </router-link>
+            </router-link>-->
           </div>
         </section>
 
@@ -263,10 +265,11 @@
     position: absolute;
     right: .16rem;
     top: .6rem;
-    font-size: .13rem;
+    font-size: .2rem;
     font-weight: bold;
     color: #fff;
     z-index: 10
+
   }
 
   .avatar {
@@ -279,6 +282,7 @@
     color: #fff;
     /*background: url('../assets/images/centertopbg.png') center center no-repeat;*/
     background-size: 100% 100%;
+    background-color: #333;
   }
 
   .icon {
@@ -461,7 +465,8 @@
     font-size: .3rem;
     /*border: 1px solid #F5751D;*/
     line-height: .3rem;
-    color: #ff6500;
+    /*color: #ff6500;*/
+    color: #333;
     border-radius: 50%;
   }
 

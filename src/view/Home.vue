@@ -4,7 +4,7 @@
       <div class="logo"><img :src="logo"/></div>
       <v-search></v-search>
       <div class="share">
-        <span class="iconfont">&#xe621;</span>
+        <span class="iconfont">&#xe71d;</span>
       </div>
     </div>
     <ul class="top-nav">
@@ -91,12 +91,13 @@
   .top-bar {
     display: flex;
     height: .45rem;
-    background-color: @background;
+    background-color: #fff;
     .logo {
       width: .65rem;
       font-size: .21rem;
       color: #000000;
-      padding: .05rem;
+      /*padding: .05rem;*/
+      padding: .08rem;
       img {
         width: 100%;
         height: 100%;
@@ -119,7 +120,7 @@
     }
   }
   .top-nav {
-    background-color: @background;
+    background-color: #fff;
     width: 100%;
     height: .45rem;
     display: flex;
