@@ -223,9 +223,9 @@
     /*background: url('../../assets/images/topbg.png') center center no-repeat;*/
     /*background-color: #eee;*/
     background-size: 100% 100%;
-    -webkit-box-shadow: 0 1px 4px rgba(138, 138, 138, .3);
-    -moz-box-shadow: 0 1px 4px rgba(138, 138, 138, .3);
-    box-shadow: 0 1px 4px rgba(138, 138, 138, .3);
+    /*-webkit-box-shadow: 0 1px 4px rgba(138, 138, 138, .3);*/
+    /*-moz-box-shadow: 0 1px 4px rgba(138, 138, 138, .3);*/
+    /*box-shadow: 0 1px 4px rgba(138, 138, 138, .3);*/
   }
 
   .white {

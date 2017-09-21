@@ -96,7 +96,7 @@
       width: .65rem;
       font-size: .21rem;
       color: #000000;
-      padding: .05rem;
+      padding: .1rem;
       img {
         width: 100%;
         height: 100%;
