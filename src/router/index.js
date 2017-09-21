@@ -190,33 +190,28 @@ export default new Router({
 
 
     {
-      path:'/em',
-      component:Empty,
+      path: '/confirmorder',
+      name: 'confirmorder',
+      component: ConfirmOrder,
+      meta: { nokeepAlive: true },
       children: [
         {
-          path: '/confirmorder',
-          name: 'confirmorder',
-          component: ConfirmOrder,
-          children: [
-            {
-              path: '/confirmorder/details',
-              name: 'confirmdetails',
-              component: Details
-            },
-            {
-              path: '/payselect',
-              name: 'payselect',
-              component: Payselect
-            },
-            {
-              path: '/deliverymode',
-              name: 'deliverymode',
-              component: DeliveryMode
-            }
-          ]
-
+          path: '/confirmorder/details',
+          name: 'confirmdetails',
+          component: Details
         },
+        {
+          path: '/payselect',
+          name: 'payselect',
+          component: Payselect
+        },
+        {
+          path: '/deliverymode',
+          name: 'deliverymode',
+          component: DeliveryMode
+        }
       ]
+
     },
     {
       path: '/userCenter',

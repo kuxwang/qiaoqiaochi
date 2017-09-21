@@ -2,7 +2,7 @@
   <div class="main">
     <section>
       <mt-header fixed title="个人信息">
-        <router-link to="/vipCenter" slot="left">
+        <router-link to="/userCenter" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
       </mt-header>

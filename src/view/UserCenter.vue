@@ -9,11 +9,11 @@
                 :class="{ 'rotate': topStatus === 'drop' }">&#xe732;下拉刷新</span>
           <span class="loading" v-show="topStatus === 'loading'">加载中</span>
         </div>
-        <router-link class="iconfont option" :to="{name:'userinfo'}">
+        <router-link class="iconfont option" :to="{name:'userInfo'}">
           &#xe63b;
         </router-link>
         <section class="avatar">
-          <router-link class="icon" :to="{name:'userinfo'}">
+          <router-link class="icon" :to="{name:'userInfo'}">
             <img :src="memberInfo.avatar" alt="">
           </router-link>
           <div class="message">
@@ -68,11 +68,13 @@
             </router-link>
           </ul>
           <ul class="center-list">
-            <router-link class="center-cell" :to="{name:'deliveryaddress',query:{from:1}}" tag="li">
+            <!--<router-link class="center-cell" :to="{name:'deliveryaddress',query:{from:1}}" tag="li">-->
+            <li class="center-cell" @click="getAddr">
               <div class="iconfont icon1">&#xe60a;</div>
               <div class="title-list">收货地址管理</div>
               <i class="iconfont right">&#xe649;</i>
-            </router-link>
+            </li>
+            <!--</router-link>-->
             <!--<router-link class="center-cell" :to="{name:'takemoney'}" tag="li">-->
             <li class="center-cell" @click="msg()">
               <div class="iconfont icon2">&#xe69d;</div>
@@ -217,9 +219,14 @@
           duration: 1800
         });
       },
+      getAddr(){
+        this.addrtype(1)
+        this.$router.push({name: 'deliveryaddress'});
+      },
       ...mapMutations({
         tabselect: 'TABSELECT',
-        setImgUrl: 'IMGURL'
+        setImgUrl: 'IMGURL',
+        addrtype:'ADDTYPE'
       })
     },
     filter: {

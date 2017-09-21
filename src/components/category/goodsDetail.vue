@@ -150,8 +150,8 @@
         this.myStata = 1
       },
       toast: function () {
+        console.log(this.myStata)
         if (this.myStata === 1) {//加入购物车
-
           this.popupVisible = false;
           let that = this;
           let params = {
@@ -194,7 +194,8 @@
             total: this.num
           }
           this.getMyorders(myOrders);
-          this.$router.push({name: 'confirmorder'})
+          console.log(123)
+          this.$router.push({path: '/confirmorder'})
         }
       },
       reduce: function (num) {

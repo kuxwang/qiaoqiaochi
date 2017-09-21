@@ -92,9 +92,6 @@
           this.$refs.mylist.statusType = '';
           this.$refs.mylist.init('')
         }
-
-
-
       }
     },
 

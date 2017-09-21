@@ -170,7 +170,7 @@
     /*height: 6.17rem;*/
     height: 100%;
     text-align: center;
-    margin-top: .48rem;
+    /*margin-top: .48rem;*/
     /*border-top: 1px solid red;*/
   }
 

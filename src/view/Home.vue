@@ -8,12 +8,14 @@
       </div>
     </div>
     <ul class="top-nav">
-      <li v-for="i in navlist">{{i}}</li>
+      <!--<li v-for="i in navlist" >{{i}}</li>-->
+      <li v-for="i in navlist" >{{i}}</li>
+
     </ul>
     <div class="scroll-view">
       <mt-swipe class="banner" :auto="4000" :show-indicators="false">
-        <mt-swipe-item v-for="i in slider">
-          <img class="silder" :src="i.thumb">
+        <mt-swipe-item v-for= "s in slider" >
+          <img class="silder" :src="s.thumb">
         </mt-swipe-item>
       </mt-swipe>
       <div class="goods">
