@@ -109,7 +109,7 @@
   import {setStore, getStore} from '../../config/myUtils';
   import {mapMutations, mapGetters} from 'Vuex';
   export default {
-    data(){
+    data () {
       return {
         popupVisible: false,
         isVip: false,
