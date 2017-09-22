@@ -2,9 +2,9 @@
   <transition name="slide">
     <div class="main">
       <mt-header title="商品详情" fixed class="header">
-        <router-link to="/" slot="left" class="pro-white">
+        <a  slot="left" class="pro-white" @click="goBack()">
           <mt-button icon="back"></mt-button>
-        </router-link>
+        </a>
       </mt-header>
       <div class="container">
         <!--<mt-loadmore :top-method="loadBottom" @top-status-change="handleBottomChange">-->
