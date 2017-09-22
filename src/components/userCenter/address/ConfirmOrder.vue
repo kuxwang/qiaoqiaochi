@@ -203,7 +203,7 @@
           let goods = ''
           let dispatchid = this.dispatches.id
           let cartids = this.myOrders.cartids
-          let remark = this.remark || '123'
+          let remark = this.remark || ''
           if (this.orderGoods) {
             for (let i = 0, j = this.orderGoods.length; i < j; i++) {
               if (i != j - 1) {
@@ -290,20 +290,28 @@
     filters: {
       calculatePrice1(value) {
         let num = '';
-        if (typeof value === 'number') {
+        if (typeof value == 'number') {
           num = Math.floor(value) || 0
-        } else if (typeof value === 'string') {
+        } else if (typeof value == 'string') {
           num = Math.floor(Number(value)) || 0
+        } else if (typeof value == 'undefined' ) {
+          return
         }
         return num || 0
       },
       calculatePrice2(value) {
+        console.log(typeof value)
         let num = ''
         if (typeof value == 'number') {
           num = value.toFixed(2).toString().split('.')[1]
+          console.log(num)
         }
         if (typeof value == 'string') {
-          num = value.split('.')[1]
+          num = value.split('.')[1] || '00'
+//          console.log(value.split('.'))
+        }
+        if (typeof value == 'undefined') {
+          return
         }
         return num.length == 0 ? num + '00' : num.length == 1 ? num + '0' : num || '00'
       }

@@ -10,7 +10,7 @@
       <ul class="scroll-goodslist clear">
         <li class="scroll-goodslist-li">
           <mt-swipe class="banner" :auto="4000" >
-            <mt-swipe-item v-for="i in slider">
+            <mt-swipe-item v-for="(i, k) in slider" :key="k">
               <img :src="i.thumb" alt="">
               <!--<img class="silder" :src="i.thumb">-->
             </mt-swipe-item>
@@ -32,7 +32,7 @@
         </li>
         <li class="scroll-goodslist-li">
           <mt-swipe class="banner" :auto="4000" >
-            <mt-swipe-item v-for="i in slider">
+            <mt-swipe-item v-for="(i, k) in slider" :key="k">
               <img :src="i.thumb" alt="">
               <!--<img class="silder" :src="i.thumb">-->
             </mt-swipe-item>
@@ -54,7 +54,7 @@
         </li>
         <li class="scroll-goodslist-li">
           <mt-swipe class="banner" :auto="4000" >
-            <mt-swipe-item v-for="i in slider">
+            <mt-swipe-item v-for="(i, k) in slider" :key="k">
               <img :src="i.thumb" alt="">
               <!--<img class="silder" :src="i.thumb">-->
             </mt-swipe-item>
@@ -76,9 +76,8 @@
         </li>
         <li class="scroll-goodslist-li">
           <mt-swipe class="banner" :auto="4000" >
-            <mt-swipe-item v-for="i in slider">
+            <mt-swipe-item v-for="(i, k) in slider" :key="k">
               <img :src="i.thumb" alt="">
-              <!--<img class="silder" :src="i.thumb">-->
             </mt-swipe-item>
           </mt-swipe>
           <p class="goodstitle">
@@ -98,7 +97,7 @@
         </li>
         <li class="scroll-goodslist-li">
           <mt-swipe class="banner" :auto="4000" >
-            <mt-swipe-item v-for="i in slider">
+            <mt-swipe-item v-for="(i, k) in slider" :key="k">
               <img :src="i.thumb" alt="">
               <!--<img class="silder" :src="i.thumb">-->
             </mt-swipe-item>

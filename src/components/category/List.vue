@@ -32,7 +32,7 @@
       <ul v-show="goodlist.length" class="list" v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded"
           infinite-scroll-distance="60">
         <!--<li class="list-cell" v-for="i in goodlist">-->
-        <router-link class="list-cell" :to="{name:'detail',query:{id:i.id}}" tag="li" v-for="i in goodlist">
+        <router-link class="list-cell" :to="{name:'detail',query:{id:i.id}}" tag="li" v-for="(i ,k) in goodlist" :key="k">
           <div class="logo">
             <img :src="i.thumb"/>
           </div>
@@ -50,9 +50,7 @@
         <div class="iconfont">&#xe618;</div>
         <div>暂无商品</div>
       </div>
-      <!--<transition name="slide">-->
       <router-view></router-view>
-      <!--</transition>-->
     </div>
   </div>
 </template>

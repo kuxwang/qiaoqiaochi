@@ -12,35 +12,12 @@
     <!--</ul>-->
     <div class="scroll-view">
       <mt-swipe class="banner" :auto="4000" :show-indicators="false">
-        <mt-swipe-item v-for="i in slider">
+        <mt-swipe-item v-for="(i, x) in slider" :key="x">
           <img class="silder" :src="i.thumb">
         </mt-swipe-item>
       </mt-swipe>
       <v-colrow></v-colrow>
       <v-colcol></v-colcol>
-      <!--<div class="goods">
-        <div class="goods__title">热销产品</div>
-        <div class="goods__item">
-          <div class="goods__pic"><img :src="img1"/></div>
-          <h3>Keep彩色受案带</h3>
-          <p>爱仕达看到就赛欧的骄傲IP等级</p>
-          <div class="buy">
-            <span>¥49</span>
-            <div>立即购买</div>
-          </div>
-        </div>
-        <div class="goods__item">
-          <div class="goods__pic">
-            <img class="goods__pic" :src="img1"/>
-          </div>
-          <h3>Keep彩色受案带</h3>
-          <p>爱仕达看到就赛欧的骄傲IP等级</p>
-          <div class="buy">
-            <span>¥49</span>
-            <div>立即购买</div>
-          </div>
-        </div>
-      </div>-->
       <div class="bottom-img">
         <img class="bottom-pic" :src="logo2"/>
       </div>
@@ -78,7 +55,6 @@
           }
         ],
         selected: 1,
-//        navlist:['推荐','化妆品','食品','日用品','母婴','保健品']
 
       }
     },
