@@ -87,7 +87,7 @@ export const _webapp = {
 
     if(_webapp.debug === true){
       if (!_env.wshoto) {
-        console.log(logData);
+        // console.log(logData);
         return ;
       }
 

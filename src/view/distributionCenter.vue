@@ -144,7 +144,7 @@
           _webapp.log(res);
 
           if (res.statusCode == 1) {
-            console.log(res)
+//            console.log(res)
             _this.memberInfo.nickname = res.data.nickname
             _this.memberInfo.id = res.data.id
             _this.memberInfo.level = res.data.level
@@ -177,8 +177,7 @@
           }
         });
         orderStatistics({data : {}}, function (res) {
-//                      console.log('orderStatistics');
-          if (res.statusCode == 1) {
+          if (res.statusCode == 1 && res.data == true) {
             _this.orderStatistics.total = res.data.total.order_count || 0
             _this.orderStatistics.lock = res.data.lock.order_count || 0
             _this.orderStatistics.refund = res.data.refund.order_count || 0
