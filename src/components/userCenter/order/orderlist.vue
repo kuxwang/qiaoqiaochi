@@ -258,7 +258,6 @@
   }
 
   .good-info > img {
-    /*float: left;*/
     display: block;
   }
 

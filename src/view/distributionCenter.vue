@@ -202,7 +202,6 @@
     created(){
       this.init()
     }
-
   }
 
 </script>
