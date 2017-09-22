@@ -9,6 +9,7 @@
        <textarea>
 
        </textarea>
+      <div></div>
 
     </div>
   </div>
@@ -41,10 +42,12 @@
     .page-view(1);
   }
   .container {
+    margin-top: .64rem;
     textarea {
       width: 100%;
       height: 1.6rem;
       margin-bottom: .22rem;
+      background-color: #eee;
     }
   }
 
