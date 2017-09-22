@@ -209,6 +209,10 @@
           .scroll-goodslist-li {
             height: 100%;
             text-align:center;
+            background: -webkit-linear-gradient(#fafafa, #ffffff);
+            background: -o-linear-gradient(#fafafa, #ffffff);
+            background: -moz-linear-gradient(#fafafa, #ffffff);
+            background: linear-gradient(#fafafa, #ffffff);
              .banner {
                height: 3rem
              }

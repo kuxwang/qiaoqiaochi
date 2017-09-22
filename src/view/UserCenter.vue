@@ -279,11 +279,8 @@
     position: relative;
     top: 0;
     left: 0;
-    /*margin-top: .4rem;*/
     height: 1.47rem;
-    /*height: 1.2rem;*/
     padding: .50rem .15rem .15rem .15rem;
-    /*padding: .23rem .15rem .15rem .15rem;*/
     color: #fff;
     /*background: url('../assets/images/centertopbg.png') center center no-repeat;*/
     background-size: 100% 100%;
@@ -295,7 +292,6 @@
     height: .70rem;
     background: grey;
     float: left;
-    border: 2px solid #ffffff;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;

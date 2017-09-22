@@ -300,15 +300,12 @@
         return num || 0
       },
       calculatePrice2(value) {
-        console.log(typeof value)
         let num = ''
         if (typeof value == 'number') {
           num = value.toFixed(2).toString().split('.')[1]
-          console.log(num)
         }
         if (typeof value == 'string') {
           num = value.split('.')[1] || '00'
-//          console.log(value.split('.'))
         }
         if (typeof value == 'undefined') {
           return
@@ -349,7 +346,6 @@
 
     },
     created() {
-      console.log(this.$route)
       this.init();
     }
   }
