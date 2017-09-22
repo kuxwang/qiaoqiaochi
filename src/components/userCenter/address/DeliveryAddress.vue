@@ -50,6 +50,7 @@
           this.$router.go(-1)
       },
       getMyAddress(v, i){
+        console.log(this.addtype)
         if(this.addtype==0){
           this.isnull(false)
           this.onActives = i;

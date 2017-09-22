@@ -211,7 +211,7 @@
 //          spinnerType: 'fading-circle'
 //        });
         let that = this;
-        let good_id = this.$route.query.goodsId;
+        let good_id = this.$route.query.id;
         let params = {
           'data': {
             id: good_id,

@@ -166,7 +166,7 @@ export const _webapp = {
   },
 
   getSignData: function (obj, auth_key) {
-    _webapp.log('getSign Data running:');
+    // _webapp.log('getSign Data running:');
     // _webapp.log(obj);
 
     if (typeof obj !== 'object') {
