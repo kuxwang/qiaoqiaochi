@@ -74,14 +74,14 @@
               <div class="title-list">收货地址管理</div>
               <i class="iconfont right">&#xe649;</i>
             </li>
-            <!--</router-link>-->
-            <!--<router-link class="center-cell" :to="{name:'takemoney'}" tag="li">-->
-            <li class="center-cell" @click="msg()">
+
+
+            <router-link class="center-cell" :to="{name:'coupon'}" tag="li">
               <div class="iconfont icon2">&#xe69d;</div>
-              <div class="title-list">我的钱包</div>
+              <div class="title-list">优惠券</div>
               <i class="iconfont right">&#xe649;</i>
-            </li>
-            <!--</router-link>-->
+            </router-link>
+
             <router-link class="center-cell" :to="{name:'collect'}" tag="li">
               <div class="iconfont icon3">&#xe615;</div>
               <div class="title-list">我的收藏</div>
@@ -98,11 +98,7 @@
             <div class="title-list">我要开店</div>
             <i class="iconfont right">&#xe649;</i>
             </router-link>
-            <router-link class="center-cell" :to="{name:'coupon'}" tag="li">
-              <div class="iconfont icon6">&#xe639;</div>
-              <div class="title-list">优惠券</div>
-              <i class="iconfont right">&#xe649;</i>
-            </router-link>
+
             <router-link class="center-cell" :to="{name:'opinion'}" tag="li">
               <div class="iconfont icon6">&#xe639;</div>
               <div class="title-list">意见反馈</div>
