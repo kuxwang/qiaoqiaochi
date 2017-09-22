@@ -1,10 +1,10 @@
 <template>
   <div class="page">
-    <mt-header title="店铺管理" fixed>
+   <!-- <mt-header title="店铺管理" fixed>
       <router-link to="/userCenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
-    </mt-header>
+    </mt-header>-->
     <div class="container">
       <div class="user">
           <div class="user__logo">
@@ -77,7 +77,9 @@
         </div>
       </section>
     </div>
-    <router-view></router-view>
+    <transition name="slide">
+      <router-view></router-view>
+    </transition>
     <v-tabbar></v-tabbar>
   </div>
 </template>
@@ -215,15 +217,17 @@
     .page-view();
   }
   .container {
-    margin-top: .64rem;
+    /*margin-top: .64rem;*/
     font-size: .14rem;
     height: 100%;
     .user {
-      height: 1.2rem;
+      /*height: 1.2rem;*/
+      height: 1.47rem;
       width: 100%;
       background-color: @style2;
       display: flex;
-      padding: .26rem .2rem;
+      /*padding: .26rem .2rem;*/
+      padding: .5rem .2rem;
       justify-content: flex-start;
       .user__logo {
         width: .68rem;
