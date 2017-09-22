@@ -12,7 +12,7 @@
     <section class="mt-main">
       <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50">
         <!--<router-link class="li—laber clearfix" :to="{name:'details',query:{id:1}}" tag="li">-->
-        <li class="li—laber-selected clearfix" @click="selected" v-if="isEdit" v-for="(v, i) in resultArr">
+        <li class="li—laber-selected clearfix" @click="selected" v-if="isEdit" v-for="(v, i) in resultArr" :key="i">
           <label class="mint-checklist-label fl ">
             <!--<span class="mint-checkbox">-->
             <input type="checkbox" class="mint-checkbox-input input-box" :data-idx="v.id">
@@ -50,7 +50,7 @@
         </div>
 
         <router-link class="li—laber clearfix" :to="{name:'details',query:{id:v.id}}" tag="li" v-if="!isEdit"
-                     v-for="(v, i) in resultArr">
+                     v-for="(v, i) in resultArr" :key="i">
           <img :src="getdefaluteimage(v.thumb)" alt="这是一个商品"/>
           <div class="li-content">
             <p class="title lr2">阿斯顿卡死建档立卡建设大街康圣诞贺卡是地板货静安寺；老卡号1</p>

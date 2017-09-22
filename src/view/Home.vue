@@ -12,7 +12,7 @@
     <!--</ul>-->
     <div class="scroll-view">
       <mt-swipe class="banner" :auto="4000" :show-indicators="false">
-        <mt-swipe-item v-for="i in slider">
+        <mt-swipe-item v-for="(i, x) in slider" :key="x">
           <img class="silder" :src="i.thumb">
         </mt-swipe-item>
       </mt-swipe>

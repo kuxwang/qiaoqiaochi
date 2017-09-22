@@ -39,7 +39,7 @@
           {{shopname}}
         </div>
         <!--<router-link class="good-info" v-for="(s.i) in goodlist" :to="{path:'details',query:{goodsId:goodsid}}" tag="div" >-->
-        <router-link class="good-info" v-for="(s,i) in goodlist" :to="{path:'details',query:{goodsId: 1}}" tag="div" >
+        <router-link class="good-info" v-for="(s,i) in goodlist" :to="{path:'details',query:{goodsId: 1}}" tag="div" :key="i">
           <img :src="s.thumb" class="order-small">
           <p>{{s.title}}</p>
           <div class="good-price">
