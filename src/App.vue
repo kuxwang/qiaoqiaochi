@@ -1,15 +1,21 @@
 <template>
   <div id="app">
     <keep-alive>
-      <router-view></router-view>
+      <router-view v-if="!$route.meta.nokeepAlive"></router-view>
     </keep-alive>
+    <router-view v-if="$route.meta.nokeepAlive"></router-view>
   </div>
 </template>
 <script>
   export default {
     name: 'app',
     created () {},
-    methods: {}
+    methods: {},
+    watch: {
+      "$route"(to,form){
+        console.log(to)
+      }
+    }
   }
 </script>
 

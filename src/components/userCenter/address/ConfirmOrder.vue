@@ -308,15 +308,6 @@
         return num.length == 0 ? num + '00' : num.length == 1 ? num + '0' : num || '00'
       }
     },
-    beforeRouteEnter (to, from, next) {
-      console.log(from)
-      if(from.name=='detailsHome'){
-        next(()=>{
-          vm.init()
-        })
-      }
-
-    },
 
     watch: {
       '$route'(to, from) {
@@ -350,6 +341,7 @@
 
     },
     created() {
+      console.log(this.$route)
       this.init();
     }
   }

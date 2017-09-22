@@ -100,9 +100,6 @@
             psize:this.psize
           }
         };
-//        setTimeout(function () {
-        let tab=document.getElementById('ordertab')
-        tab.setAttribute('class','mint-tab-item router-link-exact-active router-link-active');
 
 
         console.log('orderdetail running')

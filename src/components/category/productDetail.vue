@@ -81,7 +81,7 @@
 </template>
 <script>
   import { Header,Popup,Toast,Indicator} from 'mint-ui';
-  import {productDetail,addCart,GET_CARTNUMS} from '../../api/api.js';
+  import {ProductDetail,addCart,GET_CARTNUMS} from '../../api/api.js';
   import {setStore, getStore} from '../../config/myUtils';
   import {mapMutations, mapGetters } from 'Vuex';
   export default {
@@ -167,19 +167,20 @@
       add:function () {
         this.num++;
       },
-      getInfo:function () {
+      getInfo() {
+        console.log('run')
         Indicator.open({
           text: '加载中...',
           spinnerType: 'fading-circle'
         });
         let that=this;
-        let good_id=this.$route.query.goodsId;
+        let good_id=this.$route.query.id;
         let params={
           'data':{
-            goodsid:good_id,
+            id:good_id,
           }
         }
-        productDetail(params,function (res) {
+        ProductDetail(params,function (res) {
           Indicator.close()
           if(res.statusCode===1){
             that.goodNums=res.data.goodscount;
@@ -229,7 +230,6 @@
       this.popupVisible = false;
       next()
     },
-
     watch: {
       '$route'(to, from) {
         let _that=this;
@@ -250,11 +250,12 @@
       }
     },
     mounted () {
-      this.getInfo();
+//      this.getInfo();
+
     },
     created() {
-//        console.log(123123123212)
-//      Indicator.open();
+//      this.getInfo();
+//      console.log('dasdasd')
     }
   }
 </script>
