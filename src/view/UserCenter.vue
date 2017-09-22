@@ -299,7 +299,7 @@
     height: .70rem;
     background: grey;
     float: left;
-    border: 2px solid #ffffff;
+    /*border: 2px solid #ffffff;*/
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
