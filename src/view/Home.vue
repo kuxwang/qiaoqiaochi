@@ -32,7 +32,7 @@
   import vColrow from '../components/common/columnRow';
   import vColcol from '../components/common/columnCol';
   import {fn} from '../config/myUtils';
-  import { Attributes} from '../api/api'
+  import { Advs} from '../api/api'
 
   export default{
     data(){
@@ -40,32 +40,25 @@
         img1: require('../assets/images/confirmorder-01.jpg'),
         logo: require('../assets/images/logo.png'),
         logo2: require('../assets/images/bottom.png'),
-        slider:[
-          {
-            thumb:require('../assets/images/home-01.jpg')
-          },
-          {
-            thumb:require('../assets/images/home-01.jpg')
-          },
-          {
-            thumb:require('../assets/images/home-01.jpg')
-          },
-          {
-            thumb:require('../assets/images/home-01.jpg')
-          }
-        ],
+        slider:[],
         selected: 1,
-
       }
     },
     methods: {
-
-
+      getAdv(){
+        let params = {
+          data: {}
+        };
+        Advs(params, (res) => {
+          if (res.statusCode === 1) {
+            this.slider = res.data;
+            console.log(this.slider)
+          }
+        })
+      }
     },
-
-
-
     mounted () {
+      this.getAdv()
     },
     components: {
       vTabbar,
