@@ -131,7 +131,28 @@
         isShow: true,
         goodsparams: [], //商品详情
         bottomStatus: '',
-        allLoaded: false
+        allLoaded: false,
+
+
+    /*    types: [[1, 2], [0, 1]],
+        tselect: [],
+        isfavorite: false,
+        spec: [],  //规格
+        opitions: [],
+        specs_arr: [], //存放不同选项的名称
+        specs_id_arr: [], //存放不同选项的ID
+        standardArr: [],
+        opitiontitle:'套餐类型',
+        selectoption:'请选择',
+        noselected:true,
+        hasselect:false*/
+
+
+
+
+
+
+
 
       }
     },

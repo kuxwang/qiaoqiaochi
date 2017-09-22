@@ -32,7 +32,7 @@
   import vColrow from '../components/common/columnRow';
   import vColcol from '../components/common/columnCol';
   import {fn} from '../config/myUtils';
-  import { demo } from '../api/api'
+  import { Attributes} from '../api/api'
 
   export default{
     data(){
@@ -58,8 +58,14 @@
 
       }
     },
-    mounted () {
+    methods: {
 
+
+    },
+
+
+
+    mounted () {
     },
     components: {
       vTabbar,
