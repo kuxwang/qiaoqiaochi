@@ -2,8 +2,8 @@
   <div class="content">
     <div class="top-bar">
       <div class="logo"><img :src="logo"/></div>
-      <v-search></v-search>
-      <div class="share">
+      <v-search ref="search"></v-search>
+      <div class="share" >
         <span class="iconfont">&#xe71d;</span>
       </div>
     </div>
@@ -59,13 +59,14 @@
     },
     mounted () {
       this.getAdv()
+      console.log(this.$refs.search.isfocus)
     },
     components: {
       vTabbar,
       vSearch,
       vColrow,
       vColcol
-    }
+    },
   }
 </script>
 <style lang="less" scoped>
