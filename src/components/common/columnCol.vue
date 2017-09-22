@@ -1,59 +1,148 @@
 <template>
   <div class="column">
     <div class="title">
-      热门商品
+      最新商品
     </div>
     <div class="title-bg">
-      HOT PRODUCT
+      NEW PRODUCT
     </div>
     <div class="scroll">
       <ul class="scroll-goodslist clear">
         <li class="scroll-goodslist-li">
-          <img :src="listthumb" alt="">
+          <mt-swipe class="banner" :auto="4000" >
+            <mt-swipe-item v-for="i in slider">
+              <img :src="i.thumb" alt="">
+              <!--<img class="silder" :src="i.thumb">-->
+            </mt-swipe-item>
+          </mt-swipe>
           <p class="goodstitle">
             骨瓷碗盆
           </p>
-          <p class="price">
-            ￥39
+          <p class="goodscontent lr2">
+            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
+            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
+            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
           </p>
+          <div class="goodsprice">
+            <p class="marketprice">
+              ￥39
+            </p>
+            <div class="buy">购买</div>
+          </div>
         </li>
         <li class="scroll-goodslist-li">
-          <img :src="listthumb" alt="">
+          <mt-swipe class="banner" :auto="4000" >
+            <mt-swipe-item v-for="i in slider">
+              <img :src="i.thumb" alt="">
+              <!--<img class="silder" :src="i.thumb">-->
+            </mt-swipe-item>
+          </mt-swipe>
           <p class="goodstitle">
             骨瓷碗盆
           </p>
-          <p class="price">
-            ￥39
+          <p class="goodscontent lr2">
+            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
+            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
+            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
           </p>
+          <div class="goodsprice">
+            <p class="marketprice">
+              ￥39
+            </p>
+            <div class="buy">购买</div>
+          </div>
         </li>
         <li class="scroll-goodslist-li">
-          <img :src="listthumb" alt="">
+          <mt-swipe class="banner" :auto="4000" >
+            <mt-swipe-item v-for="i in slider">
+              <img :src="i.thumb" alt="">
+              <!--<img class="silder" :src="i.thumb">-->
+            </mt-swipe-item>
+          </mt-swipe>
           <p class="goodstitle">
             骨瓷碗盆
           </p>
-          <p class="price">
-            ￥39
+          <p class="goodscontent lr2">
+            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
+            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
+            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
           </p>
+          <div class="goodsprice">
+            <p class="marketprice">
+              ￥39
+            </p>
+            <div class="buy">购买</div>
+          </div>
         </li>
         <li class="scroll-goodslist-li">
-          <img :src="listthumb" alt="">
+          <mt-swipe class="banner" :auto="4000" >
+            <mt-swipe-item v-for="i in slider">
+              <img :src="i.thumb" alt="">
+              <!--<img class="silder" :src="i.thumb">-->
+            </mt-swipe-item>
+          </mt-swipe>
           <p class="goodstitle">
             骨瓷碗盆
           </p>
-          <p class="price">
-            ￥39
+          <p class="goodscontent lr2">
+            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
+            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
+            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
           </p>
+          <div class="goodsprice">
+            <p class="marketprice">
+              ￥39
+            </p>
+            <div class="buy">购买</div>
+          </div>
         </li>
+        <li class="scroll-goodslist-li">
+          <mt-swipe class="banner" :auto="4000" >
+            <mt-swipe-item v-for="i in slider">
+              <img :src="i.thumb" alt="">
+              <!--<img class="silder" :src="i.thumb">-->
+            </mt-swipe-item>
+          </mt-swipe>
+          <p class="goodstitle">
+            骨瓷碗盆
+          </p>
+          <p class="goodscontent lr2">
+            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
+            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
+            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
+          </p>
+          <div class="goodsprice">
+            <p class="marketprice">
+              ￥39
+            </p>
+            <div class="buy">购买</div>
+          </div>
+        </li>
+
       </ul>
-      <p>查看所有新品</p>
     </div>
   </div>
 </template>
 <script>
+
   export default {
     data () {
       return {
-          listthumb:require('../../assets/images/home-01.jpg')
+          listthumb:require('../../assets/images/home-01.jpg'),
+          slider:[
+            {
+              thumb:require('../../assets/images/home-01.jpg')
+            },
+            {
+              thumb:require('../../assets/images/home-01.jpg')
+            },
+            {
+              thumb:require('../../assets/images/home-01.jpg')
+            },
+            {
+              thumb:require('../../assets/images/home-01.jpg')
+            }
+          ],
       }
     },
     props: [],
@@ -68,11 +157,7 @@
   .column {
     position: relative;
     width:100%;
-    height:3.55rem;
-    background: -webkit-linear-gradient(#fafafa, #ffffff);
-    background: -o-linear-gradient(#fafafa, #ffffff);
-    background: -moz-linear-gradient(#fafafa, #ffffff);
-    background: linear-gradient(#fafafa, #ffffff);
+    background: #ffffff;
     .title {
       position: relative;
       width:100%;
@@ -117,38 +202,70 @@
       }
       .scroll {
         width:100%;
-        height:2.1rem;
         overflow: hidden;
         .scroll-goodslist {
-          padding: 0 0 0 .25rem;
+          padding: 0 0 .58rem 0;
           height: 100%;
-          overflow-x:scroll;
           -webkit-overflow-scrolling: touch;
-          white-space: nowrap;
           .scroll-goodslist-li {
-            display: inline-block;
-            margin-right: .1rem;
             height: 100%;
-            /*float: left;*/
             text-align:center;
+             .banner {
+               height: 3rem
+             }
              img {
-              width: 1.4rem;
-              height: 1.4rem;
+              width: 3.4rem;
+              height: 3rem;
               border-radius: .1rem;
              }
              .goodstitle {
                margin-top: .1rem;
+               margin-bottom: .1rem;
                height: .3rem;
-               font-size: .14rem;
+               text-align: left;
+               font-size: .16rem;
                line-height: .3rem;
-               color: #666666;
+               padding: 0 .15rem;
+               font-weight: bold;
+               color: #494949;
              }
-             .price {
+             .goodscontent {
+               width: 100%;
+               height: .50rem;
+               font-size: .16rem;
+               text-align: left;
+               line-height: .25rem;
+               padding: 0 .15rem;
+               color: #808080;
+             }
+             .goodsprice {
+               height: .3rem;
+               margin: .1rem .15rem;
+               text-align: left;
+              .marketprice {
+                display: inline-block;
+                width: 70%;
                 height: .22rem;
-                font-size: .12rem;
+                left: 0;
+                text-align: left;
+                font-size: .14rem;
+                font-weight: bold;
                 line-height: .22rem;
                 color: #e75058;
               }
+              .buy {
+                display: inline-block;
+                width: .75rem;
+                height: .3rem;
+                text-align: center;
+                font-size: .16rem;
+                line-height: .3rem;
+                border:1px solid #3f3f3f;
+                border-radius: .05rem;
+
+              }
+             }
+
           }
         }
       }

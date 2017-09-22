@@ -24,7 +24,7 @@
     text-align: center;
     color: #2c3e50;
     position: relative;
-    background-color: #efeff4 !important;
+    background-color: #fff !important;
     overflow: hidden;
 
   }

@@ -17,23 +17,12 @@ import {_webapp} from './config/hook.js'
 Vue.use(VueLazyload, {
   loading: require('./assets/images/default.gif')
 })
-// console.log(location.href);
 fastclick.attach(document.body)
 Vue.use(Vuex)
 Vue.use(MintUI)
 Vue.config.productionTip = false
 
-// MessageBox({
-//   title: '友情提示',
-//   message: '获取用户信息失败，可能是登陆超时或在其他设备中登陆，点击确认将为您跳转至登陆页面。',
-//   showCancelButton: false,
-//   closeOnClickModal : false
-// }).then(action => {
-//   _webapp.nativeLogin();
-// });
-
 iGetApiToken(function(apiToken){
-
   if(apiToken) {
     iGetSessionKey(function(sessionKey){
       if(sessionKey === false){

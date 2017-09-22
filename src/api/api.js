@@ -703,13 +703,12 @@ export const Favorite_remove = function (params, callback) {
 };
 export const History = function (params, callback) {
   setParams(Object.assign(params, goods.history), callback)
-
 };
 export const Deletehistory = function (params, callback) {
-
   setParams(Object.assign(params, goods.deletehistory), callback)
-
 };
+
+
 
 
 

@@ -227,17 +227,12 @@
     /*-webkit-box-shadow: 0 1px 4px rgba(138, 138, 138, .3);
     -moz-box-shadow: 0 1px 4px rgba(138, 138, 138, .3);
     box-shadow: 0 1px 4px rgba(138, 138, 138, .3);*/
-
     /*width: 616px;*/
     /*height: .64rem;*/
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-    background-color: #eaebed;
-
-
-
-
+    /*background-color: #eaebed;*/
   }
 
   .white {
