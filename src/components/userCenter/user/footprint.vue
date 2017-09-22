@@ -33,7 +33,6 @@
                 <span class="goods-intPrice">{{v.marketprice | calculatePrice1}}.</span>
                 <span class="goods-folatPrice">{{v.marketprice | calculatePrice2}}</span>
                 <span class="goods-intPrice oldprice">¥{{v.marketprice | calculatePrice1}}.{{v.marketprice | calculatePrice2}}</span>
-
               </p>
             </div>
           </div>
@@ -333,7 +332,7 @@
 
   .mt-main > ul {
     /*overflow-y: hidden;*/
-    margin-top: .45rem;
+    margin-top: .64rem;
     margin-bottom: .45rem;
   }
 
