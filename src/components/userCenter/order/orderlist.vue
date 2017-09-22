@@ -220,7 +220,11 @@
     }
   }
 </script>
-<style scoped>
+<style lang="less" scoped>
+  @import '../../../assets/css/reset/reset.css';
+  @import '../../../assets/css/reset/common.less';
+  @import '../../../assets/css/fonts/iconfont.css';
+
   .order-list {
     background: #efefef;
     padding-top: .01rem;
@@ -250,19 +254,23 @@
 
   .good-info {
     height: .75rem;
+    display: flex;
   }
 
   .good-info > img {
-    float: left;
+    display: block;
   }
 
   .good-info > p {
-    float: left;
     margin-left: .08rem;
+    margin-right: .08rem;
+    flex: 1;
+    .text-overflow(2);
+    overflow: hidden;
   }
 
   .good-price {
-    float: right
+    max-width: .68rem;
   }
 
   .good-price > p {

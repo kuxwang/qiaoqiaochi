@@ -11,11 +11,11 @@
     name: 'app',
     created () {},
     methods: {},
-    watch: {
+    /*watch: {
       "$route"(to,form){
         console.log(to)
       }
-    }
+    }*/
   }
 </script>
 

@@ -20,7 +20,7 @@
       </div>
       <ul class="nagative">
         <!--<li class="nav__item">-->
-          <router-link class="nav__item" :to="{name:'partner'}"  tag="li">
+          <router-link class="nav__item" :to="{path:'partner',query:{stab:1,type:'all',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}"  tag="li">
           <div class="logo">
             <img src="../assets/images/panter.png"/>
           </div>
@@ -28,7 +28,7 @@
           </router-link>
         <!--</li>-->
         <!--<li class="nav__item">-->
-          <router-link class="nav__item" :to="{name:'extension'}"  tag="li">
+          <router-link class="nav__item" :to="{path:'extension',query:{stab:1,type:'total',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}"  tag="li">
           <div class="logo">
             <img src="../assets/images/order.png"/>
           </div>
@@ -106,13 +106,32 @@
           credit1: '',
           credit2: '',
         },
-        team:{
-          all:'',
-          month:''
-        }
-
-
-
+        recordStatistics_get: {
+          cg_money_sum: '0',//销售总额
+          c_money_sum: '0', //佣金总额
+          o_status_3: '0', //已收货
+          pay: '0', //已提现
+          check: '0', //可提现
+          invalid: '0', //被驳回的业绩
+          apply: '0', //申请中
+          o_status_0: '0', //待打款
+          ok: '0'
+        },
+        teamsStatistics: {
+          all: '0',  //总人数
+          purchased: '0',  //已购买人数
+          no_purchased: '0'  //未购买人数
+        },
+        orderStatistics: {
+          total: '0',//全部
+          lock: '0',//未结算
+          refund: '0',//已退款
+          ok: '0', //已结算
+        },
+        topStatus: '',
+        disindex: 3,
+        defaultAvatar: '',
+        webDebug : _webapp.debug
       }
     },
     methods: {
@@ -146,6 +165,27 @@
             console.log('佣金统计接口数据异常')
           }
         });
+        teamsStatistics({data : {}}, function (res) {
+          if (res.statusCode == 1) {
+            _this.teamsStatistics.all = res.data.all || 0;
+            _this.teamsStatistics.purchased = res.data.purchased || 0;
+            _this.teamsStatistics.no_purchased = res.data.no_purchased || 0;
+          } else {
+            console.log('佣金统计接口数据异常')
+          }
+        });
+        orderStatistics({data : {}}, function (res) {
+//                      console.log('orderStatistics');
+          if (res.statusCode == 1) {
+            _this.orderStatistics.total = res.data.total.order_count || 0
+            _this.orderStatistics.lock = res.data.lock.order_count || 0
+            _this.orderStatistics.refund = res.data.refund.order_count || 0
+            _this.orderStatistics.ok = res.data.ok.order_count || 0
+//          _this.$refs.loadmore.onTopLoaded();
+          } else {
+            console.log('获取团队数量统计接口数据异常')
+          }
+        })
       },
       partnertab(idx){
         this.tabselect(idx)
@@ -162,7 +202,6 @@
     created(){
       this.init()
     }
-
   }
 
 </script>
