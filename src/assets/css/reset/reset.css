@@ -6,6 +6,7 @@ body, div, span, header, footer, nav, section, aside, article, ul, dl, dt, dd, l
   text-decoration: none;
   border: none;
   font-weight: normal;
+  font-size: .16rem;
   font-family: "Microsoft Yahei";
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;

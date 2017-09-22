@@ -7,18 +7,18 @@
         <span class="iconfont">&#xe71d;</span>
       </div>
     </div>
-    <ul class="top-nav">
-      <!--<li v-for="i in navlist" >{{i}}</li>-->
-      <li v-for="i in navlist" >{{i}}</li>
-
-    </ul>
+    <!--<ul class="top-nav">-->
+      <!--<li v-for="(v , i) in navlist" :class="{'selected' : selected == i}" >{{v}}</li>-->
+    <!--</ul>-->
     <div class="scroll-view">
       <mt-swipe class="banner" :auto="4000" :show-indicators="false">
-        <mt-swipe-item v-for= "s in slider" >
-          <img class="silder" :src="s.thumb">
+        <mt-swipe-item v-for="i in slider">
+          <img class="silder" :src="i.thumb">
         </mt-swipe-item>
       </mt-swipe>
-      <div class="goods">
+      <v-colrow></v-colrow>
+      <v-colcol></v-colcol>
+      <!--<div class="goods">
         <div class="goods__title">热销产品</div>
         <div class="goods__item">
           <div class="goods__pic"><img :src="img1"/></div>
@@ -40,13 +40,10 @@
             <div>立即购买</div>
           </div>
         </div>
-      </div>
+      </div>-->
       <div class="bottom-img">
         <img class="bottom-pic" :src="logo2"/>
       </div>
-
-
-
     </div>
     <v-tabbar></v-tabbar>
     <router-view></router-view>
@@ -55,7 +52,10 @@
 <script>
   import vTabbar from '../components/mode/Tabbar';
   import vSearch from '../components/mode/search';
+  import vColrow from '../components/common/columnRow';
+  import vColcol from '../components/common/columnCol';
   import {fn} from '../config/myUtils';
+  import { demo } from '../api/api'
 
   export default{
     data(){
@@ -66,9 +66,19 @@
         slider:[
           {
             thumb:require('../assets/images/home-01.jpg')
+          },
+          {
+            thumb:require('../assets/images/home-01.jpg')
+          },
+          {
+            thumb:require('../assets/images/home-01.jpg')
+          },
+          {
+            thumb:require('../assets/images/home-01.jpg')
           }
         ],
-        navlist:['推荐','化妆品','食品','日用品','母婴','保健品']
+        selected: 1,
+//        navlist:['推荐','化妆品','食品','日用品','母婴','保健品']
 
       }
     },
@@ -77,8 +87,9 @@
     },
     components: {
       vTabbar,
-      vSearch
-
+      vSearch,
+      vColrow,
+      vColcol
     }
   }
 </script>
@@ -99,7 +110,7 @@
       font-size: .21rem;
       color: #000000;
       /*padding: .05rem;*/
-      padding: .08rem;
+      padding: .1rem;
       img {
         width: 100%;
         height: 100%;
@@ -136,10 +147,12 @@
       line-height: .45rem;
       flex: 1;
     }
+    li.selected{
+      border-bottom:1px solid #6C6C6C;
+    }
   }
   .scroll-view {
-    position: absolute;
-    padding-top: 1.09rem;
+    position: relative;
     top: 0;
     .scroll-view(100%);
     width: 100%;
