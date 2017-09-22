@@ -13,8 +13,8 @@
           <search-void>
             <li v-for="(v, k) in resultlist" :key="k" @click="goInfo(v.id)">
             <!--<router-link v-for="(v, k) in resultlist" :key="k" :to="{name:'storeinfo',query:{id:v.id}}" tag="li">-->
-              {{v.storename}}
-              <span>{{v.city}}{{v.area}}{{v.address}} </span>
+              {{v.title}}
+              <!--<span>{{v.city}}{{v.area}}{{v.address}} </span>-->
             <!--</router-link>-->
             </li>
             <!--<p class="page-infinite-loading" v-if="loading&&isloading">-->
@@ -57,21 +57,10 @@
         this.$router.go(-1)
       },
       getFocus () {
-//          console.log(this.$route)
-          if(this.$route.name=='store'){
-              this.isfocus=false;
-          }else {
-            this.$emit('typechange1',1);
-//            this.isfocus = true
-//            this.setarealist(false);
-//            this.setsearchlist(true)
-//            console.log(this.isfocus);
-//            console.log('active');
-//            console.log(this.searchlist);
-            setTimeout(() => {
-              this.setHeight()
-            }, 500)
-          }
+        this.isfocus=true;
+        setTimeout(() => {
+          this.setHeight()
+        }, 500)
 
       },
       cancel () {
@@ -80,7 +69,7 @@
       },
       getGoods: _.debounce(function (value) {
         this.loading = false;
-        /*let params = {
+        let params = {
           data: {
 //            page: this.page,
             page: 1,
@@ -95,49 +84,19 @@
           } else if (res.statusCode === -1) {
             this.resultlist = []
           }
-        })*/
-
-        let params = {
-          data: {
-            keyword: this.find,
-            page: 1,
-            pagesize: this.pagesize,
-            lat: this.addressInfo.lat,
-            lng: this.addressInfo.lng
-          }
-        }
-        Merchants (params,res => {
-          if (res.statusCode === 1) {
-            this.resultlist = res.data
-          } else if (res.statusCode === -1) {
-            this.resultlist = []
-          }
         })
-
-
-
-
 
       }, 700),
       loadMore () {
         this.loading = true;
-//        let params = {
-//          data: {
-//            page: ++this.page,
-//            psize: 15,
-//            keywords: this.find,
-//          }
-//        }
         let params = {
           data: {
-            keyword: this.find,
-            page: 1,
-            pagesize: this.pagesize,
-            lat: this.addressInfo.lat,
-            lng: this.addressInfo.lng
+            page: ++this.page,
+            psize: 15,
+            keywords: this.find,
           }
         }
-        Merchants(params, res => {
+        Search(params, res => {
           if (res.statusCode === 1) {
             if (res.data.length > 0) {
               this.resultlist = this.resultlist.concat(res.data);
