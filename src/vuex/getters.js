@@ -16,7 +16,8 @@ export default {
   isNull:state=>state.isNull,
   defaultAddressIsNull:state=>state.defaultAddressIsNull,
   isScroll:state=>state.isScroll,
-  addtype:state=>state.addtype
+  addtype:state=>state.addtype,
+  haslogo:state=>state.haslogo
 
 }
 

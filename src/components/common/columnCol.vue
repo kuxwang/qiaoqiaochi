@@ -8,122 +8,41 @@
     </div>
     <div class="scroll">
       <ul class="scroll-goodslist clear">
-        <li class="scroll-goodslist-li">
-          <mt-swipe class="banner" :auto="4000" >
+        <!--<li class="scroll-goodslist-li" v-for="(v,index) in newgoods">-->
+        <router-link  v-for="(v,k) in newgoods" :to="{name:'details',query:{id:v.id}}" tag="li" class="scroll-goodslist-li" :key="k">
+         <!-- <mt-swipe class="banner" :auto="4000" >
             <mt-swipe-item v-for="(i, k) in slider" :key="k">
               <img :src="i.thumb" alt="">
-              <!--<img class="silder" :src="i.thumb">-->
+              &lt;!&ndash;<img class="silder" :src="i.thumb">&ndash;&gt;
             </mt-swipe-item>
-          </mt-swipe>
-          <p class="goodstitle">
-            骨瓷碗盆
+          </mt-swipe>-->
+
+
+          <img :src="v.thumb"/>
+
+          <p class="goodstitle lr2">
+            {{v.title}}
           </p>
-          <p class="goodscontent lr2">
+          <!--<p class="goodscontent lr2">
             我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
             我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
             我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
-          </p>
+          </p>-->
           <div class="goodsprice">
             <p class="marketprice">
-              ￥39
+              ￥{{v.marketprice}}
             </p>
             <div class="buy">购买</div>
           </div>
-        </li>
-        <li class="scroll-goodslist-li">
-          <mt-swipe class="banner" :auto="4000" >
-            <mt-swipe-item v-for="(i, k) in slider" :key="k">
-              <img :src="i.thumb" alt="">
-              <!--<img class="silder" :src="i.thumb">-->
-            </mt-swipe-item>
-          </mt-swipe>
-          <p class="goodstitle">
-            骨瓷碗盆
-          </p>
-          <p class="goodscontent lr2">
-            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
-            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
-            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
-          </p>
-          <div class="goodsprice">
-            <p class="marketprice">
-              ￥39
-            </p>
-            <div class="buy">购买</div>
-          </div>
-        </li>
-        <li class="scroll-goodslist-li">
-          <mt-swipe class="banner" :auto="4000" >
-            <mt-swipe-item v-for="(i, k) in slider" :key="k">
-              <img :src="i.thumb" alt="">
-              <!--<img class="silder" :src="i.thumb">-->
-            </mt-swipe-item>
-          </mt-swipe>
-          <p class="goodstitle">
-            骨瓷碗盆
-          </p>
-          <p class="goodscontent lr2">
-            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
-            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
-            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
-          </p>
-          <div class="goodsprice">
-            <p class="marketprice">
-              ￥39
-            </p>
-            <div class="buy">购买</div>
-          </div>
-        </li>
-        <li class="scroll-goodslist-li">
-          <mt-swipe class="banner" :auto="4000" >
-            <mt-swipe-item v-for="(i, k) in slider" :key="k">
-              <img :src="i.thumb" alt="">
-            </mt-swipe-item>
-          </mt-swipe>
-          <p class="goodstitle">
-            骨瓷碗盆
-          </p>
-          <p class="goodscontent lr2">
-            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
-            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
-            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
-          </p>
-          <div class="goodsprice">
-            <p class="marketprice">
-              ￥39
-            </p>
-            <div class="buy">购买</div>
-          </div>
-        </li>
-        <li class="scroll-goodslist-li">
-          <mt-swipe class="banner" :auto="4000" >
-            <mt-swipe-item v-for="(i, k) in slider" :key="k">
-              <img :src="i.thumb" alt="">
-              <!--<img class="silder" :src="i.thumb">-->
-            </mt-swipe-item>
-          </mt-swipe>
-          <p class="goodstitle">
-            骨瓷碗盆
-          </p>
-          <p class="goodscontent lr2">
-            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
-            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
-            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
-          </p>
-          <div class="goodsprice">
-            <p class="marketprice">
-              ￥39
-            </p>
-            <div class="buy">购买</div>
-          </div>
-        </li>
+        </router-link>
+        <!--</li>-->
 
       </ul>
     </div>
   </div>
 </template>
 <script>
-
+  import { Attributes} from '../../api/api'
   export default {
     data () {
       return {
@@ -142,17 +61,39 @@
               thumb:require('../../assets/images/home-01.jpg')
             }
           ],
+          newgoods:[]
       }
     },
     props: [],
-    methods: {},
+    methods: {
+      getNew(){
+        let parmas = {
+          data: {
+            attributes: "isnew:1",
+            page: 1,
+            psize: 10,
+          }
+        }
+        Attributes(parmas, (res) => {
+          console.log(res)
+          if (res.statusCode === 1) {
+            this.newgoods = res.data
+          }
+        })
+      },
+
+
+    },
     computed: {},
     created(){
-
+      this.getNew()
     }
   }
 </script>
 <style lang="less" scoped>
+  @import '../../assets/css/reset/reset.css';
+  @import '../../assets/css/reset/common.less';
+  @import '../../assets/css/fonts/iconfont.css';
   .column {
     position: relative;
     width:100%;

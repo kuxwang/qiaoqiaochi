@@ -25,4 +25,5 @@ export const ISNULL = 'ISNULL'
 export const GET_DEFAULTADDRESSISNULL = 'GET_DEFAULTADDRESSISNULL'
 export const ISSCROLL = 'ISSCROLL'
 export const ADDTYPE = 'ADDTYPE'
+export const HASLOGO = 'HASLOGO'
 

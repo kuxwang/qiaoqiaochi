@@ -1,5 +1,5 @@
 <template>
-  <div class="main" :class="{'main-search':isfocus}">
+  <div class="main" :class="{'main-search':isfocus}" >
     <div id="search" class="search" :class="{white : isfocus}" >
       <form @submit="goList()">
       <input type="text" :class="{'grey' : isfocus}" v-model="find" placeholder="请输入商品名称" @focus="getFocus()"/>
@@ -13,8 +13,8 @@
           <search-void>
             <li v-for="(v, k) in resultlist" :key="k" @click="goInfo(v.id)">
             <!--<router-link v-for="(v, k) in resultlist" :key="k" :to="{name:'storeinfo',query:{id:v.id}}" tag="li">-->
-              {{v.storename}}
-              <span>{{v.city}}{{v.area}}{{v.address}} </span>
+              {{v.title}}
+              <!--<span>{{v.city}}{{v.area}}{{v.address}} </span>-->
             <!--</router-link>-->
             </li>
             <!--<p class="page-infinite-loading" v-if="loading&&isloading">-->
@@ -57,30 +57,21 @@
         this.$router.go(-1)
       },
       getFocus () {
-//          console.log(this.$route)
-          if(this.$route.name=='store'){
-              this.isfocus=false;
-          }else {
-            this.$emit('typechange1',1);
-//            this.isfocus = true
-//            this.setarealist(false);
-//            this.setsearchlist(true)
-//            console.log(this.isfocus);
-//            console.log('active');
-//            console.log(this.searchlist);
-            setTimeout(() => {
-              this.setHeight()
-            }, 500)
-          }
+
+        this.isfocus=true;
+        setTimeout(() => {
+          this.setHeight()
+        }, 300)
 
       },
       cancel () {
         this.isfocus = false
-        this.find = ''
+        this.find = '';
+
       },
       getGoods: _.debounce(function (value) {
         this.loading = false;
-        /*let params = {
+        let params = {
           data: {
 //            page: this.page,
             page: 1,
@@ -95,49 +86,19 @@
           } else if (res.statusCode === -1) {
             this.resultlist = []
           }
-        })*/
-
-        let params = {
-          data: {
-            keyword: this.find,
-            page: 1,
-            pagesize: this.pagesize,
-            lat: this.addressInfo.lat,
-            lng: this.addressInfo.lng
-          }
-        }
-        Merchants (params,res => {
-          if (res.statusCode === 1) {
-            this.resultlist = res.data
-          } else if (res.statusCode === -1) {
-            this.resultlist = []
-          }
         })
-
-
-
-
 
       }, 700),
       loadMore () {
         this.loading = true;
-//        let params = {
-//          data: {
-//            page: ++this.page,
-//            psize: 15,
-//            keywords: this.find,
-//          }
-//        }
         let params = {
           data: {
-            keyword: this.find,
-            page: 1,
-            pagesize: this.pagesize,
-            lat: this.addressInfo.lat,
-            lng: this.addressInfo.lng
+            page: ++this.page,
+            psize: 15,
+            keywords: this.find,
           }
         }
-        Merchants(params, res => {
+        Search(params, res => {
           if (res.statusCode === 1) {
             if (res.data.length > 0) {
               this.resultlist = this.resultlist.concat(res.data);
@@ -163,13 +124,12 @@
       },
       goInfo(v){
         this.isfocus=false;
-        this.find=''
-        this.$router.push({name:'storeinfo',query:{id:v}})
+        this.find='';
+
+        this.$router.push({name:'details',query:{id:v}})
       },
       ...mapMutations({
-       /* addressInfo: 'ADDRESSINFO',
-        setsearchlist:'SEARCHLIST',
-        setarealist:'AREALIST'*/
+        'haslogo':'HASLOGO'
       }),
     },
     watch: {
@@ -177,8 +137,12 @@
         this.getGoods(newValue)
       },
       loading(newValue){
-//        console.log(newValue)
+      },
+      isfocus(newValue){
+        console.log(newValue)
+        this.$emit('changetype',1);
       }
+
     },
     components: {
       searchVoid
@@ -186,7 +150,7 @@
     created(){
     },
     mounted () {
-//      this.setHeight()
+
     },
     computed: {
       ...mapGetters([

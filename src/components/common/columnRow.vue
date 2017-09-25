@@ -8,63 +8,62 @@
     </div>
     <div class="scroll">
       <ul class="scroll-goodslist clear">
-        <li class="scroll-goodslist-li">
-          <img :src="listthumb" alt="">
+        <!--<li class="scroll-goodslist-li">-->
+          <router-link  v-for="(v,k) in hot" :to="{name:'details',query:{id:v.id}}" tag="li" class="scroll-goodslist-li" :key="k">
+
+          <img :src="v.thumb" alt="">
           <p class="goodstitle">
-            骨瓷碗盆
+            {{v.title}}
           </p>
           <p class="price">
-            ￥39
+            ￥{{v.marketprice}}
           </p>
-        </li>
-        <li class="scroll-goodslist-li">
-          <img :src="listthumb" alt="">
-          <p class="goodstitle">
-            骨瓷碗盆
-          </p>
-          <p class="price">
-            ￥39
-          </p>
-        </li>
-        <li class="scroll-goodslist-li">
-          <img :src="listthumb" alt="">
-          <p class="goodstitle">
-            骨瓷碗盆
-          </p>
-          <p class="price">
-            ￥39
-          </p>
-        </li>
-        <li class="scroll-goodslist-li">
-          <img :src="listthumb" alt="">
-          <p class="goodstitle">
-            骨瓷碗盆
-          </p>
-          <p class="price">
-            ￥39
-          </p>
-        </li>
+          </router-link>
+        <!--</li>-->
+
       </ul>
       <p>查看所有新品</p>
     </div>
   </div>
 </template>
 <script>
+  import { Attributes} from '../../api/api'
   export default {
+
     data () {
       return {
-          listthumb:require('../../assets/images/home-01.jpg')
+          listthumb:require('../../assets/images/home-01.jpg'),
+          hot:[]
       }
     },
     props: [],
-    methods: {},
+    methods: {
+      getHot(){
+        let parmas = {
+          data: {
+            attributes: "ishot:1",
+            page: 1,
+            psize: 10,
+          }
+        }
+        Attributes(parmas, (res) => {
+          console.log(res);
+          if (res.statusCode === 1) {
+            this.hot = res.data
+          }
+        })
+      }
+    },
     computed: {},
     created(){
-
+      this.getHot()
     }
   }
 </script>
 <style lang="less" scoped>
+  @import '../../assets/css/reset/reset.css';
+  @import '../../assets/css/reset/common.less';
+  @import '../../assets/css/fonts/iconfont.css';
   .column {
     position: relative;
     width:100%;
@@ -128,6 +127,7 @@
           .scroll-goodslist-li {
             display: inline-block;
             margin-right: .1rem;
+            width: 1.4rem;
             height: 100%;
             /*float: left;*/
             text-align:center;
@@ -142,6 +142,7 @@
                font-size: .14rem;
                line-height: .3rem;
                color: #666666;
+               .text-overflow(1);
              }
              .price {
                 height: .22rem;

@@ -1,9 +1,9 @@
 <template>
   <div class="content">
     <div class="top-bar">
-      <div class="logo"><img :src="logo"/></div>
-      <v-search></v-search>
-      <div class="share">
+      <div class="logo" v-if="!isSearch"><img :src="logo"/></div>
+      <v-search ref="search" @changetype="toggle()"></v-search>
+      <div class="share" v-if="!isSearch">
         <span class="iconfont">&#xe71d;</span>
       </div>
     </div>
@@ -32,7 +32,8 @@
   import vColrow from '../components/common/columnRow';
   import vColcol from '../components/common/columnCol';
   import {fn} from '../config/myUtils';
-  import { demo } from '../api/api'
+  import { Advs} from '../api/api';
+  import {mapMutations, mapGetters, mapState} from 'vuex'
 
   export default{
     data () {
@@ -40,33 +41,48 @@
         img1: require('../assets/images/confirmorder-01.jpg'),
         logo: require('../assets/images/logo.png'),
         logo2: require('../assets/images/bottom.png'),
-        slider:[
-          {
-            thumb:require('../assets/images/home-01.jpg')
-          },
-          {
-            thumb:require('../assets/images/home-01.jpg')
-          },
-          {
-            thumb:require('../assets/images/home-01.jpg')
-          },
-          {
-            thumb:require('../assets/images/home-01.jpg')
-          }
-        ],
+        slider:[],
         selected: 1,
+        isSearch:false
+      }
+    },
+    methods: {
+      getAdv(){
+        let params = {
+          data: {}
+        };
+        Advs(params, (res) => {
+          if (res.statusCode === 1) {
+            this.slider = res.data;
+            console.log(this.slider)
+          }
+        })
+      },
+      toggle(){
 
+        this.isSearch=!this.isSearch;
       }
     },
     mounted () {
-
+      this.getAdv()
+      console.log(this.$refs.search.isfocus)
     },
     components: {
       vTabbar,
       vSearch,
       vColrow,
       vColcol
+    },
+    computed: {
+      ...mapGetters([
+        'haslogo'
+      ]),
     }
+
+
+
+
+
   }
 </script>
 <style lang="less" scoped>
