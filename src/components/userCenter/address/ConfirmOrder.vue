@@ -318,6 +318,9 @@
           return
         }
         return num.length == 0 ? num + '00' : num.length == 1 ? num + '0' : num || '00'
+      },
+      mustnum(value){
+        return value > this.memberDiscount.realprice ? this.memberDiscount.realprice : value
       }
     },
 
