@@ -1,10 +1,10 @@
 <template>
   <div class="page">
-   <!-- <mt-header title="店铺管理" fixed>
-      <router-link to="/userCenter" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-    </mt-header>-->
+    <!--<mt-header title="个人中心" fixed>-->
+      <!--<router-link to="/userCenter" slot="left">-->
+        <!--<mt-button icon="back"></mt-button>-->
+      <!--</router-link>-->
+    <!--</mt-header>-->
     <div class="container">
       <div class="user">
           <div class="user__logo">
@@ -65,7 +65,7 @@
         <div class="title">
           <div class="icon"></div>
           <div class="text">收益</div>
-          <div class="right">每月明细<span class="iconfont">&#xe61b;</span></div>
+          <div class="right" @click="clickDetailed">每月明细<span class="iconfont">&#xe61b;</span></div>
         </div>
         <div class="money">
           <div class="info__item3">
@@ -196,9 +196,12 @@
         this.tabselect(idx)
         this.$router.push({name: `extension`})
       },
+      clickDetailed(){
+        this.$router.push({name:'detailed'});
+      }
     },
     components: {
-      vTabbar
+      vTabbar: vTabbar
     },
     created(){
       this.init()

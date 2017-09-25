@@ -77,6 +77,8 @@ const DrawbackInfo = r => require.ensure([], () => r(require('../components/user
 const Applys = r => require.ensure([], () => r(require('../components/userCenter/user/Apply.vue')), 'UserCenter')
 const Coupon = r => require.ensure([], () => r(require('../components/userCenter/user/Coupon.vue')), 'UserCenter')
 const Opinion = r => require.ensure([], () => r(require('../components/userCenter/user/Opinion.vue')), 'UserCenter')
+const Detailed = r => require.ensure([], () => r(require('../components/userCenter/user/Detailed.vue')), 'UserCenter')
+
 
 const Collect = r => require.ensure([], () => r(require('../components/userCenter/user/Collect.vue')), 'UserCenter')
 const Footprint = r => require.ensure([], () => r(require('../components/userCenter/user/Footprint.vue')), 'UserCenter')
@@ -99,9 +101,9 @@ export default new Router({
           component: Details,
         },
         {
-          path:'/list',
-          name:'list',
-          component:List
+          path: '/list',
+          name: 'list',
+          component: List
         }
       ]
     },
@@ -109,13 +111,13 @@ export default new Router({
     /*分类*/
     {
       path: '/category',
-      name:'category',
-      component:Category,
-      children:[
+      name: 'category',
+      component: Category,
+      children: [
         {
           path: '/category/list',
-          name:'clist',
-          component:List,
+          name: 'clist',
+          component: List,
           children: [
             {
               path: 'list/details',
@@ -182,6 +184,11 @@ export default new Router({
               component: Outmoney
             }
           ]
+        },
+        {
+          path: '/detailed',
+          name: 'detailed',
+          component: Detailed
         }
       ]
     },
@@ -212,7 +219,7 @@ export default new Router({
     },
     {
       path: '/userCenter',
-      name:'userCenter',
+      name: 'userCenter',
       component: UserCenter,
       children: [
         {
@@ -241,6 +248,7 @@ export default new Router({
               component: DrawbackInfo,
             },
 
+
           ]
         },
         {
@@ -249,19 +257,19 @@ export default new Router({
           component: UserInfo,
         },
         {
-          path:'/userCenter/apply',
-          name:'applys',
-          component:Applys
+          path: '/userCenter/apply',
+          name: 'applys',
+          component: Applys
         },
         {
-          path:'/userCenter/coupon',
-          name:'coupon',
-          component:Coupon
+          path: '/userCenter/coupon',
+          name: 'coupon',
+          component: Coupon
         },
         {
-          path:'/userCenter/opinion',
-          name:'opinion',
-          component:Opinion
+          path: '/userCenter/opinion',
+          name: 'opinion',
+          component: Opinion
         },
         {
           path: '/footprint',
@@ -287,6 +295,7 @@ export default new Router({
             },
           ]
         },
+
       ]
     },
     {
