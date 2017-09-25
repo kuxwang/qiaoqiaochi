@@ -110,9 +110,16 @@
 					<span class="goods-folatPrice">{{memberDiscount.discountprice | calculatePrice2}}</span>
 				</span>
       </li>
+      <li class="clearfix">
+        <div class="exhibition-lf fl">
+          优惠券
+        </div>
+        <span class="mygoods-price fr">
+          <input class="coupon" type="number"  placeholder="请输入优惠券" v-model="coupon"/>
+				</span>
+      </li>
     </ul>
       </div>
-
 
     <div class="settlement clearfix">
       <div class="settlement-lf fl">
@@ -125,7 +132,7 @@
       			</span>
         <span class="mygoods-price">
 					¥
-					<span class="goods-intPrice">{{memberDiscount.realprice + dispatchesprice | calculatePrice1}}.</span>
+					<span class="goods-intPrice">{{memberDiscount.realprice-coupon + dispatchesprice | calculatePrice1}}.</span>
 					<span class="goods-folatPrice">{{memberDiscount.realprice | calculatePrice2}}</span>
 				</span>
       </div>
@@ -158,12 +165,12 @@
         shopSet: '',
         payed: false,
         send:{},
-        new:false
+        new:false,
+        coupon: 0
       }
     },
     methods: {
       init() {
-//        console.log('init run.');
         let _this = this;
         let params = {
           data: {
@@ -389,7 +396,7 @@
   .deliveryAddress {
     padding: 0.15rem;
     /*   height: 1rem;*/
-    margin-top: 0.54rem;
+    margin-top: 0.64rem;
     background: #fff;
     position: relative;
     overflow: hidden;
@@ -644,6 +651,21 @@
     color: #666;
     padding: 0rem 0.1rem;
   }
+  .exhibition li .coupon {
+    text-align: right;
+    display: block;
+    height: .46rem;
+    margin-top: -0.1rem;
+    /*background-color: red;*/
+  }
+
+
+
+
+
+
+
+
 
   .exhibition-lf {
     line-height: 0.46rem;
