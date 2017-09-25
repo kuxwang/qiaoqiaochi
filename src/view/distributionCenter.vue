@@ -65,7 +65,7 @@
         <div class="title">
           <div class="icon"></div>
           <div class="text">收益</div>
-          <div class="right">每月明细<span class="iconfont">&#xe61b;</span></div>
+          <div class="right" @click="clickDetailed">每月明细<span class="iconfont">&#xe61b;</span></div>
         </div>
         <div class="money">
           <div class="info__item3">
@@ -196,6 +196,9 @@
         this.tabselect(idx)
         this.$router.push({name: `extension`})
       },
+      clickDetailed(){
+        this.$router.push({name:'detailed'});
+      }
     },
     components: {
       vTabbar
