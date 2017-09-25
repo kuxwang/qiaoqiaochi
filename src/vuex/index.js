@@ -39,7 +39,8 @@ const state = {
   oldprovince:'',
   oldcity:'',
   oldarea:'',
-  addtype:''
+  addtype:'',
+  haslogo:true, //首页logo
 }
 
 export default new Vuex.Store({

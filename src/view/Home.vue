@@ -1,9 +1,9 @@
 <template>
   <div class="content">
     <div class="top-bar">
-      <div class="logo"><img :src="logo"/></div>
-      <v-search ref="search"></v-search>
-      <div class="share" >
+      <div class="logo" v-if="!isSearch"><img :src="logo"/></div>
+      <v-search ref="search" @changetype="toggle()"></v-search>
+      <div class="share" v-if="!isSearch">
         <span class="iconfont">&#xe71d;</span>
       </div>
     </div>
@@ -32,7 +32,8 @@
   import vColrow from '../components/common/columnRow';
   import vColcol from '../components/common/columnCol';
   import {fn} from '../config/myUtils';
-  import { Advs} from '../api/api'
+  import { Advs} from '../api/api';
+  import {mapMutations, mapGetters, mapState} from 'vuex'
 
   export default{
     data(){
@@ -42,6 +43,7 @@
         logo2: require('../assets/images/bottom.png'),
         slider:[],
         selected: 1,
+        isSearch:false
       }
     },
     methods: {
@@ -55,6 +57,10 @@
             console.log(this.slider)
           }
         })
+      },
+      toggle(){
+
+        this.isSearch=!this.isSearch;
       }
     },
     mounted () {
@@ -67,6 +73,16 @@
       vColrow,
       vColcol
     },
+    computed: {
+      ...mapGetters([
+        'haslogo'
+      ]),
+    }
+
+
+
+
+
   }
 </script>
 <style lang="less" scoped>

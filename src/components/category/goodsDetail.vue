@@ -28,6 +28,10 @@
               <!--<p class="lr2">【原味】【1罐装】米国首播巴西松子218g/罐 皮剥香酥的果仁 休闲零食好伴侣</p>-->
               <span class="price">￥{{marketPrice}}</span>
               <span class="marketPrice">市场价&nbsp;<font>{{marketPrice}}</font></span>
+              <div class="memberprice">
+                ￥76
+                <span class="tip">会员券后价</span>
+              </div>
             </div>
           </div>
 
@@ -174,7 +178,6 @@
         cartids: '',
         delGoodsNum: '',
         goodsid: 4,
-//        isShow:false
         isShow: true,
         goodsparams: [], //商品详情
         bottomStatus: '',
@@ -901,14 +904,46 @@
   }
 
   .goodsTitle span {
-    float: left;
     font-size: 0.17rem;
     color: #DD2728;
     white-space: normal;
     font-weight: 700;
-    padding: 0 0 .1rem 0;
-    /*color: #dd2727;*/
+    /*padding: 0 0 .1rem 0;*/
   }
+  .goodsTitle .price {
+    font-size: .22rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #000;
+  }
+  .goodsTitle .marketPrice {
+    font-size: .1rem;
+    text-transform: uppercase;
+    color: #999;
+  }
+  .goodsTitle .memberprice {
+    font-size: .1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #bfa05d;
+    margin-top: .05rem;
+    margin-bottom: .05rem;
+  }
+  .goodsTitle .memberprice .tip {
+    width: .8rem;
+    height: .13rem;
+    line-height: .13rem;
+    font-size: .08rem;
+    -webkit-border-radius: .05rem;
+    -moz-border-radius: .05rem;
+    border-radius: .05rem;
+    background-color: #bfa05d;
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+  }
+
+
 
   .params {
     margin-top: .05rem;

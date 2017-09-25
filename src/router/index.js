@@ -189,7 +189,6 @@ export default new Router({
       ]
     },
 
-
     {
       path: '/confirmorder',
       name: 'confirmorder',

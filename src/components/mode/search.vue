@@ -1,5 +1,5 @@
 <template>
-  <div class="main" :class="{'main-search':isfocus}">
+  <div class="main" :class="{'main-search':isfocus}" >
     <div id="search" class="search" :class="{white : isfocus}" >
       <form @submit="goList()">
       <input type="text" :class="{'grey' : isfocus}" v-model="find" placeholder="请输入商品名称" @focus="getFocus()"/>
@@ -57,15 +57,17 @@
         this.$router.go(-1)
       },
       getFocus () {
+
         this.isfocus=true;
         setTimeout(() => {
           this.setHeight()
-        }, 500)
+        }, 300)
 
       },
       cancel () {
         this.isfocus = false
-        this.find = ''
+        this.find = '';
+
       },
       getGoods: _.debounce(function (value) {
         this.loading = false;
@@ -122,13 +124,12 @@
       },
       goInfo(v){
         this.isfocus=false;
-        this.find=''
-        this.$router.push({name:'storeinfo',query:{id:v}})
+        this.find='';
+
+        this.$router.push({name:'details',query:{id:v}})
       },
       ...mapMutations({
-       /* addressInfo: 'ADDRESSINFO',
-        setsearchlist:'SEARCHLIST',
-        setarealist:'AREALIST'*/
+        'haslogo':'HASLOGO'
       }),
     },
     watch: {
@@ -136,8 +137,12 @@
         this.getGoods(newValue)
       },
       loading(newValue){
-//        console.log(newValue)
+      },
+      isfocus(newValue){
+        console.log(newValue)
+        this.$emit('changetype',1);
       }
+
     },
     components: {
       searchVoid
@@ -145,7 +150,7 @@
     created(){
     },
     mounted () {
-//      this.setHeight()
+
     },
     computed: {
       ...mapGetters([
