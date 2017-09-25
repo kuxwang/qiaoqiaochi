@@ -217,7 +217,7 @@
 
   .addAddress-list {
     /*margin-top: 0.7rem;*/
-    margin-top: 0.58rem;
+    margin-top: 0.48rem;
   }
 
   .addAddress-list li {

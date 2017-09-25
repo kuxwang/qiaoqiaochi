@@ -58,7 +58,7 @@
   }
   .container {
     .coupon__num{
-      margin-top: .64rem;
+      margin-top: .45rem;
       width: 100%;
       text-align: center;
       height: 1.7rem;

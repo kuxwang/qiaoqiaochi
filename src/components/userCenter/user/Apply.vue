@@ -64,7 +64,7 @@
       width: 100%;
       height: 1.56rem;
       background-color: #9e0028;
-      margin-top: .64rem;
+      margin-top: .45rem;
       padding-top: .48rem;
       color: #e5c558;
       h1 {

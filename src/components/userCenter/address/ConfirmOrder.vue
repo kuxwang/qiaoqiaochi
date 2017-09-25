@@ -318,6 +318,9 @@
           return
         }
         return num.length == 0 ? num + '00' : num.length == 1 ? num + '0' : num || '00'
+      },
+      mustnum(value){
+        return value > this.memberDiscount.realprice ? this.memberDiscount.realprice : value
       }
     },
 
@@ -396,7 +399,7 @@
   .deliveryAddress {
     padding: 0.15rem;
     /*   height: 1rem;*/
-    margin-top: 0.64rem;
+    margin-top: 0.5rem;
     background: #fff;
     position: relative;
     overflow: hidden;

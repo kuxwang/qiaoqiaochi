@@ -303,7 +303,6 @@
     height: 100%;
     background: #ececec;
     overflow: hidden;
-
   }
 
   .mt-main {

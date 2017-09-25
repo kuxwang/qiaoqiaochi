@@ -81,7 +81,7 @@ export default {
   z-index: 30;
   overflow: auto;
   .detailed {
-    margin-top: 0.75rem;
+    margin-top: 0.55rem;
     .detailed-content {
       .detailed-year {
         display: flex;
