@@ -1,7 +1,12 @@
 <template>
   <div class="main">
     <section>
-      <mt-header title="推广订单" class="c-1">
+      <!--<mt-header title="推广订单" class="c-1">
+        <router-link to="/vipCenter" slot="left">
+          <mt-button icon="back"></mt-button>
+        </router-link>
+      </mt-header>-->
+      <mt-header title="推广订单">
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
@@ -705,12 +710,12 @@
   }
 
   .mint-navbar .mint-tab-item.is-selected {
-    color: #F5751D;
+    color: #333;
 
   }
 
   .mint-navbar .mint-tab-item.is-selected {
-    border-bottom: 2px solid #F5751D;
+    border-bottom: 2px solid #333;
   }
 
   .nav-tab {
@@ -794,7 +799,7 @@
   }
 
   .search div {
-    background-color: #F5751D;
+    background-color: #333;
     display: block;
     height: .3rem;
     flex: .3;
@@ -804,11 +809,11 @@
   }
 
   .mint-header {
-    color: #252522 !important;
+    /*color: #252522 !important;*/
   }
 
   .nav-tab .tabActive {
-    background-color: #f5751d;
+    background-color: #333;
     color: #fff;
   }
 

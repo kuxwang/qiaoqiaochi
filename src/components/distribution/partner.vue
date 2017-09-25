@@ -431,10 +431,10 @@
     z-index: 20;
   }
 
-  .mint-header {
+/*  .mint-header {
     border-bottom: 0;
     color: #fff;
-  }
+  }*/
 
   .avatar {
     position: relative;
@@ -675,7 +675,8 @@
   }
 
   .mint-navbar .mint-tab-item.is-selected {
-    color: #F5751D;
+    /*color: #F5751D;*/
+    color: #333;
     border-bottom: none;
   }
 
@@ -794,7 +795,7 @@
   }
 
   .search div {
-    background-color: #F5751D;
+    background-color: #333;
     display: block;
     height: .3rem;
     flex: .3;
@@ -808,7 +809,7 @@
   }
 
   .nav-tab .tabActive {
-    background-color: #f5751d;
+    background-color: #333;
     color: #fff;
   }
 
