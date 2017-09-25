@@ -193,7 +193,7 @@
         opitiontitle:'套餐类型',
         selectoption:'请选择',
         noselected:true,
-        hasselect:false
+        hasselect:false,
       }
     },
     methods: {
@@ -287,7 +287,13 @@
       },
       toast: function () {
         let _this = this;
-        if (!_this.spec || _this.spec.length == _this.specs_arr.length) {
+        console.log('长度')
+        console.log(_this.spec)
+        console.log(_this.specs_arr)
+
+
+//        if (!_this.spec || _this.spec.length == _this.specs_arr.length) {
+        if (!_this.spec || _this.selectoption == '已选：') {
           if (this.myStata === 1) {//加入购物车
             _this.popupVisible = false;
             let params = {
@@ -315,7 +321,7 @@
                   position: 'middle',
                   duration: 1800
                 });
-              } else if (!_this.opitionid) {
+              } else if (!_this.optionId) {
                 Toast({
                   message: '添加失败',
                   position: 'bottom',
@@ -337,10 +343,12 @@
               cartids: '',
               total: this.num
             }
+            console.log(myOrders)
             this.getMyorders(myOrders);
             this.$router.push({name: 'confirmorder'})
           }
-        } else if (_this.spec.length > _this.specs_arr.length) {
+//        } else if (_this.spec.length > _this.specs_arr.length || _this.specs_arr.some((item)=>{item == ""})) {
+        } else if (_this.selectoption == '请选择') {
           Toast({
             message: '请选择规格',
             position: 'bottom',
@@ -379,6 +387,8 @@
         ProductDetail(params, function (res) {
           Indicator.close()
           if (res.statusCode === 1) {
+            console.log('商品数据')
+            console.log(res)
             that.goodNums = res.data.goodscount;
             let goods = res.data.goods
             that.goodsId = goods.id;
@@ -388,6 +398,9 @@
             that.total = goods.total;
             that.isShow = true;
             that.goodsparams = res.data.params;
+            that.opitions=res.data.options;
+            console.log(that.opitions)
+            that.spec=res.data.specs
             document.getElementById("intro").innerHTML = goods.content;
 //            Indicator.close();
 
@@ -461,16 +474,22 @@
         }
       },
       tabtype(idx, index) {
-        //idx为选择specs
-        //index为specs.items的项的数组
         let _this = this;
         let id = this.spec[idx].items[index].id;
         let title = this.spec[idx].items[index].title;
-        /*    console.log(id)
-         console.log(title)*/
         this.$set(this.specs_arr, idx, title);
         this.$set(this.specs_id_arr, idx, id);
         this.$set(this.tselect, idx, index);
+        console.log(`specs__arr数据`)
+//        console.log(this.specs_arr)
+//        console.log(this.specs_arr.length)
+        let arrbolen = _this.specs_arr.every((item,index,array)=>{
+          console.log(_this.specs_arr.length)
+            return (item !== '')
+        })
+        console.log(`判断${arrbolen}`)
+
+
         let new_arr = [];
         for (let i = 0; i < _this.specs_arr.length; i++) {
           if (_this.specs_arr[i]) {
@@ -479,11 +498,9 @@
         }
         if (new_arr.length == _this.spec.length) {
           let optionAll = (_this.specs_id_arr).join("_");
-          let options = _this.options;
-          console.log('options的结果')
-          console.log(options)
-          console.log(_this.options)
+          let options = _this.opitions;
           let changeOptions = {};
+
           for (let o in options) {
             if (options[o].specs === optionAll) {
               changeOptions = options[o];

@@ -12,7 +12,7 @@
           <router-link  v-for="(v,k) in hot" :to="{name:'details',query:{id:v.id}}" tag="li" class="scroll-goodslist-li" :key="k">
 
           <img :src="v.thumb" alt="">
-          <p class="goodstitle">
+          <p class="goodstitle lr1">
             {{v.title}}
           </p>
           <p class="price">
@@ -138,11 +138,12 @@
              }
              .goodstitle {
                margin-top: .1rem;
+               width: 100%;
                height: .3rem;
                font-size: .14rem;
                line-height: .3rem;
                color: #666666;
-               .text-overflow(1);
+               /*.text-overflow(1);*/
              }
              .price {
                 height: .22rem;

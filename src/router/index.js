@@ -108,10 +108,7 @@ export default new Router({
       ]
     },
 
-    /*
-     * 分类
-     * */
-
+    /*分类*/
     {
       path: '/category',
       name: 'category',
@@ -250,6 +247,7 @@ export default new Router({
               name: 'drawbackInfo',
               component: DrawbackInfo,
             },
+
 
           ]
         },
