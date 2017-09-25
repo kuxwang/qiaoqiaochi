@@ -145,7 +145,7 @@
 
   .deliveryAddress {
     /*margin-top: 0.7rem;*/
-    margin-top: .58rem;
+    margin-top: .48rem;
     margin-bottom: 0.58rem;
   }
 

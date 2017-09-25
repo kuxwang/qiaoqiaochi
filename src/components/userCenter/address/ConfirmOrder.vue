@@ -399,7 +399,7 @@
   .deliveryAddress {
     padding: 0.15rem;
     /*   height: 1rem;*/
-    margin-top: 0.64rem;
+    margin-top: 0.5rem;
     background: #fff;
     position: relative;
     overflow: hidden;

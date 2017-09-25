@@ -246,7 +246,7 @@
 
   .addAddress-list {
     /*margin-top: .7rem;*/
-    margin-top: .58rem;
+    margin-top: .48rem;
   }
 
   .addAddress-list li {
