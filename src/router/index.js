@@ -106,10 +106,7 @@ export default new Router({
       ]
     },
 
-    /*
-     * 分类
-     * */
-
+    /*分类*/
     {
       path: '/category',
       name:'category',
