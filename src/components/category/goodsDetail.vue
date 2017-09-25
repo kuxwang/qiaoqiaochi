@@ -379,6 +379,8 @@
         ProductDetail(params, function (res) {
           Indicator.close()
           if (res.statusCode === 1) {
+            console.log('商品数据')
+            console.log(res)
             that.goodNums = res.data.goodscount;
             let goods = res.data.goods
             that.goodsId = goods.id;
@@ -388,6 +390,7 @@
             that.total = goods.total;
             that.isShow = true;
             that.goodsparams = res.data.params;
+            that.spec=res.data.specs
             document.getElementById("intro").innerHTML = goods.content;
 //            Indicator.close();
 
