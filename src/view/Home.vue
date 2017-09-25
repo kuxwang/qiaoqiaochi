@@ -35,7 +35,7 @@
   import { demo } from '../api/api'
 
   export default{
-    data(){
+    data () {
       return {
         img1: require('../assets/images/confirmorder-01.jpg'),
         logo: require('../assets/images/logo.png'),

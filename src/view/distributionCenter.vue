@@ -80,7 +80,7 @@
     <transition name="slide">
       <router-view></router-view>
     </transition>
-    <v-tabbar></v-tabbar>
+    <tabbar></tabbar>
   </div>
 </template>
 
@@ -198,7 +198,7 @@
       },
     },
     components: {
-      vTabbar
+      Tabbar: Tabbar
     },
     created(){
       this.init()
