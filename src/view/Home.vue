@@ -1,5 +1,8 @@
 <template>
   <div class="content">
+    <div class="top-logo">
+      <img src= "" alt= "">
+    </div>
     <div class="top-bar">
       <div class="logo" v-if="!isSearch"><img :src="logo"/></div>
       <v-search ref="search" @changetype="toggle()"></v-search>
@@ -92,11 +95,17 @@
 
   .content {
     .page-view();
+    .top-logo {
+      height: .45rem;
+      background: #000000;
+    }
   }
+
   .top-bar {
     display: flex;
     height: .45rem;
     background-color: #fff;
+
     .logo {
       width: .65rem;
       font-size: .21rem;
@@ -148,7 +157,7 @@
     top: 0;
     .scroll-view(100%);
     width: 100%;
-    padding-bottom: .5rem;
+    padding-bottom: .95rem;
     z-index: -1;
   }
 

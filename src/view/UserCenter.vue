@@ -1,5 +1,10 @@
 <template>
   <div class="main">
+    <mt-header title="个人中心">
+      <router-link to="/userCenter" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+    </mt-header>
     <div class="container">
       <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :maxDistance="60"
                    :distanceIndex="disindex"
@@ -35,75 +40,93 @@
         </section>
 
         <section class="content">
-
           <router-link class="mfriend" :to="{path:'order',query:{stab:1}}" tag="div">
+            <span class="iconfont order-icon">&#xe62e;</span>
             <span class="mint-cell-text">我的订单</span>
             <i class="iconfont right">&#xe649;</i>
           </router-link>
           <ul class="order-list">
             <!--<li class="li1" @click="ordertab(1)">-->
             <router-link class="li1" :to="{path:'order',query:{stab:1}}" tag="li">
-              <div class="iconfont listicon">&#xe626;</div>
+              <div class="iconfont listicon">&#xe658;</div>
               <div class="title">全部</div>
             </router-link>
             <!--</li>-->
             <router-link class="li1" :to="{path:'order',query:{stab:2}}" tag="li">
-              <div class="iconfont listicon">&#xe65d;</div>
+              <div class="iconfont listicon">&#xe642;</div>
               <div class="title">待付款</div>
 
             </router-link>
             <!--</li>-->
             <router-link class="li1" :to="{path:'order',query:{stab:3}}" tag="li">
-              <div class="iconfont listicon">&#xe655;</div>
+              <div class="iconfont listicon">&#xe635;</div>
               <div class="title">待发货</div>
             </router-link>
             <router-link class="li1" :to="{path:'order',query:{stab:4}}" tag="li">
               <!--<li class="li3" @click="ordertab(4)">-->
-              <div class="iconfont listicon">&#xe660;</div>
+              <div class="iconfont listicon">&#xe63a;</div>
               <div class="title">待收货</div>
             </router-link>
             <router-link class="li1" :to="{path:'order',query:{stab:5}}" tag="li">
-              <div class="iconfont listicon">&#xe6de;</div>
+              <div class="iconfont listicon">&#xe62f;</div>
               <div class="title">已完成</div>
             </router-link>
           </ul>
+          <!--<section class="adv">-->
+          <router-link  tag="div" :to="{name:'applys'}">
+            <img class="adv" :src="adv" alt="广告图">
+          </router-link>
+          <!--</section>-->
           <ul class="center-list">
-            <!--<router-link class="center-cell" :to="{name:'deliveryaddress',query:{from:1}}" tag="li">-->
-            <li class="center-cell" @click="getAddr">
-              <div class="iconfont icon1">&#xe60a;</div>
-              <div class="title-list">收货地址管理</div>
-              <i class="iconfont right">&#xe649;</i>
-            </li>
-
-
-            <router-link class="center-cell" :to="{name:'coupon'}" tag="li">
-              <div class="iconfont icon2">&#xe69d;</div>
-              <div class="title-list">优惠券</div>
+            <router-link class="center-cell" :to="{name:'applys'}" tag="li" style="margin-bottom: .1rem;">
+              <div class="iconfont icon-grey">&#xe62d;</div>
+              <div class="title-list">我要开店</div>
               <i class="iconfont right">&#xe649;</i>
             </router-link>
 
+            <router-link class="center-cell" :to="{name:'applys'}" tag="li" style="margin-bottom: .1rem;">
+              <div class="iconfont icon-grey">&#xe633;</div>
+              <div class="title-list">邀请好友</div>
+              <i class="iconfont right">&#xe649;</i>
+            </router-link>
+
+            <router-link class="center-cell" :to="{name:'coupon'}" tag="li">
+              <div class="iconfont icon-grey">&#xe699;</div>
+              <div class="title-list">现金券</div>
+              <i class="iconfont right">&#xe649;</i>
+            </router-link>
+
+            <li class="center-cell" @click="getAddr">
+              <div class="iconfont icon-grey">&#xe633;</div>
+              <div class="title-list">地址管理</div>
+              <i class="iconfont right">&#xe649;</i>
+            </li>
             <router-link class="center-cell" :to="{name:'collect'}" tag="li">
-              <div class="iconfont icon3">&#xe615;</div>
+              <div class="iconfont icon-grey">&#xe615;</div>
               <div class="title-list">我的收藏</div>
               <i class="iconfont right">&#xe649;</i>
             </router-link>
-            <router-link class="center-cell" :to="{name:'footprint'}" tag="li">
-              <div class="iconfont icon4">&#xe617;</div>
-              <div class="title-list">我的足迹</div>
-              <i class="iconfont right">&#xe649;</i>
-            </router-link>
-
-            <router-link class="center-cell" :to="{name:'applys'}" tag="li">
-            <div class="iconfont icon5">&#xe616;</div>
-            <div class="title-list">我要开店</div>
-            <i class="iconfont right">&#xe649;</i>
-            </router-link>
 
             <router-link class="center-cell" :to="{name:'opinion'}" tag="li">
-              <div class="iconfont icon6">&#xe639;</div>
+              <div class="iconfont icon-grey">&#xe672;</div>
               <div class="title-list">意见反馈</div>
               <i class="iconfont right">&#xe649;</i>
             </router-link>
+
+            <router-link class="center-cell" :to="{name:'opinion'}" tag="li">
+              <div class="iconfont icon-grey">&#xe67c;</div>
+              <div class="title-list">联系客服</div>
+              <i class="iconfont right">&#xe649;</i>
+            </router-link>
+
+
+            <!--<router-link class="center-cell" :to="{name:'footprint'}" tag="li">-->
+            <!--<div class="iconfont icon4">&#xe617;</div>-->
+            <!--<div class="title-list">我的足迹</div>-->
+            <!--<i class="iconfont right">&#xe649;</i>-->
+            <!--</router-link>-->
+
+
           </ul>
           <button class="outLogin" @click="outLogin">退出登录</button>
         </section>
@@ -117,13 +140,12 @@
   </div>
 </template>
 <script>
-
   import vTabbar from '../components/mode/Tabbar.vue'
   import {recordStatistics_get, teamsStatistics, orderStatistics, memberInfo, LOGINOUT} from '../api/api'
   import {mapMutations, mapGetters, mapState} from 'vuex'
   import {_webapp} from '../config/hook.js';
   import {MessageBox, Toast} from 'mint-ui';
-
+  import advbanner from '../assets/images/banneradv.png'
   export default {
     data() {
       return {
@@ -148,7 +170,8 @@
           credit1: '',
           credit2: '',
         },
-        defaultAvatar: ''
+        defaultAvatar: '',
+        adv: advbanner
       }
     },
     components: {
@@ -170,9 +193,8 @@
       init() {
         let _this = this;
         //用户信息
-        memberInfo({data:{}}, function (res) {
+        memberInfo({data: {}}, function (res) {
           if (res.statusCode == 1) {
-            _this.$refs.loadmore.onTopLoaded();
             _this.memberInfo.nickname = res.data.nickname
             _this.memberInfo.id = res.data.id
             _this.memberInfo.level = res.data.level
@@ -183,13 +205,14 @@
             _this.memberInfo.credit2 = res.data.credit2
             _this.memberInfo.credit1 = res.data.credit1
             _this.setImgUrl(_this.memberInfo.avatar)
+            _this.$refs.loadmore.onTopLoaded();
           } else {
             console.log('会员接口数据异常')
+            _this.$refs.loadmore.onTopLoaded();
           }
         });
       },
       outLogin() {
-
         MessageBox({title: '确认退出当前账号?', message: '点击确认退出', showCancelButton: true}).then(action => {
           if (action == 'confirm') {//表示点击了确定
             // _webapp.logOut((res)=>{})
@@ -206,7 +229,7 @@
         this.topStatus = status;
       },
       loadTop() {
-
+        this.init()
       },
       msg() {
         Toast({
@@ -222,7 +245,7 @@
       ...mapMutations({
         tabselect: 'TABSELECT',
         setImgUrl: 'IMGURL',
-        addrtype:'ADDTYPE'
+        addrtype: 'ADDTYPE'
       })
     },
     filter: {
@@ -253,6 +276,16 @@
     font-size: .16rem;
   }
 
+  .mint-header {
+    height: .45rem !;
+    background: #000 !important;
+    color: #fff !important;
+  }
+
+  .mint-header-title {
+    font-size: .18rem !important;
+  }
+
   .main, .main1 {
     position: fixed;
     top: 0;
@@ -280,7 +313,7 @@
     top: 0;
     left: 0;
     height: 1.47rem;
-    padding: .50rem .15rem .15rem .15rem;
+    padding: .35rem .15rem .40rem .33rem;
     color: #fff;
     /*background: url('../assets/images/centertopbg.png') center center no-repeat;*/
     background-size: 100% 100%;
@@ -307,6 +340,10 @@
     border-radius: 50%;
   }
 
+  .adv {
+    width: 100%;
+  }
+
   .message {
     width: 50%;
     height: .5rem;
@@ -316,7 +353,7 @@
   .message > div {
     width: 100%;
     text-align: left;
-    padding: .18rem 0 .18rem .24rem;
+    padding: 0 0 .18rem .24rem;
   }
 
   .message > div > .hello {
@@ -327,6 +364,7 @@
     text-align: left;
     /*padding-left: .24rem;*/
     font-weight: bold;
+    margin-bottom: .15rem;
   }
 
   .message > div > .level {
@@ -459,16 +497,17 @@
   }
 
   .content .iconfont {
-    /*width: .28rem;*/
-    /*height: .30rem;*/
     margin-left: auto;
     margin-right: auto;
     font-size: .3rem;
-    /*border: 1px solid #F5751D;*/
     line-height: .3rem;
-    /*color: #ff6500;*/
-    color: #333;
+    color: #a9a9a9;
     border-radius: 50%;
+  }
+
+  .content .order-icon {
+    vertical-align: middle;
+    font-size: .18rem;
   }
 
   .title-list {
@@ -484,8 +523,6 @@
 
   .details li {
     margin-top: .04rem;
-    /*border-top: 1px solid rgba(0, 0, 0, .3)*/
-    /*border-top: 1px solid rgba(0, 0, 0, .3)*/
   }
 
   .order-list {
@@ -552,12 +589,6 @@
     top: 0rem;
   }
 
-  /*.top > .money-top {*/
-  /*width: 100%;*/
-  /*font-size: .16rem;*/
-  /*line-height: .35rem;*/
-  /*}*/
-
   .mymoney {
     position: absolute;
     top: .5rem;
@@ -577,16 +608,14 @@
   }
 
   .container {
-    position: absolute;
+    /*position: absolute;*/
     top: 0;
     width: 100%;
-    /*overflow: auto;*/
     overflow-y: scroll;
     /*-webkit-overflow-scrolling: touch;*/
-    /*height: 6.2rem;*/
     height: 100%;
     /*overflow-y: scroll;*/
-
+    padding:0 0 1.14rem 0
   }
 
   .nametype {
@@ -596,12 +625,13 @@
   }
 
   .mint-loadmore-top {
+    margin-top: -51px;
     background: rgba(255, 255, 255, .7);
   }
 
-  .mint-loadmore {
-    height: 100%;
-  }
+  /*.mint-loadmore {*/
+    /*height: 100%;*/
+  /*}*/
 
   .loading {
     position: relative;
@@ -685,6 +715,10 @@
 
   .icon6 {
     color: #ef6262 !important
+  }
+
+  .icon-grey {
+    color: #aaaaaa !important
   }
 
   .postUserInfo {

@@ -41,12 +41,14 @@
 
   /*公共头部*/
   .mint-header {
-    background: #fff !important;
-    color: #252525 !important;
-    border-bottom: 1px solid #e3e3e3;
+    /*background: #fff !important;*/
+    background: #000 !important;
+    /*color: #252525 !important;*/
+    color: #ffffff !important;
+    /*border-bottom: 1px solid #e3e3e3;*/
     font-size: 0.16rem !important;
-    /*height: .45rem !important;*/
-    height: .64rem !important;
+    height: .45rem !important;
+    /*height: .64rem !important;*/
   }
 
   .mintui {
@@ -152,7 +154,7 @@
   }
 
   .mint-header-title {
-    font-size: .17rem !important;
+    font-size: .18rem !important;
   }
   .mint-msgbox-confirm {
    color: #F5751D;

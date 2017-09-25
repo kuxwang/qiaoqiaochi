@@ -406,7 +406,8 @@
 
   .header-right {
     font-size: .15rem;
-    color: rgb(120, 120, 120);
+    /*color: rgb(120, 120, 120);*/
+    color: fff;
   }
 
   .bottomtools {
@@ -489,7 +490,8 @@
     line-height: 0.4rem;
     text-align: center;
     color: #fff;
-    background: #F5751D;
+    /*background: #F5751D;*/
+    background: red;
     margin: 0 auto;
     margin-top: 0.2rem;
     font-size: 0.14rem;

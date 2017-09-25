@@ -88,7 +88,7 @@
           }
         })
 
-      }, 700),
+      }, 200),
       loadMore () {
         this.loading = true;
         let params = {
@@ -193,15 +193,14 @@
     box-shadow: 0 1px 4px rgba(138, 138, 138, .3);*/
     /*width: 616px;*/
     /*height: .64rem;*/
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
+    /*-webkit-border-radius: 10px;*/
+    /*-moz-border-radius: 10px;*/
+    /*border-radius: 10px;*/
     /*background-color: #eaebed;*/
   }
 
   .white {
-    /*background: rgb(255, 255, 255) !important;*/
-    /*background-color: ;*/
+    background: rgb(255, 255, 255) !important;
   }
 
   .grey {

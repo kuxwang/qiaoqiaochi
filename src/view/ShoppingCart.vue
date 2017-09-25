@@ -613,7 +613,8 @@
     line-height: 0.4rem;
     text-align: center;
     color: #fff;
-    background: #F5751D;
+    background: red;
+    /*background: #F5751D;*/
     margin: 0 auto;
     margin-top: 0.2rem;
     font-size: 0.14rem;

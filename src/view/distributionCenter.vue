@@ -1,10 +1,10 @@
 <template>
   <div class="page">
-   <!-- <mt-header title="店铺管理" fixed>
-      <router-link to="/userCenter" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-    </mt-header>-->
+    <!--<mt-header title="个人中心" fixed>-->
+      <!--<router-link to="/userCenter" slot="left">-->
+        <!--<mt-button icon="back"></mt-button>-->
+      <!--</router-link>-->
+    <!--</mt-header>-->
     <div class="container">
       <div class="user">
           <div class="user__logo">
@@ -80,7 +80,7 @@
     <transition name="slide">
       <router-view></router-view>
     </transition>
-    <tabbar></tabbar>
+    <v-tabbar></v-tabbar>
   </div>
 </template>
 
@@ -198,7 +198,7 @@
       },
     },
     components: {
-      Tabbar: Tabbar
+      vTabbar: vTabbar
     },
     created(){
       this.init()
