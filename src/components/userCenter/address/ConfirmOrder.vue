@@ -166,7 +166,8 @@
         payed: false,
         send:{},
         new:false,
-        coupon: 0
+        coupon: 0,
+        couonnum:20
       }
     },
     methods: {
@@ -353,6 +354,16 @@
           this.defaultAddress = '';
         }
       },
+      coupon(a,b){
+        console.log(`a${a}`)
+        console.log(`b${b}`)
+        if(a>this.memberDiscount.realprice){
+          this.coupon=this.memberDiscount.realprice
+        }
+        if(a>this.couonnum){
+          this.coupon=this.couonnum
+        }
+      }
 
     },
     created() {
