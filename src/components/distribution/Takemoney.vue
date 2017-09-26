@@ -133,7 +133,7 @@
   }
 
   .title {
-    margin: .1rem 0 0.1rem 0;
+    margin: 0rem 0 0.1rem 0;
     /*margin: .5rem 0 0.1rem 0;*/
     width: 100%;
     text-align: center;

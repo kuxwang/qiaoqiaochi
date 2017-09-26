@@ -115,7 +115,7 @@
           优惠券
         </div>
         <span class="mygoods-price fr">
-          <input class="coupon" type="number"  placeholder="请输入优惠券" v-model="coupon"/>
+          <input class="coupon" type="number"  placeholder="请输入优惠券" v-model.number="coupon"/>
 				</span>
       </li>
     </ul>

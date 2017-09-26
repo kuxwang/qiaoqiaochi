@@ -587,7 +587,7 @@
     overflow: hidden;
     overflow-y: scroll;
     background-color: #ececec;
-    margin-top: 2.05rem;
+    margin-top: 1.86rem;
     -webkit-overflow-scrolling: touch;
     padding-bottom: .4rem;
 
@@ -727,7 +727,7 @@
     display: flex;
     position: fixed;
     width: 100%;
-    top: .65rem;
+    top: .46rem;
     z-index: 1;
   }
 
@@ -783,7 +783,7 @@
     position: fixed;
     z-index: 2;
     background-color: #eee;
-    top: 1.55rem;
+    top: 1.36rem;
     padding: 0 2%;
 
   }
