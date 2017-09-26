@@ -113,8 +113,8 @@
               console.log(this.statusResult)
             } else {
               this.statusResult = []
+//              this.loading = true
               this.$refs.requestStatus.loadingStatus = this.statusResult ? 1 : 0
-
             }
           });
 //        }, 5000)
@@ -139,15 +139,22 @@
           data: {
             page: ++this.page,
             status: this.statusType,
-            pszie:this.psize
+            psize:this.psize
           }
         };
         orderList(params, res => {
+            console.log(this.loading)
           if (res.statusCode == 1) {
-            this.statusResult = this.statusResult.concat(res.data);
-            setTimeout(() => {
-              this.loading = false;
-            }, 1000)
+//                console.
+              if(res.data != ''){
+                this.statusResult = this.statusResult.concat(res.data);
+                setTimeout(() => {
+                  this.loading = false;
+                }, 1000)
+              }else{
+                this.loading = true;
+              }
+
 
           } else {
             this.isloading = false
