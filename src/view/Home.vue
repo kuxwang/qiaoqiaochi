@@ -1,7 +1,8 @@
 <template>
   <div class="content">
     <div class="top-logo">
-      <img src= "" alt= "">
+      <!--<img src= "" alt= "">-->
+      优源生物
     </div>
     <div class="top-bar">
       <div class="logo" v-if="!isSearch"><img :src="avatar"/></div>
@@ -111,6 +112,10 @@
     .top-logo {
       height: .45rem;
       background: #000000;
+      color: #fff;
+      font-size: .20rem;
+      font-weight: bold;
+      line-height: .45rem;
     }
   }
 
