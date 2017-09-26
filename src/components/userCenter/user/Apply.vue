@@ -1,9 +1,12 @@
 <template>
   <div class="page">
     <mt-header title="店铺管理" fixed>
-      <router-link to="/userCenter" slot="left">
+      <!--<router-link to="/userCenter" slot="left">
         <mt-button icon="back"></mt-button>
-      </router-link>
+      </router-link>-->
+      <a slot="left" @click="goBack">
+        <mt-button icon="back"></mt-button>
+      </a>
     </mt-header>
     <div class="container">
       <div class="title">
@@ -40,6 +43,9 @@
         if(this.isChecked==1){
           console.log('111')
         }
+      },
+      goBack(){
+        this.$router.go(-1)
       }
     },
     created(){

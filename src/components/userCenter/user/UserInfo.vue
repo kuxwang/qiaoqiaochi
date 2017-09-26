@@ -499,7 +499,8 @@
     width: 100%;
     height: 0.45rem;
     box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);
-    background: #F5751D;
+    /*background: #F5751D;*/
+    background: #333;
     color: #fff;
     font-size: 0.16rem;
   }

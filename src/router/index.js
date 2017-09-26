@@ -189,7 +189,12 @@ export default new Router({
           path: '/detailed',
           name: 'detailed',
           component: Detailed
-        }
+        },
+        {
+          path: '/vipCenter/apply',
+          name: 'disapply',
+          component: Applys
+        },
       ]
     },
 

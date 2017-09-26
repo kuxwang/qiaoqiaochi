@@ -103,6 +103,8 @@
         outline:none;
         resize : none;
         border-bottom:1px solid #e5e5e5;
+        font-size: .14rem;
+        color: #999;
       }
       .textleng {
         position: absolute;

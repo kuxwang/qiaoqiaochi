@@ -17,6 +17,10 @@
           <div class="user__qcode">
             <img :src="img1"/>
           </div>
+        <router-link class="user__update" :to="{name:'disapply'}"  tag="a">
+          升级店铺
+        </router-link>
+
       </div>
       <ul class="nagative">
         <!--<li class="nav__item">-->
@@ -254,8 +258,15 @@
           .imgfull(50%);
           height: .4rem;
           vertical-align: middle;
-          margin-top: .14rem;
+          /*margin-top: .14rem;*/
         }
+      };
+      .user__update {
+        position: absolute;
+        top: 1rem;
+        right: .2rem;
+        color: #fff;
+        font-size: .12rem;
       }
     }
     .nagative {
