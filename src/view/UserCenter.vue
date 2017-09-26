@@ -97,7 +97,7 @@
             </router-link>
 
             <li class="center-cell" @click="getAddr">
-              <div class="iconfont icon-grey">&#xe633;</div>
+              <div class="iconfont icon-grey">&#xe643;</div>
               <div class="title-list">地址管理</div>
               <i class="iconfont right">&#xe649;</i>
             </li>

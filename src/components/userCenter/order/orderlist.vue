@@ -1,27 +1,107 @@
+<!--<template>-->
+  <!--<ul class="order-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50">-->
+    <!--<void-list ref="requestStatus">-->
+      <!--<li v-for="(v,i) in statusResult">-->
+        <!--<div>订单号：{{v.ordersn}}</div>-->
+        <!--<router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}"-->
+                     <!--tag="div">-->
+          <!--<img :src=v.goods[0].thumb alt="" class="order-small">-->
+          <!--<p>{{v.goods[0].title}}</p>-->
+          <!--<div class="good-price">-->
+            <!--<p>{{v.goods[0].marketprice}}</p>-->
+            <!--<p>×{{v.goods[0].total}}</p>-->
+          <!--</div>-->
+        <!--</router-link>-->
+        <!--<div class="good-pay">-->
+          <!--<span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}-->
+        <!--</div>-->
+        <!--<div class="good-btn">-->
+          <!--<button class="cancel-order" v-if="v.status==0" @click="cancel(v.id)">-->
+            <!--取消订单-->
+          <!--</button>-->
+          <!--<button class="charge-order ocolor" @click="pay(v.ordersn)" v-if="v.status==0">-->
+            <!--付款-->
+          <!--</button>-->
+          <!--<router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}"-->
+                       <!--tag="button" v-if="v.canrefund&&v.refundid==0">-->
+            <!--申请退款-->
+          <!--</router-link>-->
+          <!--<button class="charge-order1" v-if="v.status==2 && v.refundid==0" @click="fn1(v.id)">-->
+            <!--确认收货-->
+          <!--</button>-->
+          <!--<router-link class="look-logi ocolor"-->
+                       <!--:to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button"-->
+                       <!--v-if="v.status==2">-->
+            <!--查看物流-->
+          <!--</router-link>-->
+          <!--<button class="charge-order ocolor" v-if="v.canrefund && v.refundid!=0 && v.status!=0"-->
+                  <!--@click="refund(v.refundid)">-->
+            <!--退款申请中-->
+          <!--</button>-->
+          <!--<router-link class="look-logi ocolor"-->
+                       <!--:to="{path:'logistics',query:{exp:v.express,expsn:v.expresssn,id:v.id}}" tag="button"-->
+                       <!--v-if="v.status==3">-->
+            <!--查看物流-->
+          <!--</router-link>-->
+        <!--</div>-->
+      <!--</li>-->
+      <!--<p class="page-infinite-loading" v-if="loading&&isloading">-->
+        <!--<span>-->
+          <!--<div class="mint-spinner-fading-circle circle-color-112" style="width: 28px; height: 28px;">-->
+            <!--<div class="mint-spinner-fading-circle-circle is-circle2"></div>-->
+            <!--<div class="mint-spinner-fading-circle-circle is-circle3"></div>-->
+            <!--<div class="mint-spinner-fading-circle-circle is-circle4"></div>-->
+            <!--<div class="mint-spinner-fading-circle-circle is-circle5"></div>-->
+            <!--<div class="mint-spinner-fading-circle-circle is-circle6"></div>-->
+            <!--<div class="mint-spinner-fading-circle-circle is-circle7"></div>-->
+            <!--<div class="mint-spinner-fading-circle-circle is-circle8"></div>-->
+            <!--<div class="mint-spinner-fading-circle-circle is-circle9"></div>-->
+            <!--<div class="mint-spinner-fading-circle-circle is-circle10"></div>-->
+            <!--<div class="mint-spinner-fading-circle-circle is-circle11"></div>-->
+            <!--<div class="mint-spinner-fading-circle-circle is-circle12"></div>-->
+            <!--<div class="mint-spinner-fading-circle-circle is-circle13"></div>-->
+          <!--</div>-->
+        <!--</span>-->
+        <!--加载中...-->
+      <!--</p>-->
+    <!--</void-list>-->
+  <!--</ul>-->
+<!--</template>-->
+
+
 <template>
   <ul class="order-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50">
     <void-list ref="requestStatus">
       <li v-for="(v,i) in statusResult">
         <div>订单号：{{v.ordersn}}</div>
-        <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}"
-                     tag="div">
-          <img :src=v.goods[0].thumb alt="" class="order-small">
-          <p>{{v.goods[0].title}}</p>
+        <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" v-for=" (s,index) in v.goods" tag="div">
+          <img :src=s.thumb alt="" class="order-small">
+          <p>{{s.title}}</p>
           <div class="good-price">
-            <p>{{v.goods[0].marketprice}}</p>
-            <p>×{{v.goods[0].total}}</p>
+            <p>{{s.marketprice}}</p>
+            <p>×{{s.total}}</p>
           </div>
         </router-link>
         <div class="good-pay">
-          <span>共{{v.goods[0].total}}件商品 实付：</span> ￥{{v.price}}
+          <span>共{{v.goods.length}}件商品 实付：</span> ￥{{v.price}}
         </div>
         <div class="good-btn">
           <button class="cancel-order" v-if="v.status==0" @click="cancel(v.id)">
             取消订单
           </button>
-          <button class="charge-order ocolor" @click="pay(v.ordersn)" v-if="v.status==0">
+          <!--  <button class="charge-order ocolor" @click="pay(v.ordersn)" v-if="v.status==0">
+              付款
+            </button>
+  -->
+
+          <router-link class="charge-order ocolor" :to="{name: 'orderpay', query: {orderid: v.ordersn}}"
+                       tag="button" v-if="v.status==0">
             付款
-          </button>
+          </router-link>
+
+
+
+
           <router-link class="charge-order ocolor" :to="{path:'drawback',query:{money:v.price,orderid:v.id}}"
                        tag="button" v-if="v.canrefund&&v.refundid==0">
             申请退款

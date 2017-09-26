@@ -32,7 +32,6 @@
         <order-lists ref="mylist"></order-lists>
       </div>
     </div>
-    <v-tabbar id="tabbar"></v-tabbar>
     <router-view></router-view>
   </div>
 </template>
@@ -48,7 +47,7 @@
       return {
         selected: 'all',
         statusType: '',
-        isselect: 1
+        isselect: 0
       }
     },
     watch: {
@@ -56,22 +55,27 @@
         console.log(val)
         switch (val) {
           case 1 :
+            console.log('全部')
             this.$refs.mylist.statusType = '';
             this.$refs.mylist.init('')
             break;
           case 2 :
+            console.log('代付款')
             this.$refs.mylist.statusType = 0;
             this.$refs.mylist.init(0);
             break;
           case 3 :
+            console.log('待收货')
             this.$refs.mylist.statusType = 1;
             this.$refs.mylist.init(1)
             break;
           case 4 :
+            console.log('待收货')
             this.$refs.mylist.statusType = 2;
             this.$refs.mylist.init(2)
             break;
           case 5 :
+            console.log('完成')
             this.$refs.mylist.statusType = 3;
             this.$refs.mylist.init(3)
             break;
@@ -108,21 +112,13 @@
       }
     },
     created(){
-//      this.selected=this.$route.query.stab
-      this.isselect = 1
-
+      this.isselect =1
     },
     mounted () {
       this.setHeight();
-
-
-
-//      console.log(this.isselect)
     },
     activated(){
 //      this.isselect = this.$route.query.stab
-//      console.log(this.$route.query.stab)
-      console.log('位置')
 
     },
     computed: {
@@ -161,6 +157,7 @@
     background: #ececec;
     font-size: .15rem;
     overflow: hidden;
+    z-index: 10;
   }
 
   .page-part {
@@ -228,7 +225,8 @@
     margin-top: .86rem;
     /*height: 6.22rem;*/
     -webkit-overflow-scrolling: touch;
-    padding-bottom: .8rem;
+    /*padding-bottom: .8rem;*/
+    padding-bottom: .3rem;
   }
 
   * {
