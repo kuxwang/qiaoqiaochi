@@ -178,7 +178,7 @@
   }
 
   .search {
-    /*position: absolute;*/
+    position: relative;
     font-size: .14rem;
     height: .45rem;
     display: flex;

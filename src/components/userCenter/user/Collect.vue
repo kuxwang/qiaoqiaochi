@@ -407,7 +407,7 @@
   .header-right {
     font-size: .15rem;
     /*color: rgb(120, 120, 120);*/
-    color: fff;
+    color: #ffffff;
   }
 
   .bottomtools {

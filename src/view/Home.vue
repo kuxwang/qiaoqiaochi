@@ -4,7 +4,7 @@
       <img src= "" alt= "">
     </div>
     <div class="top-bar">
-      <div class="logo" v-if="!isSearch"><img :src="logo"/></div>
+      <div class="logo" v-if="!isSearch"><img :src="avatar"/></div>
       <v-search ref="search" @changetype="toggle()"></v-search>
       <div class="share" v-if="!isSearch">
         <span class="iconfont">&#xe71d;</span>
@@ -34,8 +34,9 @@
   import vSearch from '../components/mode/search';
   import vColrow from '../components/common/columnRow';
   import vColcol from '../components/common/columnCol';
+  import defalutAvatar from '../assets/images/defaultAvatar.png'
   import {fn} from '../config/myUtils';
-  import { Advs} from '../api/api';
+  import { Advs, memberInfo } from '../api/api';
   import {mapMutations, mapGetters, mapState} from 'vuex'
 
   export default{
@@ -46,7 +47,9 @@
         logo2: require('../assets/images/bottom.png'),
         slider:[],
         selected: 1,
-        isSearch:false
+        isSearch:false,
+        avatar: defalutAvatar
+
       }
     },
     methods: {
@@ -64,10 +67,20 @@
       toggle(){
 
         this.isSearch=!this.isSearch;
+      },
+      getUserInfo () {
+          memberInfo({data: {}}, res => {
+              if(res.statusCode == 1){
+                this.avatar = res.data.avatar
+              }else{
+                console.log(用户接口请求错误)
+              }
+          })
       }
     },
     mounted () {
-      this.getAdv()
+      this.getAdv();
+      this.getUserInfo();
       console.log(this.$refs.search.isfocus)
     },
     components: {
@@ -113,8 +126,11 @@
       /*padding: .05rem;*/
       padding: .1rem;
       img {
-        width: 100%;
-        height: 100%;
+        /*width: 100%;*/
+        /*height: 100%;*/
+        width:.3rem;
+        height:.3rem;
+        border-radius: .15rem;
       }
     }
     .share {
