@@ -431,10 +431,10 @@
     z-index: 20;
   }
 
-  .mint-header {
+/*  .mint-header {
     border-bottom: 0;
     color: #fff;
-  }
+  }*/
 
   .avatar {
     position: relative;
@@ -636,7 +636,7 @@
   .p-list {
     display: block;
     background-color: #ececec;
-    margin-top: 2.05rem;
+    margin-top: 1.86rem;
     padding-bottom: .4rem;
   }
 
@@ -675,7 +675,8 @@
   }
 
   .mint-navbar .mint-tab-item.is-selected {
-    color: #F5751D;
+    /*color: #F5751D;*/
+    color: #333;
     border-bottom: none;
   }
 
@@ -722,7 +723,7 @@
     display: flex;
     position: fixed;
     width: 100%;
-    top: .65rem;
+    top: .46rem;
     z-index: 1;
   }
 
@@ -778,7 +779,7 @@
     position: fixed;
     z-index: 2;
     background-color: #eee;
-    top: 1.5rem;
+    top: 1.31rem;
     padding: 0 2%;
 
   }
@@ -794,7 +795,7 @@
   }
 
   .search div {
-    background-color: #F5751D;
+    background-color: #333;
     display: block;
     height: .3rem;
     flex: .3;
@@ -803,12 +804,9 @@
     margin-top: .15rem;
   }
 
-  .mint-header {
-    color: #252525 !important;
-  }
 
   .nav-tab .tabActive {
-    background-color: #f5751d;
+    background-color: #333;
     color: #fff;
   }
 

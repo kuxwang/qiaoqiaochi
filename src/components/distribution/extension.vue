@@ -1,7 +1,12 @@
 <template>
   <div class="main">
     <section>
-      <mt-header title="推广订单" class="c-1">
+      <!--<mt-header title="推广订单" class="c-1">
+        <router-link to="/vipCenter" slot="left">
+          <mt-button icon="back"></mt-button>
+        </router-link>
+      </mt-header>-->
+      <mt-header title="推广订单">
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
@@ -582,7 +587,7 @@
     overflow: hidden;
     overflow-y: scroll;
     background-color: #ececec;
-    margin-top: 2.05rem;
+    margin-top: 1.86rem;
     -webkit-overflow-scrolling: touch;
     padding-bottom: .4rem;
 
@@ -705,12 +710,12 @@
   }
 
   .mint-navbar .mint-tab-item.is-selected {
-    color: #F5751D;
+    color: #333;
 
   }
 
   .mint-navbar .mint-tab-item.is-selected {
-    border-bottom: 2px solid #F5751D;
+    border-bottom: 2px solid #333;
   }
 
   .nav-tab {
@@ -722,7 +727,7 @@
     display: flex;
     position: fixed;
     width: 100%;
-    top: .65rem;
+    top: .46rem;
     z-index: 1;
   }
 
@@ -778,7 +783,7 @@
     position: fixed;
     z-index: 2;
     background-color: #eee;
-    top: 1.55rem;
+    top: 1.36rem;
     padding: 0 2%;
 
   }
@@ -794,7 +799,7 @@
   }
 
   .search div {
-    background-color: #F5751D;
+    background-color: #333;
     display: block;
     height: .3rem;
     flex: .3;
@@ -804,11 +809,11 @@
   }
 
   .mint-header {
-    color: #252522 !important;
+    /*color: #252522 !important;*/
   }
 
   .nav-tab .tabActive {
-    background-color: #f5751d;
+    background-color: #333;
     color: #fff;
   }
 

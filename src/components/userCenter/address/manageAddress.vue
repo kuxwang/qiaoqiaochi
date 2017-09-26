@@ -163,7 +163,7 @@
 
   .deliveryAddress {
     /*margin-top: 0.7rem;*/
-    margin-top: .58rem;
+    margin-top: .48rem;
     margin-bottom: 0.58rem;
   }
 
@@ -213,7 +213,8 @@
     bottom: 0;
     height: 0.48rem;
     line-height: 0.48rem;
-    background: #F5751D;
+    /*background: #F5751D;*/
+    background: #333;
     text-align: center;
     color: #fff;
     font-size: 0.16rem;

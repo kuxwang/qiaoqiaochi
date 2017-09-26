@@ -115,7 +115,7 @@
           优惠券
         </div>
         <span class="mygoods-price fr">
-          <input class="coupon" type="number"  placeholder="请输入优惠券" v-model="coupon"/>
+          <input class="coupon" type="number"  placeholder="请输入优惠券" v-model.number="coupon"/>
 				</span>
       </li>
     </ul>
@@ -166,7 +166,8 @@
         payed: false,
         send:{},
         new:false,
-        coupon: 0
+        coupon: 0,
+        couonnum:20
       }
     },
     methods: {
@@ -318,6 +319,9 @@
           return
         }
         return num.length == 0 ? num + '00' : num.length == 1 ? num + '0' : num || '00'
+      },
+      mustnum(value){
+        return value > this.memberDiscount.realprice ? this.memberDiscount.realprice : value
       }
     },
 
@@ -350,6 +354,16 @@
           this.defaultAddress = '';
         }
       },
+      coupon(a,b){
+        console.log(`a${a}`)
+        console.log(`b${b}`)
+        if(a>this.memberDiscount.realprice){
+          this.coupon=this.memberDiscount.realprice
+        }
+        if(a>this.couonnum){
+          this.coupon=this.couonnum
+        }
+      }
 
     },
     created() {
@@ -396,7 +410,7 @@
   .deliveryAddress {
     padding: 0.15rem;
     /*   height: 1rem;*/
-    margin-top: 0.64rem;
+    margin-top: 0.5rem;
     background: #fff;
     position: relative;
     overflow: hidden;

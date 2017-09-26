@@ -133,12 +133,12 @@
   }
 
   .title {
-    margin: .1rem 0 0.1rem 0;
+    margin: 0rem 0 0.1rem 0;
     /*margin: .5rem 0 0.1rem 0;*/
     width: 100%;
     text-align: center;
     height: 2rem;
-    background-color: #f5751d;
+    background-color: #333;
     /*margin-bottom: 0.1rem;*/
 
   }
@@ -191,6 +191,7 @@
 
   .cell span {
     float: right;
+    height: .36rem;
   }
 
   .btn {
@@ -198,7 +199,7 @@
     width: 100%;
     margin: 0 auto;
     height: .5rem;
-    background-color: #f5751d;
+    background-color: #333;
     color: #fff;
     line-height: .5rem;
     /*z-index: ;*/

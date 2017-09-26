@@ -5,6 +5,7 @@
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
+    <div class="submit" @click="submit">提交</div>
     <div class="container">
       <h3>问题和意见</h3>
       <div class="text">
@@ -36,7 +37,8 @@
     data(){
       return {
         text:'',
-        pic:[1,1,1],
+        pic:[],
+
         test:'../../../assets/images/confirmorder-01.png',
 
       }
@@ -48,6 +50,9 @@
 //          that.myImg = res.data;
           that.pic.push()
         })
+      },
+      submit(){
+
       }
     },
     created(){
@@ -65,9 +70,21 @@
 
   .page {
     .page-view(1);
+    background: #F5F4F9;
+    .submit{
+      width:.7rem;
+      text-align: right;
+      padding-right:.15rem;
+      position:fixed;
+      font-size:.16rem;
+      color:#fff;
+      top:.11rem;
+      right:0;
+      z-index: 111;
+    }
   }
   .container {
-    margin-top: .64rem;
+    margin-top: .45rem;
     text-align: left;
     h3 {
       padding: 0 .16rem;
@@ -82,7 +99,10 @@
         width: 100%;
         height: 1.6rem;
         /*margin-bottom: .22rem;*/
-        background-color: #eee;
+        background-color: #ffffff;
+        outline:none;
+        resize : none;
+        border-bottom:1px solid #e5e5e5;
       }
       .textleng {
         position: absolute;
@@ -91,10 +111,8 @@
       }
     }
 
-
-
-
     .pic-group{
+      background: #fff;
       width: 100%;
       margin-top: .2rem;
       padding: .14rem .16rem;
@@ -102,8 +120,8 @@
       border-bottom: 1px solid #e5e5e5;
       p {
         /*display: flex;*/
-        color: #333;
-        font-size: .18rem;
+        color: #000;
+        font-size: .16rem;
         margin-bottom: .12rem;
         /*line-height: .44rem;*/
         span {
@@ -116,8 +134,10 @@
         .img-box {
           width: .76rem;
           height: .76rem;
-          border: 1px solid #e5e5e5;
-          margin: 0 0.07rem;
+          border: 1px solid #ccc;
+          border-radius:.05rem;
+          margin-right: 0.14rem;
+
           img {
             width: 100%;
             height: 100%;
@@ -130,11 +150,14 @@
           flex-direction: column;
           .iconfont {
             font-size: .3rem;
+            color:#ccc;
+            font-weight: bold;
             display: block;
             padding-top: .1rem;
           }
           div {
             font-size: .13rem;
+            color:#c3c3c3;
           }
         }
       }
