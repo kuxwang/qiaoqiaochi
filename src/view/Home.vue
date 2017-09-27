@@ -20,8 +20,8 @@
           <img class="silder" :src="i.thumb">
         </mt-swipe-item>
       </mt-swipe>
-      <v-colrow></v-colrow>
-      <v-colcol></v-colcol>
+      <v-colrow :list="hot"></v-colrow>
+      <v-colcol :list="newgoods"></v-colcol>
       <div class="bottom-img">
         <img class="bottom-pic" :src="logo2"/>
       </div>
@@ -37,7 +37,7 @@
   import vColcol from '../components/common/columnCol';
   import defalutAvatar from '../assets/images/defaultAvatar.png'
   import {fn} from '../config/myUtils';
-  import { Advs, memberInfo } from '../api/api';
+  import { Advs, memberInfo,Attributes } from '../api/api';
   import {mapMutations, mapGetters, mapState} from 'vuex'
 
   export default{
@@ -49,8 +49,9 @@
         slider:[],
         selected: 1,
         isSearch:false,
-        avatar: defalutAvatar
-
+        avatar: defalutAvatar,
+        newgoods:[],
+        hot:[]
       }
     },
     methods: {
@@ -77,11 +78,44 @@
                 console.log(用户接口请求错误)
               }
           })
+      },
+      getNew(){
+        let parmas = {
+          data: {
+            attributes: "isnew:1",
+            page: 1,
+            psize: 10,
+          }
+        }
+        Attributes(parmas, (res) => {
+          console.log(res)
+          if (res.statusCode === 1) {
+            this.newgoods = res.data
+          }
+        })
+      },
+      getHot(){
+        let parmas = {
+          data: {
+            attributes: "ishot:1",
+            page: 1,
+            psize: 10,
+          }
+        }
+        Attributes(parmas, (res) => {
+          console.log(res);
+          if (res.statusCode === 1) {
+            this.hot = res.data
+          }
+        })
       }
     },
     mounted () {
       this.getAdv();
       this.getUserInfo();
+      this.getNew();
+      this.getHot()
+
       console.log(this.$refs.search.isfocus)
     },
     components: {
