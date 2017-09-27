@@ -228,6 +228,7 @@
     height: 100%;
     .user {
       /*height: 1.2rem;*/
+      color: #fff;
       height: 1.47rem;
       width: 100%;
       background-color: @style2;

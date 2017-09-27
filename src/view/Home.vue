@@ -125,11 +125,17 @@
     background-color: #fff;
 
     .logo {
-      width: .65rem;
+      /*width: .65rem;
       font-size: .21rem;
       color: #000000;
-      /*padding: .05rem;*/
-      padding: .1rem;
+      !*padding: .05rem;*!
+      padding: .1rem*/;
+
+      width: .4rem;
+      font-size: .21rem;
+      color: #000000;
+      padding: .1rem 0.05rem .1rem .1rem;
+
       img {
         /*width: 100%;*/
         /*height: 100%;*/
@@ -140,18 +146,21 @@
     }
     .share {
       position: relative;
-      width: .51rem;
+      /*width: .51rem;*/
+      width: .45rem;
       .iconfont {
         position: absolute;
         z-index: 1;
-        font-size: .25rem;
-        left: 0.15rem;
+        font-size: .22rem;
         top: .1rem;
+        left: .05rem;
+        width: .4rem;
       }
     }
     .main {
       flex: 1;
       text-align: center;
+      margin-right: -0.1rem;
     }
   }
   .top-nav {
