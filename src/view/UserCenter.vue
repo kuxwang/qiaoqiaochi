@@ -240,7 +240,8 @@
       },
       getAddr(){
         this.addrtype(1)
-        this.$router.push({name: 'deliveryaddress'});
+//        this.$router.push({name: 'deliveryaddress'});
+        this.$router.push({name: 'manageAddress'});
       },
       ...mapMutations({
         tabselect: 'TABSELECT',

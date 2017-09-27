@@ -185,13 +185,8 @@
               position: 'middle',
               duration: 2000
             });
-
             setTimeout(() => {
-//              _this.$router.push('/confirmorder?type=1')
-//              _this.$router.push({name:'deliveryaddress'})
-
-//                _this.$router.push({name: 'deliveryaddress'})
-                this.$router.go(-1)
+              this.$router.replace({name: 'manageAddress'})
             }, 2000)
           }
         })

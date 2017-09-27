@@ -8,7 +8,7 @@
     <div class="order">
       <div class="order-top">
     <!--<router-link class="deliveryAddress" tag="div" :to="{name:'deliveryaddress'}" v-if="defaultAddress">-->
-      <div class="deliveryAddress"  v-if="defaultAddress" @click="addtype">
+      <div class="deliveryAddress"  v-if="defaultAddress!=''" @click="addtype">
       <ul class="fl deliveryAddress-lr">
         <li class="delivery-people clearfix">
           <span class="fl"><i>收货人：</i>{{defaultAddress.realname}}</span>
@@ -20,9 +20,12 @@
       </ul>
       </div>
     <!--</router-link>-->
-    <router-link class="noDeliveryAddress" tag="div" :to="{name:'deliveryaddress'}" v-if="!defaultAddress">
+    <!--<router-link class="noDeliveryAddress" tag="div" :to="{name:'manageAddress'}" v-if="!defaultAddress">
       设置收货地址
-    </router-link>
+    </router-link>-->
+    <div class="noDeliveryAddress" v-if="defaultAddress==''" @click="addtype">设置收货地址</div>
+
+
 
     <ul class="goodsList">
       <li>
@@ -142,10 +145,11 @@
       </button>
     </div>
     <!--<transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight">-->
+
+  </div>
     <transition name="slide">
       <router-view></router-view>
     </transition>
-  </div>
   </div>
 </template>
 <script>
@@ -197,7 +201,7 @@
       },
       addtype(){
         this.ADDTYPE(0)
-        this.$router.push('deliveryaddress');
+        this.$router.push({name:'manageAddress'});
       },
       goBack() {
         this.$router.push('home');
@@ -294,7 +298,6 @@
         return dispatch || '商家配送'
       }
     },
-
     filters: {
       calculatePrice1(value) {
         let num = '';
@@ -324,15 +327,45 @@
         return value > this.memberDiscount.realprice ? this.memberDiscount.realprice : value
       }
     },
-
+//    beforeRouteEnter(to, from, next){
+//      if (from.name=='manageAddress' && to.name=='confirmorder'){
+//        next((vm)=>{
+//
+//          vm.defaultAddress = vm.userAddress;
+//          vm.dispatches=vm.delivery
+//
+//          let params = {
+//            data: {
+//              cartids: vm.myOrders.cartids || '',
+//              optionid: vm.myOrders.optionid || '',
+//              total: vm.myOrders.total || '',
+//              goodsid: vm.myOrders.goodsid || '',
+//              dispatchid:1,
+//              addressid: vm.defaultAddress.id
+//            }
+//          }
+//          console.log(params)
+//          DispatchMoney(params, res => {
+//            if (res.statusCode === 1) {
+//              console.log('请求数据')
+//              console.log(res)
+//              vm.dispatchesprice = res.data.dispatches.price
+//              vm.defaultAddress=res.data.addressLists
+//              vm.payed = false;
+//            }
+//          });
+//        })
+//      }else {
+//        next()
+//      }
+//
+//    },
     watch: {
       '$route'(to, from) {
         this.payed=false;
-        let _this = this;
-        if (from.name=='deliveryaddress' && to.name=='confirmorder') {
+        if (from.name=='manageAddress') {
           this.defaultAddress = this.userAddress;
-          _this.dispatches=_this.delivery
-
+          this.dispatches=this.delivery
           let params = {
             data: {
               cartids: this.myOrders.cartids || '',
@@ -344,15 +377,16 @@
             }
           }
           DispatchMoney(params, res => {
-            if (res.statusCode === 1) {
-              _this.dispatchesprice = res.data.dispatches.price
-              _this.payed = false;
+            if (res.statusCode/1 === 1) {
+              this.dispatchesprice = res.data.dispatches.price
+              this.payed = false;
+
             }
           });
         }
-        if (this.$route.query.addressListsLength === 0) {
+        /*if (this.$route.query.addressListsLength === 0) {
           this.defaultAddress = '';
-        }
+        }*/
       },
       coupon(a,b){
         console.log(`a${a}`)
@@ -366,9 +400,12 @@
       }
 
     },
-    created() {
+    activated(){
       this.init();
-    }
+    },
+    /*created() {
+      this.init();
+    }*/
   }
 </script>
 <style scoped>

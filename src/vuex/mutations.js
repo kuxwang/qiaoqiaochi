@@ -43,9 +43,10 @@ export default {
       area: data.area,
       address: data.address,
       id: data.id,
-      goodsid:'4'
+      goodsid:'',
+      isdefault:data.isdefault
     }
-    console.log(data)
+    // console.log(data)
   },
   [TABSELECT] (state, data) {
     state.tabselect = data
@@ -58,7 +59,7 @@ export default {
   },
   [ORDERSN] (state, data) {
     state.ordersn = data;
-    console.log(data)
+    // console.log(data)
   },
   [SEARCHNUM] (state, data) {
     state.searchnum = data
@@ -68,7 +69,7 @@ export default {
   },
   [GET_MYORDERS] (state, data) {
     state.myOrders = data;
-    console.log(data)
+    // console.log(data)
   },
   [ADDRESSLISTNUM] (state, addressListNum) {
     state.addressListNum = addressListNum
@@ -77,7 +78,7 @@ export default {
     state.delivery = delivery
   },
   [ORDERINFO] (state, orderInfo) {
-    console.log(orderInfo)
+    // console.log(orderInfo)
     state.orderInfo = orderInfo
   },
   [DRAWBACKOBJ] (state, drawbackobj) {
@@ -101,26 +102,26 @@ export default {
   },
   [ISCONFIRM](state, isConfirm) {
     state.isConfirm = isConfirm;
-    console.log(isConfirm)
+    // console.log(isConfirm)
   },
   [ISNULL](state, data) {
     state.isNull=data;
-    console.log(data)
+    // console.log(data)
   },
   [GET_DEFAULTADDRESSISNULL](state, data) {
     state.defaultAddressIsNull=data;
-    console.log(data)
+    // console.log(data)
   },
   [ISSCROLL](state, data) {
     state.isScroll=data;
-    console.log(data)
+    // console.log(data)
   },
   [ADDTYPE](state, data) {
     state.addtype=data;
-    console.log(data)
+    // console.log(data)
   },
   [HASLOGO](state, data) {
     state.haslogo=data;
-    console.log(data)
+    // console.log(data)
   },
 }

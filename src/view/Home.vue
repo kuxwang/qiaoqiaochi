@@ -75,7 +75,7 @@
               if(res.statusCode == 1){
                 this.avatar = res.data.avatar
               }else{
-                console.log(用户接口请求错误)
+//                console.log(用户接口请求错误)
               }
           })
       },

@@ -6,7 +6,7 @@
       </a>
     </mt-header>
     <ul class="deliveryAddress">
-      <li v-for="(v,i) in addressLists">
+      <li v-for="(v,i) in addressLists" @click.prevent="getMyAddress(v,i)">
         <div class="clearfix deliveryAddress-tp">
           <div class="fl">
             {{v.realname}}
@@ -73,6 +73,7 @@
           this.$router.replace({name: 'editAddress', query: {id: value.id}})
       },
       addaddr(){
+//        this.$router.replace({name: 'addaddress'})
         this.$router.replace({name: 'addaddress'})
       },
       deleteAddress(value) {
@@ -104,6 +105,21 @@
         })
 
       },
+      getMyAddress(v, i){
+//        console.log(this.addtype)
+        if(this.addtype==0){
+          console.log('addtype是从订单进来的')
+          this.isnull(false)
+//          this.onActives = i;
+          this.getUserAddress(v);
+          this.$router.go(-1)
+//          this.$router.push('confirmorder')
+
+//          this.getOnActive(i);
+        }
+      },
+
+
       ...mapMutations({
         'getUserAddress': 'GET_USERADDRESS',
         'getOnActive': 'GET_ONACTIVE',
@@ -111,12 +127,13 @@
         'seteditAddresses': 'SETEDITADDRESS',
         'oldaddress': 'OLDADDRESS',
         'isnull': "ISNULL",
-        'userAddress':'userAddress'
+//        'userAddress':'userAddress'
       })
     },
     computed: {
       ...mapGetters([
-        "onActive"
+        "onActive",
+        'addtype'
       ]),
       ...mapState([
         'addressListNum'

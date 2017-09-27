@@ -202,7 +202,7 @@ export default new Router({
       path: '/confirmorder',
       name: 'confirmorder',
       component: ConfirmOrder,
-      meta: { nokeepAlive: true },
+      // meta: { nokeepAlive: true },
       children: [
         {
           path: '/confirmorder/details',
@@ -218,9 +218,29 @@ export default new Router({
           path: '/deliverymode',
           name: 'deliverymode',
           component: DeliveryMode
-        }
-      ]
+        },
+        //地址
+        {
+          path: '/manageAddress',
+          name: 'manageAddress',
+          component: ManageAddress,
+          // meta: { nokeepAlive: true },
+          children: [
+            {
+              path: '/addaddress',
+              name: 'addaddress',
+              component: AddAddress
+            },
+            {
+              path: '/editAddress',
+              name: 'editAddress',
+              component: EditAddress
+            },
+          ]
+        },
 
+
+      ]
     },
     {
       path: '/userCenter',
@@ -303,31 +323,28 @@ export default new Router({
 
       ]
     },
-    {
-      path: '/deliveryaddress',
-      name: 'deliveryaddress',
-      component: DeliveryAddress,
-      children: [
-        {
-          path: '/manageAddress',
-          name: 'manageAddress',
-          component: ManageAddress,
-          children: [
-            {
-              path: '/addaddress',
-              name: 'addaddress',
-              component: AddAddress
-            },
-            {
-              path: '/editAddress',
-              name: 'editAddress',
-              component: EditAddress
-            },
 
-          ]
-        },
-      ]
-    },
+
+//地址
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     {

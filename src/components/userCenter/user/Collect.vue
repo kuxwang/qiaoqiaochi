@@ -43,7 +43,7 @@
           <div @click="deletedata">删除</div>
         </div>
 
-        <router-link class="li—laber clearfix" :to="{name:'details1',query:{id:v.id}}" tag="li" v-if="!isEdit"
+        <router-link class="li—laber clearfix" :to="{name:'cdetails',query:{id:v.id}}" tag="li" v-if="!isEdit"
                      v-for="(v, i) in resultArr" :key="i">
           <img :src="getdefaluteimage(v.thumb)" alt="这是一个商品"/>
           <div class="li-content">

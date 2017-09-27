@@ -13,7 +13,8 @@
     methods: {},
     watch: {
       "$route"(to,form){
-        console.log(to)
+        /*console.log(to)
+        console.log(form)*/
       }
     }
   }
