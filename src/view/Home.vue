@@ -20,8 +20,8 @@
           <img class="silder" :src="i.thumb">
         </mt-swipe-item>
       </mt-swipe>
-      <v-colrow></v-colrow>
-      <v-colcol></v-colcol>
+      <v-colrow :list="hot"></v-colrow>
+      <v-colcol :list="newgoods"></v-colcol>
       <div class="bottom-img">
         <img class="bottom-pic" :src="logo2"/>
       </div>
@@ -37,7 +37,7 @@
   import vColcol from '../components/common/columnCol';
   import defalutAvatar from '../assets/images/defaultAvatar.png'
   import {fn} from '../config/myUtils';
-  import { Advs, memberInfo } from '../api/api';
+  import { Advs, memberInfo,Attributes } from '../api/api';
   import {mapMutations, mapGetters, mapState} from 'vuex'
 
   export default{
@@ -49,8 +49,9 @@
         slider:[],
         selected: 1,
         isSearch:false,
-        avatar: defalutAvatar
-
+        avatar: defalutAvatar,
+        newgoods:[],
+        hot:[]
       }
     },
     methods: {
@@ -77,11 +78,44 @@
                 console.log(用户接口请求错误)
               }
           })
+      },
+      getNew(){
+        let parmas = {
+          data: {
+            attributes: "isnew:1",
+            page: 1,
+            psize: 10,
+          }
+        }
+        Attributes(parmas, (res) => {
+          console.log(res)
+          if (res.statusCode === 1) {
+            this.newgoods = res.data
+          }
+        })
+      },
+      getHot(){
+        let parmas = {
+          data: {
+            attributes: "ishot:1",
+            page: 1,
+            psize: 10,
+          }
+        }
+        Attributes(parmas, (res) => {
+          console.log(res);
+          if (res.statusCode === 1) {
+            this.hot = res.data
+          }
+        })
       }
     },
     mounted () {
       this.getAdv();
       this.getUserInfo();
+      this.getNew();
+      this.getHot()
+
       console.log(this.$refs.search.isfocus)
     },
     components: {
@@ -117,19 +151,27 @@
       font-weight: bold;
       line-height: .45rem;
     }
+    font-family: PingFang !important;
   }
 
   .top-bar {
     display: flex;
     height: .45rem;
     background-color: #fff;
+    font-family: PingFang !important;
 
     .logo {
-      width: .65rem;
+      /*width: .65rem;
       font-size: .21rem;
       color: #000000;
-      /*padding: .05rem;*/
-      padding: .1rem;
+      !*padding: .05rem;*!
+      padding: .1rem*/;
+
+      width: .4rem;
+      font-size: .21rem;
+      color: #000000;
+      padding: .1rem 0.05rem .1rem .1rem;
+
       img {
         /*width: 100%;*/
         /*height: 100%;*/
@@ -140,18 +182,21 @@
     }
     .share {
       position: relative;
-      width: .51rem;
+      /*width: .51rem;*/
+      width: .45rem;
       .iconfont {
         position: absolute;
         z-index: 1;
-        font-size: .25rem;
-        left: 0.15rem;
+        font-size: .22rem;
         top: .1rem;
+        left: .05rem;
+        width: .4rem;
       }
     }
     .main {
       flex: 1;
       text-align: center;
+      margin-right: -0.1rem;
     }
   }
   .top-nav {

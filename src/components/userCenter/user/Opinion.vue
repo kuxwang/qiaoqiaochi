@@ -13,7 +13,6 @@
         <span class="textleng">{{text.length}}/140</span>
       </div>
 
-
       <div class="pic-group">
         <p>请提供相关问题的截图或照片<span>{{pic.length}}/4</span></p>
         <div class="pic-view">
@@ -103,6 +102,8 @@
         outline:none;
         resize : none;
         border-bottom:1px solid #e5e5e5;
+        font-size: .14rem;
+        color: #999;
       }
       .textleng {
         position: absolute;

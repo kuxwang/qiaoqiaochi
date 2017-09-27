@@ -671,6 +671,8 @@
     height: .46rem;
     margin-top: -0.1rem;
     /*background-color: red;*/
+    font-size: .16rem;
+    color: red;
   }
 
 

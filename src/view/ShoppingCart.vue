@@ -6,6 +6,41 @@
       </a>
     </mt-header>
     <ul class="goods-list" v-show="isShow">
+      <!--<li class="clearfix" v-for="(v,i) in getShCartData">-->
+        <!--<label class="mint-checklist-label fl">-->
+          <!--<div class="mint-checkbox">-->
+            <!--<input type="checkbox" class="mint-checkbox-input" :checked="v.isChecked" @click="nowChecked($event,v,i)">-->
+            <!--<span class="mint-checkbox-core"></span>-->
+          <!--</div>-->
+        <!--</label>-->
+        <!--<div @click="goProductDetail(v)">-->
+          <!--<div class="goods-img fl">-->
+            <!--<img :src="v.thumb">-->
+          <!--</div>-->
+          <!--<div class="goods-info fl">-->
+            <!--<h3 class="goods-title lr1">{{v.title}}</h3>-->
+            <!--<div class="goods-attr">-->
+							<!--<span class="goods-price">-->
+								<!--¥-->
+								<!--<span class="goods-intPrice">{{v.marketprice|getIntNmb}}</span>-->
+								<!--<span class="goods-folatPrice">{{v.marketprice|getFloatNmb}}</span>-->
+							<!--</span>-->
+              <!--<del>¥{{v.productprice}}</del>-->
+            <!--</div>-->
+            <!--<div class="goods-num">X<i>{{v.total}}</i></div>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="goods-total fr">-->
+          <!--<div class="goods-del" @click="delGoods(v,i)">-->
+            <!--<i class="iconfont">&#xe6db;</i>-->
+          <!--</div>-->
+          <!--<div class="dt_sku_numm_m clearfix">-->
+            <!--<span class="dt_subt fl" @click="reduceTotal(v,i)">-</span>-->
+            <!--<span class="dt_num fl">{{v.total}}</span>-->
+            <!--<span class="dt_add" @click="addTotal(v,i)">+</span>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</li>-->
       <li class="clearfix" v-for="(v,i) in getShCartData">
         <label class="mint-checklist-label fl">
           <div class="mint-checkbox">
@@ -19,6 +54,7 @@
           </div>
           <div class="goods-info fl">
             <h3 class="goods-title lr1">{{v.title}}</h3>
+            <div class="goods-option">{{v.optiontitle}}</div>
             <div class="goods-attr">
 							<span class="goods-price">
 								¥
@@ -27,7 +63,7 @@
 							</span>
               <del>¥{{v.productprice}}</del>
             </div>
-            <div class="goods-num">X<i>{{v.total}}</i></div>
+            <!--<div class="goods-num">X<i>{{v.total}}</i></div>-->
           </div>
         </div>
         <div class="goods-total fr">
@@ -41,7 +77,6 @@
           </div>
         </div>
       </li>
-
     </ul>
     <div class="total_area clearfix" v-show="isShow">
       <label class="mint-checklist-label fl">
@@ -281,6 +316,7 @@
             if (res.data.list && res.data.list.length >= 1) {
               _this.isShow = true
 //                    _this.isTrue = false
+              console.log(res)
               _this.getShCartData = res.data.list;
               for (let a in _this.getShCartData) {
                 _this.getShCartData[a].isChecked = false
@@ -456,6 +492,13 @@
   .goods-num i {
     font-size: 0.14rem
   }
+
+  .goods-info .goods-option {
+    font-size: 0.1rem !important;
+    text-align: left;
+    color: #999;
+  }
+
 
   .mint-checkbox {
     font-size: 0.28rem;

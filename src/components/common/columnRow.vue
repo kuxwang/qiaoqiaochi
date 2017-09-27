@@ -8,8 +8,7 @@
     </div>
     <div class="scroll">
       <ul class="scroll-goodslist clear">
-        <!--<li class="scroll-goodslist-li">-->
-          <router-link  v-for="(v,k) in hot" :to="{name:'details',query:{id:v.id}}" tag="li" class="scroll-goodslist-li" :key="k">
+          <router-link  v-for="(v,k) in list" :to="{name:'details',query:{id:v.id}}" tag="li" class="scroll-goodslist-li" :key="k">
 
           <img :src="v.thumb" alt="">
           <p class="goodstitle lr1">
@@ -17,10 +16,9 @@
           </p>
           <p class="price">
             ￥{{v.marketprice}}
+            <span>￥{{v.productprice}}</span>
           </p>
           </router-link>
-        <!--</li>-->
-
       </ul>
       <p>查看所有新品</p>
     </div>
@@ -36,27 +34,12 @@
           hot:[]
       }
     },
-    props: [],
+    props: ['list'],
     methods: {
-      getHot(){
-        let parmas = {
-          data: {
-            attributes: "ishot:1",
-            page: 1,
-            psize: 10,
-          }
-        }
-        Attributes(parmas, (res) => {
-          console.log(res);
-          if (res.statusCode === 1) {
-            this.hot = res.data
-          }
-        })
-      }
+
     },
     computed: {},
     created(){
-      this.getHot()
     }
   }
 </script>
@@ -72,6 +55,7 @@
     background: -o-linear-gradient(#fafafa, #ffffff);
     background: -moz-linear-gradient(#fafafa, #ffffff);
     background: linear-gradient(#fafafa, #ffffff);
+    font-family: PingFang !important;
     .title {
       position: relative;
       width:100%;
@@ -150,6 +134,11 @@
                 font-size: .12rem;
                 line-height: .22rem;
                 color: #e75058;
+               span {
+                 font-size: .1rem;
+                 color: #999;
+                 text-decoration: line-through;
+               }
               }
           }
         }
