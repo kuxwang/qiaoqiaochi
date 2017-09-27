@@ -727,7 +727,7 @@
     display: flex;
     position: fixed;
     width: 100%;
-    top: .46rem;
+    top: .45rem;
     z-index: 1;
   }
 

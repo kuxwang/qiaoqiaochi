@@ -181,7 +181,6 @@
           }
         };
 
-
         console.log('orderdetail running')
 
         orderList(params, res => {
@@ -426,6 +425,7 @@
     vertical-align: middle;
     margin-right: 5px;
   }
+
 
   .mint-spinner-fading-circle-circle.is-circle2:before {
     -webkit-animation-delay: -1s;

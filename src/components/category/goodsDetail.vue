@@ -1,23 +1,23 @@
 <template>
   <transition name="slide">
     <div class="main">
-      <mt-header title="商品详情" fixed class="header">
+      <mt-header title="商品详情" class="header">
         <a  slot="left" class="pro-white" @click="goBack()">
           <mt-button icon="back"></mt-button>
         </a>
       </mt-header>
       <div class="container">
-        <!--<mt-loadmore :top-method="loadBottom" @top-status-change="handleBottomChange">-->
-        <!--<mt-loadmore :bottom-method="loadBottom" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">-->
-        <!--<mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" @bottom-status-change="handleBottomChange" >-->
-        <!--<div slot="bottom" class="mint-loadmore-bottom">-->
-          <!--<span v-show="bottomStatus !== 'loading'" :class="{ 'rotate': bottomStatus === 'drop' }">↑</span>-->
-          <!--<span v-show="bottomStatus === 'loading'">Loading...</span>-->
-        <!--</div>-->
         <div v-show="isShow">
           <div class="box">
             <div class="img-box">
-              <img :src="bandimg" class="content"/>
+              <mt-swipe class="banner" :auto="4000" :show-indicators="false">
+                <mt-swipe-item v-for="(i, x) in bandimg" :key="x">
+                  <img :src="i" class="content"/>
+                </mt-swipe-item>
+              </mt-swipe>
+              <div class="tuwen" @click="gototuwen">
+                图文详情
+              </div>
             </div>
           </div>
           <div class="intro">
@@ -25,9 +25,8 @@
             </p>
             <div class="goodsTitle">
               <p>{{name}}</p>
-              <!--<p class="lr2">【原味】【1罐装】米国首播巴西松子218g/罐 皮剥香酥的果仁 休闲零食好伴侣</p>-->
               <span class="price">￥{{marketPrice}}</span>
-              <span class="marketPrice">市场价&nbsp;<font>{{marketPrice}}</font></span>
+              <span class="marketPrice">市场价&nbsp;<s>{{marketPrice}}</s></span>
               <div class="memberprice">
                 ￥76
                 <span class="tip">会员券后价</span>
@@ -47,7 +46,6 @@
               <div class="title">【{{v.title}}】</div>
               <div class="value">{{v.value}}</div>
             </div>
-
           </div>
 
           <div class="adv">
@@ -66,16 +64,13 @@
         </div>
         <div class="details">
           <div class="b-intro">
-            <div class="bottom-nav">
+            <div class="bottom-nav" id="bottom-nav">
               图文详情
             </div>
             <div class="intro" id="intro">
             </div>
           </div>
         </div>
-        <!--<div class="cut-off">继续拖动，查看图文详情</div>-->
-
-        <!--</mt-loadmore>-->
       </div>
 
       <div class="bottom-navbar">
@@ -99,10 +94,9 @@
           立即购买
         </button>
       </div>
-
       <mt-popup v-model="popupVisible" position="bottom" modal=true>
         <div class="popup-box">
-          <img :src="bandimg">
+          <img :src="bandimg[0]">
           <div class="popup-info">
             <p>￥{{marketPrice}}</p>
             <span>库存：{{total}}件</span>
@@ -209,62 +203,12 @@
         console.log(status)
         this.bottomStatus = status;
       },
-      /*      handleClick: function () {
-        this.popupVisible = true;
-        this.myStata = 1
-      },*/
-      /*toast: function () {
-        console.log(this.myStata)
-        if (this.myStata === 1) {//加入购物车
-          this.popupVisible = false;
-          let that = this;
-          let params = {
-            data: {
-              goodsid: this.goodsid,
-              total: this.num
-            }
-          }
-          let _this = this;
-          addCart(params, function (res) {
-            console.log(_this)
-            if (res.statusCode == 1) {
-              let params = {data: {}};
-              let that = _this;
-              GET_CARTNUMS(params, function (res) {//获取购物车当前数量
-                if (res.statusCode === 1) {
-                  that.delGoodsNum = res.data.cartcount;
-                } else {
-                  console.log('请求失败')
-                }
-              })
-              Toast({
-                message: '操作成功 商品已在购物车',
-                position: 'middle',
-                duration: 1800
-              });
-            } else {
-              Toast({
-                message: '添加失败',
-                position: 'bottom',
-                duration: 1800
-              });
-            }
-          })
-        } else if (this.myStata === 2) {//立即购买
-          let myOrders = {
-            goodsid: this.goodsId,
-            optionid: this.optionId,
-            cartids: '',
-            total: this.num
-          }
-          this.getMyorders(myOrders);
-          console.log(123)
-          this.$router.push({path: '/confirmorder'})
-        }
-      },*/
       goBack() {
         Indicator.close();
         this.$router.go(-1);
+      },
+      gototuwen () {
+          document.getElementById('bottom-nav').scrollIntoView(true)
       },
       goPay() {
         this.myStata = 2;
@@ -397,7 +341,7 @@
             that.goodsId = goods.id;
             that.name = goods.title;
             that.marketPrice = goods.marketprice;
-            that.bandimg = res.data.pics[0];
+            that.bandimg = res.data.pics;
             that.total = goods.total;
             that.isShow = true;
             that.goodsparams = res.data.params;
@@ -583,7 +527,7 @@
   }
 
   .mint-header {
-    border-bottom: 1px solid #e3e3e3;
+    /*border-bottom: 1px solid #e3e3e3;*/
     font-size: 0.16rem;
     height: 46px;
   }
@@ -595,13 +539,14 @@
   /*商品信息*/
   .box {
     width: 100%;
+    height:3.75rem
   }
 
   .img-box {
     position: relative;
-    padding-bottom: 100%;
-    height: 0;
-    margin-top: 46px;
+    /*padding-bottom: 100%;*/
+    height: 100%;
+    margin-top: 45px;
     width: 100%;
   }
 
@@ -624,7 +569,7 @@
   .intro {
     text-align: left;
     background: #fff;
-    padding: 0rem 0.05rem;
+    /*padding: 0rem 0.05rem;*/
     width: 100%;
   }
 
@@ -662,11 +607,12 @@
   }
 
   .bottom-nav {
-    /*padding:.1rem 0;*/
+    padding:.1rem .15rem;
     /*display: flex;*/
     border-bottom: 1px solid #eee;
-    text-align: center;
-
+    font-size: .14rem;
+    font-weight: bold;
+    text-align: left;
   }
 
   .bottom-nav span {
@@ -713,11 +659,6 @@
     color: #666;
     border-top: 1px solid #DDDDDD;
     height: 100%;
-  }
-
-  .icon-box-car, .icon-box-fav {
-
-
   }
 
   .icon-box-fav {
@@ -937,6 +878,7 @@
     color: #000;
   }
   .goodsTitle .marketPrice {
+    margin-left: .13rem;
     font-size: .1rem;
     text-transform: uppercase;
     color: #999;
@@ -950,10 +892,10 @@
     margin-bottom: .05rem;
   }
   .goodsTitle .memberprice .tip {
-    width: .8rem;
-    height: .13rem;
-    line-height: .13rem;
-    font-size: .08rem;
+    width: .7rem;
+    height: .15rem;
+    line-height: .15rem;
+    font-size: .11rem;
     -webkit-border-radius: .05rem;
     -moz-border-radius: .05rem;
     border-radius: .05rem;
@@ -994,20 +936,19 @@
     clear: both;
   }
 
-  .params-list > .title {
-    width: 30%;
-    float: left;
-    font-weight: bold;
-    font-size: .12rem;
-    color: #2D3037;
-  }
+  /*.params-list > .title {*/
+    /*width: 30%;*/
+    /*float: left;*/
+    /*font-weight: bold;*/
+    /*font-size: .12rem;*/
+  /*}*/
 
-  .params-list > .value {
-    width: 70%;
-    float: left;
-    font-size: .12rem;
-    color: #858585;
-  }
+  /*.params-list > .value {*/
+    /*width: 70%;*/
+    /*float: left;*/
+    /*font-size: .12rem;*/
+    /*color: #858585;*/
+  /*}*/
 
   button {
     outline: none;
@@ -1198,6 +1139,7 @@
     float: left;
     font-weight: bold;
     font-size: .12rem;
+    color: #2D3037;
   }
 
   .params-list > .value {
@@ -1234,6 +1176,28 @@
     border-top: 1px solid rgba(0, 0, 0, .2);
   }
 
+  .banner {
+    width: 100%;
+    height: 100%;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .tuwen {
+    position: absolute;
+    bottom: .15rem;
+    right:.15rem;
+    width: .45rem;
+    height: .45rem;
+    background-color: rgba(0,0 ,0 , .5);
+    font-size: .1rem;
+    color: #eaeaec;
+    border-radius: 50%;
+    padding:.05rem;
+
+  }
 
   /*广告*/
   .adv {
