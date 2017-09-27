@@ -494,7 +494,7 @@
 
   .content .title {
     /*color: rgba(0, 0, 0, .5);*/
-    color: #333;
+    color: #666;
     font-size: .10rem;
     line-height: .2rem;
     margin-top: .08rem;
@@ -505,8 +505,7 @@
     margin-right: auto;
     font-size: .3rem;
     line-height: .3rem;
-    /*color: #a9a9a9;*/
-    color: #333;
+    color: #AAA;
     border-radius: 50%;
   }
 
@@ -519,7 +518,6 @@
     float: left;
     font-size: .13rem;
     font-weight: bold;
-    margin-left: .1rem;
   }
 
   .details {
@@ -681,6 +679,7 @@
     height: 100%;
     font-size: .23rem;
     line-height: .48rem;
+    color: #AAAAAA;
   }
 
   .center-cell > .right {
