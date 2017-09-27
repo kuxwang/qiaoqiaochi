@@ -50,6 +50,19 @@
 
           </div>
 
+          <div class="adv">
+            <div class="adv__title">
+              <div class="border"></div>
+              <h2>品牌承诺</h2>
+              <div class="border"></div>
+            </div>
+            <div class="adv__list">
+              <div class="adv__item" v-for="(i,k) in advpic" :key="k">
+                <img :src='i.thumb'>
+                <span>{{i.title}}</span>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="details">
           <div class="b-intro">
@@ -65,34 +78,6 @@
         <!--</mt-loadmore>-->
       </div>
 
-      <!--<div class="bottom-navbar">-->
-        <!--&lt;!&ndash; <router-link class="icon-box" :to="{name:''}"  tag="a">-->
-          <!--<div class="icon-b">-->
-            <!--<div class="iconfont tabIcon">&#xe613;</div>-->
-            <!--收藏-->
-          <!--</div>-->
-        <!--</router-link> &ndash;&gt;-->
-        <!--<router-link class="icon-box icon-box-car" :to="{name:'shoppingCart'}" tag="a">-->
-          <!--<div class="icon-b">-->
-            <!--<div class="iconfont tabIcon icon-car">&#xe607;</div>-->
-            <!--购物车-->
-            <!--<i class="carNum" v-if="delGoodsNum>0">{{goodNums}}</i>-->
-          <!--</div>-->
-        <!--</router-link>-->
-        <!--&lt;!&ndash;   <a class="icon-box icon-box-car" @click="goShopCart">-->
-            <!--<div class="icon-b">-->
-              <!--<div class="iconfont tabIcon icon-car">&#xe607;</div>-->
-              <!--购物车-->
-              <!--<i class="carNum" v-if="delGoodsNum>0">{{goodNums}}</i>-->
-            <!--</div>-->
-          <!--</a> &ndash;&gt;-->
-        <!--<button class="icon-btn icon-btn-car ocolor" @click="handleClick">-->
-          <!--加入购物车-->
-        <!--</button>-->
-        <!--<button class="icon-btn icon-btn-con" @click="goPay">-->
-          <!--立即购买-->
-        <!--</button>-->
-      <!--</div>-->
       <div class="bottom-navbar">
         <div class="icon-box icon-box-fav" @click="follow()">
           <div class="icon-b">
@@ -194,6 +179,24 @@
         selectoption:'请选择',
         noselected:true,
         hasselect:false,
+        advpic:[
+          {
+            title:'正品保证',
+            thumb:require('../../assets/images/p-1.png'),
+          },
+          {
+            title:'7天无理由退换',
+            thumb:require('../../assets/images/p-2.png'),
+          },
+          {
+            title:'超时发货补贴',
+            thumb:require('../../assets/images/p-3.png'),
+          },
+          {
+            title:'PICC承保',
+            thumb:require('../../assets/images/p-4.png'),
+          }
+        ]
       }
     },
     methods: {
@@ -972,6 +975,9 @@
     font-size: .14rem;
     text-align: left;
     padding: 0 .05rem;
+    line-height: .4rem;
+    /*border-bottom: 1px solid #e0e0e0;*/
+    color: #2D3037;
 
   }
 
@@ -993,6 +999,7 @@
     float: left;
     font-weight: bold;
     font-size: .12rem;
+    color: #2D3037;
   }
 
   .params-list > .value {
@@ -1226,6 +1233,57 @@
     height: 1px;
     border-top: 1px solid rgba(0, 0, 0, .2);
   }
+
+
+  /*广告*/
+  .adv {
+    width: 100%;
+    padding: 0 .05rem;
+    height: 1.2rem;
+    border-bottom: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
+    background-color: #f2f3f5;
+  }
+  .adv__title {
+    height: .5rem;
+    text-align: center;
+  }
+  .adv__title .border {
+    display: inline-block;
+    height: .015rem;
+    width: 1.05rem;
+    background-color: #363636;
+    position: relative;
+    top: -0.04rem;
+
+  }
+  .adv__title h2 {
+    display: inline-block;
+    font-size: .15rem;
+    color: #363636;
+    margin-top: 0.06rem;
+    font-weight: bold;
+  }
+
+
+  .adv__list {
+    display: flex;
+  }
+  .adv__item {
+    flex: 1;
+    text-align: center;
+  }
+  .adv__item img {
+    width: .4rem;
+    height: .4rem;
+    display: block;
+    margin: 0 auto;
+  }
+  .adv__item span {
+    font-size: .1rem;
+  }
+
+
 
 
 </style>

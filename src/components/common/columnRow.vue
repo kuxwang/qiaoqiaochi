@@ -16,9 +16,9 @@
           </p>
           <p class="price">
             ￥{{v.marketprice}}
+            <span>￥{{v.productprice}}</span>
           </p>
           </router-link>
-
       </ul>
       <p>查看所有新品</p>
     </div>
@@ -55,6 +55,7 @@
     background: -o-linear-gradient(#fafafa, #ffffff);
     background: -moz-linear-gradient(#fafafa, #ffffff);
     background: linear-gradient(#fafafa, #ffffff);
+    font-family: PingFang !important;
     .title {
       position: relative;
       width:100%;
@@ -133,6 +134,11 @@
                 font-size: .12rem;
                 line-height: .22rem;
                 color: #e75058;
+               span {
+                 font-size: .1rem;
+                 color: #999;
+                 text-decoration: line-through;
+               }
               }
           }
         }

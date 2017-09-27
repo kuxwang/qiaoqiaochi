@@ -151,12 +151,14 @@
       font-weight: bold;
       line-height: .45rem;
     }
+    font-family: PingFang !important;
   }
 
   .top-bar {
     display: flex;
     height: .45rem;
     background-color: #fff;
+    font-family: PingFang !important;
 
     .logo {
       /*width: .65rem;
