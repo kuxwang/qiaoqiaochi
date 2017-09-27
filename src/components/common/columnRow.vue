@@ -8,7 +8,6 @@
     </div>
     <div class="scroll">
       <ul class="scroll-goodslist clear">
-        <!--<li class="scroll-goodslist-li">-->
           <router-link  v-for="(v,k) in list" :to="{name:'details',query:{id:v.id}}" tag="li" class="scroll-goodslist-li" :key="k">
 
           <img :src="v.thumb" alt="">
@@ -19,7 +18,6 @@
             ￥{{v.marketprice}}
           </p>
           </router-link>
-        <!--</li>-->
 
       </ul>
       <p>查看所有新品</p>

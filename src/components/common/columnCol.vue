@@ -9,7 +9,7 @@
     <div class="scroll">
       <ul class="scroll-goodslist clear">
         <!--<li class="scroll-goodslist-li" v-for="(v,index) in newgoods">-->
-        <router-link  v-for="(v,k) in newgoods" :to="{name:'details',query:{id:v.id}}" tag="li" class="scroll-goodslist-li" :key="k">
+        <router-link  v-for="(v,k) in list" :to="{name:'details',query:{id:v.id}}" tag="li" class="scroll-goodslist-li" :key="k">
 
           <mt-swipe class="banner" :auto="4000" >
             <!--<mt-swipe-item v-for="(i, k) in slider" :key="k">-->
@@ -63,29 +63,12 @@
           newgoods:[]
       }
     },
-    props: [],
+    props: ['list'],
     methods: {
-      getNew(){
-        let parmas = {
-          data: {
-            attributes: "isnew:1",
-            page: 1,
-            psize: 10,
-          }
-        }
-        Attributes(parmas, (res) => {
-          console.log(res)
-          if (res.statusCode === 1) {
-            this.newgoods = res.data
-          }
-        })
-      },
-
 
     },
     computed: {},
     created(){
-      this.getNew()
     }
   }
 </script>
