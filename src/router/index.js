@@ -16,6 +16,7 @@ const MyOrder = r => require.ensure([], () => r(require('../components/userCente
 const ShoppingCart = r => require.ensure([], () => r(require('../view/ShoppingCart.vue')), 'ShoppingCart')
 const UserCenter = r => require.ensure([], () => r(require('../view/UserCenter.vue')), 'UserCenter')
 const Empty = r => require.ensure([], () => r(require('../view/Empty.vue')), 'Empty')
+const Test = r => require.ensure([], () => r(require('../view/Empty.vue')), 'Empty')
 
 
 /*
@@ -343,24 +344,11 @@ export default new Router({
 
 
 //地址
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    {
+      path: '/test',
+      name:'test',
+      component: Test
+    },
 
 
 

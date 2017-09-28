@@ -365,6 +365,9 @@
         this.payed=false;
         if (from.name=='manageAddress') {
           this.defaultAddress = this.userAddress;
+          if(!this.userAddress.id){
+            this.defaultAddress=''
+          }
           this.dispatches=this.delivery
           let params = {
             data: {
@@ -384,9 +387,7 @@
             }
           });
         }
-        /*if (this.$route.query.addressListsLength === 0) {
-          this.defaultAddress = '';
-        }*/
+
       },
       coupon(a,b){
         console.log(`a${a}`)
