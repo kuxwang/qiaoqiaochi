@@ -59,7 +59,8 @@
             配送方式
           </div>
           <div class="deliveryMode-lr fr">
-            {{dispatch.dispatchname}}
+            <!--{{dispatch.dispatchname}}-->
+            {{delivery.dispatchname}}
           </div>
         </router-link>
         <div class="deliveryMode deflist clearfix">
@@ -192,9 +193,12 @@
             _this.orderGoods = res.data.orderGoods
             _this.defaultAddress = res.data.defaultAddress
             _this.memberDiscount = res.data.memberDiscount
+           /* console.log('dispatches')
+            console.log(res.data)*/
+           _this.DELIVERY(res.data.dispatches[0])
             _this.dispatches = res.data.dispatches[0]
             _this.dispatchesprice = res.data.dispatches[0].price
-            _this.shopSet = res.data.shopSet
+            _this.shopSet = res.data.shopSet;
             _this.ADDRESS(res.data.addressLists)
           }
         })
@@ -213,7 +217,8 @@
           this.payed = true;
           let addressid = this.defaultAddress.id || ''
           let goods = ''
-          let dispatchid = this.dispatches.id
+//          let dispatchid = this.dispatches.id
+          let dispatchid = this.delivery.id
           let cartids = this.myOrders.cartids
           let remark = this.remark || ''
           if (this.orderGoods) {
@@ -225,18 +230,25 @@
               }
             }
           }
-
+          console.log('配送ID')
+          console.log(this.dispatches)
+          console.log(dispatchid)
+          /*console.log()
+          console.log()
+          console.log()*/
           let params = {
             data: {
               goods:goods,
               dispatchid:dispatchid,
-              addressid,
+              addressid: addressid,
               cartids,
               remark,
 //              optionid: this.myOrders.optionid || '',
 
             }
           }
+          console.log('购物数据')
+          console.log(params)
 
           if (addressid == '') {
             Toast({
@@ -246,33 +258,31 @@
             });
             this.payed = false;
             return;
+          }else {
+            confirm_post(params, res => {
+              if (res.statusCode == 1) {
+                let ordersn = res.data.ordersn
+                _this.ORDERINFO(ordersn);
+
+                _this.$router.replace({name: 'payselect', query: {orderid: ordersn}})
+              } else if (res.statusCode == -1) {
+                Toast({
+                  message: `操作频繁请稍候`,
+                  position: 'middle',
+                  duration: 2000
+                });
+                this.payed = false;
+              }else {
+                Toast({
+                  message: `操作频繁请稍候`,
+                  position: 'middle',
+                  duration: 2000
+                });
+                this.payed = false;
+              }
+            })
           }
-
-          confirm_post(params, res => {
-            if (res.statusCode == 1) {
-              let ordersn = res.data.ordersn
-              _this.ORDERINFO(ordersn);
-
-              _this.$router.replace({name: 'payselect', query: {orderid: ordersn}})
-            } else if (res.statusCode == -1) {
-              Toast({
-                message: `操作频繁请稍候`,
-                position: 'middle',
-                duration: 2000
-              });
-              this.payed = false;
-            }else {
-              Toast({
-                message: `操作频繁请稍候`,
-                position: 'middle',
-                duration: 2000
-              });
-              this.payed = false;
-            }
-          })
         }
-
-
       },
       goProducts(v) {
         let goodsId = v.goodsid;
@@ -280,14 +290,13 @@
       },
       ...mapMutations([
         'ADDRESS', 'ORDERINFO',
-        'ADDTYPE'
+        'ADDTYPE','DELIVERY'
       ])
     },
 
     computed: {
       ...mapState([
         'delivery', 'myOrders'
-//        'delivery', 'myOrders'
       ]),
       ...mapGetters([
         'userAddress',
@@ -375,7 +384,7 @@
               optionid: this.myOrders.optionid || '',
               total: this.myOrders.total || '',
               goodsid: this.myOrders.goodsid || '',
-              dispatchid:1,
+              dispatchid: this.dispatches.id,
               addressid: this.defaultAddress.id
             }
           }
@@ -383,7 +392,6 @@
             if (res.statusCode/1 === 1) {
               this.dispatchesprice = res.data.dispatches.price
               this.payed = false;
-
             }
           });
         }

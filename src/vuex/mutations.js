@@ -76,6 +76,8 @@ export default {
   },
   [DELIVERY] (state, delivery) {
     state.delivery = delivery
+    console.log('vuexL')
+    console.log(delivery)
   },
   [ORDERINFO] (state, orderInfo) {
     // console.log(orderInfo)
