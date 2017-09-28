@@ -186,7 +186,9 @@
               duration: 2000
             });
             setTimeout(() => {
-              this.$router.replace({name: 'manageAddress'})
+//              this.$router.replace({name: 'manageAddress'})
+              this.$router.go(-1)
+
             }, 2000)
           }
         })

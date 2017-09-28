@@ -19,17 +19,17 @@
           {{v.province}}{{v.city}}{{v.area}}{{v.address}}
         </p>
         <div class="div-hr"></div>
-        <!--<i class="iconfont mySelected" v-show="onActives==i">&#xe67f;</i>-->
-        <!--<i class="iconfont mySelected" >&#xe67f;</i>-->
-        <label class="mint-checklist-label fl">
+        <i class="iconfont mySelected" v-show="onActives==i">&#xe67f;</i>
+        <i class="iconfont mySelected" >&#xe67f;</i>
+       <!-- <label class="mint-checklist-label fl">
             <span class="mint-checkbox">
-              <!--<input type="checkbox" :checked="v.isdefault==1" class="mint-checkbox-input">-->
-              <!--<span class="mint-checkbox-core"></span>-->
-              <!--<span class="defaultcheck">设置为默认</span>-->
+              <input type="checkbox" :checked="v.isdefault==1" class="mint-checkbox-input">
+              <span class="mint-checkbox-core"></span>
+              <span class="defaultcheck">设置为默认</span>
             </span>
 
-        </label>
-        <div class="edit" @click="edit(v)">
+        </label>-->
+        <div class="edit" @click.stop="edit(v)">
           编辑
         </div>
         <div class="delete" @click="deleteAddress(v.id)">
@@ -62,6 +62,18 @@
       goBack() {
         this.$router.go(-1);
       },
+      init(){
+        let _this = this
+        addresses_get({data : {}}, res => {
+          if (res.statusCode == 1) {
+            _this.getaddressnum(res.data.list.length)
+            _this.addressLists = res.data.list
+            console.log(res)
+          } else {
+            console.log('获取收货地址接口异常')
+          }
+        })
+      },
       edit(value) {
         this.seteditAddresses(value)
         let params = {
@@ -70,11 +82,18 @@
           area: value.area
         }
         this.oldaddress(params)
-          this.$router.replace({name: 'editAddress', query: {id: value.id}})
+//          this.$router.replace({name: 'editAddress', query: {id: value.id}})
+          this.$router.push({path:'/address/edit',query:{id: value.id}})
+
+
       },
       addaddr(){
 //        this.$router.replace({name: 'addaddress'})
-        this.$router.replace({name: 'addaddress'})
+//        this.$router.replace({name: 'addaddress'})
+
+        this.$router.push({path:'/address/add'})
+
+
       },
       deleteAddress(value) {
         let params = {
@@ -106,20 +125,15 @@
 
       },
       getMyAddress(v, i){
-//        console.log(this.addtype)
         if(this.addtype==0){
           console.log('addtype是从订单进来的')
           this.isnull(false)
 //          this.onActives = i;
           this.getUserAddress(v);
           this.$router.go(-1)
-//          this.$router.push('confirmorder')
-
 //          this.getOnActive(i);
         }
       },
-
-
       ...mapMutations({
         'getUserAddress': 'GET_USERADDRESS',
         'getOnActive': 'GET_ONACTIVE',
@@ -127,7 +141,6 @@
         'seteditAddresses': 'SETEDITADDRESS',
         'oldaddress': 'OLDADDRESS',
         'isnull': "ISNULL",
-//        'userAddress':'userAddress'
       })
     },
     computed: {
@@ -139,22 +152,23 @@
         'addressListNum'
       ])
     },
+
+    beforeRouteUpdate(to, from, next){
+      if(from.path=='/address/add' || from.path =='/address/edit'){
+        console.log('来自')
+        console.log(from)
+        this.init()
+      }
+      next()
+    },
+
+
     mounted() {
       this.onActives = this.onActive
     },
 
     created() {
-      let _this = this
-      addresses_get({data : {}}, res => {
-        if (res.statusCode == 1) {
-          _this.getaddressnum(res.data.list.length)
-          _this.addressLists = res.data.list
-          console.log(res)
-        } else {
-          console.log('获取收货地址接口异常')
-        }
-      })
-//      console.log(this.address)
+      this.init()
     }
   }
 </script>

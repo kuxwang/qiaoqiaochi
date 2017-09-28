@@ -136,7 +136,6 @@ export default new Router({
       component: ShoppingCart
     },
 
-
     //分销
     {
       path: '/vipCenter',
@@ -221,18 +220,18 @@ export default new Router({
         },
         //地址
         {
-          path: '/manageAddress',
+          path: '/address',
           name: 'manageAddress',
           component: ManageAddress,
           // meta: { nokeepAlive: true },
           children: [
             {
-              path: '/addaddress',
+              path: '/address/add',
               name: 'addaddress',
               component: AddAddress
             },
             {
-              path: '/editAddress',
+              path: '/address/edit',
               name: 'editAddress',
               component: EditAddress
             },
@@ -317,6 +316,24 @@ export default new Router({
               path: '/collect/details',
               name: 'cdetails',
               component: Details
+            },
+          ]
+        },
+        {
+          path: '/address',
+          name: 'address',
+          component: ManageAddress,
+          // meta: { nokeepAlive: true },
+          children: [
+            {
+              path: '/address/add',
+              name: 'useradd',
+              component: AddAddress
+            },
+            {
+              path: '/address/edit',
+              name: 'useredit',
+              component: EditAddress
             },
           ]
         },
