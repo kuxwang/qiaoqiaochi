@@ -372,7 +372,7 @@
     watch: {
       '$route'(to, from) {
         this.payed=false;
-        if (from.name=='manageAddress') {
+        if (from.name=='manageAddress' && from.query.b) {
           this.defaultAddress = this.userAddress;
           if(!this.userAddress.id){
             this.defaultAddress=''

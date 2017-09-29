@@ -67,7 +67,6 @@
         })
       },
       toggle(){
-
         this.isSearch=!this.isSearch;
       },
       getUserInfo () {

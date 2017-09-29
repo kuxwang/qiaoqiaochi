@@ -57,16 +57,19 @@
         this.$router.go(-1)
       },
       getFocus () {
-
-        this.isfocus=true;
+        this.isfocus = true;
+        this.$emit('changetype',1);
+        console.log(this.isfocus)
         setTimeout(() => {
+          console.log('走了')
           this.setHeight()
-        }, 300)
+        }, 500)
 
       },
       cancel () {
         this.isfocus = false
         this.find = '';
+        this.$emit('changetype',1);
 
       },
       getGoods: _.debounce(function (value) {
@@ -138,9 +141,8 @@
       },
       loading(newValue){
       },
-      isfocus(newValue){
-        console.log(newValue)
-        this.$emit('changetype',1);
+      isfocus(a,b){
+
       }
 
     },

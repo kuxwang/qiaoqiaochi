@@ -106,7 +106,7 @@
       return {
         onActives: '',
         addressLists: [],
-        isChecked: ''
+        isChecked: -1
       }
     },
     methods: {
@@ -114,7 +114,6 @@
         this.$router.go(-1);
       },
       init(){
-        this.isChecked=0;
         let _this = this
         addresses_get({data : {}}, res => {
           if (res.statusCode == 1) {
@@ -185,7 +184,9 @@
           this.isnull(false)
 //          this.onActives = i;
           this.getUserAddress(v);
+          this.$route.query.b=1
           this.$router.go(-1)
+
 //          this.getOnActive(i);
         }
       },
@@ -217,11 +218,9 @@
           this.$set(this.addressLists[a],'isdefault','1')
         }
         console.log(this.addressLists)
-        console.log(b)
         if(Number(b)>=0 ){
-          this.$set(this.addressLists[b],'isdefault',0)
+          this.$set(this.addressLists[b],'isdefault','0')
           console.log(this.addressLists)
-          console.log('吧》')
         }
       },
     },
@@ -457,10 +456,10 @@
             font-size: .11rem;
             flex: 1;
             /*color: #0076ff;*/
-            color: #2c3e50;
+            color: #000;
             .iconfont {
               color: #fff;
-              border: 1px solid #2c3e50;
+              border: 1px solid #000;
               border-radius: 50%;
               font-size: .05rem;
             }
@@ -470,7 +469,7 @@
               font-size: .15rem;
             };
             .title {
-              color: #2c3e50;
+              color: #000;
               font-size: .11rem;
               display: inline-block;
               margin-left: .02rem;
