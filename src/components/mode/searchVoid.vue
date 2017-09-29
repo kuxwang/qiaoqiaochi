@@ -1,9 +1,14 @@
 <template>
-  <li class="void">
+  <!--<li class="void">-->
+  <div>
     <slot>
-      暂无数据
+      <div class="tip">
+      <span class="iconfont">&#xe601;</span>
+      <span class="title">暂无商品</span>
+      </div>
     </slot>
-  </li>
+  </div>
+  <!--</li>-->
 </template>
 <script>
   export default {
@@ -12,15 +17,20 @@
     },
     props: [],
     methods: {
-      getFocus () {
-      }
+
     },
     computed: {},
     created(){
     },
   }
 </script>
-<style scoped>
+<style lang="less" scoped>
+  @import '../../assets/css/reset/reset.css';
+  @import '../../assets/css/reset/common.less';
+  @import '../../assets/css/fonts/iconfont.css';
+
+
+
   .void{
     position: relative;
     top: .35rem;
@@ -28,4 +38,24 @@
     font-size: .14rem;
     background-color: #fff;
   }
+  .tip {
+    position: relative;
+    top:1rem;
+  }
+
+
+  span {
+    display: block;
+  }
+  .iconfont {
+    font-size: 1rem;
+  }
+  .title {
+    font-size: .2rem;
+
+  }
+
+
+
+
 </style>

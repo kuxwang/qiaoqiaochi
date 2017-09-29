@@ -6,7 +6,8 @@
     </div>
     <div class="top-bar">
       <div class="logo" v-if="!isSearch"><img :src="avatar"/></div>
-      <v-search ref="search" @changetype="toggle()"></v-search>
+      <!--<v-search ref="search" @changetype="toggle()"></v-search>-->
+      <input type="text" @focus="goSearch()" placeholder="全球优质供应商直供"/>
       <div class="share" v-if="!isSearch">
         <span class="iconfont">&#xe71d;</span>
       </div>
@@ -107,6 +108,9 @@
             this.hot = res.data
           }
         })
+      },
+      goSearch(){
+        this.$router.push('search')
       }
     },
     mounted () {
@@ -114,8 +118,7 @@
       this.getUserInfo();
       this.getNew();
       this.getHot()
-
-      console.log(this.$refs.search.isfocus)
+//      console.log(this.$refs.search.isfocus)
     },
     components: {
       vTabbar,
@@ -183,6 +186,10 @@
       position: relative;
       /*width: .51rem;*/
       width: .45rem;
+      left: -0.15rem;
+      top: .04rem;
+
+
       .iconfont {
         position: absolute;
         z-index: 1;
@@ -197,6 +204,22 @@
       text-align: center;
       margin-right: -0.1rem;
     }
+
+    input {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: #e8e8e8;
+      height: .29rem;
+      font-size: .13rem;
+      padding: 0 0.2rem;
+      color: #333;
+      /*margin: .08rem 0;*/
+      border-radius: .1rem .1rem .1rem .1rem;
+      margin: .1rem .1rem;
+    }
+
+
   }
   .top-nav {
     background-color: #fff;
