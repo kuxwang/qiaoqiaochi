@@ -64,7 +64,7 @@
             {{v.province}}{{v.city}}{{v.area}}{{v.address}}
           </div>
           <div class="set">
-            <div class="default">默认地址</div>
+            <div class="default" @click="isDefault(i)"><span :class="['iconfont',{'checked':isChecked == v.isdefault} ]">&#xe69a;</span>默认地址</div>
             <div class="right">
               <span @click.stop="edit(v)"><span class="iconfont edit">&#xe64e;</span>编辑</span>
               <span @click="deleteAddress(v.id)"><span class="iconfont tranch">&#xe6db;</span>删除</span>
@@ -102,7 +102,7 @@
       return {
         onActives: '',
         addressLists: [],
-        isChecked: 1
+        isChecked: ''
       }
     },
     methods: {
@@ -183,6 +183,9 @@
 //          this.getOnActive(i);
         }
       },
+      isDefault(i){
+        this.isChecked=i
+      },
       ...mapMutations({
         'getUserAddress': 'GET_USERADDRESS',
         'getOnActive': 'GET_ONACTIVE',
@@ -201,6 +204,14 @@
         'addressListNum'
       ])
     },
+    watch: {
+      isChecked(){
+
+      },
+    },
+
+
+
 
     beforeRouteUpdate(to, from, next){
       if(from.path=='/address/add' || from.path =='/address/edit'){
@@ -437,6 +448,18 @@
             font-size: .11rem;
             flex: 1;
             color: #0076ff;
+            .iconfont {
+              color: #fff;
+              border: 1px solid #000000;
+              border-radius: 50%;
+            }
+            .checked {
+              color: #0076ff;
+              border: none;
+            }
+
+
+
           }
           .right {
             flex: 1;
