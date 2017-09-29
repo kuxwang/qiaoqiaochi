@@ -1,116 +1,127 @@
 <template>
   <div class="page">
-    <mt-header fixed title="管理收货地址">
-      <a slot="left">
-        <mt-button icon="back"></mt-button>
-      </a>
-    </mt-header>
+    <header class="header">
+      <form @submit="goList()">
+        <input type="text"  v-model="find" placeholder="请输入商品名称"/>
+      </form>
+      <div class="cancel" @click="cancel">取消</div>
+    </header>
     <div class="container">
-      <ul class="user__list">
-        <li class="user" v-for="(v,i) in addressLists" @click.prevent="getMyAddress(v,i)">
-          <div class="info">
-            <span class="name">{{v.realname}}</span>
-            <span class="tel">{{v.mobile}}</span>
-          </div>
-          <div class="area">
-            {{v.province}}{{v.city}}{{v.area}}{{v.address}}
-          </div>
-          <div class="set">
-            <div class="default">设为默认地址</div>
-            <div class="right">
-              <span @click.stop="edit(v)"><span class="iconfont edit">&#xe64e;</span>编辑</span>
-              <span @click="deleteAddress(v.id)"><span class="iconfont tranch">&#xe6db;</span>删除</span>
-            </div>
-          </div>
+      <ul>
+        <search-void>
+        <li v-for="(v, k) in resultlist" :key="k" @click="goInfo(v.id)">
+          {{v.title}}
         </li>
+        </search-void>
       </ul>
     </div>
 
   </div>
 </template>
 <script>
+//  import searchVoid from './searchVoid'
+  import {Search} from '../api/api'
+  import { mapMutations, mapGetters } from 'vuex'
+  import _ from 'lodash'
   export default {
     data(){
       return {
-        value:2
+        find: '',
+        resultlist:''
+      }
+    },
+    methods: {
+      goList(){}, //回车跳转
+      cancel(){}, //取消搜索
+      getSearch: _.debounce(function (value) {
+        this.loading = false;
+        let params = {
+          data: {
+            page: 1,
+            psize: 100,
+            keywords: value,
+            fields:'id,title'
+          }
+        }
+        Search(params, res => {
+          if (res.statusCode === 1) {
+            this.resultlist = res.data
+          } else if (res.statusCode === -1) {
+            this.resultlist = []
+          }
+        })
+
+      }, 200),  //根据关键字搜索
+      goInfo(v){
+        this.isfocus=false;
+        this.find='';
+
+        this.$router.push({name:'details',query:{id:v}})
+      },
+
+
+    },
+    watch: {
+      find(newValue){
+        this.getSearch(newValue)
       }
     }
+
+
+
+
   }
 </script>
-
-
-
-
-
-
-
-
-
 
 <style lang="less" scoped>
   @import '../assets/css/reset/reset.css';
   @import '../assets/css/reset/common.less';
   @import '../assets/css/fonts/iconfont.css';
   .page {
-    .page-view();
+    .page-view(1);
+  }
+
+  header {
+    width: 100%;
+    padding: 0 .08rem;
+    display: flex;
+    form {
+      flex: 1;
+      display: block;
+      height: 100%;
+      input {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background: #e8e8e8;
+        height: .29rem;
+        font-size: .13rem;
+        padding: 0 0.2rem;
+        color: #333;
+        margin: .08rem 0;
+        border-radius: .1rem .1rem .1rem .1rem;
+      }
+    };
+    .cancel {
+      font-size: .16rem;
+      text-align: right;
+      padding: 0 .1rem;
+      line-height: .45rem;
+    }
   }
   .container {
     margin-top: .45rem;
-    height: 100%;
-    .user__list {
+    .scroll-view(100%);
+    ul {
       width: 100%;
-      .user {
-        height: 1.2rem;
-        padding: 0 .22rem;
-
-        text-align: left;
-        .info {
-          display: flex;
-          padding-top: .1rem;
-          line-height: .22rem;
-          margin-bottom: .08rem;
-          .name {
-            flex: 1;
-            font-size: .12rem;
-          }
-          .tel {
-            text-align: right;
-            flex: 1;
-            font-size: .1rem;
-          }
-        }
-        .area {
-          font-size: .12rem;
-          /*line-height: .36rem;*/
-          line-height: .2rem;
-          border-bottom: 1px solid #eee;
-          .text-overflow(2)
-        }
-        .set {
-          display: flex;
-          line-height: .46rem;
-          .default {
-            font-size: .11rem;
-            flex: 1;
-          }
-          .right {
-            flex: 1;
-            text-align: right;
-            span {
-              font-size: .11rem;
-              .tranch {
-                font-size: .22rem;
-                position: relative;
-                top:.025rem;
-              }
-              .edit {
-                font-size: .16rem;
-                margin-right: .03rem;
-                position: relative;
-                top:.01rem;
-              }
-            }
-          }
+      li {
+        padding: .1rem .1rem .1rem .2rem;
+        border-bottom: 1px solid rgba(0, 0, 0, .1);
+        background: #fff;
+        span {
+          color: #5f5f5f;
+          font-size: .14rem;
+          .text-overflow(1)
         }
       }
     }

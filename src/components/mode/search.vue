@@ -213,7 +213,6 @@
     border: none;
     display: block;
     height: .3rem;
-
     font-size: .13rem;
     padding: 0 0.2rem;
     color: #333;
