@@ -272,6 +272,11 @@ export default new Router({
               name: 'drawbackInfo',
               component: DrawbackInfo,
             },
+            {
+              path: '/order/pay',
+              name: 'orderpay',
+              component: Payselect,
+            },
 
 
           ]

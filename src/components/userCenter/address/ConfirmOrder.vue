@@ -193,8 +193,8 @@
             _this.orderGoods = res.data.orderGoods
             _this.defaultAddress = res.data.defaultAddress
             _this.memberDiscount = res.data.memberDiscount
-           /* console.log('dispatches')
-            console.log(res.data)*/
+            console.log('订单数据')
+            console.log(res.data)
            _this.DELIVERY(res.data.dispatches[0])
             _this.dispatches = res.data.dispatches[0]
             _this.dispatchesprice = res.data.dispatches[0].price

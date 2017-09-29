@@ -55,12 +55,12 @@
     </mt-header>
     <div class="container">
       <ul class="user__list">
-        <li class="user" v-for="(v,i) in addressLists" @click.prevent="getMyAddress(v,i)">
-          <div class="info">
+        <li class="user" v-for="(v,i) in addressLists" >
+          <div class="info" @click.prevent="getMyAddress(v,i)">
             <span class="name">{{v.realname}}</span>
             <span class="tel">{{v.mobile}}</span>
           </div>
-          <div class="area">
+          <div class="area" @click.prevent="getMyAddress(v,i)">
             {{v.province}}{{v.city}}{{v.area}}{{v.address}}
           </div>
           <div class="set">
@@ -393,9 +393,12 @@
   }
   .container {
     margin-top: .45rem;
+    margin-bottom: .5rem;
+    padding-bottom: 1rem;
     .scroll-view(100%);
     .user__list {
       width: 100%;
+      /*padding-bottom: .5rem;*/
       .user {
         height: 1.2rem;
         border-bottom: 1px solid #dadada;

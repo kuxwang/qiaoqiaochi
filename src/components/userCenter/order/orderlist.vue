@@ -74,7 +74,8 @@
     <void-list ref="requestStatus">
       <li v-for="(v,i) in statusResult">
         <div>订单号：{{v.ordersn}}</div>
-        <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" v-for=" (s,index) in v.goods" tag="div">
+        <router-link class="good-info" :to="{path:'orderd',query:{oid:v.id,sta:v.status}}" v-for=" (s,index) in v.goods"
+                     :key="index" tag="div">
           <img :src=s.thumb alt="" class="order-small">
           <p>{{s.title}}</p>
           <div class="good-price">

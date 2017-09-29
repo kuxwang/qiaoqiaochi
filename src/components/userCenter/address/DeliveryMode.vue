@@ -22,7 +22,7 @@
       return {
         busActives: '',
         businessList: [
-          {
+          /*{
             "id": "1",
             "uniacid": "2",
             "dispatchname": "商家配送"
@@ -36,7 +36,7 @@
             "id": "1",
             "uniacid": "2",
             "dispatchname": "商家配送"
-          }
+          }*/
         ]
       }
     },
@@ -56,9 +56,10 @@
       })
     },
     created () {
-      let params = {};
+      let params = {data:{}};
       dispatchs_get(params, res => {
         if (res.statusCode == 1) {
+          console.log(res.data)
           this.businessList = res.data
         } else {
           console.log('配送列表接口异常')
