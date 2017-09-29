@@ -64,7 +64,11 @@
             {{v.province}}{{v.city}}{{v.area}}{{v.address}}
           </div>
           <div class="set">
-            <div class="default" @click="isDefault(i)"><span :class="['iconfont',{'checked':isChecked == v.isdefault} ]">&#xe69a;</span>默认地址</div>
+            <div :class="['default',{'blue':isChecked==i}]" @click="isDefault(i)">
+              <span :class="['iconfont',{'checked':v.isdefault==1} ]">&#xe69a;</span>
+              <span :class="['title',{'blue':isChecked==i}]">默认地址</span>
+              <!--<input type="checkbox" :value="i" v-model="isChecked" />-->
+            </div>
             <div class="right">
               <span @click.stop="edit(v)"><span class="iconfont edit">&#xe64e;</span>编辑</span>
               <span @click="deleteAddress(v.id)"><span class="iconfont tranch">&#xe6db;</span>删除</span>
@@ -110,12 +114,14 @@
         this.$router.go(-1);
       },
       init(){
+        this.isChecked=0;
         let _this = this
         addresses_get({data : {}}, res => {
           if (res.statusCode == 1) {
             _this.getaddressnum(res.data.list.length)
             _this.addressLists = res.data.list
-            console.log(res)
+            console.log('列表')
+            console.log(res.data)
           } else {
             console.log('获取收货地址接口异常')
           }
@@ -184,7 +190,8 @@
         }
       },
       isDefault(i){
-        this.isChecked=i
+        this.isChecked=i;
+        console.log(this.isChecked)
       },
       ...mapMutations({
         'getUserAddress': 'GET_USERADDRESS',
@@ -205,28 +212,30 @@
       ])
     },
     watch: {
-      isChecked(){
-
+      isChecked(a,b){
+        if(a>=0){
+          this.$set(this.addressLists[a],'isdefault','1')
+        }
+        console.log(this.addressLists)
+        console.log(b)
+        if(Number(b)>=0 ){
+          this.$set(this.addressLists[b],'isdefault',0)
+          console.log(this.addressLists)
+          console.log('吧》')
+        }
       },
     },
-
-
-
-
     beforeRouteUpdate(to, from, next){
       if(from.path=='/address/add' || from.path =='/address/edit'){
         console.log('来自')
         console.log(from)
+        this.isChecked= -1
         this.init()
       }
       next()
     },
 
-
     mounted() {
-      this.onActives = this.onActive
-
-
       console.log(this.$route.name)
     },
 
@@ -447,20 +456,32 @@
           .default {
             font-size: .11rem;
             flex: 1;
-            color: #0076ff;
+            /*color: #0076ff;*/
+            color: #2c3e50;
             .iconfont {
               color: #fff;
-              border: 1px solid #000000;
+              border: 1px solid #2c3e50;
               border-radius: 50%;
+              font-size: .05rem;
             }
             .checked {
               color: #0076ff;
               border: none;
+              font-size: .15rem;
+            };
+            .title {
+              color: #2c3e50;
+              font-size: .11rem;
+              display: inline-block;
+              margin-left: .02rem;
             }
-
-
-
+            .blue {
+              color: #0076ff;
+            }
           }
+
+
+
           .right {
             flex: 1;
             text-align: right;

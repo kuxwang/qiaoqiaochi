@@ -317,6 +317,7 @@
     height: 100%;
     background: #ececec;
     overflow: hidden;
+    z-index: 10;
 
   }
 
