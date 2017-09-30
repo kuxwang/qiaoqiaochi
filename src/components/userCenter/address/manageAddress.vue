@@ -111,6 +111,11 @@
     },
     methods: {
       goBack() {
+        if(!this.addressLists.length){
+          this.$route.query.n=1
+        }
+
+
         this.$router.go(-1);
       },
       init(){
@@ -185,6 +190,7 @@
 //          this.onActives = i;
           this.getUserAddress(v);
           this.$route.query.b=1
+
           this.$router.go(-1)
 
 //          this.getOnActive(i);
