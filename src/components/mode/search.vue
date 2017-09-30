@@ -2,8 +2,9 @@
   <div class="page">
     <header class="header">
       <form @submit="goList()">
-        <input type="text"  v-model="find" placeholder="请输入商品名称"/>
+        <input type="text"  v-model="find" :placeholder="placeholder"/>
       </form>
+      <span class="iconfont abs">&#xe651;</span>
       <div class="cancel" @click="cancel">取消</div>
     </header>
     <div class="container">
@@ -27,7 +28,8 @@
     data(){
       return {
         find: '',
-        resultlist:''
+        resultlist:'',
+        placeholder:'请输入关键字'
       }
     },
     methods: {
@@ -112,6 +114,11 @@
       padding: 0 .1rem;
       line-height: .45rem;
     }
+    .abs {
+      position: absolute;
+      top: .15rem;
+      left: .2rem;
+    }
   }
   .container {
     margin-top: .45rem;
@@ -119,6 +126,7 @@
     .scroll-view(100%);
     ul {
       width: 100%;
+      margin-top: .1rem;
       li {
         padding: .1rem .1rem .1rem .2rem;
         border-bottom: 1px solid rgba(0, 0, 0, .1);

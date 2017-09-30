@@ -7,7 +7,13 @@
     <div class="top-bar">
       <div class="logo" v-if="!isSearch"><img :src="avatar"/></div>
       <!--<v-search ref="search" @changetype="toggle()"></v-search>-->
-      <input type="text" @focus="goSearch()" placeholder="全球优质供应商直供"/>
+      <!--<input type="text" @click="goSearch()" placeholder="全球优质供应商直供" />-->
+      <div class="input" @click="goSearch()">
+        <span class="iconfont">&#xe651;</span>
+        全球优质供应商直供
+      </div>
+
+
       <div class="share" v-if="!isSearch">
         <span class="iconfont">&#xe71d;</span>
       </div>
@@ -205,7 +211,7 @@
       margin-right: -0.1rem;
     }
 
-    input {
+    .input {
       display: block;
       width: 100%;
       text-align: center;
@@ -217,6 +223,7 @@
       /*margin: .08rem 0;*/
       border-radius: .1rem .1rem .1rem .1rem;
       margin: .1rem .1rem;
+      line-height: .29rem;
     }
 
 
