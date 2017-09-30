@@ -414,7 +414,6 @@
               }
             })
 
-
             break;
           default:
             return
@@ -434,9 +433,7 @@
           console.log(_this.specs_arr.length)
             return (item !== '')
         })
-        console.log(`判断${arrbolen}`)
-
-
+//        console.log(`判断${arrbolen}`)
         let new_arr = [];
         for (let i = 0; i < _this.specs_arr.length; i++) {
           if (_this.specs_arr[i]) {
@@ -458,16 +455,12 @@
               _this.opitiontitle=changeOptions.title;
               _this.selectoption='已选：';
               _this.noselected=false;
-              console.log('changeOptions的结果')
-              console.log(changeOptions)
+//              console.log('changeOptions的结果')
+//              console.log(changeOptions)
               break;
             }
           }
-
-
         }
-
-
       },
       ...mapMutations({
         getMyorders: 'GET_MYORDERS'

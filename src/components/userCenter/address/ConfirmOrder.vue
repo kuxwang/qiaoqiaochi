@@ -373,14 +373,10 @@
       '$route'(to, from) {
         this.payed=false;
         if (from.name=='manageAddress' && from.query.b) {
-          console.log('走了')
           this.defaultAddress = this.userAddress;
           if(!this.userAddress.id){
             this.defaultAddress=''
           }
-          /*if(to.query.n){
-            this.defaultAddress=''
-          }*/
           this.dispatches=this.delivery
           let params = {
             data: {
@@ -401,8 +397,6 @@
         }
         if(from.query.n){
           this.defaultAddress=''
-          console.log('走2')
-
         }
       },
       coupon(a,b){
