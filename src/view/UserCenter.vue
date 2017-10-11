@@ -113,7 +113,7 @@
               <i class="iconfont right">&#xe649;</i>
             </router-link>
 
-            <router-link class="center-cell" :to="{name:'opinion'}" tag="li">
+            <router-link class="center-cell" :to="{name:'service'}" tag="li">
               <div class="iconfont icon-grey">&#xe67c;</div>
               <div class="title-list">联系客服</div>
               <i class="iconfont right">&#xe649;</i>

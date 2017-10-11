@@ -26,9 +26,9 @@
             <div class="goodsTitle">
               <p>{{name}}</p>
               <span class="price">￥{{marketPrice}}</span>
-              <span class="marketPrice">市场价&nbsp;<s>{{marketPrice}}</s></span>
+              <span class="marketPrice">市场价&nbsp;<s>{{maxprice}}</s></span>
               <div class="memberprice">
-                ￥76
+                ￥{{minprice}}
                 <span class="tip">会员券后价</span>
               </div>
             </div>
@@ -173,6 +173,8 @@
         selectoption:'请选择',
         noselected:true,
         hasselect:false,
+        minprice:'',
+        maxprice:'',
         advpic:[
           {
             title:'正品保证',
@@ -341,6 +343,8 @@
             that.goodsId = goods.id;
             that.name = goods.title;
             that.marketPrice = goods.marketprice;
+            that.minprice = goods.minprice;
+            that.maxprice = goods.maxprice;
             that.bandimg = res.data.pics;
             that.total = goods.total;
             that.isShow = true;

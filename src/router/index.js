@@ -84,6 +84,7 @@ const Detailed = r => require.ensure([], () => r(require('../components/userCent
 
 const Collect = r => require.ensure([], () => r(require('../components/userCenter/user/Collect.vue')), 'UserCenter')
 const Footprint = r => require.ensure([], () => r(require('../components/userCenter/user/Footprint.vue')), 'UserCenter')
+const Service = r => require.ensure([], () => r(require('../components/userCenter/user/Service.vue')), 'UserCenter')
 
 
 
@@ -331,6 +332,12 @@ export default new Router({
             },
           ]
         },
+        {
+          path: '/service',
+          name: 'service',
+          component: Service,
+        },
+
         {
           path: '/address',
           name: 'address',
