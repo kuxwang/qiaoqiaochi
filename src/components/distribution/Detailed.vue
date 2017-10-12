@@ -31,10 +31,10 @@
 </template>
 <script>
 import { Toast, Picker, Popup, DatetimePicker } from 'mint-ui';
-import { address } from '../../../assets/js/address';
+import { address } from '../../assets/js/address';
 import { mapMutations } from 'Vuex';
-import { memberInfo, PUT_USERINFO, PUT_USERAVATARS, USERPHOTO } from '../../../api/api';
-import { _webapp } from '../../../config/webapp.js';
+import { memberInfo, PUT_USERINFO, PUT_USERAVATARS, USERPHOTO } from '../../api/api';
+import { _webapp } from '../../config/webapp.js';
 //  import {_webapp} from '../../config/webapp.js';
 
 export default {
@@ -68,8 +68,8 @@ export default {
 }
 </script>
 <style scoped lang="less">
-@import '../../../assets/css/fonts/iconfont.css';
-@import '../../../assets/css/reset/reset.css';
+@import '../../assets/css/fonts/iconfont.css';
+@import '../../assets/css/reset/reset.css';
 
 .main {
   position: fixed;

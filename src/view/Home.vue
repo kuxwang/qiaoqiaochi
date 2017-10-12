@@ -44,7 +44,7 @@
   import vColcol from '../components/common/columnCol';
   import defalutAvatar from '../assets/images/defaultAvatar.png'
   import {fn} from '../config/myUtils';
-  import { Advs, memberInfo,Attributes } from '../api/api';
+  import { Advs, memberInfo,Attributes,Share } from '../api/api';
   import {mapMutations, mapGetters, mapState} from 'vuex'
 
   export default{
@@ -121,7 +121,15 @@
         this.$router.push('search')
       },
       share(){
+        let params = {
+          data :{
 
+          }
+        }
+        Share(params,res => {
+          console.log(res)
+
+        })
       },
 
     },
@@ -143,10 +151,6 @@
         'haslogo'
       ]),
     }
-
-
-
-
 
   }
 </script>

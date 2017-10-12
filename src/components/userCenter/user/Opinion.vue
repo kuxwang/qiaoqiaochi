@@ -36,10 +36,8 @@
     data(){
       return {
         text:'',
-        pic:[],
-
+        pic:['../../../assets/images/shoppingCart-01.jpg'],
         test:'../../../assets/images/confirmorder-01.png',
-
       }
     },
     methods:{
@@ -51,7 +49,12 @@
         })
       },
       submit(){
+        if(this.text){
+          let params={
+            data:{}
+          }
 
+        }
       }
     },
     created(){
@@ -59,8 +62,6 @@
     }
   }
 </script>
-
-
 
 <style lang="less" scoped>
   @import '../../../assets/css/reset/reset.css';

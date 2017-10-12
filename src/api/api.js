@@ -709,6 +709,13 @@ export const Deletehistory = function (params, callback) {
 };
 
 
+export const Share = function (params, callback) {
+  _webapp.share(params, function (res) {
+    callback(res)
+  })
+}
+
+
 
 
 

@@ -79,7 +79,7 @@ const DrawbackInfo = r => require.ensure([], () => r(require('../components/user
 const Applys = r => require.ensure([], () => r(require('../components/userCenter/user/Apply.vue')), 'UserCenter')
 const Coupon = r => require.ensure([], () => r(require('../components/userCenter/user/Coupon.vue')), 'UserCenter')
 const Opinion = r => require.ensure([], () => r(require('../components/userCenter/user/Opinion.vue')), 'UserCenter')
-const Detailed = r => require.ensure([], () => r(require('../components/userCenter/user/Detailed.vue')), 'UserCenter')
+const Detailed = r => require.ensure([], () => r(require('../components/distribution/Detailed.vue')), 'UserCenter')
 
 
 const Collect = r => require.ensure([], () => r(require('../components/userCenter/user/Collect.vue')), 'UserCenter')
