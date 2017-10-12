@@ -14,7 +14,7 @@
       </div>
 
 
-      <div class="share" v-if="!isSearch">
+      <div class="share" v-if="!isSearch" @click="share">
         <span class="iconfont">&#xe71d;</span>
       </div>
     </div>
@@ -91,9 +91,11 @@
             attributes: "isnew:1",
             page: 1,
             psize: 10,
+            fields:'description,title,id,productprice,marketprice,thumb'
           }
         }
         Attributes(parmas, (res) => {
+          console.log('new')
           console.log(res)
           if (res.statusCode === 1) {
             this.newgoods = res.data
@@ -117,7 +119,11 @@
       },
       goSearch(){
         this.$router.push('search')
-      }
+      },
+      share(){
+
+      },
+
     },
     mounted () {
       this.getAdv();

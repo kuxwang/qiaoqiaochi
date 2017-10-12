@@ -124,14 +124,11 @@
             <div class="ocolor" @click="handleClick1">加入购物车</div>
             <div @click="goPay1">立即购买</div>
           </div>
-
         </div>
       </mt-popup>
-
     </div>
   </transition>
 </template>
-
 
 <script>
   import {Header, Popup, Toast, Indicator, Loadmore} from 'mint-ui';
@@ -153,7 +150,7 @@
         myStata: '',
         goodNums: '',
         goodsId: '',
-        optionId: 0,
+        optionId: '',
         cartids: '',
         delGoodsNum: '',
         goodsid: 4,
@@ -240,9 +237,9 @@
         console.log(_this.spec)
         console.log(_this.specs_arr)
 
-
 //        if (!_this.spec || _this.spec.length == _this.specs_arr.length) {
-        if (!_this.spec || _this.selectoption == '已选：') {
+//        if (!_this.spec.length || _this.selectoption == '已选：') {
+        if (!_this.spec.length || _this.optionId) {
           if (this.myStata === 1) {//加入购物车
             _this.popupVisible = false;
             let params = {
@@ -310,8 +307,6 @@
             duration: 1800
           });
         }
-
-
       },
       reduce: function (num) {
         if (num > 1) {
@@ -474,7 +469,6 @@
       this.popupVisible = false;
       next()
     },
-
     watch: {
       '$route'(to, from) {
         let _that = this;
@@ -491,6 +485,11 @@
 //                Indicator.close();
             }
           });
+        }
+      },
+      num(a,b){
+        if(Number(a)>Number(this.total)){
+          this.num=this.total
         }
       }
     },
