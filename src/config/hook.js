@@ -299,7 +299,7 @@ export const _webapp = {
   getApiTokenSync: function () {
 
     if(_webapp.debug === true){
-      _webapp.apiToken = {data : {'access_token' : '33816f946970b34086cf37b302f8de05', 'auth_key' : 'qXFvl3PO', 'timestamp' : '123123123'}, statusCode : '1'}
+      _webapp.apiToken = {data : {'access_token' : '30092bf76aa42b9c0708968842482ebf', 'auth_key' : 'FD10m5QQ', 'timestamp' : '123123123'}, statusCode : '1'}
     }
 
     // _webapp.log('_webapp getApiTokenSync running');
@@ -388,7 +388,7 @@ export const _webapp = {
    */
   getSessionKeySync: function () {
     if(_webapp.debug === true){
-      _webapp.sessionKey = {data : {"sessionkey":"34eb8d6d23ca094992a079296b128584", "timestamp":1500997527}, statusCode : '1'};
+      _webapp.sessionKey = {data : {"sessionkey":"5e394281dfac81c1e7dddcaf4d35d1f6", "timestamp":1500997527}, statusCode : '1'};
     }
 
     // _webapp.log('_webapp getSessionKeySync running');
