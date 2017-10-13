@@ -28,6 +28,7 @@
         <button @click="apply">申请￥888/年 优源店主</button>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -62,7 +63,7 @@
   @import '../../../assets/css/fonts/iconfont.css';
 
   .page {
-    .page-view(10);
+    .page-view(100);
   }
   .container {
     .scroll-view(100%);

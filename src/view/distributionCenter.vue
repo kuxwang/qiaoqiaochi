@@ -5,7 +5,7 @@
         <!--<mt-button icon="back"></mt-button>-->
       <!--</router-link>-->
     <!--</mt-header>-->
-    <div class="container">
+    <div v-if="!issale" class="container">
       <div class="user">
           <div class="user__logo">
             <img :src="memberInfo.avatar"/>
@@ -81,6 +81,14 @@
         </div>
       </section>
     </div>
+    <div class="tip" v-else>
+      <span class="iconfont">&#xe64d;</span>
+      <div class="text">抱歉！您还没有开店</div>
+      <!--<router-link  class="btn">我要开店</router-link>-->
+      <router-link class="btn" :to="{name:'disapply'}"  tag="div">
+        我要开店
+      </router-link>
+    </div>
     <transition name="slide">
       <router-view></router-view>
     </transition>
@@ -137,6 +145,7 @@
         topStatus: '',
         disindex: 3,
         defaultAvatar: '',
+        issale:true,
         webDebug : _webapp.debug
       }
     },
@@ -383,6 +392,36 @@
 
 
 
+
+  }
+  .tip {
+    width: 100%;
+    height: 100%;
+    font-size: .16rem;
+    .iconfont {
+      display: block;
+      width: 1.25rem;
+      height: 1.15rem;
+      font-size: 1.25rem;
+      margin: 0 auto;
+      margin-top: 1rem;
+    }
+    .text {
+      font-size: .16rem;
+      color: @style2;
+      margin-top: .3rem;
+      margin-bottom: .1rem;
+    }
+    .btn {
+      width: 1.75rem;
+      height: .48rem;
+      font-size: .2rem;
+      background-color: @style2;
+      color: #fff;
+      line-height: .48rem;
+      border-radius: .05rem;
+      margin: 0 auto;
+    }
 
   }
 

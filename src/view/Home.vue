@@ -13,7 +13,6 @@
         全球优质供应商直供
       </div>
 
-
       <div class="share" v-if="!isSearch" @click="share">
         <span class="iconfont">&#xe71d;</span>
       </div>
@@ -27,8 +26,8 @@
           <img class="silder" :src="i.thumb">
         </mt-swipe-item>
       </mt-swipe>
-      <v-colrow :list="hot"></v-colrow>
-      <v-colcol :list="newgoods"></v-colcol>
+      <v-colrow :list="hot" v-if="hashot"></v-colrow>
+      <v-colcol :list="newgoods" v-if="hasnew"></v-colcol>
       <div class="bottom-img">
         <img class="bottom-pic" :src="logo2"/>
       </div>
@@ -58,7 +57,9 @@
         isSearch:false,
         avatar: defalutAvatar,
         newgoods:[],
-        hot:[]
+        hot:[],
+        hashot:true,
+        hasnew:true
       }
     },
     methods: {
@@ -98,7 +99,12 @@
           console.log('new')
           console.log(res)
           if (res.statusCode === 1) {
-            this.newgoods = res.data
+            this.newgoods = res.data;
+            if(!res.data.length){
+              this.hasnew=false
+            }
+          }else {
+            this.hasnew=false
           }
         })
       },
@@ -113,7 +119,12 @@
         Attributes(parmas, (res) => {
           console.log(res);
           if (res.statusCode === 1) {
-            this.hot = res.data
+            this.hot = res.data;
+            if(!res.data.length){
+              this.hashot=false
+            }
+          }else {
+            this.hashot=false
           }
         })
       },

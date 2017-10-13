@@ -25,7 +25,6 @@
         </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -36,7 +35,7 @@
     data(){
       return {
         text:'',
-        pic:['../../../assets/images/shoppingCart-01.jpg'],
+        pic:[],
         test:'../../../assets/images/confirmorder-01.png',
       }
     },
@@ -44,8 +43,7 @@
       uploadImg(){
         let that = this;
         _webapp.uploadImg((res) => {
-//          that.myImg = res.data;
-          that.pic.push()
+          that.pic=that.pic.concat(res.data)
         })
       },
       submit(){
@@ -53,6 +51,8 @@
           let params={
             data:{}
           }
+
+
 
         }
       }
