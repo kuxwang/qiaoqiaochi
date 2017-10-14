@@ -5,7 +5,7 @@
         <!--<mt-button icon="back"></mt-button>-->
       <!--</router-link>-->
     <!--</mt-header>-->
-    <div v-if="!issale" class="container">
+    <div v-if="issale" class="container">
       <div class="user">
           <div class="user__logo">
             <img :src="memberInfo.avatar"/>
