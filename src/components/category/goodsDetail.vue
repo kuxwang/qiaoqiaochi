@@ -591,8 +591,8 @@
   }
 
   .b-intro {
-    margin-top: .1rem;
-    background: #fff;
+    /*margin-top: .1rem;*/
+    background: #fff;=
     overflow-x: hidden;
     margin-bottom: .48rem;
   }
@@ -1199,10 +1199,10 @@
   .adv {
     width: 100%;
     padding: 0 .05rem;
-    height: 1.2rem;
-    border-bottom: 1px solid #e0e0e0;
-    border-top: 1px solid #e0e0e0;
-    background-color: #f2f3f5;
+    height: 1.4rem;
+    border-bottom: .1rem solid #f2f3f5;
+    border-top: .1rem solid #f2f3f5;
+    background-color: #ffffff;
   }
   .adv__title {
     height: .5rem;
