@@ -6,8 +6,15 @@
     </div>
     <div class="top-bar">
       <div class="logo" v-if="!isSearch"><img :src="avatar"/></div>
-      <v-search ref="search" @changetype="toggle()"></v-search>
-      <div class="share" v-if="!isSearch">
+      <!--<v-search ref="search" @changetype="toggle()"></v-search>-->
+      <!--<input type="text" @click="goSearch()" placeholder="全球优质供应商直供" />-->
+      <div class="input" @click="goSearch()">
+        <span class="iconfont">&#xe651;</span>
+        全球优质供应商直供
+      </div>
+
+
+      <div class="share" v-if="!isSearch" @click="share">
         <span class="iconfont">&#xe71d;</span>
       </div>
     </div>
@@ -37,7 +44,7 @@
   import vColcol from '../components/common/columnCol';
   import defalutAvatar from '../assets/images/defaultAvatar.png'
   import {fn} from '../config/myUtils';
-  import { Advs, memberInfo,Attributes } from '../api/api';
+  import { Advs, memberInfo,Attributes,Share } from '../api/api';
   import {mapMutations, mapGetters, mapState} from 'vuex'
 
   export default{
@@ -67,7 +74,6 @@
         })
       },
       toggle(){
-
         this.isSearch=!this.isSearch;
       },
       getUserInfo () {
@@ -75,7 +81,7 @@
               if(res.statusCode == 1){
                 this.avatar = res.data.avatar
               }else{
-                console.log(用户接口请求错误)
+//                console.log(用户接口请求错误)
               }
           })
       },
@@ -85,9 +91,11 @@
             attributes: "isnew:1",
             page: 1,
             psize: 10,
+            fields:'description,title,id,productprice,marketprice,thumb'
           }
         }
         Attributes(parmas, (res) => {
+          console.log('new')
           console.log(res)
           if (res.statusCode === 1) {
             this.newgoods = res.data
@@ -108,15 +116,29 @@
             this.hot = res.data
           }
         })
-      }
+      },
+      goSearch(){
+        this.$router.push('search')
+      },
+      share(){
+        let params = {
+          data :{
+
+          }
+        }
+        Share(params,res => {
+          console.log(res)
+
+        })
+      },
+
     },
     mounted () {
       this.getAdv();
       this.getUserInfo();
       this.getNew();
       this.getHot()
-
-      console.log(this.$refs.search.isfocus)
+//      console.log(this.$refs.search.isfocus)
     },
     components: {
       vTabbar,
@@ -129,10 +151,6 @@
         'haslogo'
       ]),
     }
-
-
-
-
 
   }
 </script>
@@ -184,6 +202,10 @@
       position: relative;
       /*width: .51rem;*/
       width: .45rem;
+      left: -0.15rem;
+      top: .04rem;
+
+
       .iconfont {
         position: absolute;
         z-index: 1;
@@ -198,6 +220,23 @@
       text-align: center;
       margin-right: -0.1rem;
     }
+
+    .input {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: #e8e8e8;
+      height: .29rem;
+      font-size: .13rem;
+      padding: 0 0.2rem;
+      color: #333;
+      /*margin: .08rem 0;*/
+      border-radius: .1rem .1rem .1rem .1rem;
+      margin: .1rem .1rem;
+      line-height: .29rem;
+    }
+
+
   }
   .top-nav {
     background-color: #fff;

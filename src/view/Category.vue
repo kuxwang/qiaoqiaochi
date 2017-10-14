@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <v-search class="bgwhite"></v-search>
+    <!--<v-search class="bgwhite"></v-search>-->
     <div class="list">
       <ul class="list-l">
         <li :class="['l-item',{tabActive: selected==index }]" v-for="(i,index) in list" @click="tab(index)">{{i.name}}

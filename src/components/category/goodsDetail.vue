@@ -26,9 +26,9 @@
             <div class="goodsTitle">
               <p>{{name}}</p>
               <span class="price">￥{{marketPrice}}</span>
-              <span class="marketPrice">市场价&nbsp;<s>{{marketPrice}}</s></span>
+              <span class="marketPrice">市场价&nbsp;<s>{{maxprice}}</s></span>
               <div class="memberprice">
-                ￥76
+                ￥{{minprice}}
                 <span class="tip">会员券后价</span>
               </div>
             </div>
@@ -124,14 +124,11 @@
             <div class="ocolor" @click="handleClick1">加入购物车</div>
             <div @click="goPay1">立即购买</div>
           </div>
-
         </div>
       </mt-popup>
-
     </div>
   </transition>
 </template>
-
 
 <script>
   import {Header, Popup, Toast, Indicator, Loadmore} from 'mint-ui';
@@ -153,7 +150,7 @@
         myStata: '',
         goodNums: '',
         goodsId: '',
-        optionId: 0,
+        optionId: '',
         cartids: '',
         delGoodsNum: '',
         goodsid: 4,
@@ -173,6 +170,8 @@
         selectoption:'请选择',
         noselected:true,
         hasselect:false,
+        minprice:'',
+        maxprice:'',
         advpic:[
           {
             title:'正品保证',
@@ -238,9 +237,9 @@
         console.log(_this.spec)
         console.log(_this.specs_arr)
 
-
 //        if (!_this.spec || _this.spec.length == _this.specs_arr.length) {
-        if (!_this.spec || _this.selectoption == '已选：') {
+//        if (!_this.spec.length || _this.selectoption == '已选：') {
+        if (!_this.spec.length || _this.optionId) {
           if (this.myStata === 1) {//加入购物车
             _this.popupVisible = false;
             let params = {
@@ -308,8 +307,6 @@
             duration: 1800
           });
         }
-
-
       },
       reduce: function (num) {
         if (num > 1) {
@@ -341,6 +338,8 @@
             that.goodsId = goods.id;
             that.name = goods.title;
             that.marketPrice = goods.marketprice;
+            that.minprice = goods.minprice;
+            that.maxprice = goods.maxprice;
             that.bandimg = res.data.pics;
             that.total = goods.total;
             that.isShow = true;
@@ -414,7 +413,6 @@
               }
             })
 
-
             break;
           default:
             return
@@ -434,9 +432,7 @@
           console.log(_this.specs_arr.length)
             return (item !== '')
         })
-        console.log(`判断${arrbolen}`)
-
-
+//        console.log(`判断${arrbolen}`)
         let new_arr = [];
         for (let i = 0; i < _this.specs_arr.length; i++) {
           if (_this.specs_arr[i]) {
@@ -458,16 +454,12 @@
               _this.opitiontitle=changeOptions.title;
               _this.selectoption='已选：';
               _this.noselected=false;
-              console.log('changeOptions的结果')
-              console.log(changeOptions)
+//              console.log('changeOptions的结果')
+//              console.log(changeOptions)
               break;
             }
           }
-
-
         }
-
-
       },
       ...mapMutations({
         getMyorders: 'GET_MYORDERS'
@@ -477,7 +469,6 @@
       this.popupVisible = false;
       next()
     },
-
     watch: {
       '$route'(to, from) {
         let _that = this;
@@ -494,6 +485,11 @@
 //                Indicator.close();
             }
           });
+        }
+      },
+      num(a,b){
+        if(Number(a)>Number(this.total)){
+          this.num=this.total
         }
       }
     },

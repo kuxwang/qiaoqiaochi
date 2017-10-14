@@ -16,6 +16,7 @@ const MyOrder = r => require.ensure([], () => r(require('../components/userCente
 const ShoppingCart = r => require.ensure([], () => r(require('../view/ShoppingCart.vue')), 'ShoppingCart')
 const UserCenter = r => require.ensure([], () => r(require('../view/UserCenter.vue')), 'UserCenter')
 const Empty = r => require.ensure([], () => r(require('../view/Empty.vue')), 'Empty')
+const Test = r => require.ensure([], () => r(require('../view/Empty.vue')), 'Empty')
 
 
 /*
@@ -47,6 +48,7 @@ const Moneylist = r => require.ensure([], () => r(require('../components/distrib
  * */
 const List = r => require.ensure([], () => r(require('../components/category/List.vue')), 'Category')
 const Details = r => require.ensure([], () => r(require('../components/category/goodsDetail.vue')), 'Category')
+const Search = r => require.ensure([], () => r(require('../components/mode/search.vue')), 'Category')
 // const Details = r => require.ensure([], () => r(require('../components/category/productDetail.vue')), 'Category')
 // const payselect = r => require.ensure([], () => r(require('../components/common/payselect.vue')), 'goodsDetails')
 
@@ -77,11 +79,12 @@ const DrawbackInfo = r => require.ensure([], () => r(require('../components/user
 const Applys = r => require.ensure([], () => r(require('../components/userCenter/user/Apply.vue')), 'UserCenter')
 const Coupon = r => require.ensure([], () => r(require('../components/userCenter/user/Coupon.vue')), 'UserCenter')
 const Opinion = r => require.ensure([], () => r(require('../components/userCenter/user/Opinion.vue')), 'UserCenter')
-const Detailed = r => require.ensure([], () => r(require('../components/userCenter/user/Detailed.vue')), 'UserCenter')
+const Detailed = r => require.ensure([], () => r(require('../components/distribution/Detailed.vue')), 'UserCenter')
 
 
 const Collect = r => require.ensure([], () => r(require('../components/userCenter/user/Collect.vue')), 'UserCenter')
 const Footprint = r => require.ensure([], () => r(require('../components/userCenter/user/Footprint.vue')), 'UserCenter')
+const Service = r => require.ensure([], () => r(require('../components/userCenter/user/Service.vue')), 'UserCenter')
 
 
 
@@ -104,6 +107,11 @@ export default new Router({
           path: '/list',
           name: 'list',
           component: List
+        },
+        {
+          path: '/search',
+          name: 'search',
+          component: Search
         }
       ]
     },
@@ -135,7 +143,6 @@ export default new Router({
       name: 'shoppingCart',
       component: ShoppingCart
     },
-
 
     //分销
     {
@@ -202,7 +209,7 @@ export default new Router({
       path: '/confirmorder',
       name: 'confirmorder',
       component: ConfirmOrder,
-      meta: { nokeepAlive: true },
+      // meta: { nokeepAlive: true },
       children: [
         {
           path: '/confirmorder/details',
@@ -218,9 +225,29 @@ export default new Router({
           path: '/deliverymode',
           name: 'deliverymode',
           component: DeliveryMode
-        }
-      ]
+        },
+        //地址
+        {
+          path: '/address',
+          name: 'manageAddress',
+          component: ManageAddress,
+          // meta: { nokeepAlive: true },
+          children: [
+            {
+              path: '/address/add',
+              name: 'addaddress',
+              component: AddAddress
+            },
+            {
+              path: '/address/edit',
+              name: 'editAddress',
+              component: EditAddress
+            },
+          ]
+        },
 
+
+      ]
     },
     {
       path: '/userCenter',
@@ -251,6 +278,11 @@ export default new Router({
               path: '/drawbackInfo',
               name: 'drawbackInfo',
               component: DrawbackInfo,
+            },
+            {
+              path: '/order/pay',
+              name: 'orderpay',
+              component: Payselect,
             },
 
 
@@ -300,34 +332,42 @@ export default new Router({
             },
           ]
         },
-
-      ]
-    },
-    {
-      path: '/deliveryaddress',
-      name: 'deliveryaddress',
-      component: DeliveryAddress,
-      children: [
         {
-          path: '/manageAddress',
-          name: 'manageAddress',
+          path: '/service',
+          name: 'service',
+          component: Service,
+        },
+
+        {
+          path: '/address',
+          name: 'address',
           component: ManageAddress,
+          // meta: { nokeepAlive: true },
           children: [
             {
-              path: '/addaddress',
-              name: 'addaddress',
+              path: '/address/add',
+              name: 'useradd',
               component: AddAddress
             },
             {
-              path: '/editAddress',
-              name: 'editAddress',
+              path: '/address/edit',
+              name: 'useredit',
               component: EditAddress
             },
-
           ]
         },
+
       ]
     },
+
+
+//地址
+    {
+      path: '/test',
+      name:'test',
+      component: Test
+    },
+
 
 
     {

@@ -23,9 +23,7 @@
             {{v.title}}
           </p>
           <p class="goodscontent lr2">
-            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
-            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
-            我想能找到自己迷恋的东西。语言，冰淇淋，意大利面，什么都行。
+            {{v.description}}
           </p>
           <div class="goodsprice">
             <p class="marketprice">
@@ -156,8 +154,9 @@
                color: #494949;
              }
              .goodscontent {
+               .text-overflow(2);
                width: 100%;
-               height: .50rem;
+               /*height: .50rem;*/
                font-size: .16rem;
                text-align: left;
                line-height: .25rem;

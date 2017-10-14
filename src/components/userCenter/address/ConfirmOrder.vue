@@ -8,7 +8,7 @@
     <div class="order">
       <div class="order-top">
     <!--<router-link class="deliveryAddress" tag="div" :to="{name:'deliveryaddress'}" v-if="defaultAddress">-->
-      <div class="deliveryAddress"  v-if="defaultAddress" @click="addtype">
+      <div class="deliveryAddress"  v-if="defaultAddress!=''" @click="addtype">
       <ul class="fl deliveryAddress-lr">
         <li class="delivery-people clearfix">
           <span class="fl"><i>收货人：</i>{{defaultAddress.realname}}</span>
@@ -20,9 +20,12 @@
       </ul>
       </div>
     <!--</router-link>-->
-    <router-link class="noDeliveryAddress" tag="div" :to="{name:'deliveryaddress'}" v-if="!defaultAddress">
+    <!--<router-link class="noDeliveryAddress" tag="div" :to="{name:'manageAddress'}" v-if="!defaultAddress">
       设置收货地址
-    </router-link>
+    </router-link>-->
+    <div class="noDeliveryAddress" v-if="defaultAddress==''" @click="addtype">设置收货地址</div>
+
+
 
     <ul class="goodsList">
       <li>
@@ -56,7 +59,8 @@
             配送方式
           </div>
           <div class="deliveryMode-lr fr">
-            {{dispatch.dispatchname}}
+            <!--{{dispatch.dispatchname}}-->
+            {{delivery.dispatchname}}
           </div>
         </router-link>
         <div class="deliveryMode deflist clearfix">
@@ -142,10 +146,11 @@
       </button>
     </div>
     <!--<transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight">-->
+
+  </div>
     <transition name="slide">
       <router-view></router-view>
     </transition>
-  </div>
   </div>
 </template>
 <script>
@@ -188,16 +193,19 @@
             _this.orderGoods = res.data.orderGoods
             _this.defaultAddress = res.data.defaultAddress
             _this.memberDiscount = res.data.memberDiscount
+            console.log('订单数据')
+            console.log(res.data)
+           _this.DELIVERY(res.data.dispatches[0])
             _this.dispatches = res.data.dispatches[0]
             _this.dispatchesprice = res.data.dispatches[0].price
-            _this.shopSet = res.data.shopSet
+            _this.shopSet = res.data.shopSet;
             _this.ADDRESS(res.data.addressLists)
           }
         })
       },
       addtype(){
         this.ADDTYPE(0)
-        this.$router.push('deliveryaddress');
+        this.$router.push({name:'manageAddress'});
       },
       goBack() {
         this.$router.push('home');
@@ -209,7 +217,8 @@
           this.payed = true;
           let addressid = this.defaultAddress.id || ''
           let goods = ''
-          let dispatchid = this.dispatches.id
+//          let dispatchid = this.dispatches.id
+          let dispatchid = this.delivery.id
           let cartids = this.myOrders.cartids
           let remark = this.remark || ''
           if (this.orderGoods) {
@@ -221,18 +230,25 @@
               }
             }
           }
-
+          console.log('配送ID')
+          console.log(this.dispatches)
+          console.log(dispatchid)
+          /*console.log()
+          console.log()
+          console.log()*/
           let params = {
             data: {
               goods:goods,
               dispatchid:dispatchid,
-              addressid,
+              addressid: addressid,
               cartids,
               remark,
 //              optionid: this.myOrders.optionid || '',
 
             }
           }
+          console.log('购物数据')
+          console.log(params)
 
           if (addressid == '') {
             Toast({
@@ -242,33 +258,31 @@
             });
             this.payed = false;
             return;
+          }else {
+            confirm_post(params, res => {
+              if (res.statusCode == 1) {
+                let ordersn = res.data.ordersn
+                _this.ORDERINFO(ordersn);
+
+                _this.$router.replace({name: 'payselect', query: {orderid: ordersn}})
+              } else if (res.statusCode == -1) {
+                Toast({
+                  message: `操作频繁请稍候`,
+                  position: 'middle',
+                  duration: 2000
+                });
+                this.payed = false;
+              }else {
+                Toast({
+                  message: `操作频繁请稍候`,
+                  position: 'middle',
+                  duration: 2000
+                });
+                this.payed = false;
+              }
+            })
           }
-
-          confirm_post(params, res => {
-            if (res.statusCode == 1) {
-              let ordersn = res.data.ordersn
-              _this.ORDERINFO(ordersn);
-
-              _this.$router.replace({name: 'payselect', query: {orderid: ordersn}})
-            } else if (res.statusCode == -1) {
-              Toast({
-                message: `操作频繁请稍候`,
-                position: 'middle',
-                duration: 2000
-              });
-              this.payed = false;
-            }else {
-              Toast({
-                message: `操作频繁请稍候`,
-                position: 'middle',
-                duration: 2000
-              });
-              this.payed = false;
-            }
-          })
         }
-
-
       },
       goProducts(v) {
         let goodsId = v.goodsid;
@@ -276,14 +290,13 @@
       },
       ...mapMutations([
         'ADDRESS', 'ORDERINFO',
-        'ADDTYPE'
+        'ADDTYPE','DELIVERY'
       ])
     },
 
     computed: {
       ...mapState([
         'delivery', 'myOrders'
-//        'delivery', 'myOrders'
       ]),
       ...mapGetters([
         'userAddress',
@@ -294,7 +307,6 @@
         return dispatch || '商家配送'
       }
     },
-
     filters: {
       calculatePrice1(value) {
         let num = '';
@@ -324,34 +336,67 @@
         return value > this.memberDiscount.realprice ? this.memberDiscount.realprice : value
       }
     },
-
+//    beforeRouteEnter(to, from, next){
+//      if (from.name=='manageAddress' && to.name=='confirmorder'){
+//        next((vm)=>{
+//
+//          vm.defaultAddress = vm.userAddress;
+//          vm.dispatches=vm.delivery
+//
+//          let params = {
+//            data: {
+//              cartids: vm.myOrders.cartids || '',
+//              optionid: vm.myOrders.optionid || '',
+//              total: vm.myOrders.total || '',
+//              goodsid: vm.myOrders.goodsid || '',
+//              dispatchid:1,
+//              addressid: vm.defaultAddress.id
+//            }
+//          }
+//          console.log(params)
+//          DispatchMoney(params, res => {
+//            if (res.statusCode === 1) {
+//              console.log('请求数据')
+//              console.log(res)
+//              vm.dispatchesprice = res.data.dispatches.price
+//              vm.defaultAddress=res.data.addressLists
+//              vm.payed = false;
+//            }
+//          });
+//        })
+//      }else {
+//        next()
+//      }
+//
+//    },
     watch: {
       '$route'(to, from) {
         this.payed=false;
-        let _this = this;
-        if (from.name=='deliveryaddress' && to.name=='confirmorder') {
+        if (from.name=='manageAddress' && from.query.b) {
           this.defaultAddress = this.userAddress;
-          _this.dispatches=_this.delivery
-
+          if(!this.userAddress.id){
+            this.defaultAddress=''
+          }
+          this.dispatches=this.delivery
           let params = {
             data: {
               cartids: this.myOrders.cartids || '',
               optionid: this.myOrders.optionid || '',
               total: this.myOrders.total || '',
               goodsid: this.myOrders.goodsid || '',
-              dispatchid:1,
+              dispatchid: this.dispatches.id,
               addressid: this.defaultAddress.id
             }
           }
           DispatchMoney(params, res => {
-            if (res.statusCode === 1) {
-              _this.dispatchesprice = res.data.dispatches.price
-              _this.payed = false;
+            if (res.statusCode/1 === 1) {
+              this.dispatchesprice = res.data.dispatches.price
+              this.payed = false;
             }
           });
         }
-        if (this.$route.query.addressListsLength === 0) {
-          this.defaultAddress = '';
+        if(from.query.n){
+          this.defaultAddress=''
         }
       },
       coupon(a,b){
@@ -366,9 +411,12 @@
       }
 
     },
-    created() {
+    activated(){
       this.init();
-    }
+    },
+    /*created() {
+      this.init();
+    }*/
   }
 </script>
 <style scoped>

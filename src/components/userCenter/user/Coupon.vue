@@ -12,15 +12,18 @@
       </div>
       <div class="title">交易明细</div>
       <ul class="coupon__list">
-        <li class="coupon__cell">
+        <li class="coupon__cell" v-for="(i,index) in list">
+        <!--<li class="coupon__cell" >-->
           <div class="logo">
-            <img src=""/>
+            <img v-if="i.type==1" :src="logo1"/>
+            <img v-if="i.type==2" :src="logo2"/>
+            <img v-if="i.type==3" :src="logo3"/>
           </div>
           <div class="info">
             <h5>优源定制纸巾</h5>
             <span class="time">09-05 11:12</span>
           </div>
-          <div class="price">-99.00</div>
+          <div class="price">-99</div>
         </li>
       </ul>
     </div>
@@ -28,15 +31,82 @@
 </template>
 
 <script>
+  import { Attributes } from '../../../api/api';
   export default {
     data(){
       return {
-        money:'999',
-        list:[]
+        money: 0,
+        list:[
+          {
+            type:1
+          },
+          {
+            type:2
+          },
+          {
+            type:3
+          },
+        ],
+        logo1: require('../../../assets/images/youhuiche.png'),
+        logo2: require('../../../assets/images/jingbi1.png'),
+        logo3: require('../../../assets/images/levelyuan.png'),
+        page: 1,
+        loading: true,
+        psizes:8
+
       }
     },
     methods:{
       init(){
+        let  params={
+          data:{
+
+          }
+        }
+        Attributes(params,(res)=>{
+          if (res.statusCode === 1) {
+            this.loading = false;
+            if (res.data.length > 0) {
+              this.list = this.list.concat(res.data);
+              setTimeout(() => {
+                this.loading = false;
+              }, 1000)
+            } else {
+              this.loading = true;
+            }
+          } else {
+            this.loading = true;
+          }
+        })
+      },
+      loadMore () {
+//        this.loading = true;
+        this.page = this.page + 1
+        let params = {
+          data: {
+            page: this.page,
+            psize: this.psizes,
+            fields: 'id,thumb,title,productprice,marketprice'
+          }
+        };
+
+        History(params, res => {
+          console.log('无限滚动数据')
+          console.log(this.page)
+          console.log(this.psizes)
+
+          if (res.statusCode === 1) {
+            this.list = this.list.concat(res.data);
+            if (res.data.length < this.psizes) {
+              this.loading = true;
+            }
+          } else {
+            this.loading = true;
+            console.log('请求失败`${res.statusCode} , ${res.data}` ')
+          }
+
+
+        });
 
       }
     },
@@ -93,6 +163,7 @@
         #img-text>.list(.75rem);
         padding: .145rem .1rem;
         border-bottom: 1px solid #e7e7e7;
+        background-color: #ffffff;
         .logo {
           #img-text>.logo(.46rem)
         }
