@@ -3,12 +3,12 @@
     <!--<v-search class="bgwhite"></v-search>-->
     <div class="list">
       <ul class="list-l">
-        <li :class="['l-item',{tabActive: selected==index }]" v-for="(i,index) in list" @click="tab(index)">{{i.name}}
+        <li :class="['l-item',{tabActive: selected==index }]" v-for="(i,index) in clist" @click="tab(index)">{{i.name}}
         </li>
       </ul>
       <div class="list-r">
         <router-link class="r-item" v-for=" (v,index) in goodslist"
-                     :to="{ name:'clist',query:{pid: list[selected].id,cid:v.id,title:v.name}}"
+                     :to="{ name:'clist',query:{pid: clist[selected].id,cid:v.id,title:v.name}}"
                      tag="div"
                      :key="index">
           <img :src="v.thumb | dGoods">
@@ -31,25 +31,27 @@
   import {mapMutations, mapGetters, mapState} from 'vuex'
   import dGoods from '../assets/images/dGoods.png'
 
-
-
   export default {
     data(){
       return {
         img1: require('../assets/images/home-01.jpg'),
         img2: require('../assets/images/home-02.jpg'),
-        list: [
+        clist: [
           {
-            name:'混合'
+            name:'1',
+            id:1
           },
           {
-            name:'混合'
+            name:'混合',
+            id:1
           },
           {
-            name:'混合'
+            name:'混合',
+            id:1
           },
           {
-            name:'混合'
+            name:'混合',
+            id:1
           }
         ],  //左侧列表
         goodslist: [
@@ -76,18 +78,23 @@
     },
     methods: {
         tab(index){
+          console.log(index);
+          console.log(this.clist)
+          console.log('上面')
           this.selected = index;
           this.goodslist = [];
           let _this = this;
+          console.log(_this.clist)
           let params = {
             data: {
-              pid: _this.list[index].id
+              pid: _this.clist[index].id
             }
           }
           Category(params, (res) => {
             if (res.statusCode === 1) {
               _this.goodslist = res.data
             } else {
+
             }
           })
 
@@ -100,8 +107,8 @@
           Category(params, (res) => {
             if (res.statusCode === 1) {
               console.log(res)
-              _this.list = res.data;
-              _this.tab(0)
+              _this.clist = _this.clist.concat(res.data)
+//              _this.tab(0)
             }
           })
         }

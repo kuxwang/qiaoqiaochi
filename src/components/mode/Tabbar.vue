@@ -7,24 +7,24 @@
           首页
         </div>
       </router-link>
-      <!--<router-link id="ordertab" class="mint-tab-item"  :to="{name:'category'}"  tag="a">-->
-        <!--<div class="mint-tab-item-label">-->
-          <!--<div class="iconfont tabIcon">&#xe7d8;</div>-->
-          <!--分类-->
-        <!--</div>-->
-      <!--</router-link>-->
+      <router-link id="ordertab" class="mint-tab-item"  :to="{name:'category'}"  tag="a">
+        <div class="mint-tab-item-label">
+          <div class="iconfont tabIcon">&#xe7d8;</div>
+          分类
+        </div>
+      </router-link>
       <router-link class="mint-tab-item" :to="{name:'shoppingCart'}"  tag="a">
         <div class="mint-tab-item-label">
           <div class="iconfont tabIcon">&#xe63c;</div>
           购物车
         </div>
       </router-link>
-      <router-link class="mint-tab-item" :to="{name:'vipCenter'}"  tag="a">
+      <!--<router-link class="mint-tab-item" :to="{name:'vipCenter'}"  tag="a">
         <div class="mint-tab-item-label">
           <div class="iconfont tabIcon">&#xe74b;</div>
           店铺
         </div>
-      </router-link>
+      </router-link>-->
       <router-link class="mint-tab-item" :to="{name:'userCenter'}"  tag="a">
         <div class="mint-tab-item-label">
           <div class="iconfont tabIcon">&#xe63f;</div>
