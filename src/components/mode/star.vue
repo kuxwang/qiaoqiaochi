@@ -1,26 +1,29 @@
 <template>
-  <div class="main">
-    <mt-header title="意见反馈" fixed>
-      <router-link to="/userCenter" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-    </mt-header>
-    <div class="container">
-
+  <div class="eval_star">
+    <div class="star" v-for="(i,index) in item" @click="setLevel(index)">
+      <img :src="star" v-if="level>=index">
+      <img :src="starnull" v-else>
     </div>
   </div>
 </template>
-
 
 <script>
   export default {
     data(){
       return {
-
+        item: 5,
+        star: require('../../assets/images/star.png'),
+        starnull: require('../../assets/images/starnull.png'),
+        level:5,
       }
     },
-    methods:{
+    prop:{
 
+    },
+    methods:{
+      setLevel(index){
+        this.level=index;
+      }
     },
     created(){
 
@@ -29,19 +32,24 @@
   }
 </script>
 
-
 <style lang="less" scoped>
   @import '../../assets/css/reset/reset.css';
   @import '../../assets/css/reset/common.less';
   @import '../../assets/css/fonts/iconfont.css';
-
-  .mian {
-    .page-view(1);
+  @size:1;
+  .eval_star {
+    display: flex;
+    width: 100%;
+    height: @size*.18rem;
+    .star {
+      width: @size*.18rem;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
-  .container {
-    margin-top: .45rem;
 
-  }
 
 
 

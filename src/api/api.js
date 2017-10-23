@@ -12,7 +12,8 @@ import {MessageBox} from 'mint-ui'
 
 // const base = 'https://ws7.wshoto.com';
 // const base = 'http://yysw.wshoto.com';
-const base = 'https://ganglong.wshoto.com/';
+// const base = 'https://ganglong.wshoto.com/';
+const base = 'https://ganglongcs.wshoto.com';
 // const base = 'https://api.duoyunjiav2.wshoto.com';
 const header = 'application/json';
 const dataType = 'json';
@@ -279,6 +280,10 @@ const collect = {
 }
 
 
+
+
+
+
 /**
  * 商品详情
  */
@@ -372,6 +377,25 @@ const USERINFO = {url: `${base}/members`, method: 'PUT', header, dataType}
  * 购物车数量 yellowStar
  */
 const CARTNUMS = {url: `${base}/carts/cartNums`, method: 'GET', header, dataType}
+
+/*
+* 优惠券 评价
+* */
+
+const coupons = {
+  coupon: {url: `${base}/coupons`, method: 'GET', header, dataType}, //coupons
+  detail: {url: `${base}/coupons/detail`, method: 'GET', header, dataType}, //优惠券详情
+  get: {url: `${base}/coupons/get`, method: 'GET', header, dataType},  //领取优惠券
+  my: {url: `${base}/coupons/my`, method: 'GET', header, dataType},  //我的优惠券
+  mypay: {url: `${base}/coupons/mypay`, method: 'GET', header, dataType},  //支付时可用优惠券
+  category: {url: `${base}/coupons/category`, method: 'GET', header, dataType},  //
+};
+const comments = {
+  // coupon: {url: `${base}/coupons`, method: 'GET', header, dataType}, //coupons
+  goodComments: {url: `${base}comments/goodComments`, method: 'GET', header, dataType}, //1.商品详情的评论列表
+  view: {url: `${base}comments/view`, method: 'GET', header, dataType}, //2.订单评论页面接口
+  save: {url: `${base}comments/save`, method: 'GET', header, dataType}, //3.提交评论接口
+};
 
 
 export const orderLists = function (params, callback) {
@@ -544,18 +568,6 @@ export const Attributes = function (params, callback) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * 加入购物车
  */
@@ -710,12 +722,50 @@ export const Deletehistory = function (params, callback) {
   setParams(Object.assign(params, goods.deletehistory), callback)
 };
 
-
+//分享
 export const Share = function (params, callback) {
   _webapp.share(params, function (res) {
     callback(res)
   })
 }
+
+
+/*
+* 优惠券和评论
+* */
+
+export const Coupons = function (params, callback) {
+  setParams(Object.assign(params, coupons.coupon), callback)
+};
+export const Coupons_detail = function (params, callback) {
+  setParams(Object.assign(params, coupons.detail), callback)
+};
+export const Coupons_get = function (params, callback) {
+  setParams(Object.assign(params, coupons.get), callback)
+};
+export const Coupons_my = function (params, callback) {
+  setParams(Object.assign(params, coupons.my), callback)
+};
+export const Coupons_mypay = function (params, callback) {
+  setParams(Object.assign(params, coupons.mypay), callback)
+};
+export const Coupons_category = function (params, callback) {
+  setParams(Object.assign(params, coupons.category), callback)
+};
+
+export const Comments_category = function (params, callback) {
+  setParams(Object.assign(params, comments.goodComments), callback)
+};
+export const Comments_view = function (params, callback) {
+  setParams(Object.assign(params, comments.view), callback)
+};
+export const Comments_save = function (params, callback) {
+  setParams(Object.assign(params, comments.save), callback)
+};
+
+
+
+
 
 
 
