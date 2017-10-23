@@ -73,22 +73,22 @@
             </router-link>
           </ul>
           <!--<section class="adv">-->
-          <router-link  tag="div" :to="{name:'applys'}">
+          <!--<router-link  tag="div" :to="{name:'applys'}">
             <img class="adv" :src="adv" alt="广告图">
-          </router-link>
+          </router-link>-->
           <!--</section>-->
           <ul class="center-list">
-            <router-link class="center-cell" :to="{name:'applys'}" tag="li" style="margin-bottom: .1rem;">
+            <!--<router-link class="center-cell" :to="{name:'applys'}" tag="li" style="margin-bottom: .1rem;">
               <div class="iconfont icon-grey">&#xe62d;</div>
               <div class="title-list">我要开店</div>
               <i class="iconfont right">&#xe649;</i>
-            </router-link>
+            </router-link>-->
 
-            <router-link class="center-cell" :to="{name:'applys'}" tag="li" style="margin-bottom: .1rem;">
+            <!--<router-link class="center-cell" :to="{name:'applys'}" tag="li" style="margin-bottom: .1rem;">
               <div class="iconfont icon-grey">&#xe633;</div>
               <div class="title-list">邀请好友</div>
               <i class="iconfont right">&#xe649;</i>
-            </router-link>
+            </router-link>-->
 
             <router-link class="center-cell" :to="{name:'coupon'}" tag="li">
               <div class="iconfont icon-grey">&#xe699;</div>

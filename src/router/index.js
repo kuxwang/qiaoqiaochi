@@ -39,6 +39,7 @@ const Orderinfo = r => require.ensure([], () => r(require('../components/distrib
 const UserInfo = r => require.ensure([], () => r(require('../components/userCenter/user/UserInfo.vue')), 'UserCenter')
 const Takemoney = r => require.ensure([], () => r(require('../components/distribution/Takemoney.vue')), 'UserCenter')
 const Moneylist = r => require.ensure([], () => r(require('../components/distribution/Moneylist.vue')), 'UserCenter')
+const Detailed = r => require.ensure([], () => r(require('../components/distribution/Detailed.vue')), 'UserCenter')
 
 
 /*
@@ -67,24 +68,29 @@ const AddAddress = r => require.ensure([], () => r(require('../components/userCe
 const DeliveryMode = r => require.ensure([], () => r(require('../components/userCenter/address/DeliveryMode.vue')), 'submitOrder')
 const ManageAddress = r => require.ensure([], () => r(require('../components/userCenter/address/manageAddress.vue')), 'submitOrder')
 const EditAddress = r => require.ensure([], () => r(require('../components/userCenter/address/EditAddress.vue')), 'submitOrder')
+const Use_coupon = r => require.ensure([], () => r(require('../components/userCenter/address/use_coupon.vue')), 'submitOrder')
 /**
  * 订单详情
  */
 const Orderd = r => require.ensure([], () => r(require('../components/userCenter/order/orderDetail.vue')), 'Orderd')
+const Comment = r => require.ensure([], () => r(require('../components/userCenter/order/comment.vue')), 'Orderd')
 const Logistics = r => require.ensure([], () => r(require('../components/userCenter/order/logistics.vue')), 'Logistics')
 const Drawback = r => require.ensure([], () => r(require('../components/userCenter/order/drawback.vue')), 'Drawback')
 const DrawbackInfo = r => require.ensure([], () => r(require('../components/userCenter/order/drawbackInfo.vue')), 'DrawbackInfo')
 
 
 const Applys = r => require.ensure([], () => r(require('../components/userCenter/user/Apply.vue')), 'UserCenter')
-const Coupon = r => require.ensure([], () => r(require('../components/userCenter/user/Coupon.vue')), 'UserCenter')
+// const Coupon = r => require.ensure([], () => r(require('../components/userCenter/user/Coupon.vue')), 'UserCenter')
 const Opinion = r => require.ensure([], () => r(require('../components/userCenter/user/Opinion.vue')), 'UserCenter')
-const Detailed = r => require.ensure([], () => r(require('../components/distribution/Detailed.vue')), 'UserCenter')
+
 
 
 const Collect = r => require.ensure([], () => r(require('../components/userCenter/user/Collect.vue')), 'UserCenter')
 const Footprint = r => require.ensure([], () => r(require('../components/userCenter/user/Footprint.vue')), 'UserCenter')
 const Service = r => require.ensure([], () => r(require('../components/userCenter/user/Service.vue')), 'UserCenter')
+const Coupon_detail = r => require.ensure([], () => r(require('../components/userCenter/user/coupon_detail.vue')), 'UserCenter')
+const Coupon = r => require.ensure([], () => r(require('../components/userCenter/user/coupons.vue')), 'UserCenter')
+const CouponList = r => require.ensure([], () => r(require('../components/userCenter/user/couponList.vue')), 'UserCenter')
 
 
 
@@ -226,6 +232,12 @@ export default new Router({
           name: 'deliverymode',
           component: DeliveryMode
         },
+        {
+          path: '/usecoupon',
+          name: 'usecoupon',
+          component: Use_coupon
+        },
+
         //地址
         {
           path: '/address',
@@ -265,6 +277,11 @@ export default new Router({
               component: Orderd,
             },
             {
+              path: '/comment',
+              name: 'comment',
+              component: Comment,
+            },
+            {
               path: '/logistics',
               name: 'logistics',
               component: Logistics,
@@ -301,7 +318,19 @@ export default new Router({
         {
           path: '/userCenter/coupon',
           name: 'coupon',
-          component: Coupon
+          component: Coupon,
+          children:[
+            {
+              path:'/userCenter/coupon/list',
+              name:'couponList',
+              component:CouponList
+            },
+            {
+              path:'/userCenter/coupon/detail',
+              name:'coupon_detail',
+              component:Coupon_detail
+            }
+          ]
         },
         {
           path: '/userCenter/opinion',

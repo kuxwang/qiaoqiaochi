@@ -359,17 +359,22 @@
 
 <template>
   <div class="content">
-    <v-search></v-search>
+    <div class="top-bar">
+      <div class="input" @click="goSearch()">
+        <span class="iconfont">&#xe651;</span>
+        全球优质供应商直供
+      </div>
+    </div>
     <div class="container">
       <mt-swipe class="banner" :auto="4000" :show-indicators="false">
-        <mt-swipe-item v-for="i in advlist">
+        <mt-swipe-item v-for="(i,index) in advlist" :key="index">
           <img class="silder" :src="i.thumb">
         </mt-swipe-item>
       </mt-swipe>
 
       <div class="type">
-        <router-link class="type-item" :to="{name:'list1',query:{pid:i.id,cid:'',title:i.name}}" tag="div"
-                     v-for="i in classlist">
+        <router-link class="type-item" :to="{name:'list',query:{pid:i.id,cid:'',title:i.name}}" tag="div"
+                     v-for="(i,index) in classlist" :key="index">
           <img :src="i.advimg">
           <span>{{i.name}}</span>
         </router-link>
@@ -385,7 +390,7 @@
       <div class="goodtypes">
         <div class="view-title" style="margin-top: 0">
           热销产品
-          <router-link class="right" :to="{name:'list1',query:{attr:'ishot:1',title:'热销产品'}}" tag="div">
+          <router-link class="right" :to="{name:'list',query:{attr:'ishot:1',title:'热销产品'}}" tag="div">
             查看更多
             <span class="iconfont">&#xe61b;</span>
           </router-link>
@@ -393,7 +398,7 @@
 
         <div class="hot">
           <div class="hot-list">
-            <router-link class="hot-item" :to="{path:'/details',query:{id:i.id}}" tag="div" v-for="i in hot">
+            <router-link class="hot-item" :to="{path:'/details',query:{id:i.id}}" tag="div" v-for="(i,index) in hot" :key="index">
               <div class="pic-div">
                 <img :src="i.thumb" alt="">
               </div>
@@ -408,14 +413,14 @@
 
         <div class="view-title">
           最新产品
-          <router-link class="right" :to="{name:'list1',query:{attr:'isnew:1',title:'最新产品'}}" tag="div">
+          <router-link class="right" :to="{name:'list',query:{attr:'isnew:1',title:'最新产品'}}" tag="div">
             查看更多
             <span class="iconfont">&#xe61b;</span>
           </router-link>
         </div>
         <div class="hot">
           <div class="hot-list">
-            <router-link class="hot-item" :to="{path:'/details',query:{id:i.id}}" tag="div" v-for="i in newgoods">
+            <router-link class="hot-item" :to="{path:'/details',query:{id:i.id}}" tag="div" v-for="(i,index) in newgoods" :key="index">
               <div class="pic-div">
                 <img :src="i.thumb" alt="">
               </div>
@@ -429,14 +434,14 @@
 
         <div class="view-title">
           推荐产品
-          <router-link class="right" :to="{name:'list1',query:{attr:'isrecommand:1',title:'推荐产品'}}" tag="div">
+          <router-link class="right" :to="{name:'list',query:{attr:'isrecommand:1',title:'推荐产品'}}" tag="div">
             查看更多
             <span class="iconfont">&#xe61b;</span>
           </router-link>
         </div>
         <ul class="recommend" v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded"
             infinite-scroll-distance="10">
-          <router-link class="re-item" :to="{path:'/details',query:{id:i.id}}" tag="li" v-for="i in recommand">
+          <router-link class="re-item" :to="{path:'/details',query:{id:i.id}}" tag="li" v-for="(i,index) in recommand" :key="index">
             <div class="pic-div">
               <img :src="i.thumb" alt="" style="height: 100%">
             </div>
@@ -491,12 +496,12 @@
           data: {}
         };
         Advs(params, (res) => {
+          console.log('广告')
+          console.log(res)
           if (res.statusCode === 1) {
             this.advlist = res.data;
           }
-
           this.getType()
-          this.advs()
           this.allLoaded = false
         })
       },
@@ -510,8 +515,8 @@
 
           this.getHot()
           if (res.statusCode === 1) {
-//            console.log('分类')
-//            console.log(res.data)
+            console.log('分类')
+            console.log(res.data)
 //            console.log(_this.classlist)
             let len = res.data.length
             if (len <= 8) {
@@ -545,7 +550,6 @@
         })
       },
       getNew(){
-
         let parmas = {
           data: {
             attributes: "isnew:1",
@@ -586,24 +590,27 @@
           }
         })
       },
+      goSearch(){
+        this.$router.push('search')
+      },
       searchlist(){
         let _this = this
         this.$router.push({name: `list`, query: {keywords: _this.find, cid: ''}})
       },
-      advs(){
-        let params = {
-          data: {
-            'identification': 'index'
-          }
-        };
-        Adv(params, (res) => {
-          if (res.statusCode === 1) {
-            console.log('hahah')
-            console.log(res)
-            this.shop = res.data;
-          }
-        })
-      },
+//      advs(){
+//        let params = {
+//          data: {
+//            'identification': 'index'
+//          }
+//        };
+//        Adv(params, (res) => {
+//          if (res.statusCode === 1) {
+//            console.log('hahah')
+//            console.log(res)
+//            this.shop = res.data;
+//          }
+//        })
+//      },
       loadMore(){
         this.myCurNo = this.myCurNo + 1;
         this.getRecom(this.myCurNo)
@@ -628,39 +635,46 @@
 
   }
 </script>
-<style scoped>
+<style lang="less" scoped>
+  @import '../assets/css/reset/reset.css';
+  @import '../assets/css/reset/common.less';
+  @import '../assets/css/fonts/iconfont.css';
 
   .banner {
-    margin-top: .45rem;
+    /*margin-top: .45rem;*/
   }
 
   .content {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #efeff4;
-    /*overflow: auto;*/
-    overflow: hidden;
-    z-index: 50;
-    -webkit-overflow-scrolling: auto;
-    font-size: .14rem;
-
+    .page-view();
+    .top-bar {
+      background-color: #fff;
+      height: .45rem;
+    }
+    .input {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: #e8e8e8;
+      height: .29rem;
+      font-size: .13rem;
+      padding: 0 0.2rem;
+      color: #333;
+      /*margin: .08rem 0;*/
+      border-radius: .1rem .1rem .1rem .1rem;
+      margin: .1rem .1rem;
+      line-height: .29rem;
+    }
   }
 
   .container {
-    position: absolute;
-    top: 0;
     width: 100%;
+    height: 100%;
+    /*margin-top: .45rem;*/
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-    /*height: 6.7rem;*/
-    height: 100%;
     padding-bottom: .6rem;
     background: #fff;
     /*background: #efeff4;*/
-
   }
 
   .mint-swipe {
@@ -669,7 +683,6 @@
     top: .1rem;
 
   }
-
   .mint-swipe-item > img {
     height: 100%;
   }
@@ -979,6 +992,13 @@
     background-color: #ececec;
     padding-top: .05rem;
   }
+
+
+
+
+
+
+
 </style>
 
 

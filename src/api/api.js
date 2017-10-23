@@ -11,7 +11,8 @@ import {MessageBox} from 'mint-ui'
 // import {fn} from '../config/myUtils.js'
 
 // const base = 'https://ws7.wshoto.com';
-const base = 'http://yysw.wshoto.com';
+// const base = 'http://yysw.wshoto.com';
+const base = 'https://ganglong.wshoto.com/';
 // const base = 'https://api.duoyunjiav2.wshoto.com';
 const header = 'application/json';
 const dataType = 'json';
