@@ -36,26 +36,18 @@
   @import '../../assets/css/reset/reset.css';
   @import '../../assets/css/reset/common.less';
   @import '../../assets/css/fonts/iconfont.css';
-  @size:1;
+  @size:.22;
   .eval_star {
     display: flex;
     width: 100%;
-    height: @size*.18rem;
+    height: @size*1rem;
     .star {
-      width: @size*.18rem;
+      width: @size*1rem;
       img {
         width: 100%;
         height: 100%;
       }
     }
   }
-
-
-
-
-
-
-
-
 
 </style>

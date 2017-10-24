@@ -392,9 +392,9 @@ const coupons = {
 };
 const comments = {
   // coupon: {url: `${base}/coupons`, method: 'GET', header, dataType}, //coupons
-  goodComments: {url: `${base}comments/goodComments`, method: 'GET', header, dataType}, //1.商品详情的评论列表
-  view: {url: `${base}comments/view`, method: 'GET', header, dataType}, //2.订单评论页面接口
-  save: {url: `${base}comments/save`, method: 'GET', header, dataType}, //3.提交评论接口
+  goodComments: {url: `${base}/comments/goodComments`, method: 'GET', header, dataType}, //1.商品详情的评论列表
+  view: {url: `${base}/comments/view`, method: 'GET', header, dataType}, //2.订单评论页面接口
+  save: {url: `${base}/comments/save`, method: 'GET', header, dataType}, //3.提交评论接口
 };
 
 
