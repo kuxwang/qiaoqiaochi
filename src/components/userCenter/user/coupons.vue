@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="scroll">
-        <button class="gocoupon" @click="goLook">去领券</button>
+        <button class="gocoupon" v-if="listArr.length" @click="goLook">去领券</button>
         <ul class="list">
           <li v-for="(item,index) in listArr" :key="index">
             <div class="left">
@@ -38,110 +38,22 @@
               <div class="type">{{item.backstr}}</div>
             </div>
           </li>
-          <li v-for="(item,index) in listArr" :key="index">
-            <div class="left">
-              <div>
-                <div class="title">
-                  {{item.couponname}}
-                </div>
-                <div class="time">
-                  有效期至 {{item.timestr}}
-                </div>
-              </div>
-              <div class="center" v-if="curNav==1">
-                <img :src="isused" />
-              </div>
-              <div class="center" v-if="curNav==2">
-                <img :src="overdate" />
-              </div>
-            </div>
-            <div class="right">
-              <div class="money">
-                ￥<span>{{item._backmoney}}</span>
-              </div>
-              <div class="type">{{item.backstr}}</div>
-            </div>
-          </li>
-          <li v-for="(item,index) in listArr" :key="index">
-            <div class="left">
-              <div>
-                <div class="title">
-                  {{item.couponname}}
-                </div>
-                <div class="time">
-                  有效期至 {{item.timestr}}
-                </div>
-              </div>
-              <div class="center" v-if="curNav==1">
-                <img :src="isused" />
-              </div>
-              <div class="center" v-if="curNav==2">
-                <img :src="overdate" />
-              </div>
-            </div>
-            <div class="right">
-              <div class="money">
-                ￥<span>{{item._backmoney}}</span>
-              </div>
-              <div class="type">{{item.backstr}}</div>
-            </div>
-          </li>
-          <li v-for="(item,index) in listArr" :key="index">
-            <div class="left">
-              <div>
-                <div class="title">
-                  {{item.couponname}}
-                </div>
-                <div class="time">
-                  有效期至 {{item.timestr}}
-                </div>
-              </div>
-              <div class="center" v-if="curNav==1">
-                <img :src="isused" />
-              </div>
-              <div class="center" v-if="curNav==2">
-                <img :src="overdate" />
-              </div>
-            </div>
-            <div class="right">
-              <div class="money">
-                ￥<span>{{item._backmoney}}</span>
-              </div>
-              <div class="type">{{item.backstr}}</div>
-            </div>
-          </li>
-          <li v-for="(item,index) in listArr" :key="index">
-            <div class="left">
-              <div>
-                <div class="title">
-                  {{item.couponname}}
-                </div>
-                <div class="time">
-                  有效期至 {{item.timestr}}
-                </div>
-              </div>
-              <div class="center" v-if="curNav==1">
-                <img :src="isused" />
-              </div>
-              <div class="center" v-if="curNav==2">
-                <img :src="overdate" />
-              </div>
-            </div>
-            <div class="right">
-              <div class="money">
-                ￥<span>{{item._backmoney}}</span>
-              </div>
-              <div class="type">{{item.backstr}}</div>
-            </div>
-          </li>
         </ul>
+
+        <div class="share-page" v-if="listArr.length ==0">
+          <span class="iconfont icon-iconfontyouhuiquan">&#xe6df;</span>
+          <div class="p">您还没有优惠券</div>
+          <div class="p">去领券中心领券吧</div>
+          <button @click="goLook" class="look-btn">去领券</button>
+        </div>
       </div>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import {Coupons_my,Coupons,History,Advs} from '../../../api/api';
+  import {Coupons_my} from '../../../api/api';
   export default {
     data(){
       return {
@@ -165,12 +77,15 @@
         isused: require('../../../assets/images/used.png'),
         overdate: require('../../../assets/images/overdate.png'),
         isloading:true,
-        page:1
+        page:1,
       }
     },
     methods:{
+      goBack(){
+        this.$router.go(-1)
+      },
       goLook(){
-
+        this.$router.push({name:'couponList'})
       },
       init(ps=10){
         let params={
@@ -227,8 +142,8 @@
   @import '../../../assets/css/reset/common.less';
   @import '../../../assets/css/fonts/iconfont.css';
 
-  .mian {
-    .page-view(100);
+  .main {
+    .page-view(1);
   }
   .container {
     margin-top: .45rem;
@@ -345,32 +260,32 @@
   }
 
   /*备用页面  */
-  /*.share-page {
-    padding: 300rpx 25%;
+  .share-page {
+    /*padding: 1.5rem 25%;*/
     color: #999;
-    background: #f8f8f8;
+    margin-top: 1rem;
+    /*background: #f8f8f8;*/
     text-align:center;
   }
 
   .share-page  .iconfont {
-    font-size: 140rpx;
+    font-size: .7rem;
   }
 
   .share-page .p {
-    font-size: 14px;
+    font-size: .14rem;
   }
 
   .share-page .look-btn {
-    width: 140rpx;
-    height: 70rpx;
-    font-size: 14px;
-    border-radius: 3px;
-    margin-top: 30rpx;
+    width: .7rem;
+    height: .35rem;
+    font-size: .14rem;
+    border-radius: .03rem;
+    margin-top: .15rem;
     background: #ff4f4f;
     outline: none;
     color: #ddd;
   }
-*/
 
 
 

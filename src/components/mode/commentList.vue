@@ -24,7 +24,6 @@
     created(){
 
     }
-
   }
 </script>
 
@@ -34,7 +33,7 @@
   @import '../../assets/css/reset/common.less';
   @import '../../assets/css/fonts/iconfont.css';
 
-  .mian {
+  .main {
     .page-view(1);
   }
   .container {

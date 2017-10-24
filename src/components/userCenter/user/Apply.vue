@@ -63,7 +63,7 @@
   @import '../../../assets/css/fonts/iconfont.css';
 
   .page {
-    .page-view(100);
+    .page-view(10);
   }
   .container {
     .scroll-view(100%);
