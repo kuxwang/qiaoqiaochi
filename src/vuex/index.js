@@ -22,6 +22,9 @@ const state = {
     cartids: '',
     total: ''
   },
+  myCoupon:{
+
+  },  //优惠券
   orderInfo: '', //订单信息,
   // reason:"",
   // backtime: '',

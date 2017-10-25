@@ -25,7 +25,8 @@ import {
   GET_DEFAULTADDRESSISNULL,
   ISSCROLL,
   ADDTYPE,
-  HASLOGO
+  HASLOGO,
+  MYCOUPON
 }
   from
     './mutation-types.js'
@@ -125,5 +126,10 @@ export default {
   [HASLOGO](state, data) {
     state.haslogo=data;
     // console.log(data)
+  },
+  [MYCOUPON](state, data) {
+    state.myCoupon=data;
+    console.log('vuex内优惠券详情')
+    console.log(data)
   },
 }

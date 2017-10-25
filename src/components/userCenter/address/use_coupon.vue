@@ -10,7 +10,7 @@
     </mt-header>
     <div class="container">
         <ul class="list">
-          <li v-for="(item,index) in list" :key="index" @click="use(index)">
+          <li v-for="(item,index) in list" :key="index" @click="use(item)">
             <div class="left">
               <div>
                 <div class="title">
@@ -66,8 +66,12 @@
         })
       },
       use(i){
-        
-      }
+        this.myCoupon(i);
+        this.goBack();
+      },
+      ...mapMutations({
+        'myCoupon': 'MYCOUPON',
+      })
     },
     created(){
       this.init()

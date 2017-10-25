@@ -69,8 +69,20 @@
           </div>
           <div class="deliveryMode-lr fr">
             <!--{{delivery.dispatchname}}-->
+            {{myCoupon.backmoney}}
           </div>
         </router-link>
+
+        <div class="deliveryMode bt switchgroup">
+          <div class="deliveryMode-lf fl">
+            购物专用{{usenum}}
+          </div>
+          <div class=" fr">
+            <mt-switch v-model="ifuse" @change="switchuse"></mt-switch>
+          </div>
+        </div>
+
+
         <div class="deliveryMode deflist clearfix">
           <div class="deliveryMode-lf fl">
             给卖家留言:
@@ -122,30 +134,23 @@
 					<span class="goods-folatPrice">{{memberDiscount.discountprice | calculatePrice2}}</span>
 				</span>
       </li>
-      <li class="clearfix">
-        <div class="exhibition-lf fl">
-          优惠券
-        </div>
-        <span class="mygoods-price fr">
-          <input class="coupon" type="number"  placeholder="请输入优惠券" v-model.number="coupon"/>
-				</span>
-      </li>
+      <!--<li class="clearfix">-->
+        <!--<div class="exhibition-lf fl">-->
+          <!--购物专用-->
+        <!--</div>-->
+        <!--<span class="mygoods-price fr">-->
+          <!--<input class="coupon" type="number"  placeholder="请输入购物专用积分" v-model.number="coupon"/>-->
+				<!--</span>-->
+      <!--</li>-->
     </ul>
       </div>
 
     <div class="settlement clearfix">
       <div class="settlement-lf fl">
-      			<span class="settlement-item-lf">
-      				共
-      				<span>
-      					{{memberDiscount.total}}
-      				</span>
-      				件 , 总金额
-      			</span>
+      			<span class="settlement-item-lf">共<span>{{memberDiscount.total}}</span>件 , 总金额</span>
         <span class="mygoods-price">
-					¥
-					<span class="goods-intPrice">{{memberDiscount.realprice-coupon + dispatchesprice | calculatePrice1}}.</span>
-					<span class="goods-folatPrice">{{memberDiscount.realprice | calculatePrice2}}</span>
+					¥<span class="goods-intPrice">{{memberDiscount.realprice-Number(myCoupon.backmoney)-integral + dispatchesprice | calculatePrice1}}.</span>
+          <span class="goods-folatPrice">{{memberDiscount.realprice | calculatePrice2}}</span>
 				</span>
       </div>
 
@@ -153,8 +158,6 @@
         提交订单
       </button>
     </div>
-    <!--<transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight">-->
-
   </div>
     <transition name="slide">
       <router-view></router-view>
@@ -162,7 +165,7 @@
   </div>
 </template>
 <script>
-  import {Header, MessageBox, Toast} from 'mint-ui';
+  import {Header, MessageBox, Toast,Switch} from 'mint-ui';
   import {GET_MYADDRESS1, GET_ORDER1, confirm_post, DispatchMoney} from '../../../api/api';
   import {mapMutations, mapState, mapGetters} from 'Vuex';
   //  import _ from 'lodash'
@@ -179,9 +182,12 @@
         payed: false,
         send:{},
         new:false,
-        coupon: 0,
-        couonnum:20,
-        goodsinfo:''
+        coupon: 0, //用户有多少积分
+        couonnum:20, //可用多少积分
+        usenum:'', //实际用了多少积分
+        goodsinfo:'',
+        ifuse:false,  //是否使用积分
+        integral:0
       }
     },
     methods: {
@@ -195,21 +201,21 @@
             goodsid: this.myOrders.goodsid || ''
           }
         };
-
         // 首次进入，初始化展示内容。
         GET_ORDER1(params, res => {
           if (res.statusCode === 1) {
-            _this.orderGoods = res.data.orderGoods
-            _this.defaultAddress = res.data.defaultAddress
-            _this.memberDiscount = res.data.memberDiscount
-            console.log('订单数据')
-            console.log(res.data)
-           _this.DELIVERY(res.data.dispatches[0])
-            _this.dispatches = res.data.dispatches[0]
-            _this.dispatchesprice = res.data.dispatches[0].price
+            _this.orderGoods = res.data.orderGoods;
+            _this.defaultAddress = res.data.defaultAddress;
+            _this.memberDiscount = res.data.memberDiscount;
+            console.log('执行')
+//            console.log(res.data)
+           _this.DELIVERY(res.data.dispatches[0]);
+            _this.dispatches = res.data.dispatches[0];
+            _this.dispatchesprice = res.data.dispatches[0].price;
             _this.shopSet = res.data.shopSet;
-            _this.ADDRESS(res.data.addressLists)
-
+            _this.ADDRESS(res.data.addressLists);
+            _this.coupon=res.data.memberDiscount.deductmoney;
+            _this.couonnum=res.data.memberDiscount.deductcredit;
             let goods='';
             for (let i = 0, j = res.data.orderGoods.length; i < j; i++) {
               if (i != j - 1) {
@@ -218,14 +224,22 @@
                 goods += res.data.orderGoods[i].goodsid + ',' + res.data.orderGoods[i].optionid  + ',' + res.data.orderGoods[i].total
               }
             }
-            _this.goodsinfo=goods
+            _this.goodsinfo=goods;
+
+            let backmoney;
+            if(_this.coupon>=_this.couonnum){   //总数大于等于优惠
+              backmoney=_this.couonnum
+            }else if(_this.coupon<_this.couonnum) {  //总数小于优惠
+              backmoney=_this.coupon
+            }
+            _this.usenum=backmoney;    //实际使用了多少积分
           }
         })
       },
       addtype(){
         this.ADDTYPE(0)
         this.$router.push({name:'manageAddress'});
-      },
+      }, //点击进入选择地址
       goBack() {
         this.$router.push('home');
       },
@@ -237,8 +251,9 @@
           let addressid = this.defaultAddress.id || ''
           let goods = ''
 //          let dispatchid = this.dispatches.id
-          let dispatchid = this.delivery.id
-          let cartids = this.myOrders.cartids
+          let dispatchid = this.delivery.id;
+          let cartids = this.myOrders.cartids;
+          let couponid = this.myCoupon.id || '';
           let remark = this.remark || ''
           if (this.orderGoods) {
             for (let i = 0, j = this.orderGoods.length; i < j; i++) {
@@ -249,12 +264,8 @@
               }
             }
           }
-          console.log('配送ID')
-          console.log(this.dispatches)
-          console.log(dispatchid)
-          /*console.log()
-          console.log()
-          console.log()*/
+
+
           let params = {
             data: {
               goods:goods,
@@ -262,8 +273,8 @@
               addressid: addressid,
               cartids,
               remark,
-//              optionid: this.myOrders.optionid || '',
-
+              credit:this.ifuse,
+              couponid
             }
           }
           console.log('购物数据')
@@ -302,24 +313,32 @@
             })
           }
         }
-      },
+      }, //提交订单
       goProducts(v) {
         let goodsId = v.goodsid;
         this.$router.push({name: 'details', query: {goodsId: goodsId}})
+      },  //进入商品详情
+      switchuse(){
+        if(this.ifuse){
+          this.integral=this.usenum
+        }else {
+          this.integral=0
+        }
       },
       ...mapMutations([
         'ADDRESS', 'ORDERINFO',
-        'ADDTYPE','DELIVERY'
+        'ADDTYPE','DELIVERY',
+        'MYCOUPON','MYCOUPON'
       ])
     },
-
     computed: {
       ...mapState([
         'delivery', 'myOrders'
       ]),
       ...mapGetters([
         'userAddress',
-        'defaultAddressIsNull'
+        'defaultAddressIsNull',
+        'myCoupon'
       ]),
       dispatch() {
         let dispatch = this.dispatches || this.delivery
@@ -355,39 +374,6 @@
         return value > this.memberDiscount.realprice ? this.memberDiscount.realprice : value
       }
     },
-//    beforeRouteEnter(to, from, next){
-//      if (from.name=='manageAddress' && to.name=='confirmorder'){
-//        next((vm)=>{
-//
-//          vm.defaultAddress = vm.userAddress;
-//          vm.dispatches=vm.delivery
-//
-//          let params = {
-//            data: {
-//              cartids: vm.myOrders.cartids || '',
-//              optionid: vm.myOrders.optionid || '',
-//              total: vm.myOrders.total || '',
-//              goodsid: vm.myOrders.goodsid || '',
-//              dispatchid:1,
-//              addressid: vm.defaultAddress.id
-//            }
-//          }
-//          console.log(params)
-//          DispatchMoney(params, res => {
-//            if (res.statusCode === 1) {
-//              console.log('请求数据')
-//              console.log(res)
-//              vm.dispatchesprice = res.data.dispatches.price
-//              vm.defaultAddress=res.data.addressLists
-//              vm.payed = false;
-//            }
-//          });
-//        })
-//      }else {
-//        next()
-//      }
-//
-//    },
     watch: {
       '$route'(to, from) {
         this.payed=false;
@@ -427,15 +413,14 @@
         if(a>this.couonnum){
           this.coupon=this.couonnum
         }
-      }
+      },
 
     },
     activated(){
+      this.MYCOUPON({});
       this.init();
     },
-    /*created() {
-      this.init();
-    }*/
+
   }
 </script>
 <style scoped>
@@ -608,6 +593,21 @@
     text-align: left;
     height: .16rem;
   }
+
+  .switchgroup {
+    height: 0.46rem;
+    line-height: 0.46rem;
+    color: #999;
+    font-size: 0.14rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mint-switch {
+    top:.07rem;
+  }
+
+
 
   .deflist {
     height: 0.46rem;

@@ -17,7 +17,8 @@ export default {
   defaultAddressIsNull:state=>state.defaultAddressIsNull,
   isScroll:state=>state.isScroll,
   addtype:state=>state.addtype,
-  haslogo:state=>state.haslogo
+  haslogo:state=>state.haslogo,
+  myCoupon:state=>state.myCoupon
 
 }
 
