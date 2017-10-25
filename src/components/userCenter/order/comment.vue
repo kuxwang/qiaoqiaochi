@@ -23,7 +23,7 @@
           </div>
           <div class="eval">
            <span>评分:</span>
-            <v-star :id="index"></v-star>
+            <v-star :len="5" :level="3"></v-star>
           </div>
           <textarea placeholder="这次买的商品满意吗，写点心得给其他顾客参考吧。长度在6-140字之间">
           </textarea>

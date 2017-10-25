@@ -63,6 +63,14 @@
             {{delivery.dispatchname}}
           </div>
         </router-link>
+        <router-link class="deliveryMode bt deflist" tag="div" :to="{name:'usecoupon',query:{goods:goodsinfo}}">
+          <div class="deliveryMode-lf fl">
+            优惠券
+          </div>
+          <div class="deliveryMode-lr fr">
+            <!--{{delivery.dispatchname}}-->
+          </div>
+        </router-link>
         <div class="deliveryMode deflist clearfix">
           <div class="deliveryMode-lf fl">
             给卖家留言:
@@ -172,7 +180,8 @@
         send:{},
         new:false,
         coupon: 0,
-        couonnum:20
+        couonnum:20,
+        goodsinfo:''
       }
     },
     methods: {
@@ -200,6 +209,16 @@
             _this.dispatchesprice = res.data.dispatches[0].price
             _this.shopSet = res.data.shopSet;
             _this.ADDRESS(res.data.addressLists)
+
+            let goods='';
+            for (let i = 0, j = res.data.orderGoods.length; i < j; i++) {
+              if (i != j - 1) {
+                goods += res.data.orderGoods[i].goodsid + ',' + res.data.orderGoods[i].optionid  + ',' + res.data.orderGoods[i].total + '|'
+              } else {
+                goods += res.data.orderGoods[i].goodsid + ',' + res.data.orderGoods[i].optionid  + ',' + res.data.orderGoods[i].total
+              }
+            }
+            _this.goodsinfo=goods
           }
         })
       },

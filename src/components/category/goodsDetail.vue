@@ -65,9 +65,13 @@
         <div class="details">
           <div class="b-intro">
             <div class="bottom-nav" id="bottom-nav">
-              图文详情
+              <span @click="tab=0">图文详情</span>
+              <span @click="tab=1">评价</span>
             </div>
-            <div class="intro" id="intro">
+            <div class="intro" v-if="tab==0" v-html="content">
+            </div>
+            <div class="comment" v-if="tab==1">
+              <v-comment></v-comment>
             </div>
           </div>
         </div>
@@ -135,6 +139,7 @@
   import {ProductDetail, addCart, GET_CARTNUMS,Favorite_add,Favorite_remove} from '../../api/api.js';
   import {setStore, getStore} from '../../config/myUtils';
   import {mapMutations, mapGetters} from 'Vuex';
+  import vComment from '../mode/commentList.vue'
   export default {
     data () {
       return {
@@ -189,7 +194,9 @@
             title:'PICC承保',
             thumb:require('../../assets/images/p-4.png'),
           }
-        ]
+        ],
+        tab:0,
+        content:""
       }
     },
     methods: {
@@ -347,7 +354,8 @@
             that.opitions=res.data.options;
             console.log(that.opitions)
             that.spec=res.data.specs
-            document.getElementById("intro").innerHTML = goods.content;
+            that.content=goods.content
+//            document.getElementById("intro").innerHTML = goods.content;
 //            Indicator.close();
 
             if (res.data.level.levelname) {
@@ -493,6 +501,11 @@
         }
       }
     },
+    components:{
+//      vComment:Comment
+      vComment
+    },
+
     mounted () {
       this.getInfo();
     },
@@ -503,9 +516,10 @@
 </script>
 
 
-<style scoped>
+<style lang="less" scoped>
   @import '../../assets/css/fonts/iconfont.css';
   @import '../../assets/css/reset/reset.css';
+  @import '../../assets/css/reset/common.less';
 
   .main {
     /*-webkit-transform: translateZ(0)；*/
@@ -592,10 +606,16 @@
 
   .b-intro {
     /*margin-top: .1rem;*/
-    background: #fff;=
+    background: #fff;
     overflow-x: hidden;
     margin-bottom: .48rem;
   }
+
+  .comment {
+    width: 100%;
+    height: 5rem;
+  }
+
 
   .b-intro > p > img {
     max-width: 100% !important;
@@ -609,6 +629,7 @@
     font-size: .14rem;
     font-weight: bold;
     text-align: left;
+    display: flex;
   }
 
   .bottom-nav span {
@@ -616,6 +637,7 @@
     flex: 1;
     height: 100%;
     line-height: .42rem;
+    text-align: center;
 
   }
 

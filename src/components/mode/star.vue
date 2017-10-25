@@ -18,6 +18,9 @@
       }
     },
     prop:{
+      len,
+      level
+
 
     },
     methods:{

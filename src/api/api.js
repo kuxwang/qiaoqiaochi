@@ -753,7 +753,7 @@ export const Coupons_category = function (params, callback) {
   setParams(Object.assign(params, coupons.category), callback)
 };
 
-export const Comments_category = function (params, callback) {
+export const CommentsList = function (params, callback) {
   setParams(Object.assign(params, comments.goodComments), callback)
 };
 export const Comments_view = function (params, callback) {
