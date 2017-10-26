@@ -92,6 +92,7 @@
         Coupons_get(params,(res)=>{
           if(res.statusCode ==1){
               console.log(res);
+              this.$router.go(-2)
           }
         })
       }

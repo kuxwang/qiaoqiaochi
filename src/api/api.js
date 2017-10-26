@@ -385,7 +385,7 @@ const CARTNUMS = {url: `${base}/carts/cartNums`, method: 'GET', header, dataType
 const coupons = {
   coupon: {url: `${base}/coupons`, method: 'GET', header, dataType}, //coupons
   detail: {url: `${base}/coupons/detail`, method: 'GET', header, dataType}, //优惠券详情
-  get: {url: `${base}/coupons/get`, method: 'GET', header, dataType},  //领取优惠券
+  get: {url: `${base}/coupons/get`, method: 'POST', header, dataType},  //领取优惠券
   my: {url: `${base}/coupons/my`, method: 'GET', header, dataType},  //我的优惠券
   mypay: {url: `${base}/coupons/mypay`, method: 'GET', header, dataType},  //支付时可用优惠券
   category: {url: `${base}/coupons/category`, method: 'GET', header, dataType},  //
@@ -394,7 +394,7 @@ const comments = {
   // coupon: {url: `${base}/coupons`, method: 'GET', header, dataType}, //coupons
   goodComments: {url: `${base}/comments/goodComments`, method: 'GET', header, dataType}, //1.商品详情的评论列表
   view: {url: `${base}/comments/view`, method: 'GET', header, dataType}, //2.订单评论页面接口
-  save: {url: `${base}/comments/save`, method: 'GET', header, dataType}, //3.提交评论接口
+  save: {url: `${base}/comments/save`, method: 'POST', header, dataType}, //3.提交评论接口
 };
 
 

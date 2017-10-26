@@ -7,7 +7,7 @@
         </a>
       </mt-header>
       <div class="container">
-        <div v-show="isShow">
+        <div v-show="isShow" class="infor">
           <div class="box">
             <div class="img-box">
               <mt-swipe class="banner" :auto="4000" :show-indicators="false">
@@ -25,7 +25,7 @@
             </p>
             <div class="goodsTitle">
               <p>{{name}}</p>
-              <span class="price">￥{{marketPrice}}</span>
+              <span class="price">￥{{marketprice}}</span>
               <span class="marketPrice">市场价&nbsp;<s>{{maxprice}}</s></span>
               <div class="memberprice">
                 ￥{{minprice}}
@@ -63,11 +63,11 @@
           </div>
         </div>
         <div class="details">
+          <div class="bottom-nav" id="bottom-nav">
+            <span @click="tab=0">图文详情</span>
+            <span @click="tab=1">评价</span>
+          </div>
           <div class="b-intro">
-            <div class="bottom-nav" id="bottom-nav">
-              <span @click="tab=0">图文详情</span>
-              <span @click="tab=1">评价</span>
-            </div>
             <div class="intro" v-if="tab==0" v-html="content">
             </div>
             <div class="comment" v-if="tab==1">
@@ -102,7 +102,7 @@
         <div class="popup-box">
           <img :src="bandimg[0]">
           <div class="popup-info">
-            <p>￥{{marketPrice}}</p>
+            <p>￥{{marketprice}}</p>
             <span>库存：{{total}}件</span>
           </div>
           <div class="type-box">
@@ -148,7 +148,7 @@
         bandimg: '',
         num: '1',
         name: '',
-        marketPrice: 0.00,
+        marketprice: 0.00,
         vipname: '',
         vipcount: '0.00',
         total: '',
@@ -344,7 +344,7 @@
             let goods = res.data.goods
             that.goodsId = goods.id;
             that.name = goods.title;
-            that.marketPrice = goods.marketprice;
+            that.marketprice = goods.marketprice;
             that.minprice = goods.minprice;
             that.maxprice = goods.maxprice;
             that.bandimg = res.data.pics;
@@ -456,14 +456,14 @@
             if (options[o].specs === optionAll) {
               changeOptions = options[o];
               _this.marketprice = changeOptions.marketprice
+              console.log(_this.marketprice)
               _this.total = changeOptions.stock;
 //              _this.marketprice=changeOptions.marketprice;
               _this.optionId = changeOptions.id;
               _this.opitiontitle=changeOptions.title;
+              _this.opitiontitle=changeOptions.title;
               _this.selectoption='已选：';
               _this.noselected=false;
-//              console.log('changeOptions的结果')
-//              console.log(changeOptions)
               break;
             }
           }
@@ -545,6 +545,11 @@
     color: #666;
   }
 
+  .infor {
+    margin-bottom: -.45rem;
+  }
+
+
   /*商品信息*/
   .box {
     width: 100%;
@@ -604,22 +609,29 @@
   }
 
   .b-intro {
-    /*margin-top: .1rem;*/
+    margin-top: .63rem;
     background: #fff;
     overflow-x: hidden;
-    margin-bottom: .48rem;
+    height: 100%;
   }
 
   .comment {
     width: 100%;
     height: 5rem;
   }
-
-
   .b-intro > p > img {
     max-width: 100% !important;
 
   }
+
+  .details {
+    overflow: hidden;
+    height: 100%;
+    padding-top: .45rem;
+  }
+
+
+
 
   .bottom-nav {
     padding:.1rem .15rem;
@@ -629,6 +641,7 @@
     font-weight: bold;
     text-align: left;
     display: flex;
+    margin-bottom: -.63rem;
   }
 
   .bottom-nav span {

@@ -118,7 +118,7 @@
 
           <router-link class="look-logi ocolor"
                        :to="{path:'comment',query:{id:v.id }}" tag="button"
-                       v-if="v.status==3">
+                       v-if="v.status==3 && v.iscomment==0">
             评价
           </router-link>
 

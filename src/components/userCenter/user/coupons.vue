@@ -99,7 +99,7 @@
         Coupons_my(params,(res)=>{
           console.log(res)
           if (res.statusCode == 1) {
-            this.loading = false;
+//            this.loading = false;
             if (res.data.length > 0) {
               this.listArr = this.listArr.concat(res.data);
               console.log(this.listArr)
@@ -125,6 +125,17 @@
     },
     created(){
       this.init();
+    },
+    beforeRouteUpdate(to, from, next) {
+      if (from.name === 'coupon_detail') {
+        console.log('领取成功回来了')
+
+        this.page=1;
+        this.select=0;
+        this.listArr=[]
+        this.init();
+      }
+      next()
     },
     watch:{
       select(val){

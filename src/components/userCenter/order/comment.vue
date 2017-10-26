@@ -95,14 +95,12 @@
         }
         Comments_save(params,(res)=>{
           if(res.statusCode ==1 ){
-            console.log(res)
-            this.$router.push('home')
+            this.$router.go(-1)
           }else {
             console.log(res.data)
           }
         })
       }
-
     },
     created(){
       this.init()

@@ -96,6 +96,11 @@
           this.$refs.mylist.statusType = '';
           this.$refs.mylist.init('')
         }
+        if(from.name=='comment'){
+          console.log('从评价回来')
+          this.$refs.mylist.statusType = 3;
+          this.$refs.mylist.init(3)
+        }
       }
     },
 
