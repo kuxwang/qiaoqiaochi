@@ -42,14 +42,11 @@
 
   /*公共头部*/
   .mint-header {
-    /*background: #fff !important;*/
-    background: #000 !important;
-    /*color: #252525 !important;*/
-    color: #ffffff !important;
-    /*border-bottom: 1px solid #e3e3e3;*/
+    background: #fff !important;
+    color: #252525 !important;
+    border-bottom: 1px solid #e3e3e3;
     font-size: 0.16rem !important;
     height: .45rem !important;
-    /*height: .64rem !important;*/
   }
 
   .mintui {
@@ -57,7 +54,7 @@
   }
 
   .ocolor {
-    background-color: #F5751D !important;
+    background-color: #EC5151 !important;
   }
 
   input {
@@ -96,14 +93,14 @@
   }
 
   .mint-navbar .mint-tab-item.is-selected {
-    border-bottom: 2px solid #F5751D;
-    color: #F5751D;
+    border-bottom: 2px solid #EC5151;
+    color: #EC5151;
     font-size: .15rem;
   }
 
   /*yellowStar*/
   .mint-msgbox-confirm {
-    color: #F5751D;
+    color: #EC5151;
   }
 
   ::-webkit-scrollbar {
@@ -158,7 +155,7 @@
     font-size: .18rem !important;
   }
   .mint-msgbox-confirm {
-   color: #F5751D;
+   color: #EC5151;
   }
   .mint-msgbox-message {
     line-height: .2rem;

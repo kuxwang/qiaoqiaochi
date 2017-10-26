@@ -146,7 +146,7 @@
   }
 
   .money {
-    color: #f5751d;
+    color: #EC5151;
     font-size: .18rem;
   }
 

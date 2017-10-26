@@ -277,12 +277,6 @@
     font-size: .16rem;
   }
 
-  .mint-header {
-    height: .45rem !;
-    background: #000 !important;
-    color: #fff !important;
-  }
-
   .mint-header-title {
     font-size: .18rem !important;
   }
@@ -736,7 +730,7 @@
     width: 100%;
     height: 0.45rem;
     box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);
-    background: #F5751D;
+    background: #EC5151;
     color: #fff;
     font-size: 0.16rem;
   }

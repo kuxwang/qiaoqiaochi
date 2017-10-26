@@ -384,9 +384,9 @@
         </router-link>
         <!--</div>-->
       </div>
-      <div class="adv">
+     <!-- <div class="adv">
         <img :src='shop | getdefalute'/>
-      </div>
+      </div>-->
       <div class="goodtypes">
         <div class="view-title" style="margin-top: 0">
           热销产品
@@ -409,8 +409,6 @@
             </router-link>
           </div>
         </div>
-
-
         <div class="view-title">
           最新产品
           <router-link class="right" :to="{name:'list',query:{attr:'isnew:1',title:'最新产品'}}" tag="div">
@@ -652,7 +650,7 @@
     }
     .input {
       display: block;
-      width: 100%;
+      width: 96%;
       text-align: center;
       background: #e8e8e8;
       height: .29rem;
@@ -661,7 +659,9 @@
       color: #333;
       /*margin: .08rem 0;*/
       border-radius: .1rem .1rem .1rem .1rem;
-      margin: .1rem .1rem;
+      margin: 0 auto;
+      margin-top: .1rem;
+      margin-bottom: .1rem;
       line-height: .29rem;
     }
   }

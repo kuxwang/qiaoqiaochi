@@ -259,7 +259,7 @@
     bottom: 0;
     height: 0.48rem;
     line-height: 0.48rem;
-    /*background: #F5751D;*/
+    /*background: #EC5151;*/
     background: #333;
     text-align: center;
     color: #fff;
@@ -289,7 +289,7 @@
 
   .userpopup-lr {
     font-size: 0.135rem;
-    color: #F5751D;
+    color: #EC5151;
   }
 
   .picker-item {

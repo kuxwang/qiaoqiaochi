@@ -91,7 +91,7 @@
             <i class="carNum" v-if="delGoodsNum>0">{{goodNums}}</i>
           </div>
         </router-link>
-        <button class="icon-btn icon-btn-car ocolor" @click="handleClick">
+        <button class="icon-btn icon-btn-car" @click="handleClick">
           加入购物车
         </button>
         <button class="icon-btn icon-btn-con" @click="goPay">
@@ -1016,8 +1016,8 @@
   }
 
   .isActive {
-    color: #F5751D;
-    border-bottom: 3px solid #F5751D;
+    color: #EC5151;
+    border-bottom: 3px solid #EC5151;
   }
 
   /*规格*/
@@ -1076,7 +1076,7 @@
   }
 
   .starActive {
-    color: #F5751D;
+    color: #EC5151;
   }
 
   .pic-text {

@@ -431,7 +431,7 @@
     width: 50%;
     height: .45rem;
     line-height: .45rem;
-    background: #F5751D;
+    background: #EC5151;
     font-size: .20rem;
     color: #fff;
   }
@@ -457,8 +457,8 @@
   }
 
   .mint-checkbox-input:checked + .mint-checkbox-core {
-    background-color: #F5751D;
-    border-color: #F5751D;
+    background-color: #EC5151;
+    border-color: #EC5151;
     vertical-align: middle;
   }
 
@@ -490,7 +490,7 @@
     line-height: 0.4rem;
     text-align: center;
     color: #fff;
-    /*background: #F5751D;*/
+    /*background: #EC5151;*/
     background: red;
     margin: 0 auto;
     margin-top: 0.2rem;

@@ -499,8 +499,8 @@
     width: 100%;
     height: 0.45rem;
     box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);
-    /*background: #F5751D;*/
-    background: #333;
+    /*background: #EC5151;*/
+    background: #EC5151;
     color: #fff;
     font-size: 0.16rem;
   }
@@ -528,7 +528,7 @@
 
   .userpopup-lr {
     font-size: 0.135rem;
-    color: #F5751D;
+    color: #EC5151;
   }
 
   .picker-item {

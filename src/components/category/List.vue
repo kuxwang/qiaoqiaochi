@@ -97,6 +97,7 @@
           }
         }
         Attributes(params, (res) => {
+          Indicator.close()
           if (res.statusCode === 1) {
             if (res.data) {
               this.goodlist = res.data
@@ -159,15 +160,12 @@
             }
           });
         }
-
-
       },
       searchlist(){
         let params = {
           data: {
             keywords: this.find,
             cid: this.$route.query.cid
-//            cid:''
           }
         }
         ProductDetail(params, (res) => {
@@ -511,7 +509,7 @@
   }
 
   .search div {
-    background-color: #F5751D;
+    background-color: #EC5151;
     display: block;
     height: .3rem;
     flex: .3;

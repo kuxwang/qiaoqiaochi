@@ -201,7 +201,7 @@
     bottom: 0;
     height: 0.48rem;
     line-height: 0.48rem;
-    /*background: #F5751D;*/
+    /*background: #EC5151;*/
     background: #333;
     text-align: center;
     color: #fff;

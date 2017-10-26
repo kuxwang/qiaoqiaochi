@@ -903,8 +903,8 @@
   }
 
   .isActive {
-    color: #F5751D;
-    border-bottom: 3px solid #F5751D;
+    color: #EC5151;
+    border-bottom: 3px solid #EC5151;
   }
 
   /*规格*/
@@ -963,7 +963,7 @@
   }
 
   .starActive {
-    color: #F5751D;
+    color: #EC5151;
   }
 
   .pic-text {

@@ -241,10 +241,10 @@
     position:relative;
   }
   .logistics-info>ul>li.fcolor{
-    color:#F5751D;
+    color:#EC5151;
   }
   .logistics-info>ul>li.fcolor>b{
-    background:#F5751D ;
+    background:#EC5151 ;
   }
   .logistics-info>ul>li>b{
     position: absolute;

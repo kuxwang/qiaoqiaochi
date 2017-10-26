@@ -128,7 +128,7 @@ export default {
 }
 
 .mint-header {
-  z-index: 31 !important;
+  /*z-index: 31 !important;*/
 }
 </style>
 

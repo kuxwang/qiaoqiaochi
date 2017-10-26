@@ -119,7 +119,7 @@
     left: 0.2rem;
     top: 0px;
     font-size: 0.20rem;
-    color: #F5751D;
+    color: #EC5151;
   }
 
   .deliverymode-list li:before {

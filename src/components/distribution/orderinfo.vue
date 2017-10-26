@@ -146,7 +146,7 @@
 
   h3 {
     font-size: .46rem;
-    color: #F5751D;
+    color: #EC5151;
   }
 
   .userinfo {
@@ -202,8 +202,8 @@
     height: .45rem;
     line-height: 0.45rem;
     border-radius: .45rem;
-    border: 1px #F5751D solid;
-    /* background: #F5751D; */
+    border: 1px #EC5151 solid;
+    /* background: #EC5151; */
     color: #333;
   }
 
@@ -257,7 +257,7 @@
     color: #6C6C6C;
     line-height: .4rem;
     text-align: center;
-    border: 1px #F5751D solid
+    border: 1px #EC5151 solid
   }
 
   .tianchong {

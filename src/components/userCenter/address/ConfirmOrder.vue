@@ -502,7 +502,7 @@
   }
 
   .goods-price {
-    color: #F5751D;
+    color: #EC5151;
     font-size: 0.12rem;
   }
 
@@ -655,7 +655,7 @@
         line-height: 0.46rem;*/
     text-align: right;
     font-size: 0.12rem;
-    color: #F5751D;
+    color: #EC5151;
   }
 
   .goods-total {
@@ -701,14 +701,14 @@
     height: 0.50rem;
     line-height: 0.50rem;
     font-size: 0.16rem;
-    background: #F5751D;
+    background: #EC5151;
     color: #fff;
     text-align: center;
     outline: none;
   }
 
   .settlement-item-lf span {
-    color: #F5751D;
+    color: #EC5151;
   }
 
   .exhibition {

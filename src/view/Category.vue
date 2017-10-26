@@ -36,42 +36,8 @@
       return {
         img1: require('../assets/images/home-01.jpg'),
         img2: require('../assets/images/home-02.jpg'),
-        clist: [
-          {
-            name:'1',
-            id:1
-          },
-          {
-            name:'混合',
-            id:1
-          },
-          {
-            name:'混合',
-            id:1
-          },
-          {
-            name:'混合',
-            id:1
-          }
-        ],  //左侧列表
-        goodslist: [
-          {
-            name:'呵呵',
-            id:1,
-          },
-          {
-            name:'呵呵',
-            id:1,
-          },
-          {
-            name:'呵呵',
-            id:1,
-          },
-          {
-            name:'呵呵',
-            id:1,
-          }
-        ], //右侧商品,
+        clist: [],  //左侧列表
+        goodslist: [], //右侧商品,
         selected: 0,
         find: ''
       }
@@ -97,7 +63,6 @@
 
             }
           })
-
         },
         init(){
           let _this = this;
@@ -278,7 +243,7 @@
   }
 
   .search div {
-    background-color: #F5751D;
+    background-color: #EC5151;
     display: block;
     height: .3rem;
     flex: .3;

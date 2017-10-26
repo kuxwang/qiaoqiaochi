@@ -212,7 +212,7 @@
     margin: 0 auto;
     display: block;
     width: 100%;
-    color: #F5751D !important;
+    color: #EC5151 !important;
   }
 
   .order .span2 {
@@ -295,8 +295,8 @@
   }
 
   .mint-checkbox-input:checked + .mint-checkbox-core {
-    background-color: #F5751D;
-    border-color: #F5751D;
+    background-color: #EC5151;
+    border-color: #EC5151;
   }
 
   .mint-checkbox-input[disabled] + .mint-checkbox-core {

@@ -768,9 +768,9 @@
     margin-left: auto;
     margin-right: auto;
     font-size: .20rem;
-    /*border: 1px solid #F5751D;*/
+    /*border: 1px solid #EC5151;*/
     line-height: .3rem;
-    /*color: #F5751D;*/
+    /*color: #EC5151;*/
     border-radius: 50%;
   }
 
