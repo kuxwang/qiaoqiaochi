@@ -67,12 +67,10 @@
           <div class="deliveryMode-lf fl">
             优惠券
           </div>
-          <div class="deliveryMode-lr fr">
-            <!--{{delivery.dispatchname}}-->
-            {{myCoupon.backmoney}}
+          <div class="deliveryMode-lr fr" v-if="backmoney !=0">
+            {{backmoney}}
           </div>
         </router-link>
-
         <div class="deliveryMode bt switchgroup">
           <div class="deliveryMode-lf fl">
             购物专用{{usenum}}
@@ -81,8 +79,6 @@
             <mt-switch v-model="ifuse" @change="switchuse"></mt-switch>
           </div>
         </div>
-
-
         <div class="deliveryMode deflist clearfix">
           <div class="deliveryMode-lf fl">
             给卖家留言:
@@ -149,11 +145,10 @@
       <div class="settlement-lf fl">
       			<span class="settlement-item-lf">共<span>{{memberDiscount.total}}</span>件 , 总金额</span>
         <span class="mygoods-price">
-					¥<span class="goods-intPrice">{{memberDiscount.realprice-Number(myCoupon.backmoney)-integral + dispatchesprice | calculatePrice1}}.</span>
+					¥<span class="goods-intPrice">{{memberDiscount.realprice-integral + dispatchesprice-this.myCoupon.backmoney | calculatePrice1}}.</span>
           <span class="goods-folatPrice">{{memberDiscount.realprice | calculatePrice2}}</span>
 				</span>
       </div>
-
       <button id="commitForm" class="settlement-lr fr" @click="goPay">
         提交订单
       </button>
@@ -187,7 +182,7 @@
         usenum:'', //实际用了多少积分
         goodsinfo:'',
         ifuse:false,  //是否使用积分
-        integral:0
+        integral:0,
       }
     },
     methods: {
@@ -253,7 +248,7 @@
 //          let dispatchid = this.dispatches.id
           let dispatchid = this.delivery.id;
           let cartids = this.myOrders.cartids;
-          let couponid = this.myCoupon.id || '';
+//          let couponid = this.myCoupon.id || '';
           let remark = this.remark || ''
           if (this.orderGoods) {
             for (let i = 0, j = this.orderGoods.length; i < j; i++) {
@@ -264,8 +259,6 @@
               }
             }
           }
-
-
           let params = {
             data: {
               goods:goods,
@@ -273,13 +266,11 @@
               addressid: addressid,
               cartids,
               remark,
-              credit:this.ifuse,
-              couponid
+              credit:Number(this.ifuse),
+              couponid:this.myCoupon.id || ''
             }
           }
-          console.log('购物数据')
           console.log(params)
-
           if (addressid == '') {
             Toast({
               message: `请选择收货地址`,
@@ -293,7 +284,6 @@
               if (res.statusCode == 1) {
                 let ordersn = res.data.ordersn
                 _this.ORDERINFO(ordersn);
-
                 _this.$router.replace({name: 'payselect', query: {orderid: ordersn}})
               } else if (res.statusCode == -1) {
                 Toast({
@@ -343,6 +333,9 @@
       dispatch() {
         let dispatch = this.dispatches || this.delivery
         return dispatch || '商家配送'
+      },
+        backmoney(){
+        return Number(this.myCoupon.backmoney) || 0
       }
     },
     filters: {
@@ -404,7 +397,7 @@
           this.defaultAddress=''
         }
       },
-      coupon(a,b){
+      /*coupon(a,b){
         console.log(`a${a}`)
         console.log(`b${b}`)
         if(a>this.memberDiscount.realprice){
@@ -413,14 +406,12 @@
         if(a>this.couonnum){
           this.coupon=this.couonnum
         }
-      },
-
+      },*/
     },
     activated(){
-      this.MYCOUPON({});
+      this.MYCOUPON({backmoney:0});
       this.init();
     },
-
   }
 </script>
 <style scoped>

@@ -23,7 +23,7 @@ const state = {
     total: ''
   },
   myCoupon:{
-
+    backmoney:0
   },  //优惠券
   orderInfo: '', //订单信息,
   // reason:"",
