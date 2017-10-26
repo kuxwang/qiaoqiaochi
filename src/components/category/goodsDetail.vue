@@ -502,7 +502,6 @@
       }
     },
     components:{
-//      vComment:Comment
       vComment
     },
 

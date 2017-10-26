@@ -1,12 +1,12 @@
 <template>
   <div class="main">
     <mt-header title="评价" fixed>
-      <!--<router-link to="/userCenter" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>-->
-      <a @click="submit()" slot="left">
+      <a @click="goBack()" slot="left">
         <mt-button icon="back"></mt-button>
       </a>
+      <div slot="right" @click="submit()">
+        提交
+      </div>
     </mt-header>
     <!--<div class="container">-->
       <ul class="container">
@@ -23,9 +23,15 @@
           </div>
           <div class="eval">
            <span>评分:</span>
-            <v-star :len="5" :level="3"></v-star>
+            <!--<v-star :len="5" :level="3"></v-star>-->
+            <div class="eval_star">
+              <div class="star" v-for="(s,idx) in 5" @click="setLevel(index,idx)">
+                <img :src="star" v-if="level[index]>=idx+1">
+                <img :src="starnull" v-else>
+              </div>
+            </div>
           </div>
-          <textarea placeholder="这次买的商品满意吗，写点心得给其他顾客参考吧。长度在6-140字之间">
+          <textarea placeholder="这次买的商品满意吗，写点心得给其他顾客参考吧。长度在6-140字之间" v-model="text[index]">
           </textarea>
         </li>
       </ul>
@@ -34,13 +40,17 @@
 </template>
 
 <script>
-  import {Comments_view} from '../../../api/api';
-  import vStar from '../../mode/star';
+  import {Comments_view,Comments_save} from '../../../api/api';
+//  import vStar from '../../mode/star';
 
   export default {
     data(){
       return {
-        list:[]
+        list:[],
+        level:[],
+        star: require('../../../assets/images/star.png'),
+        starnull: require('../../../assets/images/starnull.png'),
+        text:[]
       }
     },
     methods:{
@@ -55,41 +65,55 @@
         }
         Comments_view(params,(res)=>{
           if(res.statusCode==1){
-            console.log('可评价数据')
             console.log(res)
-            this.list=res.data
+            this.list=res.data;
+            let arr=[];
+            for(let i=0;i<res.data.length;i++){
+              arr.push(5);
+            }
+            this.level=arr;
+            console.log('this.level')
+            console.log(this.level)
           }
         })
-
-
+      },
+      setLevel(i,s){
+        this.$set(this.level, i, s+1);
+        console.log(this.level)
       },
       submit(){
         let params={
-          'orderid': this.$route.query.id
+          data:{
+            'orderid': this.$route.query.id
+          }
         }
         let len=this.list.length;
-        /*for (let i=0;i<len;i++){
-          params.i=this.$refs.i.level
-        }*/
-
-        /*console.log(this)
-
-
-        console.log(params)*/
+        for(let i=0;i<len;i++){
+          params.data[`columns[${i}][goodsid]`]=this.list[i].id;
+          params.data[`columns[${i}][level]`]=this.level[i];
+          params.data[`columns[${i}][content]`]=this.text[i];
+        }
+        Comments_save(params,(res)=>{
+          if(res.statusCode ==1 ){
+            console.log(res)
+            this.$router.push('home')
+          }else {
+            console.log(res.data)
+          }
+        })
       }
-
-
-
-
-
-
 
     },
     created(){
       this.init()
     },
     components:{
-      vStar:vStar
+//      vStar:vStar
+    },
+    watch:{
+     /* text(a){
+        console.log(a)
+      }*/
     }
 
   }
@@ -168,9 +192,18 @@
         span {
           display: block;
           margin-right: .1rem;
+          line-height: .29rem;
         }
         .eval_star {
           flex: 1;
+          display: flex;
+          width: 100%;
+          .star {
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
         }
       }
       textarea {
