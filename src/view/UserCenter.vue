@@ -240,7 +240,6 @@
       },
       getAddr(){
         this.addrtype(1)
-//        this.$router.push({name: 'deliveryaddress'});
         this.$router.push({name: 'address'});
       },
       ...mapMutations({
@@ -281,14 +280,13 @@
     font-size: .18rem !important;
   }
 
-  .main, .main1 {
+  .main {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: #ececec;
-    /*overflow: auto;*/
     overflow: hidden;
   }
 

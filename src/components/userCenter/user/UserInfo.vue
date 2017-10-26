@@ -373,12 +373,9 @@
       this.getUserInfo();
       console.log('Userinfo')
     },
-
     created () {
-
       this.getUserInfo();
     }
-
   }
 </script>
 <style scoped>
