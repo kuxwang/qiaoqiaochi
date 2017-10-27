@@ -28,14 +28,14 @@
               <!--<span class="level">{{memberInfo.id}}</span>-->
               <!--<span class="level">{{memberInfo.leveldetail.levelname}}</span>-->
             </div>
-            <!--<router-link class="mymoney" :to="{name: 'takemoney'}" tag="div">
+            <router-link class="mymoney" :to="{name: 'takemoney'}" tag="div">
               <p>
-                {{memberInfo.credit2}} 元
+                {{memberInfo.credit1}} 元
               </p>
               <p>
-                我的余额
+                购物专用
               </p>
-            </router-link>-->
+            </router-link>
           </div>
         </section>
 

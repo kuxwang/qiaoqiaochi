@@ -3,7 +3,7 @@
     <!--<v-search class="bgwhite"></v-search>-->
     <div class="list">
       <ul class="list-l">
-        <li :class="['l-item',{tabActive: selected==index }]" v-for="(i,index) in clist" @click="tab(index)">{{i.name}}
+        <li :class="['l-item',{tabActive: selected==index }]" v-for="(i,index) in clist" @click="tabselect(index)">{{i.name}}
         </li>
       </ul>
       <div class="list-r">
@@ -43,22 +43,24 @@
       }
     },
     methods: {
-        tab(index){
-          console.log(index);
+      tabselect(index){
+  /*        console.log(index);
           console.log(this.clist)
-          console.log('上面')
-          this.selected = index;
-          this.goodslist = [];
-          let _this = this;
+          console.log('上面')*/
+        let _this = this;
+          _this.selected = index;
+          _this.goodslist = [];
           console.log(_this.clist)
           let params = {
             data: {
               pid: _this.clist[index].id
             }
           }
-          Category(params, (res) => {
+
+        Category(params, (res) => {
             if (res.statusCode === 1) {
               _this.goodslist = res.data
+
             } else {
 
             }
@@ -73,7 +75,8 @@
             if (res.statusCode === 1) {
               console.log(res)
               _this.clist = _this.clist.concat(res.data)
-//              _this.tab(0)
+              this.tabselect(_this.selected)
+
             }
           })
         }
@@ -89,7 +92,7 @@
     }
     ,
     mounted() {
-      this.init()
+      this.init();
     }
 
 
@@ -150,11 +153,11 @@
   .list-l {
     flex: 1;
     height: 100%;
-    background-color: #eee;
+
     /*border: 1px solid #eee;*/
     /*margin-top: -0.02rem;*/
     padding-left: 0;
-    background: #fff;
+    /*background: #fff;*/
   }
 
   .l-item {
@@ -165,6 +168,7 @@
     line-height: .4rem;
     border-bottom: 1px solid #f8f8f8;
     color: #232327;
+    background-color: #eee;
 
   }
 

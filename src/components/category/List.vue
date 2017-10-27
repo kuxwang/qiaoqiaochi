@@ -179,7 +179,6 @@
       },
       getAttrsort(ordersort){
         let _this = this;
-
         let params = {
           data: {
             attributes: _this.$route.query.attr,
