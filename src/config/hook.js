@@ -182,7 +182,7 @@ export const _webapp = {
     for (let objKey in obj) {
       if (obj[objKey] !== '' && objKey !== 'access_token' && objKey !== 'sign'&& objKey.indexOf('[')<0 ) {
         keys.push(objKey);
-        console.log(objKey)
+        // console.log(objKey)
 
       }
     }

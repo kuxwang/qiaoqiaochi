@@ -72,7 +72,6 @@
     methods: {
 
       go1(){
-        console.log('run');
         console.log(this.ok);
         if(this.ok > 0){
           this.$router.push({name: 'outmoney'})
@@ -98,9 +97,6 @@
             this.pay = res.data.pay.c_money_sum;
             this.defaults = res.data.default.c_money_sum;
             this.manage = res.data.manage.c_money_sum;
-
-//            console.log(res)
-
           } else {
             console.log('请求失败')
           }

@@ -34,6 +34,7 @@ const Test = r => require.ensure([], () => r(require('../view/Empty.vue')), 'Emp
 const VipCenter = r => require.ensure([], () => r(require('../view/distributionCenter.vue')), 'UserCenter')
 const Extension = r => require.ensure([], () => r(require('../components/distribution/extension.vue')), 'UserCenter')
 const Partner = r => require.ensure([], () => r(require('../components/distribution/partner.vue')), 'UserCenter')
+const Qcode = r => require.ensure([], () => r(require('../components/distribution/qCode.vue')), 'UserCenter')
 const PartnerInfo = r => require.ensure([], () => r(require('../components/distribution/partnerInfo.vue')), 'UserCenter')
 const Orderinfo = r => require.ensure([], () => r(require('../components/distribution/orderinfo.vue')), 'UserCenter')
 const UserInfo = r => require.ensure([], () => r(require('../components/userCenter/user/UserInfo.vue')), 'UserCenter')
@@ -208,6 +209,11 @@ export default new Router({
           name: 'disapply',
           component: Applys
         },
+        {
+          path:'/qCode',
+          name:'qCode',
+          component:Qcode
+        }
       ]
     },
 

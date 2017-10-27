@@ -1,10 +1,10 @@
 <template>
   <div class="main">
-    <mt-header title="个人中心">
+    <!--<mt-header title="个人中心">
       <router-link to="/userCenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
-    </mt-header>
+    </mt-header>-->
     <div class="container">
       <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" :maxDistance="60"
                    :distanceIndex="disindex"
@@ -90,6 +90,13 @@
               <i class="iconfont right">&#xe649;</i>
             </router-link>-->
 
+
+            <router-link class="center-cell" :to="{name:'vipCenter'}" tag="li">
+              <div class="iconfont icon-grey">&#xe600;</div>
+              <div class="title-list">分销中心</div>
+              <i class="iconfont right">&#xe649;</i>
+            </router-link>
+
             <router-link class="center-cell" :to="{name:'coupon'}" tag="li">
               <div class="iconfont icon-grey">&#xe699;</div>
               <div class="title-list">现金券</div>
@@ -107,7 +114,7 @@
               <i class="iconfont right">&#xe649;</i>
             </router-link>
 
-            <router-link class="center-cell" :to="{name:'opinion'}" tag="li">
+            <!--<router-link class="center-cell" :to="{name:'opinion'}" tag="li">
               <div class="iconfont icon-grey">&#xe672;</div>
               <div class="title-list">意见反馈</div>
               <i class="iconfont right">&#xe649;</i>
@@ -118,13 +125,13 @@
               <div class="title-list">联系客服</div>
               <i class="iconfont right">&#xe649;</i>
             </router-link>
+-->
 
-
-            <!--<router-link class="center-cell" :to="{name:'footprint'}" tag="li">-->
-            <!--<div class="iconfont icon4">&#xe617;</div>-->
-            <!--<div class="title-list">我的足迹</div>-->
-            <!--<i class="iconfont right">&#xe649;</i>-->
-            <!--</router-link>-->
+            <router-link class="center-cell" :to="{name:'footprint'}" tag="li">
+            <div class="iconfont icon4">&#xe617;</div>
+            <div class="title-list">我的足迹</div>
+            <i class="iconfont right">&#xe649;</i>
+            </router-link>
 
 
           </ul>
@@ -704,7 +711,7 @@
   }
 
   .icon4 {
-    color: #ef6262 !important
+    /*color: #ef6262 !important*/
   }
 
   .icon5 {

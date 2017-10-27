@@ -9,7 +9,7 @@
       </router-link>
       <router-link id="ordertab" class="mint-tab-item"  :to="{name:'category'}"  tag="a">
         <div class="mint-tab-item-label">
-          <div class="iconfont tabIcon">&#xe7d8;</div>
+          <div class="iconfont tabIcon">&#xe654;</div>
           分类
         </div>
       </router-link>
