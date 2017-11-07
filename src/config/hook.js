@@ -87,7 +87,7 @@ export const _webapp = {
 
     if(_webapp.debug === true){
       if (!_env.wshoto) {
-        // console.log(logData);
+        console.log(logData);
         return ;
       }
 
@@ -166,7 +166,7 @@ export const _webapp = {
   },
 
   getSignData: function (obj, auth_key) {
-    // _webapp.log('getSign Data running:');
+    _webapp.log('getSign Data running:');
     // _webapp.log(obj);
 
     if (typeof obj !== 'object') {
@@ -180,10 +180,8 @@ export const _webapp = {
     let keys = [];
 
     for (let objKey in obj) {
-      if (obj[objKey] !== '' && objKey !== 'access_token' && objKey !== 'sign'&& objKey.indexOf('[')<0 ) {
+      if (obj[objKey] !== '' && objKey !== 'access_token' && objKey !== 'sign') {
         keys.push(objKey);
-        // console.log(objKey)
-
       }
     }
     // _webapp.log(keys);
@@ -301,7 +299,7 @@ export const _webapp = {
   getApiTokenSync: function () {
 
     if(_webapp.debug === true){
-      _webapp.apiToken = {data : {'access_token' : '872f32cc27506bbbb8e0f5d8a3145cce', 'auth_key' : 'Hi6Ohy7b', 'timestamp' : '123123123'}, statusCode : '1'}
+      _webapp.apiToken = {data : {'access_token' : '51f3e67ff0a401598e62d19162fbfef5', 'auth_key' : 'LzRRhn2v', 'timestamp' : '123123123'}, statusCode : '1'}
     }
 
     // _webapp.log('_webapp getApiTokenSync running');
@@ -390,7 +388,7 @@ export const _webapp = {
    */
   getSessionKeySync: function () {
     if(_webapp.debug === true){
-      _webapp.sessionKey = {data : {"sessionkey":"8b6d978b783b2390a524276cce56d8e6", "timestamp":1500997527}, statusCode : '1'};
+      _webapp.sessionKey = {data : {"sessionkey":"3811fe35aef083876e3de6d2b09444c1", "timestamp":1500997527}, statusCode : '1'};
     }
 
     // _webapp.log('_webapp getSessionKeySync running');

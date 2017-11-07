@@ -7,7 +7,7 @@
           首页
         </div>
       </router-link>
-      <router-link id="ordertab" class="mint-tab-item"  :to="{name:'category'}"  tag="a">
+      <router-link id="ordertab" class="mint-tab-item"  :to="{name:'class'}"  tag="a">
         <div class="mint-tab-item-label">
           <div class="iconfont tabIcon">&#xe654;</div>
           分类

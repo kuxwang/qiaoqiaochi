@@ -284,8 +284,8 @@
     bottom: 0;
     height: 0.48rem;
     line-height: 0.48rem;
-    /*background: #EC5151;*/
-    background: #333;
+    background: #EC5151;
+    /*background: #333;*/
     text-align: center;
     color: #fff;
     font-size: 0.16rem;

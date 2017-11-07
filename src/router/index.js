@@ -12,6 +12,7 @@ const app = r => require.ensure([], () => r(require('../App.vue')), 'app')
  * */
 import Home from '../view/Home.vue'
 const Category = r => require.ensure([], () => r(require('../view/Category.vue')), 'Category')
+const Class = r => require.ensure([], () => r(require('../view/Class.vue')), 'Class')
 const MyOrder = r => require.ensure([], () => r(require('../components/userCenter/order/MyOrder.vue')), 'Order')
 const ShoppingCart = r => require.ensure([], () => r(require('../view/ShoppingCart.vue')), 'ShoppingCart')
 const UserCenter = r => require.ensure([], () => r(require('../view/UserCenter.vue')), 'UserCenter')
@@ -143,6 +144,12 @@ export default new Router({
         }
       ]
     },
+    {
+      path: '/class',
+      name: 'class',
+      component: Class
+    },
+
 
     //购物车
     {

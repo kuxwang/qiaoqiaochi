@@ -43,6 +43,9 @@
             <span class="total">库存{{i.total}}</span>
             <span class="sale">销量{{i.sales}}</span>
           </div>
+          <div class="nototal iconfont" v-if="i.total==0">
+            &#xe665;
+          </div>
         </router-link>
         <!--</li>-->
       </ul>
@@ -420,7 +423,17 @@
     -webkit-box-shadow: 0 0 2px rgba(74, 74, 74, .2);
     -moz-box-shadow: 0 0 2px rgba(74, 74, 74, .2);
     box-shadow: 0 0 2px rgba(74, 74, 74, .2);
-
+    position: relative;
+  }
+  .list-cell .nototal {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    /*background-color: red;*/
+    font-size: .8rem;
+    line-height: 1.1rem;
+    color: #8a8a8a;
   }
 
   .list-cell .logo {

@@ -142,7 +142,6 @@
             _this.payText = '正在发起支付...';
             _webapp.payment(type, res.data, function(payResult){
               _this.loadingStatus = 0;
-
               if (payResult.statusCode == 1) {
                 _this.payStstus = 1
                 Toast({

@@ -15,9 +15,9 @@
                   <img :src="i" class="content"/>
                 </mt-swipe-item>
               </mt-swipe>
-              <div class="tuwen" @click="gototuwen">
+              <!--<div class="tuwen" @click="gototuwen">
                 图文详情
-              </div>
+              </div>-->
             </div>
           </div>
           <div class="intro">
@@ -64,8 +64,8 @@
         </div>
         <div class="details">
           <div class="bottom-nav" id="bottom-nav">
-            <span @click="tab=0">图文详情</span>
-            <span @click="tab=1">评价</span>
+            <span :class="{active: tab==0}" @click="tab=0">图文详情</span>
+            <span :class="{active: tab==1}" @click="tab=1">评价</span>
           </div>
           <div class="b-intro">
             <div class="intro" v-if="tab==0" v-html="content">
@@ -125,7 +125,7 @@
           </div>
           <button v-if="hasselect" class="confirm ocolor" @click="toast">确认</button>
           <div v-else class="confirm1">
-            <div class="ocolor" @click="handleClick1">加入购物车</div>
+            <div class="addshop" @click="handleClick1">加入购物车</div>
             <div @click="goPay1">立即购买</div>
           </div>
         </div>
@@ -240,80 +240,88 @@
       },
       toast: function () {
         let _this = this;
-        console.log('长度')
-        console.log(_this.spec)
-        console.log(_this.specs_arr)
-
-//        if (!_this.spec || _this.spec.length == _this.specs_arr.length) {
-//        if (!_this.spec.length || _this.selectoption == '已选：') {
-        if (!_this.spec.length || _this.optionId) {
-          if (this.myStata === 1) {//加入购物车
-            _this.popupVisible = false;
-            let params = {
-              data: {
-                goodsid: _this.$route.query.id,
-                total: _this.num,
-                optionid: _this.optionId
-              }
-            }
-
-            addCart(params, function (res) {
-              console.log(_this)
-              if (res.statusCode == 1) {
-                let params = {data:{}};
-                let that = _this;
-                GET_CARTNUMS(params, function (res) {//获取购物车当前数量
-                  if (res.statusCode === 1) {
-                    that.delGoodsNum = res.data.cartcount;
-                  } else {
-                    console.log('请求失败')
-                  }
-                });
-                Toast({
-                  message: '操作成功 商品已在购物车',
-                  position: 'middle',
-                  duration: 1800
-                });
-              } else if (!_this.optionId) {
-                Toast({
-                  message: '添加失败',
-                  position: 'bottom',
-                  duration: 1800
-                });
-              } else if (!_this.total) {
-                Toast({
-                  message: '添加失败',
-                  position: 'bottom',
-                  duration: 1800
-                });
-              }
-            })
-          } else if (this.myStata === 2) {//立即购买
-            let myOrders = {
-//            goodsid:this.goodsId,
-              goodsid: this.$route.query.id,
-              optionid: this.optionId,
-              cartids: '',
-              total: this.num
-            }
-            console.log(myOrders)
-            this.getMyorders(myOrders);
-            this.$router.push({name: 'confirmorder'})
-          }
-//        } else if (_this.spec.length > _this.specs_arr.length || _this.specs_arr.some((item)=>{item == ""})) {
-        } else if (_this.selectoption == '请选择') {
-          Toast({
-            message: '请选择规格',
-            position: 'bottom',
-            duration: 1800
-          });
-        } else if (!_this.total) {
+        if(_this.total<=0){
           Toast({
             message: '暂无库存',
             position: 'bottom',
             duration: 1800
           });
+        }else {
+          if (!_this.spec.length || _this.optionId) {
+            if (this.myStata === 1) {//加入购物车
+              _this.popupVisible = false;
+              let params = {
+                data: {
+                  goodsid: _this.$route.query.id,
+                  total: _this.num,
+                  optionid: _this.optionId
+                }
+              }
+
+              addCart(params, function (res) {
+                console.log(_this)
+                if (res.statusCode == 1) {
+                  let params = {data:{}};
+                  let that = _this;
+                  GET_CARTNUMS(params, function (res) {//获取购物车当前数量
+                    if (res.statusCode === 1) {
+                      that.delGoodsNum = res.data.cartcount;
+                    } else {
+                      console.log('请求失败')
+                    }
+                  });
+                  Toast({
+                    message: '操作成功 商品已在购物车',
+                    position: 'middle',
+                    duration: 1800
+                  });
+                }
+                else if (!_this.optionId) {
+                  Toast({
+                    message: '添加失败',
+                    position: 'bottom',
+                    duration: 1800
+                  });
+                }
+                else if (!_this.total) {
+                  Toast({
+                    message: '添加失败',
+                    position: 'bottom',
+                    duration: 1800
+                  });
+                }
+              })
+            }
+            else if (this.myStata === 2) {//立即购买
+              let myOrders = {
+//            goodsid:this.goodsId,
+                goodsid: this.$route.query.id,
+                optionid: this.optionId,
+                cartids: '',
+                total: this.num
+              }
+              console.log(myOrders)
+              this.getMyorders(myOrders);
+              this.$router.push({name: 'confirmorder'})
+            }
+//        } else if (_this.spec.length > _this.specs_arr.length || _this.specs_arr.some((item)=>{item == ""})) {
+          }
+          else if (_this.selectoption == '请选择') {
+            Toast({
+              message: '请选择规格',
+              position: 'bottom',
+              duration: 1800
+            });
+          }
+          else if (!_this.total) {
+            Toast({
+              message: '暂无库存',
+              position: 'bottom',
+              duration: 1800
+            });
+          }
         }
+
       },
       reduce: function (num) {
         if (num > 1) {
@@ -634,14 +642,16 @@
 
 
   .bottom-nav {
-    padding:.1rem .15rem;
+    /*padding:.1rem .15rem;*/
+    padding:0 .15rem;
     /*display: flex;*/
     border-bottom: 1px solid #eee;
     font-size: .14rem;
     font-weight: bold;
     text-align: left;
     display: flex;
-    margin-bottom: -.63rem;
+    margin-bottom: -.53rem;
+    background-color: #fff;
   }
 
   .bottom-nav span {
@@ -656,6 +666,14 @@
   .bottom-nav span:first-child {
     border-right: 1px solid #eee;
   }
+  .bottom-nav .active {
+    color: #dd2727;
+    border-bottom: 3px solid #dd2727;
+  }
+
+
+
+
 
   .img-p {
     width: 100%;
@@ -826,10 +844,9 @@
     background-color: #dd2727;
     line-height: .46rem;
   }
-
-
-
-
+  .confirm1 .addshop {
+    background-color: #ff9500;
+  }
 
   .cal-box {
     /*position:relative;*/

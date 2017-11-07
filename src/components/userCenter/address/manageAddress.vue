@@ -64,11 +64,11 @@
             {{v.province}}{{v.city}}{{v.area}}{{v.address}}
           </div>
           <div class="set">
-            <div :class="['default',{'blue':isChecked==i}]" @click="isDefault(i)">
-              <span :class="['iconfont',{'checked':v.isdefault==1} ]">&#xe69a;</span>
-              <span :class="['title',{'blue':isChecked==i}]">默认地址</span>
-              <!--<input type="checkbox" :value="i" v-model="isChecked" />-->
-            </div>
+            <!--<div :class="['default',{'blue':isChecked==i}]" @click="isDefault(i)">-->
+              <!--&lt;!&ndash;<span :class="['iconfont',{'checked':v.isdefault==1} ]">&#xe69a;</span>-->
+              <!--<span :class="['title',{'blue':isChecked==i}]">默认地址</span>&ndash;&gt;-->
+              <!--&lt;!&ndash;<input type="checkbox" :value="i" v-model="isChecked" />&ndash;&gt;-->
+            <!--</div>-->
             <div class="right">
               <span @click.stop="edit(v)"><span class="iconfont edit">&#xe64e;</span>编辑</span>
               <span @click="deleteAddress(v.id)"><span class="iconfont tranch">&#xe6db;</span>删除</span>
@@ -490,6 +490,8 @@
           .right {
             flex: 1;
             text-align: right;
+            display: flex;
+            justify-content: space-between;
             span {
               font-size: .11rem;
               color: #666;

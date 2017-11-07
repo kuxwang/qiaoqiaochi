@@ -69,7 +69,7 @@
               <div class="dingdan-icon ">
                 <!--<img :src="../../public/imgs/ygmhb2.png" />-->
                 <div class="iconfont">&#xe612;</div>
-                <span class="num">{{teamsStatistics.agent}}</span>
+                <span class="num">{{teamsStatistics.purchased}}</span>
               </div>
               <span> 已购买伙伴</span>
             </div>
@@ -82,7 +82,7 @@
             <div class="mydingdan-list">
               <div class="dingdan-icon ">
                 <div class="iconfont">&#xe64d;</div>
-                <span class="num">{{teamsStatistics.fans}}</span>
+                <span class="num">{{teamsStatistics.no_purchased}}</span>
               </div>
               <span> 未购买伙伴</span>
             </div>
@@ -226,10 +226,10 @@
           no_purchased: '0'  //未购买人数
         },
         orderStatistics: {
-          total: '0',//全部
-          lock: '0',//未结算
-          refund: '0',//已退款
-          ok: '0', //已结算
+          total: 0,//全部
+          lock: 0,//未结算
+          refund: 0,//已退款
+          ok: 0, //已结算
         },
         topStatus: '',
         disindex: 3,
@@ -260,7 +260,7 @@
             console.log('会员接口数据异常')
           }
         })
-        teamsStatistics({data : {}}, function (res) {
+/*        teamsStatistics({data : {}}, function (res) {
           if (res.statusCode == 1) {
             _this.teamsStatistics.all = res.data.all || 0;
             _this.teamsStatistics.purchased = res.data.purchased || 0;
@@ -269,7 +269,7 @@
 //            console.log('佣金统计接口数据异常')
             console.log(res.data)
           }
-        });
+        });*/
         teamsStatistics({data : {}}, function (res) {
           if (res.statusCode == 1) {
             _this.teamsStatistics.all = res.data.all || 0;
@@ -281,14 +281,14 @@
           }
         });
         orderStatistics({data : {}}, function (res) {
-          if (res.statusCode == 1 && res.data == true) {
+//          if (res.statusCode == 1 && res.data == true) {
+          if (res.statusCode == 1) {
             _this.orderStatistics.total = res.data.total.order_count || 0
             _this.orderStatistics.lock = res.data.lock.order_count || 0
             _this.orderStatistics.refund = res.data.refund.order_count || 0
             _this.orderStatistics.ok = res.data.ok.order_count || 0
-//          _this.$refs.loadmore.onTopLoaded();
+            console.log(_this.orderStatistics)
           } else {
-//            console.log('获取团队数量统计接口数据异常')
             console.log(res.data)
           }
         })

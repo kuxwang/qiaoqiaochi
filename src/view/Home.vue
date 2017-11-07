@@ -388,15 +388,14 @@
         <img :src='shop | getdefalute'/>
       </div>-->
       <div class="goodtypes">
-        <div class="view-title" style="margin-top: 0">
+        <div class="view-title" v-if="hot.length" style="margin-top: 0">
           热销产品
           <router-link class="right" :to="{name:'list',query:{attr:'ishot:1',title:'热销产品'}}" tag="div">
             查看更多
             <span class="iconfont">&#xe61b;</span>
           </router-link>
         </div>
-
-        <div class="hot">
+        <div class="hot" v-if="hot.length">
           <div class="hot-list">
             <router-link class="hot-item" :to="{path:'/details',query:{id:i.id}}" tag="div" v-for="(i,index) in hot" :key="index">
               <div class="pic-div">
@@ -409,14 +408,14 @@
             </router-link>
           </div>
         </div>
-        <div class="view-title">
+        <div class="view-title" v-if="newgoods.length">
           最新产品
           <router-link class="right" :to="{name:'list',query:{attr:'isnew:1',title:'最新产品'}}" tag="div">
             查看更多
             <span class="iconfont">&#xe61b;</span>
           </router-link>
         </div>
-        <div class="hot">
+        <div class="hot" v-if="newgoods.length">
           <div class="hot-list">
             <router-link class="hot-item" :to="{path:'/details',query:{id:i.id}}" tag="div" v-for="(i,index) in newgoods" :key="index">
               <div class="pic-div">
@@ -429,8 +428,7 @@
             </router-link>
           </div>
         </div>
-
-        <div class="view-title">
+        <div class="view-title" v-if="recommand.length">
           推荐产品
           <router-link class="right" :to="{name:'list',query:{attr:'isrecommand:1',title:'推荐产品'}}" tag="div">
             查看更多
@@ -438,7 +436,7 @@
           </router-link>
         </div>
         <ul class="recommend" v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded"
-            infinite-scroll-distance="10">
+            infinite-scroll-distance="10" v-if="recommand.length">
           <router-link class="re-item" :to="{path:'/details',query:{id:i.id}}" tag="li" v-for="(i,index) in recommand" :key="index">
             <div class="pic-div">
               <img :src="i.thumb" alt="" style="height: 100%">
@@ -499,7 +497,7 @@
           if (res.statusCode === 1) {
             this.advlist = res.data;
           }
-          this.getType()
+
           this.allLoaded = false
         })
       },
@@ -511,7 +509,7 @@
         };
         Category(params, (res) => {
 
-          this.getHot()
+
           if (res.statusCode === 1) {
             console.log('分类')
             console.log(res.data)
@@ -544,7 +542,7 @@
           if (res.statusCode === 1) {
             this.hot = res.data
           }
-          this.getNew();
+
         })
       },
       getNew(){
@@ -563,7 +561,7 @@
           if (res.statusCode === 1) {
             this.newgoods = res.data
           }
-          this.getRecom(1)
+
         })
       },
       getRecom(page){
@@ -624,6 +622,10 @@
     },
     mounted(){
       this.getAdv();
+      this.getType();
+      this.getNew();
+      this.getRecom(1);
+      this.getHot()
     },
     components: {
       vTabbar,
@@ -867,7 +869,8 @@
 
   .view-title {
     position: relative;
-    color: #ff771b;
+    /*color: #ff771b;*/
+    color: #dd2727;
     background-color: #fff;
     line-height: .4rem;
     text-align: left;
