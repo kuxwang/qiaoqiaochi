@@ -51,7 +51,7 @@
 </style>-->
 <template>
   <div class="main">
-    <mt-header title="岗龙数码购物商城" fixed>
+    <mt-header title="二维码" fixed>
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
@@ -126,6 +126,7 @@
       this.init();
     },
     created () {
+      this.init();
       /*Indicator.open({
         text: '加载中...',
         spinnerType: 'fading-circle'

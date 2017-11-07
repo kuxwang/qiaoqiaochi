@@ -40,39 +40,25 @@
             <span class="total" v-show="!noselected">×{{num}}</span>
           </div>
 
-          <div class="params">
+         <!-- <div class="params">
             <div class="info">商品信息</div>
             <div v-for="v in goodsparams" class="params-list">
               <div class="title">【{{v.title}}】</div>
               <div class="value">{{v.value}}</div>
             </div>
-          </div>
-
-          <div class="adv">
-            <div class="adv__title">
-              <div class="border"></div>
-              <h2>品牌承诺</h2>
-              <div class="border"></div>
-            </div>
-            <div class="adv__list">
-              <div class="adv__item" v-for="(i,k) in advpic" :key="k">
-                <img :src='i.thumb'>
-                <span>{{i.title}}</span>
-              </div>
-            </div>
-          </div>
+          </div>-->
         </div>
         <div class="details">
           <div class="bottom-nav" id="bottom-nav">
             <span :class="{active: tab==0}" @click="tab=0">图文详情</span>
-            <span :class="{active: tab==1}" @click="tab=1">评价</span>
+            <!--<span :class="{active: tab==1}" @click="tab=1">评价</span>-->
           </div>
           <div class="b-intro">
             <div class="intro" v-if="tab==0" v-html="content">
             </div>
-            <div class="comment" v-if="tab==1">
+            <!--<div class="comment" v-if="tab==1">
               <v-comment></v-comment>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>
@@ -177,24 +163,6 @@
         hasselect:false,
         minprice:'',
         maxprice:'',
-        advpic:[
-          {
-            title:'正品保证',
-            thumb:require('../../assets/images/p-1.png'),
-          },
-          {
-            title:'7天无理由退换',
-            thumb:require('../../assets/images/p-2.png'),
-          },
-          {
-            title:'超时发货补贴',
-            thumb:require('../../assets/images/p-3.png'),
-          },
-          {
-            title:'PICC承保',
-            thumb:require('../../assets/images/p-4.png'),
-          }
-        ],
         tab:0,
         content:""
       }
@@ -634,7 +602,7 @@
 
   .details {
     overflow: hidden;
-    height: 100%;
+    /*height: 100%;*/
     padding-top: .45rem;
   }
 

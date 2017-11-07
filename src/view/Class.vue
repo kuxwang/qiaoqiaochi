@@ -23,7 +23,7 @@
             </span>
             <section>
               <p class="title">{{s.title}}</p>
-              <strong class="price">￥{{s.price}}</strong>
+              <strong class="price">￥{{s.marketprice}}</strong>
               <div class="control">
                 <div class="iconfont" v-if="totallist[index][idx]" @click="reduce(index,idx)" >&#xe734;</div>
                 <div class="num" v-if="totallist[index][idx]">{{totallist[index][idx]}}</div>
@@ -61,7 +61,7 @@
           <template v-for="(item,idx) in list">
             <li class="order-cell" v-if="totallist[idx][index]" v-for="(i,index) in item.child" :key="index">
               <div class="name">{{i.title}}</div>
-              <div class="price">￥{{i.price}}</div>
+              <div class="price">￥{{i.marketprice}}</div>
               <div class="control">
                 <div class="iconfont" @click="reduce(idx,index)">&#xe734;</div>
                 <div class="num" >{{totallist[idx][index]}}</div>
@@ -80,13 +80,14 @@
 /*import LeftItem from '../components/class/LeftItem.vue'
 import RightItem from '../components/class/RightItem.vue'*/
 import {Popup, Toast} from 'mint-ui';
+import {CateGoods} from '../api/api'
 
   export default {
     data(){
       return {
         popupVisible:false,
         list:[
-          {
+         /* {
             type:'1',
             child:[
               {
@@ -154,7 +155,7 @@ import {Popup, Toast} from 'mint-ui';
                 id:32
               },
             ]
-          },
+          },*/
         ] ,
         select:0,
         totallist:[],
@@ -202,41 +203,67 @@ import {Popup, Toast} from 'mint-ui';
           this.total--
         }
       },
-      getNum(){
-        console.log('hahah')
-      },
       goConfirm(){
         this.popupVisible=false;
         console.log(this.order)
+        /*let _this = this;
+        let cartIds = [];
+        _this.getShCartData.map((v, i, arr) => {
+          cartIds.push(_this.getShCartData[i].id);
+        })
+        let myOrders = {
+          goodsid: _this.goodsId,
+          optionid: _this.optionId,
+          cartids: cartIds.join(','),
+          total: ''
+        }
+        _this.getMyorders(myOrders);
+        _this.$router.push({ name: 'confirmorder' });
+        */
+
+      },
+      init(){
+        let params={
+          data:{
+            fields:'id,ccate,title,app_thumb,thumb,marketprice,sales'
+          }
+        }
+        CateGoods(params,(res)=>{
+            console.log(res)
+            if(res.statusCode==1){
+              this.list=res.data
+
+              let len=this.list.length;
+              let arr=[]
+              for (let i=0;i<len;i++){
+                let l=this.list[i].child.length;
+                arr.push(Array.apply(null, Array(l)).map(() => 0))
+              }
+              this.totallist=arr;
+
+
+
+
+            }
+        })
       }
     },
     components:{
-      /*LeftItem,
-      RightItem*/
     },
     mounted(){
-      let len=this.list.length;
-      let arr=[]
-      for (let i=0;i<len;i++){
-        let l=this.list[i].child.length;
-        arr.push(Array.apply(null, Array(l)).map(() => 0))
-      }
-      this.totallist=arr;
-      console.log('数量')
-      console.log(this.totallist)
-
+      this.init()
     },
     computed:{
       money(){
         let i,num=0,len=this.list.length;
         for(i=0;i<len;i++){
           for(let s=0;s<this.list[i].child.length;s++){
-            num+=Number(this.list[i].child[s].price) * this.totallist[i][s]
-//            num+=2 * 2
+            num+=Number(this.list[i].child[s].marketprice) * this.totallist[i][s]
           }
         }
-        console.log(num)
-        return num
+        /*console.log(num)
+        console.log(len=this.list.length)*/
+        return num || 0
       },
       order(){
         let i,

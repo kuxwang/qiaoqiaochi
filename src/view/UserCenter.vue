@@ -28,14 +28,14 @@
               <!--<span class="level">{{memberInfo.id}}</span>-->
               <!--<span class="level">{{memberInfo.leveldetail.levelname}}</span>-->
             </div>
-            <router-link class="mymoney" :to="{name: 'takemoney'}" tag="div">
+            <!--<router-link class="mymoney" :to="{name: 'takemoney'}" tag="div">
               <p>
                 {{memberInfo.credit1}} 元
               </p>
               <p>
                 购物专用
               </p>
-            </router-link>
+            </router-link>-->
           </div>
         </section>
 
@@ -97,11 +97,11 @@
               <i class="iconfont right">&#xe649;</i>
             </router-link>
 
-            <router-link class="center-cell" :to="{name:'coupon'}" tag="li">
+            <!--<router-link class="center-cell" :to="{name:'coupon'}" tag="li">
               <div class="iconfont icon-grey">&#xe699;</div>
               <div class="title-list">现金券</div>
               <i class="iconfont right">&#xe649;</i>
-            </router-link>
+            </router-link>-->
 
             <li class="center-cell" @click="getAddr">
               <div class="iconfont icon-grey">&#xe643;</div>

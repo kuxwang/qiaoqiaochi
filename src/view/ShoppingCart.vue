@@ -269,7 +269,6 @@ export default {
         });
         return;
       }
-
       _this.getShCartData.map((v, i, arr) => {
         cartIds.push(_this.getShCartData[i].id);
       })

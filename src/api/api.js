@@ -268,7 +268,8 @@ const goods = {
   search: {url: `${base}/products/search`, method: 'GET', header, dataType}, //获取指定属性的商品
   history: {url: `${base}/products/history`, method: 'GET', header, dataType}, //历史足迹
   deletehistory: {url: `${base}/products/history`, method: 'DELETE', header, dataType}, //删除历史足迹
-  adv: {url: `${base}/wxappadvs`, method: 'GET', header, dataType} //广告
+  adv: {url: `${base}/wxappadvs`, method: 'GET', header, dataType}, //广告
+  cateGoods: {url: `${base}/goods/cateGoods`, method: 'GET', header, dataType} //广告
 }
 
 const collect = {
@@ -563,6 +564,9 @@ export const Search = function (params, callback) {
 }
 export const Attributes = function (params, callback) {
   setParams(Object.assign(params, goods.attributes), callback)
+}
+export const CateGoods = function (params, callback) {
+  setParams(Object.assign(params, goods.cateGoods), callback)
 }
 
 

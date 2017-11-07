@@ -116,11 +116,11 @@
             查看物流
           </router-link>
 
-          <router-link class="look-logi ocolor"
+          <!--<router-link class="look-logi ocolor"
                        :to="{path:'comment',query:{id:v.id }}" tag="button"
                        v-if="v.status==3 && v.iscomment==0">
             评价
-          </router-link>
+          </router-link>-->
 
           <button class="charge-order ocolor" v-if="v.canrefund && v.refundid!=0 && v.status!=0"
                   @click="refund(v.refundid)">
