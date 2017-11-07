@@ -38,18 +38,18 @@
     </div>
     <footer :class="{popindex:popupVisible}">
       <div class="car">
-        <span :class="['iconfont',{active:order.length}]" @click="popup">
+        <span :class="['iconfont',{active:order.length>0}]" @click="popup">
           <!--<i class="iconfont">&#xe63c;</i>-->
           &#xe63c;
           <!--<span class="num">11</span>-->
         </span>
-        <div class="num" v-if="order.length">{{total}}</div>
+        <div class="num" v-if="order.length>0">{{total}}</div>
       </div>
       <div class="info" >
         ￥{{money}}
         <!--111-->
       </div>
-      <div :class="['submit',{final:order.length}]" @click="goConfirm">
+      <div :class="['submit',{final:order.length>0}]" @click="goConfirm">
       <!--<div :class="['submit']" @click="goConfirm">-->
         去结算
       </div>
@@ -81,6 +81,7 @@
 import RightItem from '../components/class/RightItem.vue'*/
 import {Popup, Toast} from 'mint-ui';
 import {CateGoods} from '../api/api'
+import { mapMutations, mapGetters } from 'Vuex';
 
   export default {
     data(){
@@ -160,7 +161,10 @@ import {CateGoods} from '../api/api'
         select:0,
         totallist:[],
         orderlist:[],
-        total:0
+        total:0,
+        goodsId:'',
+        optionId:''
+
       }
     },
     methods:{
@@ -206,20 +210,16 @@ import {CateGoods} from '../api/api'
       goConfirm(){
         this.popupVisible=false;
         console.log(this.order)
-        /*let _this = this;
-        let cartIds = [];
-        _this.getShCartData.map((v, i, arr) => {
-          cartIds.push(_this.getShCartData[i].id);
-        })
+        let _this = this;
+//        let cartIds = this.order;
         let myOrders = {
           goodsid: _this.goodsId,
           optionid: _this.optionId,
-          cartids: cartIds.join(','),
+          cartids: this.order,
           total: ''
         }
         _this.getMyorders(myOrders);
-        _this.$router.push({ name: 'confirmorder' });
-        */
+        _this.$router.push({ name: 'confirmorder',query:{order:1,id:this.order}});
 
       },
       init(){
@@ -246,7 +246,10 @@ import {CateGoods} from '../api/api'
 
             }
         })
-      }
+      },
+      ...mapMutations({
+        getMyorders: 'GET_MYORDERS'
+      })
     },
     components:{
     },
@@ -268,16 +271,20 @@ import {CateGoods} from '../api/api'
       order(){
         let i,
             len=this.list.length,
-            arr=[];
+            arr=[],
+            str='';
         for(i=0;i<len;i++){
           for(let s=0;s<this.list[i].child.length;s++){
             if(this.totallist[i][s]){
-              let str=`${this.list[i].child[s].title}+${this.list[i].child[s].id}+${this.list[i].child[s].price}+${this.totallist[i][s]}`;
-              arr.push(str);
+//              let str=`${this.list[i].child[s].title}+${this.list[i].child[s].id}+${this.list[i].child[s].marketprice}+${this.totallist[i][s]}`;
+//              let str=this.list[i].child[s].id
+                str+=`${this.list[i].child[s].id},${this.totallist[i][s]},${this.list[i].child[s].marketprice}|`
+//              arr.push(str);
             }
           }
         }
-        return arr;
+        str=str.substr(0,str.length-1)
+        return str;
       }
     }
   }

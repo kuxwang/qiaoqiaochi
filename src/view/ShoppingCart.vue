@@ -272,10 +272,16 @@ export default {
       _this.getShCartData.map((v, i, arr) => {
         cartIds.push(_this.getShCartData[i].id);
       })
+     /*let cartIds='';
+     for(let i=0;i<_this.getShCartData.length;i++){
+       cartIds+=`${_this.getShCartData[i].id},${_this.getShCartData[i].total},${_this.getShCartData[i].marketprice}|`
+     }
+     cartIds=cartIds.substr(0,cartIds.length-1)*/
       let myOrders = {
         goodsid: _this.goodsId,
         optionid: _this.optionId,
         cartids: cartIds.join(','),
+//        cartids: cartIds,
         total: ''
       }
       _this.getMyorders(myOrders);

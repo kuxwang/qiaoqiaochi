@@ -63,7 +63,7 @@
             {{delivery.dispatchname}}
           </div>
         </router-link>
-        <router-link class="deliveryMode bt deflist" tag="div" :to="{name:'usecoupon',query:{goods:goodsinfo}}">
+        <!--<router-link class="deliveryMode bt deflist" tag="div" :to="{name:'usecoupon',query:{goods:goodsinfo}}">
           <div class="deliveryMode-lf fl">
             优惠券
           </div>
@@ -78,7 +78,7 @@
           <div class=" fr">
             <mt-switch v-model="ifuse" @change="switchuse"></mt-switch>
           </div>
-        </div>
+        </div>-->
         <div class="deliveryMode deflist clearfix">
           <div class="deliveryMode-lf fl">
             给卖家留言:
@@ -183,6 +183,7 @@
         goodsinfo:'',
         ifuse:false,  //是否使用积分
         integral:0,
+        newcartid:''
       }
     },
     methods: {
@@ -196,6 +197,16 @@
             goodsid: this.myOrders.goodsid || ''
           }
         };
+        /*if(this.$route.query.order){
+          params = {
+            data: {
+              cartids: '',
+              optionid:'',
+              total:'',
+              goodsid: this.$route.query.id || ''
+            }
+          };
+        }*/
         // 首次进入，初始化展示内容。
         GET_ORDER1(params, res => {
           if (res.statusCode === 1) {
@@ -204,6 +215,8 @@
             _this.memberDiscount = res.data.memberDiscount;
             console.log('执行')
 //            console.log(res.data)
+
+            _this.newcartid=res.data.cartids;
            _this.DELIVERY(res.data.dispatches[0]);
             _this.dispatches = res.data.dispatches[0];
             _this.dispatchesprice = res.data.dispatches[0].price;
@@ -228,6 +241,8 @@
               backmoney=_this.coupon
             }
             _this.usenum=backmoney;    //实际使用了多少积分
+          }else {
+            console.log(res.data)
           }
         })
       },
@@ -248,6 +263,13 @@
 //          let dispatchid = this.dispatches.id
           let dispatchid = this.delivery.id;
           let cartids = this.myOrders.cartids;
+          if(this.$route.query.order){
+            cartids=this.newcartid
+          }else {
+            cartids=this.myOrders.cartids
+          }
+
+
 //          let couponid = this.myCoupon.id || '';
           let remark = this.remark || ''
           if (this.orderGoods) {
@@ -280,6 +302,16 @@
             this.payed = false;
             return;
           }else {
+            /*if(_this.$route.query.order){
+//              nsole.  colog('从订单进来')
+              params={
+                goods:_this.$route.query.id,
+                dispatchid:dispatchid,
+                addressid: addressid,
+                cartids:'',
+                remark,
+              }
+            }*/
             confirm_post(params, res => {
               if (res.statusCode == 1) {
                 let ordersn = res.data.ordersn

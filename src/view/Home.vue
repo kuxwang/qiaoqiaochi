@@ -138,7 +138,6 @@
           if (res.statusCode === 1) {
             this.advlist = res.data;
           }
-
           this.allLoaded = false
         })
       },
