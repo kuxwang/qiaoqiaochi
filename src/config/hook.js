@@ -83,30 +83,10 @@ export const _webapp = {
 
   sessionKey: {},
 
-  log: function (logData) {
-
-    if(_webapp.debug === true){
-      if (!_env.wshoto) {
-        console.log(logData);
-        return ;
-      }
-
-      let str = '';
-      switch (typeof logData) {
-        case 'object' :
-          str = JSON.stringify(logData);
-          break;
-        default :
-          str = logData;
-          break;
-      }
-
-      let $message = $('.messageApp');
-      let html = '<li style=" width: 100%; padding: 0; margin: 0px; border-bottom: 1px solid #efefef;">' + str + '</li>';
-      $message.append(html);
-    }
-
-    return true;
+  getQueryString : function (name) {
+    let reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    let r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  unescape(r[2]); return null;
   },
 
   clearLog: function () {
@@ -166,7 +146,7 @@ export const _webapp = {
   },
 
   getSignData: function (obj, auth_key) {
-    _webapp.log('getSign Data running:');
+    //_webapp.log('getSign Data running:');
     // _webapp.log(obj);
 
     if (typeof obj !== 'object') {
@@ -548,6 +528,116 @@ export const _webapp = {
       });
     }
   },
+
+
+  share: function (data, callback) {
+    var handler = 'share';
+    if (_env.ios) {
+      _webapp.setupWebViewJavascriptBridge(function (bridge) {
+        bridge.callHandler(handler, data, function (response) {
+          //return _webapp.callback(response, callback);
+        });
+
+        bridge.registerHandler(handler, function (data, responseCallback) {
+          responseCallback('share callback');
+          return _webapp.callback(data, callback);
+        });
+      });
+    }
+
+    if (_env.android) {
+      _webapp.connectWebViewJavascriptBridge(function (bridge) {
+        if (_webapp.init === false) {
+          //初始化
+          _webapp.init = true;
+          bridge.init(function (message, responseCallback) {
+            var data = {
+              'Javascript Responds': 'Wee!'
+            };
+            responseCallback(data);
+          });
+        }
+
+        bridge.callHandler(handler, data, function (response) {
+          //return _webapp.callback(response, callback);
+        });
+
+        bridge.registerHandler(handler, function (response, responseCallback) {
+          responseCallback('share callback');
+          response = eval('(' + response + ')');
+          return _webapp.callback(response, callback);
+        });
+
+      });
+    }
+  },
+  checkLogin: function (callback) {
+
+    // _webapp.log('_webapp getApiToken running');
+    let handler = 'checkLogin';
+
+    if (_env.ios) {
+      _webapp.setupWebViewJavascriptBridge(function (bridge) {
+        bridge.callHandler(handler, function (response) {
+          // _webapp.log('_webapp callHandler back, response :');
+          // _webapp.log(response);
+          // _webapp.apiToken = response;
+          // _webapp.log('_webapp callHandler back, apiToken :');
+          // _webapp.log(_webapp.apiToken);
+          // return _webapp.callback(response, callback);
+        });
+
+        bridge.registerHandler(handler, function (response, responseCallback) {
+          // _webapp.log('_webapp registerHandler back, response :');
+          // _webapp.log(response);
+          // responseCallback('getApiToken responseCallback.');
+          // _webapp.apiToken = response;
+
+          // _webapp.log('_webapp registerHandler back, getSessionKey :');
+          // _webapp.log(_webapp.apiToken);
+          return _webapp.callback(response, callback);
+        });
+      });
+    }
+
+    if (_env.android) {
+      _webapp.connectWebViewJavascriptBridge(function (bridge) {
+        if (_webapp.init === false) {
+          //初始化
+          _webapp.init = true;
+          bridge.init(function (message, responseCallback) {
+            let data = {
+              'Javascript Responds': 'apiToken init!'
+            };
+            responseCallback(data);
+          });
+        }
+
+        bridge.callHandler(handler, function (response) {
+          // response = eval('(' + response + ')');
+          // _webapp.log('_webapp callHandler back, response :');
+          // _webapp.log(response);
+          // _webapp.apiToken = response;
+          // _webapp.log('_webapp callHandler back, apiToken :');
+          // _webapp.log(_webapp.apiToken);
+          // return _webapp.callback(response, callback);
+        });
+
+        bridge.registerHandler(handler, function (response, responseCallback) {
+          // _webapp.log('_webapp registerHandler back, response :');
+          // _webapp.log(response);
+          // responseCallback('getApiToken responseCallback.');
+          response = eval('(' + response + ')');
+          // _webapp.apiToken = response;
+          // _webapp.log('_webapp registerHandler back, apiToken :');
+          // _webapp.log(_webapp.apiToken);
+          return _webapp.callback(response, callback);
+        });
+      });
+    }
+
+  },
+
 
   shellQrcode: function (url) {
     let handler = 'shellQrcode';
