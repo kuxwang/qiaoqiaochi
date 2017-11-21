@@ -23,6 +23,7 @@
             </span>
             <section>
               <p class="title">{{s.title}}</p>
+              <span class="sales">销量：{{s.sales}}</span>
               <strong class="price">￥{{s.marketprice}}</strong>
               <div class="control">
                 <div class="iconfont" v-if="totallist[index][idx]" @click="reduce(index,idx)" >&#xe734;</div>
@@ -56,7 +57,9 @@
     </footer>
     <mt-popup v-model="popupVisible" position="bottom" modal=true>
       <div class="pop-box">
-        <p>已选商品</p>
+        <div class="title">
+          <p>已选商品</p>
+        </div>
         <ul class="order">
           <template v-for="(item,idx) in list">
             <li class="order-cell" v-if="totallist[idx][index]" v-for="(i,index) in item.child" :key="index">
@@ -87,77 +90,7 @@ import { mapMutations, mapGetters } from 'Vuex';
     data(){
       return {
         popupVisible:false,
-        list:[
-         /* {
-            type:'1',
-            child:[
-              {
-                thumb:'',
-                title:'类型11',
-                price:10,
-                id:11
-              },
-              {
-                thumb:'',
-                title:'类型12',
-                price:20,
-                id:12
-              },
-              {
-                thumb:'',
-                title:'类型13',
-                price:30,
-                id:13,
-              },
-              {
-                thumb:'',
-                title:'类型14',
-                price:40,
-                id:14
-              },
-            ]
-          },
-          {
-            type:'2',
-            child:[
-              {
-                thumb:'',
-                title:'类型21',
-                price:100,
-                id:21
-              },
-              {
-                thumb:'',
-                title:'类型22',
-                price:200,
-                id:22
-              },
-              {
-                thumb:'',
-                title:'类型23',
-                price:300,
-                id:23
-              },
-            ]
-          },
-          {
-            type:'3',
-            child:[
-              {
-                thumb:'',
-                title:'那就买，。你1',
-                price:1000,
-                id:31
-              },
-              {
-                thumb:'',
-                title:'那就买，。你2',
-                price:2000,
-                id:32
-              },
-            ]
-          },*/
-        ] ,
+        list:[] ,
         select:0,
         totallist:[],
         orderlist:[],
@@ -185,6 +118,9 @@ import { mapMutations, mapGetters } from 'Vuex';
       },
       popup(){
         this.popupVisible=!this.popupVisible
+        if(this.order.length==0){
+          this.popupVisible=false
+        }
       },
       add(i,d){
         let total=this.totallist[i][d]
@@ -208,19 +144,22 @@ import { mapMutations, mapGetters } from 'Vuex';
         }
       },
       goConfirm(){
-        this.popupVisible=false;
-        console.log(this.order)
-        let _this = this;
+        if(this.order.length>0){
+          this.popupVisible=false;
+          console.log(this.order)
+          let _this = this;
 //        let cartIds = this.order;
-        let myOrders = {
-          goodsid: _this.goodsId,
-          optionid: _this.optionId,
-          cartids: this.order,
-          total: ''
-        }
-        _this.getMyorders(myOrders);
-        _this.$router.push({ name: 'confirmorder',query:{order:1,id:this.order}});
+          let myOrders = {
+            goodsid: _this.goodsId,
+            optionid: _this.optionId,
+            cartids: this.order,
+            total: ''
+          }
+          _this.getMyorders(myOrders);
+          _this.$router.push({ name: 'confirmorder',query:{order:1,id:this.order}});
+        }else {
 
+        }
       },
       init(){
         let params={
@@ -240,10 +179,6 @@ import { mapMutations, mapGetters } from 'Vuex';
                 arr.push(Array.apply(null, Array(l)).map(() => 0))
               }
               this.totallist=arr;
-
-
-
-
             }
         })
       },
@@ -255,6 +190,13 @@ import { mapMutations, mapGetters } from 'Vuex';
     },
     mounted(){
       this.init()
+    },
+    watch:{
+      order(i){
+        if(i.length==0){
+          this.popupVisible=false;
+        }
+      }
     },
     computed:{
       money(){
@@ -313,7 +255,7 @@ import { mapMutations, mapGetters } from 'Vuex';
   }
 
   .left {
-    width: .77rem;
+    width: .78rem;
     background-color: #fff;
   }
   .left-item {
@@ -364,9 +306,9 @@ import { mapMutations, mapGetters } from 'Vuex';
     border-radius: 50%;
     left: .15rem;
     top:-.08rem;
-    font-size: .25rem;
+    font-size: .22rem;
     text-align: center;
-    line-height: .4rem;
+    line-height: .34rem;
     color: #333;
   }
   .car .active {
@@ -416,6 +358,16 @@ import { mapMutations, mapGetters } from 'Vuex';
     font-size: .12rem;
     padding: .075rem 0;
     margin: 0;
+
+
+
+    /*margin-right: .133333rem;*/
+    font-weight: 700;
+    /*font-size: .32rem;*/
+    color: #666;
+    -webkit-box-flex: 0;
+    /*-webkit-f*/
+
   }
   .right-item {
     background-color: #fff;
@@ -497,6 +449,8 @@ import { mapMutations, mapGetters } from 'Vuex';
   }
   .control .iconfont {
     font-size: .2rem;
+    /*color: #ff771b;*/
+    color: #3190e8;
   }
   .control .num {
     min-width: .16rem;
@@ -517,9 +471,37 @@ import { mapMutations, mapGetters } from 'Vuex';
     overflow: hidden;
     margin-bottom: .5rem;
   }
-  .pop-box p {
+  .pop-box .title {
+    height: .4rem;
+    padding: 0 .125rem;
+    color: #666;
+    font-size: .16rem;
+    line-height: .4rem;
+    text-align: left;
+
+
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+
+
 
   }
+  .pop-box .title p {
+    border-left: .035rem solid #2395ff;
+    height: .2rem;
+    line-height: .2rem;
+    padding-left: .1rem;
+  }
+
+
+
   .pop-box ul {
     overflow: hidden;
     overflow-y: scroll;

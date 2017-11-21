@@ -8,7 +8,7 @@
         <mt-button slot="right" class="header-right" @click="clearList">清空</mt-button>
         <mt-button slot="right" class="header-right" @click="edit()">编辑</mt-button>
       </mt-header>
-    </section>
+    </section>.mt-main li
     <section class="mt-main">
       <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50">
         <!--<router-link class="li—laber clearfix" :to="{name:'details',query:{id:1}}" tag="li">-->
@@ -20,7 +20,7 @@
             <!--</span>-->
           </label>
           <div class="info">
-            <img :src="getdefaluteimage(v.thumb)" alt="这是一个商品"/>
+            <img :src="getdefaluteimage(v.thumb)" alt="这是一个商品" />
             <div class="li-content-edit">
               <p class="title lr2">{{v.title}}</p>
               <!--<p class="oldprice">-->
@@ -37,7 +37,7 @@
             </div>
           </div>
         </li>
-        <div class="bottomtools" v-if="isEdit">
+        <!-- <div class="bottomtools" v-if="isEdit">
           <div @click="selectAll">
             <label class="mint-checklist-label fl">
               <input id="allselect" type="checkbox" class="mint-checkbox-input">
@@ -46,11 +46,12 @@
             </label>
           </div>
           <div @click="deletedata">删除</div>
+        </div> -->
+        <div class="newlyAdded" @click="deletedata" v-if="isEdit">
+          删除
         </div>
-
-        <router-link class="li—laber clearfix" :to="{name:'details',query:{id:v.id}}" tag="li" v-if="!isEdit"
-                     v-for="(v, i) in resultArr" :key="i">
-          <img :src="getdefaluteimage(v.thumb)" alt="这是一个商品"/>
+        <router-link class="li—laber clearfix" :to="{name:'details',query:{id:v.id}}" tag="li" v-if="!isEdit" v-for="(v, i) in resultArr" :key="i">
+          <img :src="getdefaluteimage(v.thumb)" alt="这是一个商品" />
           <div class="li-content">
             <p class="title lr2">阿斯顿卡死建档立卡建设大街康圣诞贺卡是地板货静安寺；老卡号1</p>
             <!--<p class="title lr2">{{v.title}}</p>-->
@@ -65,21 +66,30 @@
               <span class="goods-folatPrice">{{v.marketprice | calculatePrice2}}</span>
               <span class="goods-intPrice oldprice">¥{{v.marketprice | calculatePrice1}}.{{v.marketprice | calculatePrice2}}</span>
 
-            <div class="find iconfont">&#xe728;</div>
+              <div class="find iconfont">&#xe728;</div>
             </p>
           </div>
         </router-link>
       </ul>
+      <!-- <div class="nogoods" v-show="isShow">
+              <div class="nogoods-tp">
+                <img src="../../../assets/images/shoppingCart-02.png">
+              </div>
+              <p class="nogoods-mid">
+                您并没有历史记录哦
+              </p>
+              <router-link class="nogoods-bt" tag="div" :to="{name:'home'}">
+                去逛逛
+              </router-link>
+            </div> -->
       <div class="nogoods" v-show="isShow">
         <div class="nogoods-tp">
-          <img src="../../../assets/images/shoppingCart-02.png">
+          <img src="../../../assets/images/gwc.png">
         </div>
         <p class="nogoods-mid">
-          您并没有历史记录哦
+          <h3> 您并没有历史记录哦</h3>
+          <h4>去逛逛~</h4>
         </p>
-        <router-link class="nogoods-bt" tag="div" :to="{name:'home'}">
-          去逛逛
-        </router-link>
       </div>
     </section>
     <transition name="slide">
@@ -88,444 +98,469 @@
   </div>
 </template>
 <script>
-  import {Toast, MessageBox, InfiniteScroll} from 'mint-ui';
-  import {mapMutations} from 'Vuex';
-  import {History, Deletehistory} from '../../../api/api';
-  import defalutImage from '../../../assets/images/confirmorder-01.png';
-  export default{
-    data () {
-      return {
-        marketprice: 138.00,
-        defaultIcon: '../../../assets/images/confirmorder-01.png',
-        test1: '',
-        isChecked: 0,
-        isEdit: false,
-        resultArr: [],
-        page: 1,
-        loading: true,
-        isShow: true,
-        psizes: 8
+import { Toast, MessageBox, InfiniteScroll } from "mint-ui";
+import { mapMutations } from "Vuex";
+import { History, Deletehistory } from "../../../api/api";
+// import defalutImage from '../../../assets/images/confirmorder-01.png';
+export default {
+  data() {
+    return {
+      marketprice: 138.0,
+      // defaultIcon: '../../../assets/images/confirmorder-01.png',
+      defaultIcon: "",
+      test1: "",
+      isChecked: 0,
+      isEdit: false,
+      resultArr: [],
+      page: 1,
+      loading: true,
+      isShow: true,
+      psizes: 8
+    };
+  },
+  watch: {
+    resultArr(value) {
+      if (value.length > 0) {
+        this.isShow = false;
+      } else {
+        this.isShow = true;
       }
+    }
+  },
+  methods: {
+    ...mapMutations([]),
+    getdefaluteimage(value) {
+      return value || defalutImage;
     },
-    watch: {
-      resultArr(value){
-        if (value.length > 0) {
-          this.isShow = false
-        } else {
-          this.isShow = true
-        }
-      }
+    selected() {
+      //        this.isChecked =
     },
-    methods: {
-      ...mapMutations([]),
-      getdefaluteimage (value){
-        return value || defalutImage
-      },
-      selected () {
-//        this.isChecked =
-      },
-      selectAll () {
-        let inputArr = document.getElementsByClassName('input-box')
-        let allselect = document.getElementById('allselect').checked
-        if (!allselect) {
-          for (let i = 0, j = inputArr.length; i < j; i++) {
-            inputArr[i].checked = false
-          }
-        } else {
-          for (let i = 0, j = inputArr.length; i < j; i++) {
-            inputArr[i].checked = true
-          }
-        }
-      },
-      edit(){
-        if(this.resultArr.length){
-          this.isEdit = !this.isEdit
-        }else {
-          Toast({
-            message: `暂无浏览记录`,
-            position: 'middle',
-            duration: 2000
-          });
-        }
-      },
-      deletedata () {
-        let inputArr = document.getElementsByClassName('input-box')
-        let inputselect = ''
+    selectAll() {
+      let inputArr = document.getElementsByClassName("input-box");
+      let allselect = document.getElementById("allselect").checked;
+      if (!allselect) {
         for (let i = 0, j = inputArr.length; i < j; i++) {
-          if (inputArr[i].checked) {
-//            console.log(inputArr[i].attributes['data-idx'].nodeValue)
-            let idx = inputArr[i].attributes['data-idx'].nodeValue
-            if (inputselect) {
-              inputselect = inputselect + ',' + idx
-            } else {
-              inputselect = idx
-            }
+          inputArr[i].checked = false;
+        }
+      } else {
+        for (let i = 0, j = inputArr.length; i < j; i++) {
+          inputArr[i].checked = true;
+        }
+      }
+    },
+    edit() {
+      if (this.resultArr.length) {
+        this.isEdit = !this.isEdit;
+      } else {
+        Toast({
+          message: `暂无浏览记录`,
+          position: "middle",
+          duration: 2000
+        });
+      }
+    },
+    deletedata() {
+      let inputArr = document.getElementsByClassName("input-box");
+      let inputselect = "";
+      for (let i = 0, j = inputArr.length; i < j; i++) {
+        if (inputArr[i].checked) {
+          //            console.log(inputArr[i].attributes['data-idx'].nodeValue)
+          let idx = inputArr[i].attributes["data-idx"].nodeValue;
+          if (inputselect) {
+            inputselect = inputselect + "," + idx;
+          } else {
+            inputselect = idx;
           }
         }
-        let params = {
-          data: {
-            goodsid: inputselect
-          }
+      }
+      let params = {
+        data: {
+          goodsid: inputselect
         }
-        Deletehistory(params, res => {
-          console.log(res)
-          if (res.statusCode == 1) {
-            this.page=1
-            Toast('已删除选中商品')
-            setTimeout(() => {
-              this.isEdit = false
-              let params = {
-                data: {
-                  page: this.page,
-                  psize: this.psizes,
-                  fields: 'id,thumb,title,productprice,marketprice'
-                }
-              }
-              History(params, res => {
-                if (res.statusCode == 1) {
-                  if (res.data.length > 0) {
-                    this.resultArr = res.data;
-                    setTimeout(() => {
-                      this.loading = false;
-                    }, 1000)
-                  } else {
-                    this.resultArr = [];
-                    this.loading = true;
-                  }
-                } else {
-                  this.loading = true;
-                }
-              })
-            }, 100)
-
-          }
-        })
-        console.log(inputselect)
-      },
-      clearList () {
-        MessageBox({
-          title: '提示',
-          message: '是否全部清空',
-          showCancelButton: true
-        }).then(res => {
-          if (res == 'confirm') {
+      };
+      Deletehistory(params, res => {
+        console.log(res);
+        if (res.statusCode == 1) {
+          this.page = 1;
+          Toast("已删除选中商品");
+          setTimeout(() => {
+            this.isEdit = false;
             let params = {
               data: {
-                clearall: 1
+                page: this.page,
+                psize: this.psizes,
+                fields: "id,thumb,title,productprice,marketprice"
               }
-            }
-            Deletehistory(params, res => {
-              if (res.statusCode) {
-                this.resultArr = []
+            };
+            History(params, res => {
+              if (res.statusCode == 1) {
+                if (res.data.length > 0) {
+                  this.resultArr = res.data;
+                  setTimeout(() => {
+                    this.loading = false;
+                  }, 1000);
+                } else {
+                  this.resultArr = [];
+                  this.loading = true;
+                }
+              } else {
+                this.loading = true;
               }
-            })
-          }
-        })
-      },
-      loadMore () {
-//        this.loading = true;
-        this.page = this.page + 1
-        let params = {
-          data: {
-            page: this.page,
-            psize: this.psizes,
-            fields: 'id,thumb,title,productprice,marketprice'
-          }
-        };
-
-        History(params, res => {
-          console.log('无限滚动数据')
-          console.log(this.page)
-          console.log(this.psizes)
-
-          if (res.statusCode === 1) {
-            this.resultArr = this.resultArr.concat(res.data);
-            if (res.data.length < this.psizes) {
-              this.loading = true;
+            });
+          }, 100);
+        }
+      });
+      console.log(inputselect);
+    },
+    clearList() {
+      MessageBox({
+        title: "提示",
+        message: "是否全部清空",
+        showCancelButton: true
+      }).then(res => {
+        if (res == "confirm") {
+          let params = {
+            data: {
+              clearall: 1
             }
-          } else {
-            this.loading = true;
-            console.log('请求失败`${res.statusCode} , ${res.data}` ')
-          }
-
-
-        });
-
-      }
+          };
+          Deletehistory(params, res => {
+            if (res.statusCode) {
+              this.resultArr = [];
+            }
+          });
+        }
+      });
     },
-    mounted() {
-    },
-    created() {
+    loadMore() {
+      //        this.loading = true;
+      this.page = this.page + 1;
       let params = {
         data: {
           page: this.page,
           psize: this.psizes,
-          fields: 'id,thumb,title,productprice,marketprice'
+          fields: "id,thumb,title,productprice,marketprice"
         }
-      }
+      };
+
       History(params, res => {
-        if (res.statusCode == 1) {
-          this.loading = false;
-          if (res.data.length > 0) {
-            this.resultArr = this.resultArr.concat(res.data);
-            setTimeout(() => {
-              this.loading = false;
-            }, 1000)
-          } else {
+        console.log("无限滚动数据");
+        console.log(this.page);
+        console.log(this.psizes);
+
+        if (res.statusCode === 1) {
+          this.resultArr = this.resultArr.concat(res.data);
+          if (res.data.length < this.psizes) {
             this.loading = true;
           }
         } else {
           this.loading = true;
+          console.log("请求失败`${res.statusCode} , ${res.data}` ");
         }
-      })
+      });
+    }
+  },
+  mounted() {},
+  created() {
+    let params = {
+      data: {
+        page: this.page,
+        psize: this.psizes,
+        fields: "id,thumb,title,productprice,marketprice"
+      }
+    };
+    History(params, res => {
+      if (res.statusCode == 1) {
+        this.loading = false;
+        if (res.data.length > 0) {
+          this.resultArr = this.resultArr.concat(res.data);
+          setTimeout(() => {
+            this.loading = false;
+          }, 1000);
+        } else {
+          this.loading = true;
+        }
+      } else {
+        this.loading = true;
+      }
+    });
+  },
+  filters: {
+    calculatePrice1(value) {
+      let num = "";
+      if (typeof value === "number") {
+        num = Math.floor(value) || 0;
+      } else if (typeof value === "string") {
+        num = Math.floor(Number(value)) || 0;
+      }
+      return num || 0;
     },
-    filters: {
-      calculatePrice1(value) {
-        let num = '';
-        if (typeof value === 'number') {
-          num = Math.floor(value) || 0
-        } else if (typeof value === 'string') {
-          num = Math.floor(Number(value)) || 0
-        }
-        return num || 0
-      },
-      calculatePrice2(value) {
-        let num = ''
-        if (typeof value == 'number') {
-          num = value.toFixed(2).toString().split('.')[1]
-        }
-        if (typeof value == 'string') {
-          num = value.split('.')[1]
-        }
-        return num.length == 0 ? num + '00' : num.length == 1 ? num + '0' : num || '00'
-      },
-      listimages (value) {
-        return value ? value : this.defaultIcon
-      },
+    calculatePrice2(value) {
+      let num = "";
+      if (typeof value == "number") {
+        num = value
+          .toFixed(2)
+          .toString()
+          .split(".")[1];
+      }
+      if (typeof value == "string") {
+        num = value.split(".")[1];
+      }
+      return num.length == 0
+        ? num + "00"
+        : num.length == 1 ? num + "0" : num || "00";
     },
+    listimages(value) {
+      return value ? value : this.defaultIcon;
+    }
   }
+};
 </script>
-<style scoped>
-  @import '../../../assets/css/fonts/iconfont.css';
-  @import '../../../assets/css/reset/reset.css';
+<style lang="less" scoped>
+@import "../../../assets/less/common.less";
 
-  .main {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #ececec;
-    overflow: hidden;
-    z-index: 10;
+.main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: @background;
+  overflow: hidden;
+  z-index: 10;
+}
 
-  }
+.mt-main {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+  background: @background;
+}
 
-  .mt-main {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    height: 100%;
-    background: #fff;
-  }
+.mt-main > ul {
+  /*overflow-y: hidden;*/
+  margin-top: 0.45rem;
+  margin-bottom: 0.45rem;
+}
 
-  .mt-main > ul {
-    /*overflow-y: hidden;*/
-    margin-top: .45rem;
-    margin-bottom: .45rem;
-  }
+.mt-main li {
+  width: 100%;
+  height: 1.1rem;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  background: rgb(255, 255, 255);
+  padding: 0rem 0.1rem;
+}
 
-  .mt-main li {
-    width: 100%;
-    height: 1.1rem;
-    background: #fff;
-  }
+.mt-main > ul img {
+  width: 0.9rem;
+  height: 0.9rem;
+}
 
-  .mt-main > ul img {
-    width: 1.1rem;
-    height: 1.1rem;
-    /*padding: .1rem;*/
-    float: left;
-  }
+.li-content {
+  position: relative;
+  width: 63%;
+  height: 1rem;
+  padding: 0.05rem 0.1rem;
+}
 
-  .li-content {
-    position: relative;
-    width: 70%;
-    height: 1.1rem;
-    float: left;
-    padding: .1rem .1rem .1rem .1rem;
-  }
+.li-content-edit {
+  position: relative;
+  width: 63%;
+  height: 1.1rem;
+  float: left;
+  padding: 0.1rem 0.1rem 0.1rem 0.1rem;
+}
 
-  .li-content-edit {
-    position: relative;
-    width: 63%;
-    height: 1.1rem;
-    float: left;
-    padding: .1rem .1rem .1rem .1rem;
-  }
+.li—laber {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
 
-  .li—laber {
-    border-bottom: 1px solid rgba(0, 0, 0, .03)
-  }
+.li—laber-selected {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+.li—laber-selected .mint-checklist-label {
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.title {
+  font-size: 0.14rem;
+  text-align: left;
+  /*font-weight: bold;*/
+  line-height: 0.2rem;
+}
 
-  .li—laber-selected {
-    border-bottom: 1px solid rgba(0, 0, 0, .03)
-  }
+.oldprice {
+  font-size: 0.11rem;
+  /*position: absolute;*/
+  text-align: left;
+  margin-left: 0.15rem;
+  margin-top: 0.05rem;
+  bottom: 0.3rem;
+  color: #777777;
+  text-decoration: line-through;
+}
 
-  .title {
-    font-size: .11rem;
-    text-align: left;
-    /*font-weight: bold;*/
-  }
+.oldprice .goods-intPrice {
+  font-size: 0.11rem;
+}
 
-  .oldprice {
-    font-size: .11rem;
-    /*position: absolute;*/
-    text-align: left;
-    margin-left: .15rem;
-    margin-top: .05rem;
-    bottom: 0.3rem;
-    color: #777777;
-    text-decoration: line-through;
-  }
+.oldprice .goods-folatPrice {
+}
 
-  .oldprice .goods-intPrice {
-    font-size: .11rem;
-  }
+.price {
+  position: absolute;
+  text-align: left;
+  bottom: 0.05rem;
+  color: red;
+}
 
-  .oldprice .goods-folatPrice {
+.info {
+  flex: 1;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
 
-  }
+.goods-intPrice {
+  font-size: 0.11rem;
+}
 
-  .price {
-    position: absolute;
-    text-align: left;
-    margin-top: .05rem;
-    bottom: 0.05rem;
-    color: red;
-  }
+.goods-folatPrice {
+  font-size: 0.11rem;
+}
 
-  .info {
-    width: 90%;
-    float: right;
-  }
+.header-right {
+  font-size: 0.15rem;
+  color: rgb(120, 120, 120);
+}
 
-  .goods-intPrice {
-    font-size: 0.11rem;
-  }
+.bottomtools {
+  width: 100%;
+  height: 0.45rem;
+  position: fixed;
+  bottom: 0;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  .goods-folatPrice {
-    font-size: 0.11rem;
-  }
+.bottomtools > div:first-child {
+  width: 50%;
+  height: 0.45rem;
+  line-height: 0.45rem;
+  font-size: 0.18rem;
+}
 
-  .header-right {
-    font-size: .15rem;
-    color: rgb(120, 120, 120);
-  }
+.bottomtools > div:last-child {
+  width: 1.1rem;
+  height: 0.45rem;
+  line-height: 0.45rem;
+  background: @themeColor1;
+  font-size: 0.16rem;
+  color: #fff;
+}
 
-  .bottomtools {
-    width: 100%;
-    height: .45rem;
-    position: fixed;
-    bottom: 0;
-    background: #fff;
-  }
+.bottomtools .mint-checkbox-core {
+  margin-top: 0;
+}
 
-  .bottomtools > div:first-child {
-    float: left;
-    width: 50%;
-    height: .45rem;
-    line-height: .45rem;
-    font-size: .18rem;
-  }
+.bottomtools .mint-checklist-label {
+  width: 50%;
+}
 
-  .bottomtools > div:last-child {
-    float: left;
-    width: 50%;
-    height: .45rem;
-    line-height: .45rem;
-    background: #EC5151;
-    font-size: .20rem;
-    color: #fff;
-  }
+.mint-checklist-label {
+  position: absolute;
+  width: 100%;
+  height: 1.2rem;
+  text-align: left;
+  /*margin-top: .45rem;*/
+}
 
-  .bottomtools .mint-checkbox-core {
-    margin-top: 0;
-  }
+.mint-checkbox-input:checked + .mint-checkbox-core {
+  background-color: #f5751d;
+  border-color: #f5751d;
+  vertical-align: middle;
+}
 
-  .bottomtools .mint-checklist-label {
-    width: 50%;
-  }
+.nogoods {
+  margin-top: 1.5rem;
+}
 
-  .mint-checklist-label {
-    position: absolute;
-    width: 100%;
-    height: 1.2rem;
-    text-align: left;
-    /*margin-top: .45rem;*/
-  }
+.nogoods-tp {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+}
 
-  .mint-checkbox-core {
-    margin-top: .45rem;
-  }
+.nogoods-tp img {
+  display: block;
+  width: 100%;
+}
 
-  .mint-checkbox-input:checked + .mint-checkbox-core {
-    background-color: #EC5151;
-    border-color: #EC5151;
-    vertical-align: middle;
-  }
+.nogoods h3 {
+  color: #666;
+  font-size: 0.16rem;
+  text-align: center;
+}
 
-  .nogoods {
-    margin-top: 1.5rem;
+.nogoods h4 {
+  color: #999;
+  font-size: 0.14rem;
+  margin-top: 0.2rem;
+  text-align: center;
+}
 
-  }
+.nogoods-mid {
+  margin-top: 0.2rem;
+  font-size: 0.14em;
+  color: #666;
+}
 
-  .nogoods-tp {
-    width: 0.55rem;
-    height: 0.47rem;
-    margin: 0 auto;
-  }
+.find {
+  display: none;
+  position: absolute;
+  right: 0.15rem;
+  top: 0.9rem;
+  /*margin-left:.15rem;*/
+  font-size: 0.12rem;
+  padding: 0 0.05rem;
+  /*border: 1px solid rgba(0, 0, 0, .1);*/
+  /*-webkit-border-radius:;*/
+  /*-moz-border-radius:;*/
+  border-radius: 0.03rem;
+}
 
-  .nogoods-tp img {
-    display: block;
-    width: 100%;
-  }
+.li-content-edit {
+  position: relative;
+  width: 63%;
+  height: 1rem;
+  float: left;
+  padding: 0.05rem 0.1rem 0.05rem 0.1rem;
+}
 
-  .nogoods-mid {
-    margin-top: 0.2rem;
-    font-size: 0.14em;
-    color: #666;
-  }
-
-  .nogoods-bt {
-    width: 1.6rem;
-    height: 0.4rem;
-    line-height: 0.4rem;
-    text-align: center;
-    color: #fff;
-    background: red;
-    /*background: #EC5151;*/
-    margin: 0 auto;
-    margin-top: 0.2rem;
-    font-size: 0.14rem;
-    box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);
-    border-radius: 0.04rem;
-  }
-
-  .find {
-    position: absolute;
-    right: .15rem;
-    top: .85rem;
-    /*margin-left:.15rem;*/
-    font-size: .12rem;
-    padding: 0 .05rem;
-    display: inline-block;
-    /*border: 1px solid rgba(0, 0, 0, .1);*/
-    /*-webkit-border-radius:;*/
-    /*-moz-border-radius:;*/
-    border-radius: .03rem;
-  }
+.newlyAdded {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  height: 0.5rem;
+  line-height: 0.5rem;
+  text-align: center;
+  font-size: 0.16rem;
+  margin: 0 auto;
+  background: @themeColor1;
+  color: #fff;
+  margin-top: 0.4rem;
+}
 </style>
 

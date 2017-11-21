@@ -549,51 +549,6 @@ export var _webapp = {
     }
   },
 
-
-  share: function (data, callback) {
-    var handler = 'share';
-    if (_env.ios) {
-      _webapp.setupWebViewJavascriptBridge(function (bridge) {
-        bridge.callHandler(handler, data, function (response) {
-          //return _webapp.callback(response, callback);
-        });
-
-        bridge.registerHandler(handler, function (data, responseCallback) {
-          responseCallback('share callback');
-          return _webapp.callback(data, callback);
-        });
-      });
-    }
-
-    if (_env.android) {
-      _webapp.connectWebViewJavascriptBridge(function (bridge) {
-        if (_webapp.init === false) {
-          //初始化
-          _webapp.init = true;
-          bridge.init(function (message, responseCallback) {
-            var data = {
-              'Javascript Responds': 'Wee!'
-            };
-            responseCallback(data);
-          });
-        }
-
-        bridge.callHandler(handler, data, function (response) {
-          //return _webapp.callback(response, callback);
-        });
-
-        bridge.registerHandler(handler, function (response, responseCallback) {
-          responseCallback('share callback');
-          response = eval('(' + response + ')');
-          return _webapp.callback(response, callback);
-        });
-
-      });
-    }
-  },
-
-
-
   setupWebViewJavascriptBridge: function (callback) {
     if (window.WebViewJavascriptBridge) {
       return callback(WebViewJavascriptBridge);

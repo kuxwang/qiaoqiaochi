@@ -9,6 +9,12 @@ import getters from './getters'
 Vue.use(Vuex)
 const state = {
   userAddress: {},//用户收货地址
+  changeAddress:{},//每次点击改变后的地址
+  changeDelivery:{},//修改后的配送方式
+  changeDeliveryIndex:'',//修改后的配送方式index
+  isCollection:false,  //收藏状态
+  tabbarIsSHow:true,  //tabbar是否显示
+  orderStatus:'',  //当前订单状态
   tabselect: '',
   onActive: '',//默认收货地址选中索引值
   busActive: '',//默认配送方式索引值
@@ -22,9 +28,6 @@ const state = {
     cartids: '',
     total: ''
   },
-  myCoupon:{
-    backmoney:0
-  },  //优惠券
   orderInfo: '', //订单信息,
   // reason:"",
   // backtime: '',

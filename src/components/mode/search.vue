@@ -79,9 +79,9 @@
 </script>
 
 <style lang="less" scoped>
-  @import '../../assets/css/reset/reset.css';
-  @import '../../assets/css/reset/common.less';
-  @import '../../assets/css/fonts/iconfont.css';
+  @import '../../assets/less/reset.less';
+  @import '../../assets/less/common.less';
+  @import '../../assets/fonts/iconfont.css';
   .page {
     .page-view(1);
   }

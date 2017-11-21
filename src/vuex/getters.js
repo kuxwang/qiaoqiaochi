@@ -18,7 +18,11 @@ export default {
   isScroll:state=>state.isScroll,
   addtype:state=>state.addtype,
   haslogo:state=>state.haslogo,
-  myCoupon:state=>state.myCoupon
-
+  changeAddress:state=>state.changeAddress,
+  changeDelivery:state=>state.changeDelivery,
+  changeDeliveryIndex:state=>state.changeDeliveryIndex,
+  tabbarIsSHow:state=>state.tabbarIsSHow,
+  orderStatus:state=>state.orderStatus,
+  isCollection:state=>state.isCollection
 }
 

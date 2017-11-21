@@ -1,3 +1,138 @@
+<!--
+<template>
+  <div class="box">
+      <div class="scroll-item" v-show="!on1">
+        &lt;!&ndash; 轮播 &ndash;&gt;
+        <mt-swipe :auto="0" :showIndicators="true" class="homeswiper">
+          <mt-swipe-item v-for="(v,i) in advertisementList" :key="i" class="homeswiper-item">
+            <img :src="v.thumb" alt="">
+          </mt-swipe-item>
+        </mt-swipe>
+        &lt;!&ndash; 商品列表 &ndash;&gt;
+        <ul class="goodslist">
+          <li class="goodslist-item" v-for="(v,i) in goodslist" :key="i" @click="goDetails(v)">
+            <img v-lazy="v.app_thumb" alt="">
+          </li>
+        </ul>
+      </div>
+      &lt;!&ndash; loading &ndash;&gt;
+      <div class="loading-container" v-show="on1">
+          <loading></loading>
+      </div>
+    <router-view></router-view>
+  </div>
+</template>
+<script>
+import Loading from "../components/base/loading/loading";
+import {
+  GET_HOMEGOODS,
+  GET_HOMEADVERTISEMENT,
+  GET_ADVERTISEMENT,
+  ProductDetail
+} from "../api/api";
+import { mapMutations, mapGetters, mapState } from "vuex";
+export default {
+  data() {
+    return {
+      advertisementList: [
+        //轮播图
+      ],
+      goodslist: [],
+      on1: true
+    };
+  },
+  methods: {
+    getAdvertisementList() {
+      //获取轮播图
+      let _this = this;
+      let params = {
+        data: {}
+      };
+      GET_ADVERTISEMENT(params, res => {
+        if (res.statusCode === 1) {
+          _this.advertisementList = res.data;
+        } else {
+          console.log("home GET_ADVERTISEMENT:" + res.data);
+        }
+      });
+    },
+    getGoodslist() {
+      //获取商品列表
+      let _this = this;
+      let params = {
+        data: {
+          page: 1,
+          psize: 10,
+          fields: "id,app_thumb"
+        }
+      };
+      ProductDetail(params, res => {
+        if (res.statusCode === 1) {
+          _this.goodslist = res.data;
+        } else {
+          console.log("home ProductDetail:" + res.data);
+        }
+      });
+    },
+    goDetails(v) {
+      //去商品详情
+      let _this = this;
+      _this.$router.push({ name: "details", query: { id: v.id } });
+    }
+  },
+  components: {
+    Loading
+  },
+  mounted() {
+    let _this = this;
+    _this.on1 = false;
+    _this.getAdvertisementList();
+    _this.getGoodslist();
+  }
+};
+</script>
+<style lang="less" scoped>
+@import "../assets/less/common.less";
+.box {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background: @background;
+  .scroll-item {
+    .scroll-view(100%);
+    .mint-swipe {
+      height: 1.8rem;
+      margin-top: 0.1rem;
+      .homeswiper-item {
+        height: 100%;
+        img {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    .goodslist {
+      background: @background;
+      padding-bottom: 0.6rem;
+      .goodslist-item {
+        // height: 1.8rem;
+        margin-top: 0.1rem;
+        background: @background;
+        img {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+</style>
+-->
 <template>
   <div class="content">
     <div class="top-bar">
@@ -25,16 +160,13 @@
         </router-link>
         <!--</div>-->
       </div>
-     <!-- <div class="adv">
-        <img :src='shop | getdefalute'/>
-      </div>-->
+      <!-- <div class="adv">
+         <img :src='shop | getdefalute'/>
+       </div>-->
       <div class="goodtypes">
         <div class="view-title" v-if="hot.length" style="margin-top: 0">
           热销产品
-          <router-link class="right" :to="{name:'list',query:{attr:'ishot:1',title:'热销产品'}}" tag="div">
-            查看更多
-            <span class="iconfont">&#xe61b;</span>
-          </router-link>
+
         </div>
         <div class="hot" v-if="hot.length">
           <div class="hot-list">
@@ -51,10 +183,10 @@
         </div>
         <div class="view-title" v-if="newgoods.length">
           最新产品
-          <router-link class="right" :to="{name:'list',query:{attr:'isnew:1',title:'最新产品'}}" tag="div">
+          <!--<router-link class="right" :to="{name:'list',query:{attr:'isnew:1',title:'最新产品'}}" tag="div">
             查看更多
             <span class="iconfont">&#xe61b;</span>
-          </router-link>
+          </router-link>-->
         </div>
         <div class="hot" v-if="newgoods.length">
           <div class="hot-list">
@@ -71,10 +203,10 @@
         </div>
         <div class="view-title" v-if="recommand.length">
           推荐产品
-          <router-link class="right" :to="{name:'list',query:{attr:'isrecommand:1',title:'推荐产品'}}" tag="div">
+          <!--<router-link class="right" :to="{name:'list',query:{attr:'isrecommand:1',title:'推荐产品'}}" tag="div">
             查看更多
             <span class="iconfont">&#xe61b;</span>
-          </router-link>
+          </router-link>-->
         </div>
         <ul class="recommend" v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded"
             infinite-scroll-distance="10" v-if="recommand.length">
@@ -102,17 +234,17 @@
 
 <script>
   import vTabbar from '../components/mode/Tabbar';
-//  import vScroll from '../components/common/scroll';
+  //  import vScroll from '../components/common/scroll';
   import vSearch from '../components/mode/search';
   import {Swipe, SwipeItem, InfiniteScroll} from 'mint-ui';
   import {Advs, Category, Attributes,Adv} from '../api/api'
-  import topbg from '../assets/images/avatopr-background.png'
+//  import topbg from '../assets/images/avatopr-background.png'
 
   export default{
     data(){
       return {
-        img1: require('../assets/images/home-01.jpg'),
-        img2: require('../assets/images/home-02.jpg'),
+//        img1: require('../assets/images/home-01.jpg'),
+//        img2: require('../assets/images/home-02.jpg'),
         recommand: [],
         newgoods: [],
         hot: [],
@@ -276,9 +408,9 @@
   }
 </script>
 <style lang="less" scoped>
-  @import '../assets/css/reset/reset.css';
-  @import '../assets/css/reset/common.less';
-  @import '../assets/css/fonts/iconfont.css';
+  @import '../assets/less/reset.less';
+  @import '../assets/less/common.less';
+  @import '../assets/fonts/iconfont.css';
 
   .banner {
     /*margin-top: .45rem;*/
@@ -288,7 +420,8 @@
     .page-view();
     .top-bar {
       background-color: #fff;
-      height: .45rem;
+      /*height: .45rem;*/
+      height: .35rem;
     }
     .input {
       display: block;
@@ -505,12 +638,13 @@
   .goodtips .right-tip {
     position: absolute;
     right: .1rem;
+    font-size: .1rem;
   }
 
   .view-title {
     position: relative;
-    /*color: #ff771b;*/
-    color: #dd2727;
+    color: #ff771b;
+    /*color: #dd2727;*/
     background-color: #fff;
     line-height: .4rem;
     text-align: left;
@@ -628,7 +762,7 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     line-height: 0;
-    background: url('../assets/images/all.png') center center no-repeat;
+    /*background: url('../assets/images/all.png') center center no-repeat;*/
     background-size: 70% 70%;
   }
   .goodtypes {

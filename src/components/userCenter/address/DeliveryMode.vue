@@ -6,7 +6,7 @@
       </a>
     </mt-header>
     <ul class="deliverymode-list">
-      <li :class="{on:busActives==i}" v-for="(v,i) in businessList" @click="getDispatchName(v,i)">
+      <li :class="{on:busActives==i}" v-for="(v,i) in businessList" @click="getDispatchName(v,i)" :key="i">
       		<span>
       			{{v.dispatchname}}
       		</span>
@@ -21,23 +21,7 @@
     data(){
       return {
         busActives: '',
-        businessList: [
-          /*{
-            "id": "1",
-            "uniacid": "2",
-            "dispatchname": "商家配送"
-          },
-          {
-            "id": "1",
-            "uniacid": "2",
-            "dispatchname": "免费配送"
-          },
-          {
-            "id": "1",
-            "uniacid": "2",
-            "dispatchname": "商家配送"
-          }*/
-        ]
+        businessList: []
       }
     },
     methods: {
@@ -46,13 +30,13 @@
       },
       getDispatchName(v, i){
         this.busActives = i
-        this.getBusActive(i)
-        this.getdelivery(v)
-        this.$router.push('/confirmorder');
+        this.getChangeDelivery(v);
+        this.getChangeDeliveryIndex(i);
+        this.$router.replace({name:'confirmorder'});
       },
       ...mapMutations({
-        'getBusActive': 'GET_BUSACTIVE',
-        'getdelivery': 'DELIVERY'
+        'getChangeDelivery':'GET_CHANGEDELIVERY',
+        'getChangeDeliveryIndex':'GET_CHANGEDELIVERYINDEX'
       })
     },
     created () {
@@ -68,26 +52,23 @@
     },
     computed: {
       ...mapGetters([
-        'busActive',
-        'ADDTYPE'
+        'changeDeliveryIndex'
       ])
     },
     mounted(){
-      this.busActives = this.busActive
+      this.changeDeliveryIndex!=''? this.busActives =this.changeDeliveryIndex:this.busActives=0;
     }
   }
 </script>
-<style scoped>
-  @import '../../../assets/css/fonts/iconfont.css';
-  @import '../../../assets/css/reset/reset.css';
-
+<style lang="less" scoped>
+@import '../../../assets/less/common.less';
   .main {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: #efeff4;
+    background: @background;
     overflow: auto;
     z-index: 50
   }
@@ -105,7 +86,7 @@
     height: 0.5rem;
     line-height: 0.5rem;
     background: #fff;
-    border-bottom: 0.01rem solid #D8D8D8;
+    border-bottom: 0.01rem solid #F6F6F9;
     font-size: 0.15rem;
     padding: 0rem 0.1rem;
     text-align: left;
@@ -119,7 +100,7 @@
     left: 0.2rem;
     top: 0px;
     font-size: 0.20rem;
-    color: #EC5151;
+    color: #F5751D;
   }
 
   .deliverymode-list li:before {

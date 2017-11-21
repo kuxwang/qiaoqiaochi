@@ -8,11 +8,15 @@ import qs from 'qs'
 import {_webapp} from '../config/hook.js'
 import {MessageBox} from 'mint-ui'
 
+// import {fn} from '../config/myUtils.js'
 
 // const base = 'https://ws7.wshoto.com';
-// const base = 'https://ganglong.wshoto.com';
-const base = 'http://qiaoqiaochi.wshoto.com';
+// const base='http://mz.wshoto.com';
+// const base = 'https://api.duoyunjiav2.wshoto.com';
+// const base='http://youjialeyuan.wshoto.com';
 
+// const base = 'http://wswuxi.wshmi.com';
+const base = 'http://qiaoqiaochi.wshoto.com';
 const header = 'application/json';
 const dataType = 'json';
 
@@ -256,6 +260,12 @@ const commissions = {
    */
   withdrawals_get: {url: `${base}/commissions/withdrawals`, method: 'GET', header, dataType},
   withdrawals_post: {url: `${base}/commissions/withdrawals`, method: 'POST', header, dataType},
+
+  // 团队梯队
+  teamsLevelLists: {url: `${base}/commissions/teamsLevelLists`, method: 'GET', header, dataType},
+
+  //团队梯队人数
+  teamsLevelCount: {url: `${base}/commissions/teamsLevelCount`, method: 'GET', header, dataType}
 };
 
 const goods = {
@@ -277,10 +287,6 @@ const collect = {
   add: {url: `${base}/products/favorite`, method: 'POST', header, dataType},  //添加收藏
   remove: {url: `${base}/products/favorite`, method: 'DELETE', header, dataType},  //删除收藏
 }
-
-
-
-
 
 
 /**
@@ -377,25 +383,6 @@ const USERINFO = {url: `${base}/members`, method: 'PUT', header, dataType}
  */
 const CARTNUMS = {url: `${base}/carts/cartNums`, method: 'GET', header, dataType}
 
-/*
-* 优惠券 评价
-* */
-
-const coupons = {
-  coupon: {url: `${base}/coupons`, method: 'GET', header, dataType}, //coupons
-  detail: {url: `${base}/coupons/detail`, method: 'GET', header, dataType}, //优惠券详情
-  get: {url: `${base}/coupons/get`, method: 'POST', header, dataType},  //领取优惠券
-  my: {url: `${base}/coupons/my`, method: 'GET', header, dataType},  //我的优惠券
-  mypay: {url: `${base}/coupons/mypay`, method: 'GET', header, dataType},  //支付时可用优惠券
-  category: {url: `${base}/coupons/category`, method: 'GET', header, dataType},  //
-};
-const comments = {
-  // coupon: {url: `${base}/coupons`, method: 'GET', header, dataType}, //coupons
-  goodComments: {url: `${base}/comments/goodComments`, method: 'GET', header, dataType}, //1.商品详情的评论列表
-  view: {url: `${base}/comments/view`, method: 'GET', header, dataType}, //2.订单评论页面接口
-  save: {url: `${base}/comments/save`, method: 'POST', header, dataType}, //3.提交评论接口
-};
-
 
 export const orderLists = function (params, callback) {
   setParams(Object.assign(params, commissions.orderLists), callback)
@@ -427,6 +414,17 @@ export const teamsLists = function (params, callback) {
 export const teams = function (params, callback) {
   setParams(Object.assign(params, commissions.teams), callback)
 };
+
+//团队梯队
+export const teamsLevelLists = function (params, callback) {
+  setParams(Object.assign(params, commissions.teamsLevelLists), callback)
+};
+
+//团队梯队人数
+export const teamsLevelCounts = function (params, callback) {
+  setParams(Object.assign(params, commissions.teamsLevelCount), callback)
+};
+
 //订单列表
 
 /**
@@ -565,9 +563,20 @@ export const Search = function (params, callback) {
 export const Attributes = function (params, callback) {
   setParams(Object.assign(params, goods.attributes), callback)
 }
+
+
 export const CateGoods = function (params, callback) {
   setParams(Object.assign(params, goods.cateGoods), callback)
 }
+
+
+
+
+
+
+
+
+
 
 
 /**
@@ -724,60 +733,27 @@ export const Deletehistory = function (params, callback) {
   setParams(Object.assign(params, goods.deletehistory), callback)
 };
 
-//分享
-export const Share = function (params, callback) {
-  _webapp.share(params, function (res) {
-    callback(res)
-  })
+// 新增  订单统计
+const STATISTICS = {url: `${base}/orders/statistics`, method: 'GET', header, dataType}
+export const GET_STATISTICS= function (params, callback) {
+  setParams(Object.assign(params, STATISTICS), callback)
+};
+
+// 新增  首页商品图
+const HOMEGOODS={url: `${base}/goods/goodsIndex`, method: 'GET', header, dataType}
+export const GET_HOMEGOODS= function (params, callback) {
+  setParams(Object.assign(params, HOMEGOODS), callback)
+};
+
+
+// 新增  首页广告图
+const HOMEADVERTISEMENT={url: `${base}/wxappadvs/wxappadvs`, method: 'GET', header, dataType}
+export const GET_HOMEADVERTISEMENT= function (params, callback) {
+  setParams(Object.assign(params, HOMEADVERTISEMENT), callback)
+};
+
+// 新增  首页轮播图
+const ADVERTISEMENT = { url: `${base}/slides`, method: 'GET', header, dataType };
+export const GET_ADVERTISEMENT = function (params, callback) {
+  setParams(Object.assign(params, ADVERTISEMENT), callback)
 }
-
-
-/*
-* 优惠券和评论
-* */
-
-export const Coupons = function (params, callback) {
-  setParams(Object.assign(params, coupons.coupon), callback)
-};
-export const Coupons_detail = function (params, callback) {
-  setParams(Object.assign(params, coupons.detail), callback)
-};
-export const Coupons_get = function (params, callback) {
-  setParams(Object.assign(params, coupons.get), callback)
-};
-export const Coupons_my = function (params, callback) {
-  setParams(Object.assign(params, coupons.my), callback)
-};
-export const Coupons_mypay = function (params, callback) {
-  setParams(Object.assign(params, coupons.mypay), callback)
-};
-export const Coupons_category = function (params, callback) {
-  setParams(Object.assign(params, coupons.category), callback)
-};
-
-export const CommentsList = function (params, callback) {
-  setParams(Object.assign(params, comments.goodComments), callback)
-};
-export const Comments_view = function (params, callback) {
-  setParams(Object.assign(params, comments.view), callback)
-};
-export const Comments_save = function (params, callback) {
-  setParams(Object.assign(params, comments.save), callback)
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

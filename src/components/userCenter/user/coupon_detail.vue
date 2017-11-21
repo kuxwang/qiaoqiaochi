@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <mt-header title="岗龙数码购物商城" fixed>
+    <mt-header title="悄悄吃" fixed>
     <!--  <router-link to="/userCenter" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>-->
