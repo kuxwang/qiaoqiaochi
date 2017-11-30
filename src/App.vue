@@ -34,8 +34,17 @@ export default {
 }
 </script>
 <style>
+  @import './assets/fonts/iconfont.css';
 #app {
+
   height: 100%;
 }
+  .mint-header {
+    background-color: #fff !important;
+    color: #252525 !important;
+  }
+  .mint-loadmore-top {
+    font-size: .14rem;
+  }
 </style>
 

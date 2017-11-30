@@ -137,7 +137,7 @@ export default {
       //初始化
       let _this = this;
       memberInfo({ data: {} }, function(res) {
-        
+
         if (res.statusCode == 1) {
           console.log("userCenter init 初始化");
           console.log(res);

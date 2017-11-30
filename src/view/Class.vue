@@ -308,7 +308,7 @@ import { mapMutations, mapGetters } from 'Vuex';
     top:-.08rem;
     font-size: .22rem;
     text-align: center;
-    line-height: .34rem;
+    line-height: .38rem;
     color: #333;
   }
   .car .active {
