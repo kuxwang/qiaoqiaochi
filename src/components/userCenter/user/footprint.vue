@@ -8,7 +8,7 @@
         <mt-button slot="right" class="header-right" @click="clearList">清空</mt-button>
         <mt-button slot="right" class="header-right" @click="edit()">编辑</mt-button>
       </mt-header>
-    </section>.mt-main li
+    </section>
     <section class="mt-main">
       <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50">
         <!--<router-link class="li—laber clearfix" :to="{name:'details',query:{id:1}}" tag="li">-->
@@ -317,9 +317,12 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "../../../assets/less/common.less";
+  @import '../../../assets/less/index.less';
+  @import '../../../assets/less/reset.less';
+  @import '../../../assets/fonts/iconfont.css';
 
-.main {
+
+  .main {
   position: fixed;
   top: 0;
   left: 0;

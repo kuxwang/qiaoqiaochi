@@ -42,7 +42,7 @@
           </span>
           <input type="search" name="" class="userinfo-list-lr fl" placeholder="请输入支付宝真实姓名" v-model="alipay_name">
         </li>
-     
+
         <li @click="setCity">
           <span class="userinfo-list-lf fl">
             所在城市
@@ -251,7 +251,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "../../../assets/less/common.less";
+  @import '../../../assets/less/index.less';
+  @import '../../../assets/less/reset.less';
+  @import '../../../assets/fonts/iconfont.css';
 
 .main {
   position: fixed;
@@ -371,11 +373,12 @@ export default {
   line-height: 0.5rem;
   text-align: center;
   font-size: 0.16rem;
-  margin: 0 auto;
+  /*margin: 0 auto;*/
   border-radius: 0.05rem;
   background: #19ac15;
   color: #fff;
-  margin: 0.4rem 0rem;
+  margin: 0.4rem 2.5%;
+  /*margin-top: .04rem;*/
 }
 
 .picker-toolbar .mint-datetime-action {
@@ -411,5 +414,8 @@ export default {
 .mint-header {
   z-index: 31 !important;
 }
+  .mint-header-title {
+    color: #252525 !important;
+  }
 </style>
 

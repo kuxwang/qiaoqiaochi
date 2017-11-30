@@ -61,7 +61,9 @@
   }
 </script>
 <style lang="less" scoped>
-@import '../../../assets/less/common.less';
+  @import '../../../assets/less/index.less';
+  @import '../../../assets/less/reset.less';
+  @import '../../../assets/fonts/iconfont.css';
   .main {
     position: fixed;
     top: 0;

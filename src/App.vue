@@ -33,18 +33,37 @@ export default {
   },
 }
 </script>
-<style>
+<style lang="less" scoped>
+  @import './assets/less/common.less';
   @import './assets/fonts/iconfont.css';
+  @import './assets/less/reset.less';
+  /*@import './assets/less/index.less';*/
 #app {
-
   height: 100%;
 }
-  .mint-header {
-    background-color: #fff !important;
-    color: #252525 !important;
+.mint-header {
+  background-color: #fff !important;
+  color: #252525 !important;
+  display: flex !important;
+}
+
+
+.mint-loadmore-top {
+  font-size: .14rem;
+}
+  .mint-header-button.is-left {
+    float: left;
   }
-  .mint-loadmore-top {
-    font-size: .14rem;
+  .mint-header-title{
+    color: #252525;
+  }
+
+
+  .is-left {
+    float: left;
+  }
+  .is-right {
+    float: right;
   }
 </style>
 

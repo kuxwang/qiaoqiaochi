@@ -81,6 +81,10 @@
             </router-link>
           </ul>
           <button class="outLogin" @click="outLogin">退出登录</button>
+          <div class="edition">
+            v.2.6.1130
+          </div>
+
         </section>
       </mt-loadmore>
       <div class="loading-container" v-show="on1">
@@ -234,7 +238,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "../assets/less/common.less";
+  @import '../assets/less/reset.less';
+  @import '../assets/less/index.less';
+  @import '../assets/fonts/iconfont.css';
 .main,
 .main1 {
   position: fixed;
@@ -298,6 +304,7 @@ export default {
 
 .message > div {
   width: 100%;
+  text-align: center;
 }
 
 .message span {
@@ -441,6 +448,9 @@ export default {
   width: 0.3rem;
   height: 0.3rem;
   margin: 0 auto;
+}
+  .li1 .title {
+  text-align: center;
 }
 
 .content .iconfont img {
@@ -719,4 +729,11 @@ export default {
 .avatar-content {
   padding-top: 0.2rem;
 }
+.edition{
+  color:#B0B0B0;
+  font-size: 0.12rem;
+  margin-top: 0.2rem;
+  text-align: center;
+}
+
 </style>

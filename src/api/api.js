@@ -54,7 +54,7 @@ let resulthandling = (opt) => {
       // newData = {'statusCode' : -1, 'data' : '获取用户信息失败，可能是在其他设备中登陆'};
       MessageBox({
         title: '友情提示',
-        message: '获取用户信息失败，可能是登陆超时或在其他设备中登陆，点击确认将为您跳转至登陆页面',
+        message: '很抱歉，您还没有登陆，点击确认我们将为您跳转至登陆页面',
         showCancelButton: false,
         closeOnClickModal : false
       }).then(action => {

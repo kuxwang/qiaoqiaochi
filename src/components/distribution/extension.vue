@@ -1,894 +1,647 @@
 <template>
   <div class="main">
     <section>
-      <!--<mt-header title="推广订单" class="c-1">
-        <router-link to="/vipCenter" slot="left">
-          <mt-button icon="back"></mt-button>
-        </router-link>
-      </mt-header>-->
-      <mt-header title="推广订单">
+      <mt-header fixed title="推广订单" style="z-index: 3">
         <router-link to="/vipCenter" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
       </mt-header>
     </section>
-    <div class="container">
-    <div class="list-header c-1">
-      <transition name="slide">
-        <router-view></router-view>
-      </transition>
-      <ul class="nav-tab">
-        <li :class="{tabActive: selected==1 }" @click="tabnav('total',1)">
-          <!--<router-link @click="selecttab(1)" to="/extension1" tag="li" :class="{tabActive: selected==1 }"  >-->
-          <div class="title">全部</div>
-          <div class="iconfont listicon">&#xe624;</div>
-          <div>
-            <span class="num">{{ordertotal}}</span><span class="yuan"> 单</span>
-          </div>
-          <!--</router-link>-->
-        </li>
-        <li :class="{tabActive: selected==2 }" @click="tabnav('lock',2)">
-          <!--<router-link @click="selecttab(2)" to="/extension2" tag="li" :class="{tabActive: selected==2 }" >-->
-          <div class="title">未结算</div>
-          <div class="iconfont listicon">&#xe624;</div>
-          <div>
-            <span class="num">{{orderlock}}</span><span class="yuan"> 单</span>
-          </div>
-          <!--</router-link>-->
-          <!--</li>-->
-          <!--<router-link  @click="selecttab(3)" to="/extension3" tag="li" :class="{tabActive: selected==3 }">-->
-        </li>
-        <li :class="{tabActive: selected==3 }" @click="tabnav('refund',3)">
-          <!--<li class="li2">-->
-          <div class="title">已退款</div>
-          <div class="iconfont listicon">&#xe8b5;</div>
-          <div>
-            <span class="num">{{orderrefund}}</span><span class="yuan"> 单</span>
-            <!--<span class="num">{{ordernum.refund.order_count}}</span><span class="yuan"> 单</span>-->
-          </div>
-        </li>
-        <!--</router-link>-->
-
-        <li :class="{tabActive: selected==4 }" @click="tabnav('ok',4)">
-          <div class="title">已结算</div>
-          <div class="iconfont listicon">&#xe619;</div>
-          <div>
-            <span class="num">{{orderok}}</span><span class="yuan"> 单</span>
-          </div>
-        </li>
-      </ul>
-
-      <div class="search">
-        <input type="text" results="1" v-model="find" placeholder="输入订单号、粉丝ID"/>
-        <div @click="searchlist">搜索</div>
+    <div class="containers">
+      <div class="list-header c-1">
+        <transition name="slide">
+          <router-view></router-view>
+        </transition>
+        <ul class="nav-tab">
+          <li :class="{tabActive: selected==1 }" @click="switchOrder('total',1)">
+            <div class="title">全部</div>
+            <div class="iconfont listicon">&#xe624;</div>
+            <div>
+              <span class="num">{{ordertotal}}</span>
+              <span class="yuan"> 单</span>
+            </div>
+          </li>
+          <li :class="{tabActive: selected==2 }" @click="switchOrder('lock',2)">
+            <div class="title">未结算</div>
+            <div class="iconfont listicon">&#xe624;</div>
+            <div>
+              <span class="num">{{orderlock}}</span>
+              <span class="yuan"> 单</span>
+            </div>
+          </li>
+          <li :class="{tabActive: selected==3 }" @click="switchOrder('refund',3)">
+            <div class="title">已退款</div>
+            <div class="iconfont listicon">&#xe8b5;</div>
+            <div>
+              <span class="num">{{orderrefund}}</span>
+              <span class="yuan"> 单</span>
+            </div>
+          </li>
+          <li :class="{tabActive: selected==4 }" @click="switchOrder('ok',4)">
+            <div class="title">已结算</div>
+            <div class="iconfont listicon">&#xe619;</div>
+            <div>
+              <span class="num">{{orderok}}</span>
+              <span class="yuan"> 单</span>
+            </div>
+          </li>
+        </ul>
+        <div class="search">
+          <input type="text" results="1" v-model="find" placeholder="输入订单号、粉丝ID" />
+          <div @click="searchOrder">搜索</div>
+        </div>
       </div>
+      <mt-loadmore :bottom-method="loadBottom" @bottom-status-change="handleBottomChange" :autoFill="isTrue" :bottom-all-loaded="allLoaded"
+        ref="loadmore">
+        <ul class="p-list" v-show="defShow">
+          <li class="p-cell" v-for="(v,i) in orderlist" @click="goOrderInfo(v)" :key="i">
+            <div class="up">
+              <span class="ordernum">订单编号{{v.ordersn}}</span>
+              <span class="time">{{i.createtime}}</span>
+            </div>
+            <div class="down">
+              <div class="logo">
+                <img :src="v.avatar" />
+              </div>
+              <div class="info">
+                <h5>{{v.nickname}}</h5>
+                <span>{{v.mid}}</span>
+              </div>
+              <div class="ordertype">
+                <span>{{v.status}}</span>
+                <span>￥{{v.price}}</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <div slot="bottom" class="mint-loadmore-bottom" v-show="!allLoaded">
+          <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+          <span v-show="bottomStatus === 'loading'">
+            <mt-spinner type="snake"></mt-spinner>
+          </span>
+        </div>
+      </mt-loadmore>
+      <!-- 没有伙伴时 -->
+      <default-img :defData="defMsg" v-show="!defShow"></default-img>
     </div>
-
-    <ul class="p-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="allLoaded"
-        infinite-scroll-distance="10">
-      <loading-list ref="requestStatus">
-        <li class="p-cell" v-if="i.ordersn" v-for="(i,index) in orderlist" @click="orderinfo(index)">
-          <div class="up">
-            <span class="ordernum">订单编号{{i.ordersn}}</span>
-            <span class="time">{{i.createtime}}</span>
-          </div>
-          <div class="down">
-            <div class="logo">
-              <img :src="i.avatar"/>
-            </div>
-            <div class="info">
-              <h5>{{i.nickname}}</h5>
-              <span>{{i.mid}}</span>
-            </div>
-            <div class="ordertype">
-              <span>{{i.status}}</span>
-              <span>￥{{i.price}}</span>
-            </div>
-          </div>
-
-        </li>
-      </loading-list>
-    </ul>
-    <!--  <div slot="bottom" class="mint-loadmore-bottom" style="text-align:center" v-show="allLoaded == false" v-if="">
-        <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">继续滚动，可加载更多</span>
-        <span v-show="bottomStatus === 'loading'"><mt-spinner type="snake"></mt-spinner></span>
-      </div>-->
-    <!--<div v-if="!orderlist.length" class="tips">-->
-    <!--<span class="iconfont">&#xe66f;</span>-->
-    <!--没有相关订单<br>-->
-    <!--</div>-->
-  </div>
   </div>
 </template>
 <script>
-  import MtCell from "../../../node_modules/mint-ui/packages/cell/src/cell";
-  //  import {TabContainer, TabContainerItem, Cell}  from 'mint-ui'
-  import {Search, Loadmore, InfiniteScroll, Toast} from 'mint-ui';
-  import {mapMutations, mapGetters} from 'vuex';
-  import {orderStatistics, orderLists, orders} from '../../api/api'
-  import loadingList from '../common/loadinglist.vue'
+import { Search, Loadmore, InfiniteScroll, Toast } from "mint-ui";
+import { mapMutations, mapGetters } from "vuex";
+import { orderStatistics, orderLists, orders } from "../../api/api";
+import defaultImg from "../base/defaultImg/defaultImg";
+import myDefImg from "../../assets/images/wdhb.png";
 
-
-  export default{
-    data () {
-      return {
-        active: 'tab-container1',
-        selected: 1,
-        find: '',
-        ordernum: {},
-        ordertotal: '0',
-        orderlock: '0',
-        orderrefund: '0',
-        orderok: '0',
-        orderlist: [],
-        searched: true,
-        myCurNo: 1,
-        psizes: 10,
-        bottomStatus: '',
-        allLoaded: false,
-        isTrue: false,
-        onePage: false,
-        loding: true
-      }
-    },
-    beforeRouteEnter (to, from, next) {
+export default {
+  data() {
+    return {
+      active: "tab-container1",
+      selected: 1,
+      find: "",
+      ordernum: {},
+      ordertotal: 0,
+      orderlock: 0,
+      orderrefund: 0,
+      orderok: 0,
+      defShow: true,
+      ordersn: "",
+      mid: "",
+      defMsg: {
+        img: myDefImg,
+        title1: "还没有相关订单",
+        title2: ""
+      },
+      orderlist: [],
+      psize: 10,
+      page: 1,
+      bottomStatus: "",
+      allLoaded: true,
+      isTrue: false,
+      type: ""
+    };
+  },
+  methods: {
+    init() {
+      //初始化
       let _this = this;
-      let params = {
-        data: {
-          type: to.query.type,
-          page: 1,
-          psize: 10
-        }
-
-      }
-//      console.log(to.query.type);
-      orderLists(params, (res) => {
-        if (res.statusCode == 1) {
-          to.meta.post = res.data
-          console.log(res.data)
-          next(vm => {
-            console.log(vm.orderlist)
-            console.log('okokok')
-          })
-        } else {
-          console.log('请求失败`${res.statusCode} , ${res.data}` ')
-        }
-
-      });
-
-    },
-    methods: {
-      orderinfo(index){
-        this.ordersn(this.orderlist[index].ordersn);
-        this.$router.push({name: `orderinfo`});
-//        this.allLoaded = true;
-      },
-      selecttab(idx, page){
-        let _this = this;
-//        this.selected = idx;
-        /*if(idx==5){
-         this.orderlist = [];
-         this.allLoaded = true;
-         }else if(page===1) {
-         this.orderlist = [];
-         this.allLoaded = false;
-         this.myCurNo = 1;
-         }*/
-        if (page == 1) {
-          _this.orderlist = []
-        }
-        _this.$refs.requestStatus.loadingStatus = 0
-        switch (idx) {
-          case 1:
-            let params = {
-              data: {
-                type: 'total',
-                page: page,
-                psize: this.psizes
-              }
-            }
-            orderLists(params, (res) => {
-
-              if (res.statusCode == 1) {
-                _this.$refs.requestStatus.loadingStatus = 1
-                this.orderlist = this.orderlist.concat(res.data);
-
-                if (res.data.length < _this.psizes) {
-                  _this.allLoaded = true;
-                }
-                console.log(this.orderlist.length)
-              } else {
-                _this.allLoaded = true;
-                console.log('请求失败`${res.statusCode} , ${res.data}` ')
-              }
-
-            });
-            break;
-          case 2:
-            params = {
-              data: {
-                type: 'lock',
-                page: page,
-                psize: this.psizes
-              }
-            };
-            orderLists(params, (res) => {
-              if (res.statusCode == 1) {
-                _this.$refs.requestStatus.loadingStatus = 1
-                this.orderlist = this.orderlist.concat(res.data);
-
-                if (res.data.length < _this.psizes) {
-                  _this.allLoaded = true;
-                }
-              } else {
-                _this.allLoaded = true;
-                console.log('请求失败`${res.statusCode} , ${res.data}` ')
-              }
-              console.log(this.orderlist.length)
-            });
-            break;
-          case 3:
-            params = {
-              data: {
-                type: 'refund',
-                page: page,
-                psize: this.psizes
-              }
-            };
-            orderLists(params, (res) => {
-              if (res.statusCode == 1) {
-                _this.$refs.requestStatus.loadingStatus = 1
-                this.orderlist = this.orderlist.concat(res.data);
-
-                if (res.data.length < _this.psizes) {
-                  _this.allLoaded = true;
-                }
-              } else {
-                _this.allLoaded = true;
-                console.log('请求失败`${res.statusCode} , ${res.data}` ')
-              }
-              console.log(this.orderlist.length)
-            })
-            break;
-          case 4:
-            params = {
-              data: {
-                type: 'ok',
-                page: page,
-                psize: this.psizes
-              }
-            };
-            orderLists(params, (res) => {
-              if (res.statusCode == 1) {
-                _this.$refs.requestStatus.loadingStatus = 1
-                this.orderlist = this.orderlist.concat(res.data);
-
-                if (res.data.length < _this.psizes) {
-                  _this.allLoaded = true;
-                }
-              } else {
-                _this.allLoaded = true;
-                console.log('请求失败`${res.statusCode} , ${res.data}` ')
-              }
-              console.log(this.orderlist.length)
-
-            })
-            break;
-          default:
-            _this.$refs.requestStatus.loadingStatus = 1
-            console.log('hehhe')
-
-        }
-      },
-      tabnav(type, index){
-        let _this = this;
-        this.myCurNo = 1;
-        _this.selected = index;
-        _this.orderlist = [];
-        _this.$refs.requestStatus.loadingStatus = 0
-
-        let params = {
-          data: {
-            type: type,
-            page: 1,
-            psize: _this.psizes
-          }
-        }
-        orderLists(params, (res) => {
-          if (res.statusCode == 1) {
-            _this.orderlist = _this.orderlist.concat(res.data);
-            _this.$refs.requestStatus.loadingStatus = 1
-            if (res.data.length < _this.psizes) {
-              _this.allLoaded = true;
-            }
-            console.log(_this.orderlist.length);
-            console.log(_this.selected);
-            console.log(_this.myCurNo);
-          } else {
-            _this.$refs.requestStatus.loadingStatus = 1
-            _this.allLoaded = true;
-            console.log('请求失败`${res.statusCode} , ${res.data}` ')
-          }
-
-        });
-      },
-      ...mapMutations({
-        searchnum: 'SEARCHNUM',
-        ordersn: 'ORDERSN',
-        isScrolls: 'ISSCROLL'
-
-      }),
-      /*      handleBottomChange(status) {
-       console.log(status);
-       this.bottomStatus = status
-       },
-       loadBottom() {
-       console.log('xx1');
-       //         return ;
-       this.myCurNo += 1;
-       //        this.$refs.loadmore.onBottomLoaded();
-       this.selecttab(this.selected, this.myCurNo);
-       },*/
-      loadMore(){
-        this.myCurNo = this.myCurNo + 1;
-        this.selecttab(this.selected, this.myCurNo)
-      },
-      searchlist(){
-        this.orderlist = [];
-        this.selected = 5
-        this.allLoaded = true;
-        let _this = this;
-        if (_this.find.length === 20) {
-          let params = {
-            data: {
-              ordersn: _this.find
-            }
-          };
-          _this.allLoaded = true
-          orders(params, (res) => {
-            if (res.statusCode === 1) {
-              let obji = [];
-              obji.push(res.data.order);
-              _this.orderlist = obji;
-              _this.allLoaded = true;
-              console.log(res.data)
-            } else {
-              console.log('请求失败');
-              _this.searched = false
-            }
-          })
-        } else if (!_this.find) {
-          Toast({
-            message: '请输入订单号或者用户ID。',
-            position: 'middle',
-            duration: 2000
-          });
-        }else {
-          let params = {
-            data: {
-              mid: _this.find
-            }
-          };
-          orders(params, (res) => {
-            console.log(res);
-            if (res.statusCode === 1) {
-              console.log(res)
-              _this.orderlist = res.data.order;
-              console.log(_this.orderlist)
-            } else {
-              Toast({
-                message: res.data,
-                position: 'middle',
-                duration: 2000
-              });
-//              console.log('请求失败');
-            }
-          })
-        }
-
-      }
-
-
-    },
-//    watch:{
-//      find(a,b){
-//          if(this.selected === 5){
-//            this.searchlist()
-//          }
-//      }
-//    },
-
-    created(){
-      let _this = this;
-      this.selected = this.$route.query.stab;
-      let res = this.$route.meta.post;
-      _this.orderlist = res
+      _this.selected = _this.$route.query.stab;
       _this.ordertotal = _this.$route.query.total;
       _this.orderrefund = _this.$route.query.refund;
       _this.orderlock = _this.$route.query.lock;
       _this.orderok = _this.$route.query.ok;
+      _this.type = _this.$route.query.type;
+      _this.switchOrder(_this.$route.query.type, _this.$route.query.stab);
     },
-    components: {
-      loadingList
+    switchOrder(type, index) {
+      //切换
+      let _this = this;
+      //数据重置
+      _this.psize = 10;
+      _this.page = 1;
+      _this.bottomStatus = "";
+      _this.type = type;
+      _this.allLoaded = true;
+      _this.isTrue = false;
+      _this.selected = index;
+      _this.orderlist = [];
+      _this.find = ""; //每次切换清空搜索框
+      let params = {
+        data: {
+          type: type,
+          page: _this.page,
+          psize: _this.psize
+        }
+      };
+      orderLists(params, res => {
+        console.log(res);
+        if (res.statusCode == 1) {
+          _this.orderlist = res.data;
+          // 当orderlist length<=0时 显示默认图
+          _this.orderlist.length <= 0
+            ? (_this.defShow = false)
+            : (_this.defShow = true);
+          // 当orderlist length<_this.psize 表示可以上拉，否则禁止
+          _this.orderlist.length < _this.psize
+            ? (_this.allLoaded = true)
+            : (_this.allLoaded = false);
+        } else {
+          _this.defShow = false;
+          console.log("extension orderLists" + res.data);
+        }
+      });
     },
-    mounted(){
-      this.$refs.requestStatus.loadingStatus = 1
+    handleBottomChange(status) {
+      this.bottomStatus = status;
     },
-    beforeRouteUpdate(to, from, next){
-      if (to.name === 'orderinfo') {
-        this.isScrolls(this.allLoaded)
-        this.allLoaded = true;
-        console.log('qu')
-        console.log(this.allLoaded)
-      }
-      if (from.name === 'orderinfo') {
-        this.allLoaded = this.isScroll;
-        console.log('huilai')
-        console.log(this.allLoaded)
-      }
+    loadBottom() {
+      //上拉加载
+      let _this = this;
+      let params = {
+        data: {
+          page: ++_this.page,
+          type: _this.type,
+          psize: _this.psize
+        }
+      };
+      console.log(params.data);
+      orderLists(params, res => {
+        if (res.statusCode === 1) {
+          _this.orderlist = _this.orderlist.concat(res.data);
+        }
+        this.$refs.loadmore.onBottomLoaded();
+        if (res.data.length < _this.psize) {
+          Toast({
+            message: "亲，已经到底了哦~",
+            position: "middle",
+            duration: 1500
+          });
+          _this.allLoaded = true;
+          return false;
+        }
+      });
+    },
 
-//      console.log(this.allLoaded + '的结果')
-      next()
+    searchOrder() {
+      let _this = this;
+      if (_this.find.length == 12) {
+        _this.ordersn = _this.find;
+      } else if (Number(_this.find)) {
+        _this.mid = _this.find;
+      } else {
+        Toast({
+          message: "订单号或用户ID输入有误!",
+          position: "top",
+          duration: 1500
+        });
+        _this.find = ""; //输入错误时候，清空搜索框
+        return false;
+      }
+      let params = {
+        data: {
+          ordersn: _this.ordersn || "",
+          mid: _this.mid || ""
+        }
+      };
+      orders(params, res => {
+        if (res.statusCode === 1) {
+          _this.orderlist = [];
+          _this.orderlist = res.data.order;
+          _this.find = ""; //请求完成，清空搜索框
+        } else {
+          Toast({
+            message: res.data,
+            position: "top",
+            duration: 1500
+          });
+          _this.find = ""; //输入错误时候，清空搜索框
+        }
+      });
     },
-
-    computed: {
-      ...mapGetters([
-        'tabselect',
-        'isScroll'
-      ]),
-    }
+    goOrderInfo(v) {
+      console.log(v);
+      let _this = this;
+      _this.$router.push({
+        name: "orderinfo",
+        query: { ordersn: v.ordersn, mid: v.mid }
+      });
+    },
+    ...mapMutations({
+      searchnum: "SEARCHNUM",
+      isScrolls: "ISSCROLL"
+    })
+  },
+  components: {
+    defaultImg
+  },
+  mounted() {
+    let _this = this;
+    _this.init();
   }
+};
 </script>
-<style scoped>
-  @import '../../assets/css/fonts/iconfont.css';
-  @import '../../assets/css/reset/reset.css';
-
-  * {
-    font-size: .16rem;
-  }
-
-  .mint-header {
-    border-bottom: 0;
-    color: #fff;
-    z-index: 2;
-  }
-
-  .main {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #ececec;
-    overflow: auto;
-    z-index: 20;
-  }
-
-  .avatar {
-    position: relative;
-    top: 0;
-    left: 0;
-    margin-top: .4rem;
-    height: 1rem;
-    padding: .15rem;
-    color: #fff;
-    background-color: #f47f2f;
-  }
-
-  .icon {
-    width: .70rem;
-    height: .70rem;
-    background: grey;
-    float: left;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-  }
-
-  .message {
-    width: 78%;
-    height: 100%;
-    float: left;
-  }
-
-  .message div {
-    width: 100%;
-    height: 33%;
-  }
-
-  .message > div > span {
-    display: block;
-    max-width: 100%;
-    height: 100%;
-    float: left;
-    font-size: .14rem;
-    line-height: .23rem;
-    padding: 0 0 0 10px;
-  }
-
-  .message > span {
-    font-size: .14rem;
-    float: left;
-    display: block;
-    padding: 0 0 0 10px;
-  }
-
-  .avatar > .right {
-    position: absolute;
-    top: .4rem;
-    right: .2rem;
-  }
-
-  .top {
-    /*height: .64rem;*/
-    /*background: #fff;*/
-    margin-top: .4rem;
-    background: rgb(244, 127, 47);
-    -webkit-box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
-    -moz-box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
-    box-shadow: 0 2px 8px rgba(138, 138, 138, .4);
-    /*display: flex;*/
-  }
-
-  /*
-
-    .top > div {
-      position: relative;
-      !*width: 50%;*!
-      height: 100%;
-      background: rgba(0, 0, 0, .2);
-      !*float: left;*!
-      flex: 1;
-    }
-
-    .top > div > span {
-      line-height: .32rem;
-      !*color: red;*!
-      color: #fff;
-    }
-
-    .top .title {
-      display: block;
-      height: .25rem;
-      font-size: .14rem;
-      !*color: #666;*!
-      color: #fff;
-    }
-  */
-
-  .yuan {
-    color: red;
-    font-size: .10rem;
-  }
-
-  .num {
-    color: red;
-    font-size: .18rem;
-  }
-
-  .top_1:after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: .1rem;
-    width: 1px;
-    height: 70%;
-    background-color: rgba(0, 0, 0, .1);
-  }
-
-  .details li {
-    margin-top: .04rem;
-  }
-
-  .p-list {
-    display: block;
-    width: 100%;
-    height: 4.68rem;
-    overflow: hidden;
-    overflow-y: scroll;
-    background-color: #ececec;
-    margin-top: 1.86rem;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: .4rem;
-
-  }
-
-  .mint-loadmore {
-    width: 100%;
-  }
-
-  .p-cell {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    padding: 0;
-    margin-top: 0.05rem;
-    background-color: #fff;
-    border-top: 1px solid #e2e2e2;
-    width: 100%;
-  }
-
-  .up {
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-    padding: 0 0.1rem;
-    line-height: .36rem;
-
-  }
-
-  .up .ordernum {
-    font-size: 0.12rem;
-  }
-
-  .up .time {
-    float: right;
-    font-size: 0.1rem;
-
-  }
-
-  .down {
-    flex: 3;
-    height: 0.68rem;
-    display: flex;
-    padding: 0 0.1rem;
-  }
-
-  .logo {
-    flex: 1;
-    width: .43rem;
-    height: .43rem;
-    margin-top: .1rem;
-    /*padding: 0.1rem 0;*/
-  }
-
-  .info {
-    flex: 4;
-    text-align: left;
-    margin-left: 0.1rem;
-    padding: 0.05rem 0;
-    color: #666;
-  }
-
-  .info h5 {
-    margin-top: 0.1rem;
-    color: #27272f;
-    font-size: 0.14rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 1.72rem;
-
-  }
-
-  .info span {
-
-    font-size: 0.14rem;
-    color: #666;
-  }
-
-  .logo img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    vertical-align: middle;
-    display: block;
-
-  }
-
-  .ordertype {
-    flex: 3;
-    padding: 0.05rem 0;
-    color: #666;
-    max-width: 1.29rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .ordertype span {
-    display: block;
-    text-align: right;
-    font-size: 0.14rem;
-    margin-top: 0.05rem;
-  }
-
-  .ordertype span:last-child {
-    margin-top: 0.1rem;
-  }
-
-  .mint-tab-container-item {
-    overflow: hidden;
-    overflow-y: scroll;
-    height: 4.8rem;
-  }
-
-  .mint-navbar .mint-tab-item.is-selected {
-    color: #333;
-
-  }
-
-  .mint-navbar .mint-tab-item.is-selected {
-    border-bottom: 2px solid #333;
-  }
-
-  .nav-tab {
-    /*margin-top: .5rem;*/
-    height: .90rem;
-    -webkit-box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
-    -moz-box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
-    box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
-    display: flex;
-    position: fixed;
-    width: 100%;
-    top: .45rem;
-    z-index: 1;
-  }
-
-  .nav-tab li {
-    position: relative;
-    display: block;
-    /*width: 33.3%;*/
-    height: .90rem;
-    /*float: left*/
-    background-color: #fff;
-    padding: .1rem .2rem;
-    flex: 1;
-  }
-
-  .nav-tab .li1:after, .nav-tab .li2:after, .nav-tab .li4:after, .nav-tab .li5:after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: .14rem;
-    width: 1px;
-    height: 70%;
-    background-color: rgba(0, 0, 0, .1);
-  }
-
-  .nav-tab .li4, .content .li5, .content .li6 {
-    border-top: 1px solid rgba(0, 0, 0, .2)
-  }
-
-  .nav-tab .title {
-    color: rgba(0, 0, 0, .5);
-    font-size: .14rem;
-    line-height: .2rem;
-  }
-
-  .nav-tab .iconfont {
-    width: .28rem;
-    height: .30rem;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: .20rem;
-    /*border: 1px solid #EC5151;*/
-    line-height: .3rem;
-    /*color: #EC5151;*/
-    border-radius: 50%;
-  }
-
-  .search {
-    height: .5rem;
-    display: flex;
-    /*margin: .2rem 2%;*/
-    width: 100%;
-
-    position: fixed;
-    z-index: 2;
-    background-color: #eee;
-    top: 1.36rem;
-    padding: 0 2%;
-
-  }
-
-  .search input {
-    border: none;
-    display: block;
-    height: .3rem;
-    flex: 1;
-    padding: 0 0.2rem;
-    background: #fff;
-    margin-top: .15rem;
-  }
-
-  .search div {
-    background-color: #333;
-    display: block;
-    height: .3rem;
-    flex: .3;
-    color: #fff;
-    line-height: .3rem;
-    margin-top: .15rem;
-  }
-
-  .mint-header {
-    /*color: #252522 !important;*/
-  }
-
-  .nav-tab .tabActive {
-    background-color: #333;
-    color: #fff;
-  }
-
-  .nav-tab .tabActive .title {
-    color: #fff;
-  }
-
-  .tabActive .num, .tabActive .yuan {
-    color: #fff;
-  }
-
-  .c-1 {
-    z-index: 3;
-    top: 0;
-    right: 0;
-    left: 0;
-    position: fixed;
-  }
-
-  .tips {
-    text-align: center;
-    font-size: .14rem;
-    color: #666;
-    margin-top: 2.8rem;
-
-  }
-
-  .tips .iconfont {
-    display: block;
-    font-size: .8rem;
-  }
-
-  .mint-loadmore {
-    /* height: 4.5rem;
-      overflow: hidden;*/
-    /*overflow-y: scroll;*/
-
-  }
-
-  .mint-loadmore {
-    /*position: absolute;
-    top:1.9rem;*/
-  }
-
-  .mint-loadmore-content {
-    /*overflow-y: scroll !important;*/
-  }
-
-  .list-content {
-    overflow: hidden;
-    /*overflow-y: scroll;*/
-    /*height: 4.75rem;*/
-    position: absolute;
-    top: 1.9rem;
-    width: 100%;
-  }
-
-  .mint-loadmore-bottom span {
-    display: inline-block;
-    transition: .2s linear;
-    vertical-align: middle;
-  }
-
-  .tips {
-
-  }
-  .container {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    overflow: hidden;
-    /*overflow-y: scroll;*/
-    /*-webkit-overflow-scrolling: touch;*/
-    height: 100%;
-    /*overflow-y: scroll;*/
-    padding-bottom: .5rem;
-  }
+<style lang="less" scoped>
+  @import "../../assets/less/index.less";
+  @import '../../assets/less/reset.less';
+  @import '../../assets/fonts/iconfont.css';
+
+.main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: @background;
+  overflow: auto;
+  z-index: 20;
+}
+
+.avatar {
+  position: relative;
+  top: 0;
+  left: 0;
+  margin-top: 0.4rem;
+  height: 1rem;
+  padding: 0.15rem;
+  color: #fff;
+  background-color: #f47f2f;
+}
+
+.icon {
+  width: 0.7rem;
+  height: 0.7rem;
+  background: grey;
+  float: left;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.message {
+  width: 78%;
+  height: 100%;
+  float: left;
+}
+
+.message div {
+  width: 100%;
+  height: 33%;
+}
+
+.message > div > span {
+  display: block;
+  max-width: 100%;
+  height: 100%;
+  float: left;
+  font-size: 0.14rem;
+  line-height: 0.23rem;
+  padding: 0 0 0 10px;
+}
+
+.message > span {
+  font-size: 0.14rem;
+  float: left;
+  display: block;
+  padding: 0 0 0 10px;
+}
+
+.avatar > .right {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.2rem;
+}
+
+.top {
+  /*height: .64rem;*/
+  /*background: #fff;*/
+  margin-top: 0.4rem;
+  background: rgb(244, 127, 47);
+  -webkit-box-shadow: 0 2px 8px rgba(138, 138, 138, 0.4);
+  -moz-box-shadow: 0 2px 8px rgba(138, 138, 138, 0.4);
+  box-shadow: 0 2px 8px rgba(138, 138, 138, 0.4);
+}
+
+.yuan {
+  color: #333;
+  font-size: 0.1rem;
+}
+
+.num {
+  color: #333;
+  font-size: 0.18rem;
+}
+
+.top_1:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0.1rem;
+  width: 1px;
+  height: 70%;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.details li {
+  margin-top: 0.04rem;
+}
+
+.mint-loadmore {
+  width: 100%;
+}
+
+.p-cell {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  padding: 0;
+  margin-top: 0.05rem;
+  background-color: #fff;
+  border-top: 1px solid #f6f5fa;
+  width: 100%;
+}
+
+.up {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  text-align: left;
+  border-bottom: 1px solid #f6f5fa;
+  padding: 0 0.1rem;
+  line-height: 0.36rem;
+}
+
+.up .ordernum {
+  font-size: 0.13rem;
+}
+
+.up .time {
+  float: right;
+  font-size: 0.1rem;
+  font-size: 0.13rem;
+}
+
+.down {
+  flex: 3;
+  height: 0.68rem;
+  display: flex;
+  padding: 0 0.1rem;
+}
+
+.logo {
+  flex: 1;
+  width: 0.43rem;
+  height: 0.43rem;
+  margin-top: 0.1rem;
+  /*padding: 0.1rem 0;*/
+}
+
+.info {
+  flex: 4;
+  text-align: left;
+  margin-left: 0.1rem;
+  padding: 0.05rem 0;
+  color: #666;
+}
+
+.info h5 {
+  margin-top: 0.1rem;
+  color: #27272f;
+  font-size: 0.14rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 1.72rem;
+  margin-bottom: 0.05rem;
+}
+
+.info span {
+  font-size: 0.14rem;
+  color: #666;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  vertical-align: middle;
+  display: block;
+}
+
+.ordertype {
+  flex: 3;
+  padding: 0.05rem 0;
+  color: #666;
+  max-width: 1.29rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ordertype span {
+  display: block;
+  text-align: right;
+  font-size: 0.14rem;
+  margin-top: 0.05rem;
+}
+
+.ordertype span:last-child {
+  margin-top: 0.1rem;
+}
+
+.mint-tab-container-item {
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 4.8rem;
+}
+
+.mint-navbar .mint-tab-item.is-selected {
+  color: #333;
+}
+
+.mint-navbar .mint-tab-item.is-selected {
+  border-bottom: 2px solid #333;
+}
+
+.nav-tab {
+  /*margin-top: .5rem;*/
+  height: 0.9rem;
+  display: flex;
+  position: fixed;
+  width: 100%;
+  top: 0.45rem;
+  z-index: 1;
+  background: #fff;
+}
+
+.nav-tab li {
+  position: relative;
+  display: block;
+  /*width: 33.3%;*/
+  height: 0.9rem;
+  /*float: left*/
+  background-color: #fff;
+  padding: 0.1rem 0.2rem;
+  flex: 1;
+}
+
+.nav-tab .li1:after,
+.nav-tab .li2:after,
+.nav-tab .li4:after,
+.nav-tab .li5:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0.14rem;
+  width: 1px;
+  height: 70%;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.nav-tab .li4,
+.content .li5,
+.content .li6 {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.nav-tab .title {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.14rem;
+  line-height: 0.2rem;
+}
+
+.nav-tab .iconfont {
+  width: 0.28rem;
+  height: 0.3rem;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 0.2rem;
+  /*border: 1px solid #F5751D;*/
+  line-height: 0.3rem;
+  /*color: #F5751D;*/
+  border-radius: 50%;
+}
+
+.search {
+  height: 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  /* margin: .2rem 2%; */
+  width: 100%;
+  position: fixed;
+  z-index: 2;
+  background-color: @background;
+  top: 1.31rem;
+  // padding: 0 2%;
+}
+
+.search input {
+  border: none;
+  display: block;
+  height: 0.4rem;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding: 0 0.2rem;
+  background: #fff;
+  margin-top: 0.15rem;
+}
+
+.search div {
+  background-color: #f5751d;
+  display: block;
+  height: 0.4rem;
+  -webkit-box-flex: 0.3;
+  -ms-flex: 0.3;
+  flex: 0.3;
+  color: #fff;
+  // line-height: 0.4rem;
+  margin-top: 0.15rem;
+  font-size: 0.14rem;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+}
+
+.nav-tab .tabActive {
+  background-color: #fff;
+  color: @themeColor1;
+}
+
+.nav-tab .tabActive .title {
+  color: @themeColor1;
+}
+
+.tabActive .num,
+.tabActive .yuan {
+  color: @themeColor1;
+}
+
+.c-1 {
+  z-index: 3;
+  top: 0;
+  right: 0;
+  left: 0;
+  position: fixed;
+}
+
+.tips {
+  text-align: center;
+  font-size: 0.14rem;
+  color: #666;
+  margin-top: 2.8rem;
+}
+
+.tips .iconfont {
+  display: block;
+  font-size: 0.8rem;
+}
+
+.list-content {
+  overflow: hidden;
+  position: absolute;
+  top: 1.9rem;
+  width: 100%;
+}
+
+.mint-loadmore-bottom span {
+  display: inline-block;
+  transition: 0.2s linear;
+  vertical-align: middle;
+}
+
+.p-list {
+  background-color: @background;
+  padding-bottom: 0.1rem;
+  margin-top: 1.9rem;
+  .scroll-view(100%); // .scroll-view(5rem);
+}
+
+.mint-loadmore {
+  overflow: hidden;
+}
 </style>

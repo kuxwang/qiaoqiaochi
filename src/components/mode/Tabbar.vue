@@ -5,14 +5,14 @@
         <div class="mint-tab-item-label">
           <!--<div class="iconfont tabIcon">&#xe648;</div>-->
           <div class="iconfont tabIcon">&#xe640;</div>
-          立即购买
+          全部商品
         </div>
       </router-link>
       <router-link class="mint-tab-item" :to="{name:'class'}" tag="a">
         <div class="mint-tab-item-label">
           <!--<div class="iconfont tabIcon">&#xe64a;</div>-->
           <div class="iconfont tabIcon">&#xe654;</div>
-          分类
+          精选
         </div>
       </router-link>
       <router-link class="mint-tab-item" :to="{name:'shoppingCart'}" tag="a">
@@ -46,7 +46,9 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-@import '../../assets/less/common.less';
+  @import '../../assets/less/index.less';
+  @import '../../assets/less/reset.less';
+  @import '../../assets/fonts/iconfont.css';
 .tabIcon {
     font-size: 0.24rem;
     padding-bottom: 0.05rem;

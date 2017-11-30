@@ -1,184 +1,181 @@
 <template>
-  <div class="page">
-    <mt-header title="分销中心" fixed>
-      <router-link to="/userCenter" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-    </mt-header>
-    <div  class="container">
-      <div class="userinfo">
-        <!--<div class="userinfo-tp" @click="goUserinfo">-->
-        <div class="userinfo-tp">
-          <div class="userinfo-lf">
-            <div class="userphoto">
-              <img :src="memberInfo.avatar"/>
+  <div class="main needsclick">
+    <div class="container">
+      <mt-header title="会员中心" class="header" fixed>
+        <a slot="left" @click="goBack">
+          <mt-button icon="back"></mt-button>
+        </a>
+      </mt-header>
+      <div class="vipcenter-content" v-show="!on1">
+        <div slot="top" class="mint-loadmore-top">
+          <span class="iconfont" v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">&#xe732;下拉刷新</span>
+          <span class="loading" v-show="topStatus === 'loading'">加载中</span>
+        </div>
+        <section class="avatar">
+          <div class="avatar-content">
+            <div class="icon">
+              <img :src="memberInfo.avatar" alt="">
             </div>
-            <div class="userinfo-item">
-              <div class="userinfo-p">
-                昵称：{{memberInfo.nickname}}
-              </div>
-              <div class="userinfo-p">
-                会员ID：{{memberInfo.id}}
-              </div>
-              <div class="userinfo-p">
-                等级：{{memberInfo.level}}
-              </div>
-              <div class="userinfo-p">
-                推荐人：{{memberInfo.from}}
-              </div>
+            <div class="message">
+              <p class="nametype">昵称:{{memberInfo.nickname}}</p>
+              <p class="nametype">会员ID:{{memberInfo.id}}</p>
+              <p class="nametype">等级:{{memberInfo.level}}</p>
+              <p class="nametype">推荐人:{{memberInfo.from}}</p>
             </div>
           </div>
-          <div class="userinfo-lr deltriangle">
-            <!-- <text class="deltriangle"></text> -->
-          </div>
-        </div>
-        <div class="userinfo-bt">
-          <div class="userinfo-cost">
-            推广费：{{recordStatistics_get.c_money_sum}}元
-          </div>
-        </div>
-      </div>
-      <!-- 分割块 -->
-      <div class="delblock"></div>
-      <div class="partner">
-        <div class="mypartner">
-          <!--<img :src="../../public/imgs/hb.png"/>-->
-          <div class="iconfont">&#xe612;</div>
-          <span>我的伙伴</span>
-        </div>
-        <div class="partner-list">
-          <!--<div class="partner-content" data-status="0" @click="partnerInfoTap">-->
-            <router-link class="partner-content"
-                         :to="{path:'partner',query:{stab:1,type:'all',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}"
-                         tag="div">
-            <div class="mydingdan-list">
-              <div class="dingdan-icon ">
-                <!--<img :src="../../public/imgs/syhb2.png" />-->
-                <div class="iconfont">&#xe646;</div>
-                <span class="num">{{teamsStatistics.all}}</span>
-              </div>
-              <span> 所有伙伴</span>
-            </div>
-            </router-link>
-          <!--</div>-->
-          <!--<div class="partner-content" data-status="1" @click="partnerInfoTap">-->
-          <router-link class="partner-content"
-                       :to="{path:'partner',query:{stab:2,type:'agent',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}"
-                       tag="div">
-            <div class="mydingdan-list">
-              <div class="dingdan-icon ">
-                <!--<img :src="../../public/imgs/ygmhb2.png" />-->
-                <div class="iconfont">&#xe612;</div>
-                <span class="num">{{teamsStatistics.purchased}}</span>
-              </div>
-              <span> 已购买伙伴</span>
-            </div>
+        </section>
+        <section class="top">
+          <router-link class="money-top" :to="{name: 'takemoney'}" tag="div">
+            推广费:{{recordStatistics_get.c_money_sum}} 元
           </router-link>
+        </section>
+        <section class="content">
+          <!-- 我的伙伴 -->
+          <div class="mfriend">
+            <span class="mint-cell-text">
+              <span class="iconfont">
+                &#xe612;
+              </span>
+              我的伙伴
+            </span>
+          </div>
+          <ul class="order-list">
+            <!--<router-link class="li1" :to="{path:'partnerlevel',query:{stab:1,type:'all',level:'1'}}" tag="li">-->
 
-          <router-link class="partner-content"
-                       :to="{path:'partner',query:{stab:3,type:'fans',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}"
-                       tag="div">
-          <!--<div class="partner-content" data-status="2" @click="partnerInfoTap">-->
-            <div class="mydingdan-list">
-              <div class="dingdan-icon ">
-                <div class="iconfont">&#xe64d;</div>
+            <router-link class="li1"
+                         :to="{path:'partnerlevel',query:{stab:2,type:'agent',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}"
+                         tag="li">
+
+              <div class="title lr1">所有伙伴</div>
+              <div class="iconfont listicon">&#xe646;</div>
+              <div class="nummoney">
+                <span class="num">{{teamsStatistics.all}}</span>
+                <span class="yuan"> 人</span>
+              </div>
+            </router-link>
+            <!--<router-link class="li1" :to="{path:'partnerlevel',query:{stab:1,type:'agent',level:'1'}}" tag="li">-->
+            <router-link class="li1"
+                         :to="{path:'partnerlevel',query:{stab:2,type:'agent',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}"
+                         tag="li">
+              <div class="title lr1">已购买伙伴</div>
+              <div class="iconfont listicon">&#xe600;</div>
+              <div class="nummoney">
+                <span class="num">{{teamsStatistics.purchased}}</span>
+                <span class="yuan"> 人</span>
+              </div>
+            </router-link>
+            <!--<router-link class="li1" :to="{path:'partnerlevel',query:{stab:1,type:'fans',level:'1'}}" tag="li">-->
+            <router-link class="li1"
+                         :to="{path:'partnerlevel',query:{stab:2,type:'agent',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}"
+                         tag="li">
+              <div class="title lr1">未购买伙伴</div>
+              <div class="iconfont listicon">&#xe60d;</div>
+              <div class="nummoney">
                 <span class="num">{{teamsStatistics.no_purchased}}</span>
+                <span class="yuan"> 人</span>
               </div>
-              <span> 未购买伙伴</span>
-            </div>
-          <!--</div>-->
-          </router-link>
-        </div>
-      </div>
-      <!-- 分割块 -->
-      <div class="delblock"></div>
-      <div class="partner">
-        <div class="mypartner">
-          <!--<img :src="../../public/imgs/ddtg.png">-->
-          <div class="iconfont">&#xe650;</div>
-          <span>推广订单</span>
-        </div>
-        <div class="partner-list partner-list2">
-          <!--<div class="partner-content" data-status="0" @click="distributionOrderInfo">-->
-          <router-link class="partner-content"
-                       :to="{path:'extension',query:{stab:1,type:'total',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}"
-                       tag="div">
-            <div class="mydingdan-list">
-              <div class="dingdan-icon ">
-                <!--<img :src="../../public/imgs/dfk.png" />-->
-                <div class="iconfont">&#xe66f;</div>
+            </router-link>
+            <!-- 区域合伙人 -->
+            <!--<router-link class="li1" :to="{path:'partnerlevel',query:{stab:1,type:'area',level:'1',isHide:'1'}}" tag="li" v-show="isAreaPartner">-->
+            <!--<router-link class="li1"
+                         :to="{path:'partnerlevel',query:{stab:2,type:'agent',all:teamsStatistics.all,agent:teamsStatistics.purchased,fans:teamsStatistics.no_purchased}}"
+                         tag="li">
+            <div class="title lr1">区域合伙人</div>
+              <div class="iconfont listicon">&#xe60d;</div>
+              <div class="nummoney">
+                <span class="num">{{teamsStatistics.area}}</span>
+                <span class="yuan"> 人</span>
+              </div>
+            </router-link>-->
+          </ul>
+
+          <!-- 我的合伙人 -->
+          <!-- <div class="mfriend" v-show="partnerAgents">
+            <span class="mint-cell-text">
+              <span class="iconfont">
+                &#xe612;
+              </span>
+              我的合伙人
+            </span>
+          </div>
+          <ul class="order-list" v-show="partnerAgents">
+            <router-link class="li1" :to="{path:'extension',query:{stab:1,type:'total',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}"
+              tag="li">
+              <div class="title">中级合伙人</div>
+              <div class="iconfont listicon">&#xe624;</div>
+              <div class="nummoney">
                 <span class="num">{{orderStatistics.total}}</span>
+                <span class="yuan"> 单</span>
               </div>
-              <span> 全部</span>
+            </router-link>
+          </ul> -->
+          <!-- 推广订单 -->
+          <div class="mfriend">
+            <span class="mint-cell-text">
+              <span class="iconfont">
+                &#xe650;
+              </span>
+              推广订单
+            </span>
+          </div>
+          <ul class="order-list">
+            <router-link class="li1" :to="{path:'extension',query:{stab:1,type:'total',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}"
+              tag="li">
+              <div class="title">全部</div>
+              <div class="iconfont listicon">&#xe624;</div>
+              <div class="nummoney">
+                <span class="num">{{orderStatistics.total}}</span>
+                <span class="yuan"> 单</span>
+              </div>
+            </router-link>
+            <router-link class="li1" :to="{path:'extension',query:{stab:2,type:'lock',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}"
+              tag="li">
+              <div class="title">未结算</div>
+              <div class="iconfont listicon">&#xe624;</div>
+              <div class="nummoney">
+                <span class="num">{{orderStatistics.lock}}</span>
+                <span class="yuan"> 单</span>
+              </div>
+            </router-link>
+            <router-link class="li1" :to="{path:'extension',query:{stab:3,type:'refund',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}"
+              tag="li">
+              <div class="title">已退款</div>
+              <div class="iconfont listicon">&#xe8b5;</div>
+              <div class="nummoney">
+                <span class="num">{{orderStatistics.refund}}</span>
+                <span class="yuan"> 单</span>
+              </div>
+            </router-link>
+            <router-link class="li1" :to="{path:'extension',query:{stab:4,type:'ok',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}"
+              tag="li">
+              <div class="title">已结算</div>
+              <div class="iconfont listicon">&#xe619;</div>
+              <div class="nummoney">
+                <span class="num">{{orderStatistics.ok}}</span>
+                <span class="yuan"> 单</span>
+              </div>
+            </router-link>
+          </ul>
+          <!-- 推广费 -->
+          <router-link class="mfriend" tag="div" to="/takemoney">
+            <div class="mint-cell-text">
+              <span class="iconfont tgf">
+                &#xe670;
+              </span>
+              推广费
+            </div>
+            <div class="mfriend-right ">
+              <span>去提现</span>
+              <span class="iconfont">
+                &#xe61b;
+              </span>
             </div>
           </router-link>
-          <!--</div>-->
-          <!--<div class="partner-content" data-status="1" @click="distributionOrderInfo">-->
-            <router-link class="partner-content"
-                         :to="{path:'extension',query:{stab:2,type:'lock',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}"
-                         tag="div">
-            <div class="mydingdan-list">
-              <div class="dingdan-icon ">
-                <div class="iconfont">&#xe624;</div>
-                <span class="num">{{orderStatistics.lock}}</span>
-              </div>
-              <span> 未结算</span>
-            </div>
-            </router-link>
-          <!--</div>-->
-          <!--<div class="partner-content" data-status="2" @click="distributionOrderInfo">-->
-            <router-link class="partner-content"
-                         :to="{path:'extension',query:{stab:3,type:'refund',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}"
-                         tag="div">
-            <div class="mydingdan-list">
-              <div class="dingdan-icon ">
-                <div class="iconfont">&#xe8b5;</div>
-                <span class="num">{{orderStatistics.refund}}</span>
-              </div>
-              <span> 已退款</span>
-            </div>
-            </router-link>
-          <!--</div>-->
-          <!--<div class="partner-content" data-status="3" @click="distributionOrderInfo">-->
-            <router-link class="partner-content"
-                         :to="{path:'extension',query:{stab:4,type:'ok',total:orderStatistics.total,lock:orderStatistics.lock,refund:orderStatistics.refund,ok:orderStatistics.ok}}"
-                         tag="div">
-            <div class="mydingdan-list">
-              <div class="dingdan-icon ">
-                <div class="iconfont">&#xe619;</div>
-                <span class="num">{{orderStatistics.ok}}</span>
-              </div>
-              <span> 已结算</span>
-            </div>
-            </router-link>
-          <!--</div>-->
-        </div>
+        </section>
       </div>
-      <!-- 分割块 -->
-      <div class="delblock"></div>
-      <!--<div class="goWithdrawals" @click="goWithdrawals">-->
-      <div class="goWithdrawals" @click="gomoney()">
-        <div class="goWithdrawals-lf">
-          <!--<img :src="../../public/imgs/mymoney.png" class="partner-md goWithdrawals-img">-->
-          <div class="iconfont">&#xe670;</div>
-          <span>推广费</span>
-        </div>
-        <div class="goWithdrawals-lr">
-          <span>去提现</span>
-          <span class="deltriangle"></span>
-        </div>
-      </div>
-      <!--<div class="goWithdrawals" @click="goQrcode">-->
-      <div class="goWithdrawals" @click="goqcode()">
-        <div class="goWithdrawals-lf">
-          <!--<img :src="../../public/imgs/qr-icon.png" class="partner-md goWithdrawals-img">-->
-          <div class="iconfont">&#xe609;</div>
-          <span>我的二维码</span>
-        </div>
-        <div class="goWithdrawals-lr">
-          <span>去分享</span>
-          <span class="deltriangle"></span>
-        </div>
+      <!-- loading -->
+      <div class="loading-container" v-show="on1">
+        <loading></loading>
       </div>
     </div>
     <transition name="slide">
@@ -186,29 +183,18 @@
     </transition>
   </div>
 </template>
-
 <script>
-  import {recordStatistics_get, teamsStatistics, orderStatistics, memberInfo, } from '../api/api'
-  import {_webapp} from '../config/hook.js';
-  import {mapMutations, mapGetters, mapState} from 'vuex'
-  import {MessageBox} from 'mint-ui';
+  import { recordStatistics_get, teamsStatistics, orderStatistics, memberInfo, } from '../api/api'
+  import { _webapp } from '../config/hook.js';
+  import { mapMutations, mapGetters, mapState } from 'vuex'
+  import { MessageBox } from 'mint-ui';
+  import Loading from '../components/base/loading/loading';
 
   export default {
-    data(){
+    data() {
       return {
-        memberInfo: {
-          nickname: '',//昵称
-          id: '',//会员id
-          level: '',//会员等级
-          avatar: '',
-          leveldetail: {
-            levelname: '默认等级',
-          },
-          mobile: '',
-          from: '',  //推荐人
-          credit1: '',
-          credit2: '',
-        },
+        topStatus: '',
+        disindex: 3,
         recordStatistics_get: {
           cg_money_sum: '0',//销售总额
           c_money_sum: '0', //佣金总额
@@ -223,311 +209,504 @@
         teamsStatistics: {
           all: '0',  //总人数
           purchased: '0',  //已购买人数
-          no_purchased: '0'  //未购买人数
+          no_purchased: '0',  //未购买人数
+          area:'0'
         },
         orderStatistics: {
-          total: 0,//全部
-          lock: 0,//未结算
-          refund: 0,//已退款
-          ok: 0, //已结算
+          total: '0',//全部
+          lock: '0',//未结算
+          refund: '0',//已退款
+          ok: '0', //已结算
         },
-        topStatus: '',
-        disindex: 3,
+        memberInfo: {
+          nickname: '',//昵称
+          id: '',//会员id
+          level: '',//会员等级
+          avatar: '',
+          leveldetail: {
+            levelname: '默认等级',
+          },
+          from: ''  //推荐人
+        },
         defaultAvatar: '',
-        issale:true,
-        webDebug : _webapp.debug
+        webDebug: _webapp.debug,
+        on1: true,
+        isAreaPartner:'',
+        partnerAgents:''
       }
     },
     methods: {
-      init(){
-        let _this=this;
-        memberInfo({data : {}}, function (res) {
-          _webapp.log('memberInfo res');
-          _webapp.log(res);
-
-          if (res.statusCode == 1) {
-//            console.log(res)
-            _this.memberInfo.nickname = res.data.nickname
-            _this.memberInfo.id = res.data.id
-            _this.memberInfo.level = res.data.level
-            _this.memberInfo.leveldetail = res.data.leveldetail
+      goBack() {
+        this.$router.push({ name: 'userCenter' });
+      },
+      init() {  //初始化
+        let _this = this;
+        memberInfo({ data: {} }, function (res) {
+          if (res.statusCode === 1) {
+            _this.on1 = false;
+            _this.memberInfo.nickname = res.data.nickname;
+            _this.memberInfo.id = res.data.id;
+            _this.memberInfo.level = res.data.level;
+            _this.memberInfo.leveldetail = res.data.leveldetail;
             _this.memberInfo.avatar = res.data.avatar
-            _this.memberInfo.from = res.data.parent_name || '总店'
-            _this.memberInfo.level = res.data.agentleveldetail.levelname
-//            _this.setImgUrl(_this.memberInfo.avatar)
-
+            _this.memberInfo.from = res.data.parent_name || '总店';
+            _this.memberInfo.level = res.data.agentleveldetail.levelname;
+            _this.isAreaPartner=res.data.isAreaPartner;
+            _this.partnerAgents=res.data.partnerAgents;
           } else {
-            console.log('会员接口数据异常')
-          }
-        })
-/*        teamsStatistics({data : {}}, function (res) {
-          if (res.statusCode == 1) {
-            _this.teamsStatistics.all = res.data.all || 0;
-            _this.teamsStatistics.purchased = res.data.purchased || 0;
-            _this.teamsStatistics.no_purchased = res.data.no_purchased || 0;
-          } else {
-//            console.log('佣金统计接口数据异常')
-            console.log(res.data)
-          }
-        });*/
-        teamsStatistics({data : {}}, function (res) {
-          if (res.statusCode == 1) {
-            _this.teamsStatistics.all = res.data.all || 0;
-            _this.teamsStatistics.purchased = res.data.purchased || 0;
-            _this.teamsStatistics.no_purchased = res.data.no_purchased || 0;
-          } else {
-//            console.log('佣金统计接口数据异常')
-            console.log(res.data)
+            console.log('distributionCenter memberInfo:' + res.data);
           }
         });
-        orderStatistics({data : {}}, function (res) {
-//          if (res.statusCode == 1 && res.data == true) {
-          if (res.statusCode == 1) {
-            _this.orderStatistics.total = res.data.total.order_count || 0
-            _this.orderStatistics.lock = res.data.lock.order_count || 0
-            _this.orderStatistics.refund = res.data.refund.order_count || 0
-            _this.orderStatistics.ok = res.data.ok.order_count || 0
-            console.log(_this.orderStatistics)
+        recordStatistics_get({ data: { type: '' } }, function (res) {
+          if (res.statusCode === 1) {
+            _this.recordStatistics_get.cg_money_sum = res.data.total.cg_money_sum || 0;
+            _this.recordStatistics_get.c_money_sum = res.data.total.c_money_sum || 0;
+            _this.recordStatistics_get.o_status_3 = res.data.o_status_3.c_money_sum || 0;
+            _this.recordStatistics_get.pay = res.data.pay.c_money_sum || 0;
+            _this.recordStatistics_get.check = res.data.check.c_money_sum || 0;
+            _this.recordStatistics_get.ok = res.data.ok.c_money_sum || 0;
+            _this.recordStatistics_get.invalid = res.data.invalid.cg_money_sum || 0;
+            _this.recordStatistics_get.apply = res.data.apply.c_money_sum;
+            _this.recordStatistics_get.o_status_0 = res.data.o_status_0.c_money_sum || 0;
           } else {
-            console.log(res.data)
+            console.log('distributionCenter recordStatistics_get:' + res.data);
+          }
+        })
+        teamsStatistics({ data: {} }, function (res) {
+          if (res.statusCode == 1) {
+            _this.teamsStatistics.all = res.data.all || 0;
+            _this.teamsStatistics.purchased = res.data.purchased || 0;
+            _this.teamsStatistics.no_purchased = res.data.no_purchased || 0;
+            _this.teamsStatistics.area=res.data.area;
+          } else {
+            console.log('distributionCenter teamsStatistics:' + res.data);
+          }
+        });
+        orderStatistics({ data: {} }, function (res) {
+          if (res.statusCode == 1) {
+            _this.orderStatistics.total = res.data.total.order_count || 0;
+            _this.orderStatistics.lock = res.data.lock.order_count || 0;
+            _this.orderStatistics.refund = res.data.refund.order_count || 0;
+            _this.orderStatistics.ok = res.data.ok.order_count || 0;
+          } else {
+            console.log('distributionCenter orderStatistics:' + res.data);
           }
         })
       },
-      gomoney(){
-        this.$router.push('takemoney')
+      partnertab(idx) {
+        this.tabselect(idx)
+        this.$router.push({ name: `partner` })
       },
-      goqcode(){
-        this.$router.push('qCode')
+      ordertab(idx) {
+        this.tabselect(idx)
+        this.$router.push({ name: `extension` })
+      },
+      ...mapMutations({
+        tabselect: 'TABSELECT',
+        setImgUrl: 'IMGURL'
+      })
+    },
+    computed: {
+      ...mapState([
+        'imgUrl'
+      ])
+    },
+    components: {
+      Loading
+    },
+    filter: {
+      setdefault(value) {
+        return value || 0
       }
     },
-    created(){
-      this.init()
+    // watch: {
+    //   $route(from) {
+    //     if (from.name === 'vipCenter') {
+    //       this.memberInfo.avatar = this.imgUrl
+    //     }
+    //   }
+    // },
+    mounted() {
+      this.init();
     }
   }
-
 </script>
-
 <style lang="less" scoped>
-  @import '../assets/css/reset/reset.css';
-  @import '../assets/css/reset/common.less';
-  @import '../assets/css/fonts/iconfont.css';
-
-  .page {
-    .page-view();
-  }
-  .container {
-    /*margin-top: .64rem;*/
-    font-size: .14rem;
+  @import '../assets/less/common.less';
+  .main {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
-    padding-top: .45rem;
+    background: #F8F8F8;
+    /* overflow: auto; */
+    overflow: hidden;
+  }
 
-  }
-  .userinfo{
-    height:1.9rem;
-  }
-  .userinfo-tp{
+  .avatar {
+    /* height: 1.5rem; */
     display: flex;
     justify-content: center;
+    background: #fff;
+    padding-top: 0.2rem;
+  }
+
+  .avatar-content {
+    display: flex;
     align-items: center;
-    padding-top: .34rem;
   }
-  .userphoto{
-    width: .8rem;
-    height: .8rem;
+
+  .icon {
+    width: .90rem;
+    height: .90rem;
+    background: grey;
     border-radius: 50%;
+    border: 1px solid #ffffff;
     overflow: hidden;
-    margin-left: .14rem;
   }
-  .userphoto img{
+
+  .icon>img {
     display: block;
     width: 100%;
     height: 100%;
   }
-  .userinfo{
-    position:relative;
+
+  .message {
+    /* width: 78%; */
+    margin-left: 0.1rem;
   }
-  .userinfo-item{
-    margin-left: .15rem;
+
+  .message div {
+    /* width: 100%; */
+    /* height: 25%; */
   }
-  .userinfo-lf{
-    display: flex;
-    justify-content: center space-around;
-    align-items:center;
+
+  .message>div>span {
+    font-size: .14rem;
   }
-  .userinfo-p{
-    display: block;
-    font-size: 12px;
-    color:#333;
-    line-height: 20px;
-  }
-  .userinfo-bt{
-    width: 100%;
-    margin-top: .25rem;
+
+  .avatar>.right {
     position: absolute;
-    bottom: .2rem;
-    left:0px;
+    top: .4rem;
+    right: .2rem;
   }
-  .userinfo-cost{
-    padding-top: .15rem;
-    font-size: 14px;
-    color:#333;
-    text-align: center;
+
+  .top {
+    /* height: .35rem; */
+    background: #fff;
+    padding: 0.2rem 0rem;
   }
-  .userinfo-lr.deltriangle{
-    width: .1rem;
-    height:.1rem;
-    border-top:1px solid #fff;
-    border-left:1px solid #fff;
-    margin-right: .26rem;
+
+  .top>div {
+    /* position: relative;
+  width: 50%;
+  height: 100%;
+  background: rgba(0, 0, 0, .5);
+  float: left;
+  line-height: .5484rem;
+  color: #fff;
+  font-size: .25rem; */
   }
-  .mypartner{
-    height: .5rem;
-    line-height: .5rem;
-    padding-left: .1rem;
-    border-bottom: 1px solid #F6F5FA;
+
+  .top>div>span {
+    line-height: .32rem;
+    /*color: red;*/
+    color: #fff;
+  }
+
+  .top .title {
+    display: block;
+    height: .25rem;
+    font-size: .14rem;
+    /*color: #666;*/
+    color: #fff;
+  }
+
+  .yuan {
+    color: @themeColor2;
+    font-size: .10rem;
+  }
+
+  .num {
+    color: @themeColor2;
+    font-size: .14rem;
+  }
+
+  .top_1:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: .1rem;
+    width: 1px;
+    height: 70%;
+    background-color: rgba(0, 0, 0, .1);
+  }
+
+  .content {
+    margin-bottom: .25rem;
+  }
+
+  .content .mfriend {
+    /* position: relative;
+  margin-top: .1rem;
+  text-align: left;
+  color: rgba(0, 0, 0, .7);
+  background-color: #fff;
+  padding: .08rem .2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, .1); */
+    height: 0.5rem;
+    line-height: 0.5rem;
     text-align: left;
-    display: flex;
-  }
-  .mypartner .iconfont{
-    width:.2rem;
-    height:.2rem;
-    position: relative;
-    top: .02rem;
-    left:0px;
-    color: #dd2727;
-    font-weight: 800;
-  }
-  .mypartner span{
-    font-size: 15px;
-    color:#333;
-    margin-left: .15rem;
-  }
-  .partner-list{
+    background: #fff;
+    border-bottom: 1px solid #F6F5FA;
+    padding-left: 0.15rem;
+    color: #333;
+    margin-top: 0.1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .partner-content{
-    padding: .25rem 0;
-    text-align: center;
+
+  .mint-cell-text {
+    font-size: 0.14rem;
+    /* font-weight: 700; */
+  }
+
+  .mint-cell-text span.iconfont {
+    color: @themeColor2;
+    font-size: 0.19rem;
+    margin-right: 0.05rem;
+  }
+
+  .mint-cell-text span.tgf {
+    font-size: 0.21rem;
+  }
+
+  .content ul {
+    /*margin-top: .1rem;*/
+    height: .90rem;
+    /* -webkit-box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
+  -moz-box-shadow: 0 1px 2px rgba(138, 138, 138, .4);
+  box-shadow: 0 1px 2px rgba(138, 138, 138, .4); */
+  }
+
+  .content .tuiguang {
+    height: 1.8rem;
+  }
+
+  .content li {
+    position: relative;
+    display: block;
+    width: 33.3%;
+    height: .90rem;
+    float: left;
+    background-color: #fff;
+    padding: .1rem;
+  }
+
+  .content .li1:after,
+  .content .li2:after,
+  .content .li4:after,
+  .content .li5:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: .14rem;
+    width: 1px;
+    height: 70%;
+    background-color: rgba(0, 0, 0, .1);
+  }
+
+  .content .li4,
+  .content .li5,
+  .content .li6 {
+    border-top: 1px solid rgba(0, 0, 0, .2)
+  }
+
+  .content .title {
+    color: #333;
+    font-size: .14rem;
+    line-height: .2rem;
+  }
+
+  .content .iconfont.listicon {
+    width: .28rem;
+    height: .30rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: .20rem;
+    line-height: .3rem;
+    color: #333;
+  }
+
+  .details {
+    margin-top: .1rem;
+  }
+
+  .details li {
+    margin-top: .04rem;
+    /*border-top: 1px solid rgba(0, 0, 0, .3)*/
+    /*border-top: 1px solid rgba(0, 0, 0, .3)*/
+  }
+
+  .order-list {
+    display: flex;
+  }
+
+  .order-list li {
     flex: 1;
   }
-  .partner-item{
-    text-align: center;
-    border-right:1px solid #eee;
-  }
-  .last-item{
-    border:none;
-  }
-  .partner-tp{
-    font-size:14px;
-    color: #999;
-    line-height: 14px;
-  }
-  .partner-md{
+
+  .outLogin {
     display: block;
-    width: .2rem;
-    height:.2rem;
-    margin:0 auto;
-    margin-top:.15rem;
-    line-height: .14rem;
-
-  }
-  .partner-bt{
-    font-size: 14px;
-    color:#EE0B09;
-    line-height: 14px;
-    margin-top: .15rem;
-  }
-  .goWithdrawals{
-    height:.5rem;
-    line-height:.5rem;
-    border-bottom:1px solid #F5F5F5;
-    display: flex;
-    justify-content:space-between;
-    align-items: center;
-    /* margin-bottom: 50rpx; */
-    padding-left:.1rem;
-  }
-  .goWithdrawals-lf,.goWithdrawals-lr{
-    display: flex;
-    justify-content:space-between;
-    align-items: center;
-  }
-  .goWithdrawals-lf span{
-    font-size:15px;
-    color:#333;
-    margin-left:.15rem;
-  }
-  .goWithdrawals-lf .iconfont{
-    font-size:.15rem;
-    color:#dd2727;
-    font-weight: 800;
+    margin-top: 0.05rem;
+    width: 100%;
+    height: 0.45rem;
+    -webkit-box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);
+    box-shadow: 0 0.02rem 0.06rem rgba(138, 138, 138, .3);
+    background: #fff;
+    color: rgba(0, 0, 0, .5);
+    font-size: 0.16rem;
+    border: none;
+    outline: none;
   }
 
-
-
-
-
-  .goWithdrawals-lr span{
-    font-size:14px;
-    color:#666;
-    margin-right:.15rem;
+  .topdiv-first:after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: .40rem;
+    top: .09rem;
+    right: 0;
+    background: rgba(255, 255, 255, .1);
   }
-  /* .goWithdrawals-lr text:nth-child(1){
-      margin-right:10rpx;
-  } */
-  .goWithdrawals-img{
-    margin:0;
+
+  .mint-cell-text-right {
+    position: absolute;
+    right: .4rem;
+    top: .1rem;
+    font-size: 0.14rem;
+    /*font-weight: 700;*/
+    color: rgba(0, 0, 0, .3);
   }
+
+  .mint-cell-text-right:after {
+    content: '>';
+    position: absolute;
+    top: -.01rem;
+    width: .1rem;
+    right: -.2rem;
+    color: rgba(0, 0, 0, .3);
+    color: #333;
+  }
+
+  .text-right {
+    /* position: absolute;
+  width: 30%;
+  height: 100%;
+  top: 0;
+  right: 0; */
+    color: #333;
+  }
+
+  .mint-header.is-fixed {
+    top: 0rem;
+  }
+
+  .top>.money-top {
+    width: 100%;
+    font-size: .14rem;
+    text-align: center;
+    color: #333;
+  }
+
+  .nummoney {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .container {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    /*overflow: auto;*/
+    overflow-y: scroll;
+    /*-webkit-overflow-scrolling: touch;*/
+    height: 100%;
+    /*overflow-y: scroll;*/
+    // padding-bottom: .3rem;
+  }
+
+  .nametype {
+    /* display: inline-block;
+  width: .6rem;
+  text-align: right; */
+    font-size: 0.12rem;
+    text-align: left;
+    margin-top: 0.02rem;
+    color: #333;
+    line-height: 0.15rem;
+  }
+
+  .mint-loadmore-top {
+    background: rgba(255, 255, 255, .7);
+  }
+
+  .loading {
+    position: relative;
+  }
+
+  .loading:before {
+    content: '';
+    position: absolute;
+    left: -0.35rem;
+    top: -.08rem;
+    width: .4rem;
+    height: .4rem;
+    display: block;
+    background: url('../assets/images/Spinner.gif') no-repeat 100% 100%;
+    background-size: 100% 100%;
+  }
+
+  .main1 {
+    overflow-y: scroll !important;
+  }
+
+  .version {
+    text-align: center;
+    padding: 0 .1rem;
+    font-size: .12rem;
+    margin-top: .1rem;
+    margin-bottom: .1rem;
+    color: #b3abab;
+  }
+
+
+
+
+
+
+
 
   /* 新增 */
-  .mydingdan-list {
-    padding: 0 .05rem;
-    border-right: 1px solid #F6F6F9;
-    flex: 1;
 
-  }
-  .mydingdan-list .dingdan-icon div{
-    width: 100%;
-    height: 100%;
-    font-size: .3rem;
-  }
-  .mydingdan-list .dingdan-icon {
-    width:30px;
-    height:30px;
-    margin:0 auto;
-    position:relative;
-  }
-  .mydingdan-list span{
-    display:block;
-    margin-top: 5px;
-  }
-  .mydingdan-list .num{
-    text-align:center;
-    background:#EC5151;
-    color:#fff;
-    width:.15rem;
-    height:.15rem;
-    line-height:.15rem;
-    border-radius:.11rem;
-    position:absolute;
-    right:-.05rem;
-    top:-.05rem;
-    font-size:.12rem;
+  .mfriend-right {
+    padding-right: 0.15rem;
   }
 
+  .mfriend-right span {
+    font-size: 0.14rem;
+    color: #666;
+  }
 
+  .mfriend-right .iconfont {
+    font-size: 0.18rem;
+    color: #666;
+  }
 
-
-
-
-
-
-
-
-
-
-
-
+  .vipcenter-content {
+    margin-top: .45rem;
+  }
 </style>

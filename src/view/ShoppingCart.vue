@@ -1,10 +1,22 @@
 <template>
   <div class="content">
-    <mt-header title="购物车" class="is-fixed header">
+    <!--<mt-header title="购物车" class="is-fixed header">-->
+    <!--<mt-header title="购物车">
       <a slot="left" @click="goBack">
         <mt-button icon="back"></mt-button>
       </a>
+    </mt-header>-->
+    <mt-header title="购物车" class="header">
+      <!--<a  slot="left" class="pro-white" >
+        <mt-button icon="back"></mt-button>
+      </a>-->
+      <router-link to="/" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
     </mt-header>
+
+
+
     <div class="shopingCart-content" v-show="!on1">
       <div class="goods-content" v-show="defShow">
         <ul class="goods-list">
@@ -104,7 +116,7 @@ export default {
       defPrice: 0, //购物车总的价格
       defTotal: 0, //购物车总的数量
       isTrue: false, //全选状态
-      defShow: true, 
+      defShow: true,
       goodsId: "",
       optionId: "",
       cartids: "",
@@ -131,7 +143,7 @@ export default {
             console.log(res.data);
             _this.getShCartData = res.data.list;
             _this.on1 = false;
-            
+
             _this.getShCartData.map((v, i, arr) => {
               //遍历数组，增加isChecked属性，默认不选中
               _this.getShCartData[i].isChecked = false;
@@ -355,7 +367,10 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "../assets/less/common.less";
+  @import '../assets/less/reset.less';
+  @import '../assets/less/common.less';
+  @import '../assets/fonts/iconfont.css';
+  @import '../assets/less/index.less';
 
 .content {
   position: fixed;

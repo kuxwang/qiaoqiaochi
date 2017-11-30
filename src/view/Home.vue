@@ -135,12 +135,12 @@ export default {
 -->
 <template>
   <div class="content">
-    <div class="top-bar">
+    <!--<div class="top-bar">
       <div class="input" @click="goSearch()">
         <span class="iconfont">&#xe651;</span>
         输入关键字搜索
       </div>
-    </div>
+    </div>-->
     <div class="container">
       <mt-swipe class="banner" :auto="4000" :show-indicators="false">
         <mt-swipe-item v-for="(i,index) in advlist" :key="index">

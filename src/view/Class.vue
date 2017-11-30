@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <mt-header title="分类" class="header">
+    <mt-header title="精选" class="header">
       <!--<a  slot="left" class="pro-white" >
         <mt-button icon="back"></mt-button>
       </a>-->
@@ -18,7 +18,7 @@
           <div class="right-type" v-for="(i,index) in list">
             <h3 v-bind:id='tab(index)'> {{i.type}} </h3>
           <div class="right-item" v-for="(s,idx) in i.child">
-            <span>
+            <span class="logo">
               <img :src="s.thumb">
             </span>
             <section>
@@ -111,7 +111,7 @@ import { mapMutations, mapGetters } from 'Vuex';
         console.log(selector)
         console.log(anchor)
         console.log(list)
-        list.scrollTop = anchor.offsetTop
+        list.scrollTop = anchor.offsetTop - 44;
 
         this.select=s
         console.log(s)
@@ -233,7 +233,10 @@ import { mapMutations, mapGetters } from 'Vuex';
 </script>
 
 
-<style scoped>
+<style lang="less" scoped>
+  /*@import '../assets/less/reset.less';*/
+  @import '../assets/less/index.less';
+  @import '../assets/fonts/iconfont.css';
   .main {
     position: fixed;
     top: 0;
@@ -252,6 +255,9 @@ import { mapMutations, mapGetters } from 'Vuex';
     display: flex;
     width: 100%;
     /*margin-top: .45rem;*/
+  }
+  a:-webkit-any-link {
+    text-decoration: none;
   }
 
   .left {
@@ -284,7 +290,8 @@ import { mapMutations, mapGetters } from 'Vuex';
   footer {
     width: 100%;
     height: .48rem;
-    background-color: rgba(61,61,63,.9);
+    /*background-color: rgba(61,61,63,.9);*/
+    background-color: #fff;
     display: flex;
   }
   .popindex {
@@ -301,19 +308,21 @@ import { mapMutations, mapGetters } from 'Vuex';
     width: .4rem;
     height: .4rem;
     position: absolute;
-    background-color: #444;
-    border: .05rem solid #444;
+    /*background-color: #444;*/
+    border: .02rem solid #444;
     border-radius: 50%;
     left: .15rem;
     top:-.08rem;
     font-size: .22rem;
     text-align: center;
-    line-height: .38rem;
+    line-height: .4rem;
     color: #333;
   }
   .car .active {
-    background-color: #3190e8;
+    /*background-color: #3190e8;*/
+    background-color: #ff771b;
     color: #fff;
+    border: none;
   }
   .car .num {
     position: absolute;
@@ -331,7 +340,8 @@ import { mapMutations, mapGetters } from 'Vuex';
     flex: 1;
     padding: .0725rem 0;
     font-size: .18rem;
-    color: #fff;
+    /*color: #fff;*/
+    color: #dd2727;
     text-align: left;
   }
   footer .submit {
@@ -342,6 +352,7 @@ import { mapMutations, mapGetters } from 'Vuex';
     font-size: .15rem;
     font-weight: 700;
     line-height: .48rem;
+    text-align: center;
   }
   .right {
     flex: 1;
@@ -356,17 +367,18 @@ import { mapMutations, mapGetters } from 'Vuex';
     width: 100%;
     text-align: left;
     font-size: .12rem;
-    padding: .075rem 0;
+    /*padding: .075rem 0;*/
     margin: 0;
-
-
-
-    /*margin-right: .133333rem;*/
+    /*border-left: 3px solid #333;*/
+    border-left: 3px solid #ff771b;
+    height: .12rem;
+    line-height: .12rem;
+    padding: .018rem 0 .018rem .1rem;
+    margin: .01rem 0;
     font-weight: 700;
-    /*font-size: .32rem;*/
+    /*color: #666;*/
     color: #666;
     -webkit-box-flex: 0;
-    /*-webkit-f*/
 
   }
   .right-item {
@@ -383,7 +395,7 @@ import { mapMutations, mapGetters } from 'Vuex';
     position: relative;
     text-align: left;
   }
-  span {
+  span.logo {
     width: .76rem;
     height: .76rem;
     margin-right: .1rem;
@@ -400,13 +412,21 @@ import { mapMutations, mapGetters } from 'Vuex';
     position: relative;
     padding-bottom: .25rem;
   }
+
+  section .sales {
+    position: absolute;
+    bottom: .3rem;
+    font-size: .1rem;
+    color: #333;
+  }
+
   section p {
     margin: 0;
   }
   .title {
-    font-size: .15rem;
-    font-weight: 700;
-    line-height: .18rem;
+    font-size: .14rem;
+    /*font-weight: 700;*/
+    line-height: .14rem;
     overflow: hidden;
     display: -webkit-box;
     display: -webkit-flex;
@@ -418,12 +438,14 @@ import { mapMutations, mapGetters } from 'Vuex';
     align-items: start;
     padding-right: .2rem;
     word-break: break-word;
+    color: #333;
   }
   strong {
     font-weight: 700;
     font-size: .16rem;
     line-height: .16rem;
-    color: #f60;
+    /*color: #f60;*/
+    color: red;
     padding-bottom: .035rem;
     display: -webkit-box;
     display: -webkit-flex;
@@ -449,8 +471,8 @@ import { mapMutations, mapGetters } from 'Vuex';
   }
   .control .iconfont {
     font-size: .2rem;
-    /*color: #ff771b;*/
-    color: #3190e8;
+    color: #ff771b;
+    /*color: #3190e8;*/
   }
   .control .num {
     min-width: .16rem;
@@ -494,7 +516,8 @@ import { mapMutations, mapGetters } from 'Vuex';
 
   }
   .pop-box .title p {
-    border-left: .035rem solid #2395ff;
+    /*border-left: .035rem solid #2395ff;*/
+    border-left: .035rem solid #ff771b;
     height: .2rem;
     line-height: .2rem;
     padding-left: .1rem;
@@ -545,7 +568,8 @@ import { mapMutations, mapGetters } from 'Vuex';
     flex: 1;
   }
   footer .final {
-    background-color: #4cd964;
+    /*background-color: #4cd964;*/
+    background-color: #ff771b;
     color: #fff;
   }
 
