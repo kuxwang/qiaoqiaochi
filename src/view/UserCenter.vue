@@ -48,28 +48,28 @@
             <li class="li1" @click="goOrder(2)">
               <div class="iconfont listicon">
                 <img src="../assets/images/dfk.png" alt="">
-                <span class="numpoint">{{status0Num}}</span>
+                <span class="numpoint" v-if="status0Num>0">{{status0Num}}</span>
               </div>
               <div class="title">待付款</div>
             </li>
             <li class="li1" @click="goOrder(3)">
               <div class="iconfont listicon">
                 <img src="../assets/images/yfk.png" alt="">
-                <span class="numpoint">{{status1Num}}</span>
+                <span class="numpoint" v-if="status1Num>0">{{status1Num}}</span>
               </div>
               <div class="title">待发货</div>
             </li>
             <li class="li1" @click="goOrder(4)">
               <div class="iconfont listicon">
                 <img src="../assets/images/dhh.png" alt="">
-                <span class="numpoint">{{status2Num}}</span>
+                <span class="numpoint" v-if="status2Num>0">{{status2Num}}</span>
               </div>
               <div class="title">待收货</div>
             </li>
             <li class="li1" @click="goOrder(5)">
               <div class="iconfont listicon">
                 <img src="../assets/images/ywc.png" alt="">
-                <span class="numpoint">{{status3Num}}</span>
+                <!--<span class="numpoint" v-if="status3Num>0">{{status3Num}}</span>-->
               </div>
               <div class="title">已完成</div>
             </li>

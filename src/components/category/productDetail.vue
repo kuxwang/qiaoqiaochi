@@ -33,7 +33,7 @@
               <span class="total" v-show="!noselected">×{{num}}</span>
             </div>
 
-            <div class="params">
+            <div class="params" v-if="goodsparams.length">
               <div class="info">商品信息</div>
               <div v-for="v in goodsparams" class="params-list">
                 <div class="title">【{{v.title}}】</div>

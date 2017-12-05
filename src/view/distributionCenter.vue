@@ -333,6 +333,7 @@
 </script>
 <style lang="less" scoped>
   @import '../assets/less/common.less';
+  @import '../assets/less/index.less';
   .main {
     position: fixed;
     top: 0;
@@ -707,6 +708,6 @@
   }
 
   .vipcenter-content {
-    margin-top: .45rem;
+    /*margin-top: .45rem;*/
   }
 </style>

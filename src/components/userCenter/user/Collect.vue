@@ -12,7 +12,7 @@
     <section class="mt-main">
       <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
         <!--<router-link class="li—laber clearfix" :to="{name:'details',query:{id:1}}" tag="li">-->
-        <li class="li—laber-selected clearfix" @click="selected(v)" v-if="isEdit" v-for="(v, i) in resultArr" :key="i">
+        <li class="li—laber-selected clearfix edit" @click="selected(v)" v-if="isEdit" v-for="(v, i) in resultArr" :key="i">
           <label class="mint-checklist-label">
             <!--<span class="mint-checkbox">-->
             <input type="checkbox" class="mint-checkbox-input input-box" :data-idx="v.id">
@@ -546,6 +546,16 @@ export default {
   background: @themeColor1;
   color: #fff;
   margin-top: 0.4rem;
+  z-index: 100;
 }
+
+  .edit .info {
+    padding-left: .3rem;
+  }
+  .mint-checkbox-core {
+    border: 1px solid #252525;
+  }
+
+
 </style>
 

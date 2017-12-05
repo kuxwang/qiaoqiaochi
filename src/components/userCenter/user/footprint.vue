@@ -12,7 +12,7 @@
     <section class="mt-main">
       <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="50">
         <!--<router-link class="li—laber clearfix" :to="{name:'details',query:{id:1}}" tag="li">-->
-        <li class="li—laber-selected clearfix" @click="selected" v-if="isEdit" v-for="(v, i) in resultArr" :key="i">
+        <li class="li—laber-selected clearfix edit" @click="selected" v-if="isEdit" v-for="(v, i) in resultArr" :key="i">
           <label class="mint-checklist-label fl ">
             <!--<span class="mint-checkbox">-->
             <input type="checkbox" class="mint-checkbox-input input-box" :data-idx="v.id">
@@ -53,21 +53,21 @@
         <router-link class="li—laber clearfix" :to="{name:'details',query:{id:v.id}}" tag="li" v-if="!isEdit" v-for="(v, i) in resultArr" :key="i">
           <img :src="getdefaluteimage(v.thumb)" alt="这是一个商品" />
           <div class="li-content">
-            <p class="title lr2">阿斯顿卡死建档立卡建设大街康圣诞贺卡是地板货静安寺；老卡号1</p>
+            <p class="title lr2">{{v.title}}</p>
             <!--<p class="title lr2">{{v.title}}</p>-->
             <!--<p class="oldprice">-->
             <!--<span-->
             <!--class="goods-intPrice">¥{{v.marketprice | calculatePrice1}}.{{v.marketprice | calculatePrice2}}</span>-->
             <!--&lt;!&ndash;<span class="goods-folatPrice">{{v.marketprice | calculatePrice2}}</span>&ndash;&gt;-->
             <!--</p>-->
-            <p class="price">
+            <div class="price">
               ¥
               <span class="goods-intPrice">{{v.marketprice | calculatePrice1}}.</span>
               <span class="goods-folatPrice">{{v.marketprice | calculatePrice2}}</span>
               <span class="goods-intPrice oldprice">¥{{v.marketprice | calculatePrice1}}.{{v.marketprice | calculatePrice2}}</span>
 
               <div class="find iconfont">&#xe728;</div>
-            </p>
+            </div>
           </div>
         </router-link>
       </ul>
@@ -86,10 +86,10 @@
         <div class="nogoods-tp">
           <img src="../../../assets/images/gwc.png">
         </div>
-        <p class="nogoods-mid">
+        <div class="nogoods-mid">
           <h3> 您并没有历史记录哦</h3>
           <h4>去逛逛~</h4>
-        </p>
+        </div>
       </div>
     </section>
     <transition name="slide">
@@ -97,7 +97,7 @@
     </transition>
   </div>
 </template>
-<script>
+ <script>
 import { Toast, MessageBox, InfiniteScroll } from "mint-ui";
 import { mapMutations } from "Vuex";
 import { History, Deletehistory } from "../../../api/api";
@@ -564,6 +564,13 @@ export default {
   background: @themeColor1;
   color: #fff;
   margin-top: 0.4rem;
+  z-index: 100;
 }
+  .edit .info {
+    padding-left: .3rem;
+  }
+  .mint-checkbox-core {
+    border: 1px solid #252525;
+  }
 </style>
 
