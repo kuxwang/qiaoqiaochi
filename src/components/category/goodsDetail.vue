@@ -110,7 +110,6 @@
               <div class="types" v-for="(i,index) in spec" :key="i">
                 <span class="type-title">{{i.title}}</span>
                 <div class="type">
-                  <!--<span class="typeitem"  :class="{'tActive':tselect[idx] == index}"  v-for="(v,index) in i"  @click="tabtype(idx,index)" >{{idx}}类型{{index}}</span>-->
                   <span class="typeitem" :class="{'tActive':tselect[index]==indexs}" v-for="(v,indexs) in i.items" @click="tabtype(index,indexs)" :key="indexs">{{v.title}}</span>
                 </div>
               </div>
